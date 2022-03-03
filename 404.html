@@ -13,46 +13,6 @@
     <link href="/css/umc.css" rel="stylesheet" type="text/css" />
     <link href="/css/umc.sub.css" rel="stylesheet" type="text/css" />
     <script src="/js/umc.js" type="text/javascript"></script>
-    <script>
-        WDK.UI.Config({
-            "posurl": "https://ali.365lu.cn/" + (WDK.cookie('root') || 'UMC') + '/' + (WDK.cookie('device') || WDK.cookie('device', WDK.uuid()))
-        });
-        // WDK.UI.Config({
-        //     "posurl": "http://192.168.210.160/" + (WDK.cookie('root') || 'UMC') + '/' + (WDK.cookie('device') || WDK.cookie('device', WDK.uuid()))
-        // });
-
-        WDK.Src = '/';
-        WDK.SPA = '/';
-        WDK(function($) {
-            var html = [];
-
-            html.push('<li><a ui-spa href="dashboard">工作台</a></li>',
-                '<li><a ui-spa href="/explore">发现</a></li>',
-                '<li><a ui-spa href="/365lu/help">功能说明</a></li>',
-                '<li><a ui-spa href="/download">App下载</a></li>');
-
-            var site = $('.header-sub-nav .menu-site').html(html.join(''));
-            requestAnimationFrame(() => {
-                function ns() {
-                    var path = location.pathname;
-                    site.find('li').cls('is-active', 0).find('a').each(function() {
-                        var m = $(this);
-                        var s = m.attr('ui-spa');
-
-                        var k = s ? ($.SPA + s) : m.attr('href');
-                        if (k == path) {
-                            m.parent().cls('is-active', 1);
-                            return false;
-                        }
-                    });
-                };
-
-                $(window).on("popstate", ns);
-                ns();
-            });
-
-        });
-    </script>
     <script src="/js/Sortable.js"></script>
     <script src="/js/umc.date.js"></script>
     <script src="/js/umc.database.js"></script>
@@ -62,6 +22,7 @@
     <script src="/js/umc.page.js"></script>
     <script src="/js/umc.paging.js"></script>
     <script src="/js/umc.sub.js"></script>
+    <script src="/js/Sub.js"></script>
 
 
 
@@ -88,8 +49,9 @@
             <div class="umc-sidebar-back"></div>
             <div class="umc-sidebar-menu"></div>
             <div class="login-box"><em>天天</em> <sub>录</sub>
-                <a ui-spa="dashboard"></a>
-                <a ui-spa="explore"></a>
+                <a ui-spa></a>
+                <a ui-spa href="/dashboard"></a>
+                <a ui-spa href="/explore"></a>
             </div>
             <!--%publish%-->
             <a ui-spa id="team"></a>
