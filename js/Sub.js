@@ -1,5 +1,5 @@
 UMC.UI.Config({ 'posurl': 'https://ali.365lu.cn/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
-UMC.Src = '/v.0.1';
+UMC.Src = '/v.0.1/';
 UMC.SPA = '/';
 UMC(function ($) {
     var html = [];
