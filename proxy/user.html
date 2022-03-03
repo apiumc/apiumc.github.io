@@ -1,0 +1,57 @@
+<div class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item icon-data" data-icon="" style="line-height: 40px;">
+        </div>
+
+        <div class="filter-container-button">
+            <a ui-event="ShowSub" class="el-button filter-item el-button--primary el-button--small">
+                加载子组织成员
+            </a>
+        </div>
+    </div>
+    <div class="el-card umc-organize-container" style="display: flex;">
+        <div style="width: 300px;  padding: 5px;height: calc(100vh - 90px); overflow-y: auto;">
+            <ul id="Organize" class="umc-organize"></ul>
+        </div>
+        <div style="flex: 1;">
+
+            <div class="el-table">
+                <table cellspacing="0" cellpadding="0" border="0">
+                    <colgroup>
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                用户名
+                            </th>
+                            <th>
+                                别名
+                            </th>
+                            <th>
+                                使用时间
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <script type="text/html">
+                            <tr>
+                                <td class="is-center">{Username}
+                                </td>
+                                <td class="is-center">
+                                    {name}
+                                </td>
+                                <td class="is-center">
+                                    {activeTime}
+                                </td>
+                            </tr>
+                        </script>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

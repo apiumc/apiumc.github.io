@@ -1,0 +1,109 @@
+.umc-sub-header-bg {
+    text-align: center;
+    height: 520px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
+    background-image: url(https://gw.alipayobjects.com/mdn/prod_resou/afts/img/A*QT3DQZcBDqwAAAAAAAAAAABjARQnAQ);
+}
+
+.umc-sub-header-desc {
+    text-align: center;
+    font-size: 18px;
+    padding: 0 3em;
+}
+
+.umc-sub-header-title {
+    margin-top: 64px;
+    font-size: 44px;
+    text-align: center;
+    font-weight: 700;
+    color: #262626;
+    line-height: 1.35;
+    margin-bottom: 16px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.umc-sub-middle h2 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.35;
+    color: #262626;
+}
+
+.umc-sub-middle li {
+    margin: 32px 0;
+    padding: 18px 18px 18px 16px;
+    max-width: 220px;
+    border-left: 4px solid rgba(0, 0, 0, 0);
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #8c8c8c;
+}
+
+.umc-sub-middle li.active {
+    background-color: #f7f7f7;
+    border-left: 4px solid #25b864;
+    color: #262626;
+}
+
+.umc-sub-middle img {
+    max-width: 100%;
+}
+
+.umc-sub-middle h1,
+.umc-sub-middle h2,
+.umc-sub-middle h3,
+.umc-sub-middle h4,
+.umc-sub-middle h5,
+.umc-sub-middle h6 {
+    color: #262626;
+    line-height: 1.35;
+}
+
+.umc-sub-middle-wrapper h3 {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.umc-sub-middle-wrapper {
+    padding: 30px 50px;
+}
+
+.umc-sub-middle-wrapper p {
+    margin-top: 10px;
+}
+
+.umc-sub-app #app .main-container {
+    background-color: #FFF;
+}
+
+.umc-sub-middle-container {
+    background-repeat: no-repeat;
+    background-position: 40% 30px;
+    background-size: 1390px;
+    padding: 126px 0 26px 0;
+    background-image: url(https://gw.alipayobjects.com/zos/basement_prod/c8db90f3-2bac-4be9-a177-5ecce089de43.svg);
+}
+
+.umc-sub-middle-tabs>div {
+    flex-shrink: 0;
+    width: 100%;
+    opacity: 1;
+    -webkit-transition: opacity .45s;
+    transition: opacity .45s;
+    display: none;
+}
+
+.umc-sub-middle-tabs>div.active {
+    display: block;
+}
+
+.umc-sub-app #header-search {
+    display: none;
+}

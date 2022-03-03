@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>顾家数据平台</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link href="//www.365lu.cn/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.sso.css" rel="stylesheet" type="text/css" />
+    <script src="//www.365lu.cn/js/umc.js" type="text/javascript"></script>
+
+    <script src="/UMC.Conf" type="text/javascript"></script>
+    <script>
+        UMC.UI.Config({
+            'posurl': 'https://ali.365lu.cn/UMC/' + (WDK.cookie('device') || WDK.cookie('device', WDK.uuid()))
+        });
+        UMC.UI.Bridge = function(v, fn) {
+            fetch([UMC.UI.Config().posurl, '?', v.replace(/^&+/, '')].join('') + '&_v=proxy', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(json => fn(json));
+
+
+        };
+        UMC(function($) {
+
+            $.UI.Command("Account", "Check", "Info", function(xhr) {
+                $.UI.Device = xhr.Device;
+                if (xhr.IsCashier) {
+                    location.reload(true);
+                    // $.UI.On('Cashier', xhr);
+                } else {
+                    var login = $('.login-container');
+                    $.api('Message', 'mqtt', cfg => {
+                        var client = new Paho.MQTT.Client(cfg.broker, 443, cfg.client);
+                        client.onConnectionLost = function() {};
+                        login.find(".qrcode_view .context").click('a', function() {
+                            login.on("connect");
+                        });
+
+                        var qrcode = new QRCode(document.getElementById("qrcode"), {
+                            width: 200,
+                            height: 200
+                        });
+                        client.onMessageArrived = function(message) {
+                            var uss = [].concat(JSON.parse(message.payloadString))[0];
+                            if (uss.msg) {
+                                if (uss.msg == 'OK') {
+                                    if (uss.code) {
+                                        $.UI.Command('Account', 'Login', {
+                                            'code': uss.code,
+                                            appid: uss.appid
+                                        });
+                                    } else {
+                                        location.reload(true);
+                                    }
+                                } else {
+                                    login.find(".qrcode_view .context").html(['<b>', uss.msg, '</b>'].join(''));
+                                }
+                            }
+
+                        };
+                        var timeId = 0;
+                        login.on('disconnect', function() {
+                            client.disconnect();
+                            clearTimeout(timeId);
+                            login.find(".qrcode_view .context").html("<a>刷新二维码</a>");
+                        }).on('connect', function() {
+                            client.connect({
+                                useSSL: true,
+                                userName: cfg.user,
+                                password: cfg.pass,
+                                onSuccess: function() {
+                                    login.find(".qrcode_view .context").children().remove();
+                                    qrcode.makeCode(['https://data.kukahome.com/umc.sso.html?', xhr.Device].join(''));
+                                    timeId = setTimeout(function() {
+                                        login.on('disconnect')
+                                    }, 60000);
+                                },
+                                mqttVersion: 4,
+                                onFailure: function(e) {
+                                    console.log(e);
+                                    login.find(".qrcode_view .context").html("<a>扫码错误，请刷新</a>");
+                                }
+                            });
+                        }).on('connect');
+                    });
+                }
+            });
+
+        })
+    </script>
+    <script src="//www.365lu.cn/js/mqttws31.min.js?v.01"></script>
+    <script src="//www.365lu.cn/js/qrcode.min.js?v.01"></script>
+
+</head>
+
+<body>
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active" style="z-index: 2100;"><i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content">Switch Size Success</p>
+    </div>
+    <div class="login-container">
+        <form class="el-form login-form el-form--label-left" autocomplete="on">
+            <div class="title-container">
+
+                <span>欢迎使用 顾家数据平台！</span><img src="https://cdn.yufuid.com/images/appearance/tn-demo-1578467276481.png" alt="">
+            </div>
+            <div class="qrcode_view">
+                <div style="width: 200px; height: 200px; margin: auto; position: relative;">
+                    <div class="context"></div>
+                    <div id="qrcode"></div>
+                    <!--[if IE]> 不支持IE内核的浏览器，推荐使用chrome .如果使用360请切换极速模式<![endif]-->
+                </div>
+            </div>
+            <div class="login_qrcode_text">
+                请使用钉钉或移动端扫描二维码登录
+
+            </div>
+
+
+        </form>
+    </div>
+</body>
+
+</html>

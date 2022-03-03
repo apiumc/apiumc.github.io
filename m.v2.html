@@ -1,0 +1,258 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>顾家数据平台</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <link href="//www.365lu.cn/css/weui.css?v.02" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/base.css?v.02" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/icon.css?v.02" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.ui.css?v.02" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/mobile.css?v.02" rel="stylesheet" type="text/css" />
+    <script src="//www.365lu.cn/js/umc.js?v.02" type="text/javascript"></script>
+    <script src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.7.13/dingtalk.open.js"></script>
+    <script src="/UMC.Conf" type="text/javascript"></script>
+    <script>
+        UMC.UI.Bridge = function(v, fn) {
+            fetch([UMC.UI.Config().posurl, '?', v.replace(/^&+/, '')].join('') + '&_v=proxy', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(json => fn(json));
+
+        }
+        UMC.UI.Ver = 'proxy';
+        UMC.Src = 'https://www.365lu.cn/v0.1/';
+    </script>
+    <script src="//www.365lu.cn/js/umc.database.js?v.02"></script>
+    <script src="//www.365lu.cn/js/umc.grid.js?v.02"></script>
+    <script src="//www.365lu.cn/js/umc.dialog.js?v.02"></script>
+    <script src="//www.365lu.cn/js/umc.ui.js?v.02"></script>
+    <script src="//www.365lu.cn/js/umc.page.js?v.02"></script>
+
+    <style>
+        .weui_tab_bd .wdk-section-header+.weui_cells {
+            margin-top: 0px;
+        }
+        
+        .weui_cell {
+            padding: 15px;
+        }
+        
+        .wdk_cell_icon::before {
+            font-size: 18px;
+        }
+        
+        .weui_tabbar_icon {
+            margin: 0 auto;
+            width: 34px;
+            height: 34px;
+        }
+        
+        div[ui=main] .weui_tabbar_icon::before {
+            font-size: 24px;
+        }
+        
+        .wdk-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 0px;
+        }
+        
+        .wdk-icon ul {
+            padding: 12px 0;
+        }
+        
+        a.weui_cell[href]:after,
+        .weui_cell[click-data]:after {
+            display: none;
+        }
+        
+        .weui_btn_primary,
+        .weui_btn_warn,
+        .wdk-footer-button.bgcolor {
+            background: #1890ff !important;
+        }
+        
+        .wdk-sku-footer::before,
+        .wdk-footer::before {
+            border-top-color: #1890ff;
+        }
+        
+        .iframe {
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .iframe.iphone {
+            height:98vh;
+        }
+    </style>
+
+    <script>
+        ($ => {
+
+            $.UI.On('UI.Push', function(e, xhr) {
+                var app = $(document.body);
+                app.children('div[ui].ui').cls('ui', false).remove().on('backstage');
+                app.append(xhr.root.cls('ui', true).on('active'));
+            }).On("Close", function() {
+                location.reload(true);
+            }).Off('Prompt');
+            var viewConfig;
+            UMC.page('main', '主页', false, function(root, title, menu) {
+
+                var tabData = [{
+                    "text": "收藏",
+                    cmd: 'Favorite',
+                    model: 'Exp',
+                    "icon": "\uf1b3"
+                }, {
+                    "text": "管理者视窗",
+                    cmd: 'MenuTop',
+                    model: 'Exp',
+                    "icon": "\uf219"
+                }, {
+                    "text": "主题看板",
+                    cmd: 'Menu',
+                    model: 'Exp',
+                    "icon": "\uf200"
+                }];
+                var tabs = [];
+                root.ui('Key.Report', function(e, item) {
+
+                    WDK.UI.Command('Exp', 'ReportATT', item.Key);
+                }).ui('Report.Open', function(e, v) {
+                    viewConfig = v;
+                    location.hash = 'Exp';
+                }).ui('Key.Url', function(e, item) {
+                    if (item.charAt(0) == '#') {
+                        if (item.indexOf('Exp?key=') > -1) {
+                            WDK.UI.Command('Exp', 'ReportATT', item.substring(9));
+                        } else {
+                            location.hash = item;
+                        }
+                    } else {
+                        location.href = item;
+                    }
+                }).ui('Favorite', function() {
+                    tabs[0].query();
+                }, true);
+
+                var weui_tab = $('.weui_tab_bd', root);
+                var tabbar = $('.weui_tabbar', root)
+                    .on('click', 'a.weui_tabbar_item', function(e, auto) {
+                        var me = $(this);
+                        var index = parseInt(me.attr('data-index')) || 0;
+
+                        if (!me.is('.weui_bar_item_on')) {
+
+                            me.addClass('weui_bar_item_on').siblings('a').removeClass('weui_bar_item_on');
+
+                            var body = weui_tab.children('div').eq(index);
+                            body.css('display', 'flex').siblings('div').hide();
+                            var data = tabData[index];
+                            if (!body.attr('data-init')) {
+                                body.attr('data-init', "Y");
+                                body.html('<section style="flex: 1; overflow: auto"></section>')
+
+                                var pager = new WDK.POS.Pager(body);
+                                tabs.push(pager);
+                                pager.model = data.model;
+                                pager.cmd = data.cmd;
+                                pager.search = data.search || {};
+                                pager.query();
+                            }
+
+                        }
+                        return false;
+                    });
+                tabbar.format(tabData, true);
+                weui_tab.format(tabData, true);
+                tabbar.find('a').each(function(i) {
+                    var d = tabData[i];
+                    var m = $(this).attr('data-index', i + '');
+
+                    if (d.max) {
+                        m.addClass('wdk-max-bar')
+                    }
+                }).eq(0).click(true);
+            }).page('Exp', 'Exp', function(root) {
+                root.on('active', function() {
+                    var iframe = root.find('iframe');
+                    if (iframe.attr('url') != viewConfig.Url) {
+                        $(document.body).addClass('wdk-loading');
+                        iframe.attr('src', viewConfig.Url).attr('url', viewConfig.Url);
+                    }
+
+                    dd.biz.navigation.setRight({
+                        show: true,
+                        control: true,
+                        text: viewConfig.right.text || '收藏',
+                        onSuccess: function(result) {
+                            if (WDK(document.body).children('div[ui=Exp]').is('.ui')) {
+                                UMC.Click(viewConfig.right.click);
+                            }
+                        }
+                    });
+                }).ui('Report.Open', function(e, v) {
+                    viewConfig = v;
+                    requestAnimationFrame(r => root.on('active'));
+                }).on('hash', function(e, v) {
+                    root.find('iframe').attr('src', 'about:blank');
+                    requestAnimationFrame(r => root.on('active'));
+                }).find('iframe').on('load', function() {
+                    $(document.body).removeClass('wdk-loading');
+                })
+            });
+            $(function() {
+
+                var userAgent = navigator.userAgent.toLowerCase();
+                if (userAgent.indexOf('iphone') > 0) {
+                    $('iframe').addClass('iphone');
+                }
+                $.UI.Command("Account", "Check", "Info", function(xhr) {
+                    $.UI.Device = xhr.Device;
+                    if (xhr.IsCashier) {
+                        $.UI.On("Prompt", function(e, p) {
+                            alert(p.Text);
+                        });
+                        $(window).on('popstate');
+                    } else if ($.UI.Device) {
+                        $.UI.On('Close', {});
+                    }
+                });
+            });
+        })(WDK);
+    </script>
+</head>
+
+<body>
+    <div ui="Exp">
+        <iframe class="iframe" frameborder="0"></iframe>
+    </div>
+    <div ui="main">
+        <div class="weui_tab">
+            <div class="weui_tab_bd">
+                <script type="text/html">
+                    <div class="wdk-tab-body-item">
+                    </div>
+                </script>
+            </div>
+            <footer class="weui_tabbar">
+                <script type="text/html">
+                    <a href="javascript:;" data-key="{key}" class="weui_tabbar_item">
+                        <div class="weui_tabbar_icon" data-icon="{icon}"></div>
+                        <p class="weui_tabbar_label">{text}</p>
+                    </a>
+                </script>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

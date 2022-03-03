@@ -1,0 +1,66 @@
+<div class="app-container">
+
+    <div class="filter-container">
+        <div class="filter-container-item" style="line-height: 40px;">
+
+            <button id="root" class="el-button filter-item ">根目录
+                            </button>
+
+        </div>
+        <div class=" filter-container-button ">
+            <a style="position: relative;" class="el-button filter-item el-button--primary el-button--small">
+                <b class="wdk_cell_icon" data-icon="&#xf0ee;"></b> 上传文件
+                <input class="weui_uploader_input" type="file" multiple="">
+            </a>
+            <a style="position: relative;" class="el-button filter-item el-button--primary el-button--small">
+                <b class="wdk_cell_icon" data-icon="&#xf0ee;"></b> 上传文件夹<input class="weui_uploader_input" type="file" webkitdirectory="" multiple="">
+            </a>
+        </div>
+    </div>
+    <div class="item-container ">
+
+        <div class="el-table ">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="60">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            文件名
+                        </th>
+                        <th>
+                            大小
+                        </th>
+                        <th>
+                            更新时间
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html ">
+                        <tr>
+                            <td>
+                                <a {href}>  {icon} {name}</a>
+                            </td>
+                            <td>{size}
+                            </td>
+                            <td>{time}
+                            </td>
+                            <td class="is-center">
+                                <a model="System" cmd="Dir" send="{send}" class="el-tag el-tag--small ">删除</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

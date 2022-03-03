@@ -1,0 +1,785 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>顾家数据平台</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link href="css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <link href="css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="css/umc.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="https://data.kukahome.com/xplatform/statics/image/favicon/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://data.kukahome.com/xplatform/statics/image/favicon/favicon.ico" type="image/x-icon" />
+    <script src="js/umc.js" type="text/javascript"></script>
+    <script>
+        WDK.UI.Config({
+            "posurl": "https://data.kukahome.com/EXP/" + (WDK.cookie('device') || WDK.cookie('device', WDK.uuid()))
+        });
+            WDK.UI.Config({
+                "posurl": "http://192.168.210.160:8010/UMC/" + (WDK.cookie('device') || WDK.cookie('device', WDK.uuid()))
+            });
+          WDK.Src = 'https://oss.365lu.cn/v0.1/';
+            // WDK.Src = '/';
+    </script>
+    <script src="js/umc.date.js"></script>
+    <script src="js/umc.database.js"></script>
+    <script src="js/umc.grid.js"></script>
+    <script src="js/umc.dialog.js"></script>
+    <script src="js/umc.ui.js"></script>
+    <script src="js/umc.page.js"></script>
+    <script src="js/umc.paging.js"></script>
+    <script src="js/umc.sso.js?v0.1"></script>
+    <script src="js/mqttws31.min.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <style>
+        .login-container {
+            background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(css/login_bg.png);
+            background-color: rgb(50, 125, 232);
+            background-repeat: no-repeat;
+            background-origin: border-box;
+            background-position: center center;
+            background-size: cover;
+        }
+        
+        .login-container .login-form {
+            max-width: 430px;
+            background-color: #fff;
+            padding: 0;
+            margin: 0 auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 8px 0 rgba(42, 93, 158, .16), 0 0 4px 0 rgba(42, 93, 158, .08);
+            margin-top: 10%;
+        }
+        
+        .title-container {
+            background-color: #fff;
+            max-width: 430px;
+            padding: 40px;
+            margin: 0 auto;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            line-height: 40px;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .title-container img {
+            height: 20px;
+            vertical-align: middle;
+        }
+        
+        .login-container #qrcode {
+            width: 200px;
+            height: 200px;
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+        
+        .login-container #qrcode:empty::before {
+            padding-top: 10%;
+            display: block;
+            content: "检测登录环境";
+        }
+        
+        .login-container .qrcode_view img {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .login-container .qrcode_view .context {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            line-height: 50px;
+            background-color: #fff;
+            border-radius: 25px;
+            box-shadow: 0 0px 4px rgba(0, 21, 41, .4);
+            white-space: nowrap;
+            z-index: 1;
+        }
+        
+        .login-container .qrcode_view .context:empty {
+            width: 50px;
+            background-image: url(../css/images/logo.png);
+            height: 50px;
+            background-size: cover;
+            /* content: "KUKA"; */
+            display: block;
+            color: red;
+            text-align: center;
+        }
+        
+        .login-container .qrcode_view .context~#qrcode {
+            position: relative;
+        }
+        
+        .login-container .qrcode_view .context~#qrcode::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            background-color: rgba(255, 255, 255, 0.86);
+        }
+        
+        .login-container .qrcode_view .context:empty~#qrcode::after {
+            display: none;
+        }
+        
+        .login-container .qrcode_view .context b,
+        .login-container .qrcode_view .context a {
+            padding: 0 15px;
+        }
+        
+        .login-container .qrcode_view .context img {
+            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        
+        .login_qrcode_text {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .sso-nav-tap {
+            height: 261px;
+            width: 300px;
+            margin: 18px 9px 0px;
+            background-image: url(https://tableaudev.kukahome.com/img/project-thumb-2.png?2019_2_20_zbvdujcmr2l);
+            background-color: #fafafa;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 1px solid #d8d8d8;
+            border-radius: 1px;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, .15);
+            display: block;
+            height: 184px;
+            position: relative;
+            background-size: cover;
+        }
+        
+        .sso-nav-tap::before {
+            content: '';
+            display: block;
+            position: absolute;
+            background-image: url(https://tableaudev.kukahome.com/img/project_card_shape.svg?2019_2_20_zbvdujcmr2l);
+            top: -4px;
+            right: -4px;
+            width: 119px;
+            height: 26px;
+            z-index: 1;
+        }
+        
+        .sso-nav-name {
+            height: 41px;
+            padding-left: 12px;
+            padding-right: 12px;
+            line-height: 41px;
+            position: relative;
+        }
+        
+        .sso-explore {
+            padding: 20px;
+            background-color: #fff;
+        }
+        
+        .sso-nav-tap:hover::after {
+            background-color: rgba(34, 38, 54, 0.5);
+            border-radius: 1px;
+            display: block;
+            height: 184px;
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            content: '';
+        }
+        
+        .sso-nav-tap.leaf:hover::after {
+            z-index: 1;
+        }
+        
+        .sso-explore .sso-nav {
+            float: left;
+        }
+        
+        .sso-explore {
+            overflow: hidden;
+        }
+        
+        .sso-nav-tap.leaf {
+            background-image: none;
+        }
+        
+        .sso-nav-tap em {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-size: cover;
+            transition: all 0.6s ease;
+        }
+        
+        .sso-nav-tap.leaf:before {
+            background-image: none;
+            content: '\f201';
+            font-family: wdk;
+            font-size: 74px;
+            line-height: 184px;
+            text-align: center;
+            color: #999;
+            left: 0px;
+            right: auto;
+            width: 100%;
+        }
+        
+        .sso-nav-header {
+            overflow: hidden;
+        }
+        
+        .sso-nav-header div {
+            float: left;
+            cursor: pointer;
+        }
+        
+        .sso-nav-header .sso-nav-title::before {
+            content: '/';
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+        
+        .sso-nav-text {
+            max-width: 80%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 41px;
+        }
+        
+        .sso-nav-more {
+            position: absolute;
+            right: 12px;
+            top: 0px;
+        }
+        
+        .umc-search-menu li {
+            width: 250px;
+        }
+        
+        .umc-search-empty::before {
+            content: "未搜索到数据";
+        }
+        
+        .umc-search-menu a {
+            color: #111;
+            ;
+        }
+        
+        .umc-search-menu li {
+            position: relative;
+            display: block;
+            padding: 12px;
+            overflow: hidden;
+            color: rgba(0, 0, 0, 0.65);
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 22px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            -webkit-transition: background 0.3s ease;
+            transition: background 0.3s ease;
+        }
+        
+        .umc-search-menu li:hover {
+            background-color: #e6f7ff;
+        }
+        
+        .umc-search-menu li.umc-search-empty {
+            text-align: center;
+            /* min-height: 50px; */
+            line-height: 50px;
+        }
+        
+        .umc-recent-empty,
+        .umc-favoriter-empty {
+            text-align: center;
+            line-height: 150px;
+            padding-top: 25vh;
+        }
+        
+        .umc-favoriter-empty::after {
+            content: "还未有收藏的页面";
+            line-height: 20px;
+        }
+        
+        .umc-recent-empty::after {
+            content: "未有最近浏览的页面";
+        }
+        
+        .umc-favoriter-empty::before {
+            content: '\f006';
+            font-family: wdk;
+            display: block;
+            font-size: 80px;
+            line-height: 50px;
+        }
+        
+        .sso-explore {
+            min-height: calc(100vh - 50px);
+            background-color: #fff;
+        }
+        
+        #sliders .sliders #overflow img {
+            max-height: 400px;
+        }
+        
+        #sliders .sliders #overflow a {
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .umc-logo-name {
+            color: rgb(191, 203, 217);
+            font-size: 15px;
+            line-height: 30px;
+            text-align: center;
+        }
+        
+        .sso-nav-tap.leaf em {
+            z-index: 1;
+        }
+        
+        .el-button.fullscreen::before {
+            content: '\f065';
+            font-family: wdk;
+        }
+        
+        body.umc-fullscreen .el-button.fullscreen::before {
+            content: '\f066';
+        }
+        
+        body.umc-fullscreen .el-link iframe,
+        body.umc-fullscreen .app-main {
+            height: 100vh;
+        }
+        
+        body.umc-fullscreen #app .sidebar-container {
+            display: none;
+        }
+        
+        body.umc-fullscreen #app .main-container {
+            margin-left: 0px;
+        }
+        
+        body.umc-fullscreen #app .navbar {
+            display: none;
+        }
+        
+        body.umc-fullscreen #app .navbar::before {
+            top: 0px
+        }
+        
+        .umc-link-view .app-main,
+        .el-link iframe {
+            overflow: hidden;
+            display: block;
+        }
+        
+        .sso-nav-tap.leaf {
+            overflow: hidden;
+        }
+        
+        .sso-nav-tap.leaf:hover em {
+            transform: scale(1.2);
+        }
+        
+        .login-container .qrcode_view {
+            position: relative;
+            display: block;
+        }
+        
+        .login-container .download {
+            max-width: 330px;
+            padding: 0;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .login-container .download .ios::before,
+        .login-container .download .android::before {
+            content: '\F17b';
+            font-family: wdk;
+            font-size: 50px;
+            padding: 0 10px;
+            vertical-align: middle;
+            color: #32b2a7;
+        }
+        
+        .login-container .download .ios::before {
+            content: '\F179';
+            color: #000;
+        }
+        
+        .login-container .download a {
+            color: #111;
+        }
+        
+        .umc-download  #app.hideSidebar .main-container {
+
+            margin-left: 0px;
+        }
+        
+        .umc-download .login-container {
+            display: none;
+            ;
+        }
+        
+        .umc-download .pattern {
+            position: fixed;
+            top: 75px;
+            z-index: 1;
+            max-width: 312px;
+            width: 21.66%;
+            transition: all .5s;
+        }
+        
+        .umc-download .pattern {
+            width: 18%;
+        }
+        
+        .umc-download .pattern.left {
+            left: 0;
+        }
+        
+        .umc-download .pattern.right {
+            right: 0;
+        }
+        
+        .umc-download #wechat_tip,
+        .umc-download .wechat_tip_content {
+            display: none;
+        }
+        
+        .umc-download .wechat_tip {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            background: #3ab2a7;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            width: 135px;
+            height: 60px;
+            border-radius: 10px;
+            top: 15px;
+        }
+        
+        .umc-download .wechat_tip>i {
+            top: -10px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 12px solid #3ab2a7;
+        }
+        
+        .umc-download .main .icon-container .icon img {
+            max-width: 100%;
+            width: 120px;
+            height: 120px;
+            border-radius: 17.54%;
+        }
+        
+        .umc-download .main .icon-container {
+            margin-right: auto;
+            margin-left: auto;
+            width: 290px;
+            position: relative;
+            height: 290px;
+        }
+        
+        .umc-download .pattern img {
+            width: 100%;
+            transition: all 1s;
+            pointer-events: none;
+        }
+        
+        .umc-download {
+            height: 100%;
+        }
+        
+        .umc-download .main .icon-container .icon {
+            top: 0;
+            left: 0;
+            padding: 10px;
+            width: 140px;
+            height: 140px;
+        }
+        
+        .umc-download section.app-main {
+            background-color: #Fff;
+        }
+        
+        .umc-download .main .icon-container span {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            box-sizing: border-box;
+        }
+        
+        .umc-download .main .app-brief .icon-container .qrcode {
+            background-color: #eff2f2;
+            transition: all .25s;
+        }
+        
+        .umc-download .main .icon-container .qrcode {
+            right: 0;
+            bottom: 0;
+            width: 140px;
+            height: 140px;
+            border: 20px solid transparent;
+            border-radius: 26px;
+        }
+        
+        .umc-download .main .name {
+            position: relative;
+            margin: 20px auto;
+            width: 290px;
+            color: #505556;
+            text-align: left;
+            font-weight: 400;
+            font-size: 28px;
+        }
+        
+        .umc-download .main .scan-tips {
+            margin: 0 auto;
+            width: 290px;
+            color: #a9b1b3;
+            font-size: 14px;
+            text-align: left;
+            white-space: nowrap;
+            line-height: 22px;
+        }
+        
+        .umc-download #actions button {
+            transition: all .25s;
+        }
+        
+        .umc-download .main .actions button {
+            display: inline-block;
+            padding: 12px 46px;
+            min-width: 200px;
+            border: 1px solid #32b2a7;
+            border-radius: 40px;
+            font-size: 14px;
+            background: #32b2a7;
+            color: #fff;
+        }
+        
+        .umc-download .main .actions {
+            margin: 30px auto 0;
+            max-width: 290px;
+        }
+        
+        .umc-download .main {
+            margin: 0 auto;
+            max-width: 94%;
+            height: 95%;
+            display: table;
+            width: 700px;
+        }
+        
+        .umc-download .wechat_tip,
+        .umc-download .wechat_tip>i {
+            position: absolute;
+            right: 10px;
+        }
+        
+        .umc-download .actions p {
+            line-height: 1.5;
+            padding: 12px;
+            color: #3ab2a7;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .umc-download.wechat #wechat_tip,
+        .umc-download.wechat .wechat_tip_content {
+            display: block;
+        }
+        
+        .umc-download.wechat .pattern,
+        .umc-download.wechat #actions.type-android {
+            display: none;
+        }
+        
+        .umc-download .main>header .actions p {
+            line-height: 1.5;
+            padding: 12px;
+            color: #3ab2a7;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .umc-download .main .icon-container .qrcode img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .umc-download .main .icon-container:hover .qrcode {
+            transform: scale(1.6);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+        }
+        
+        .umc-download .pattern {
+            top: 0px;
+        }
+        
+        .umc-download {
+            background-color: #fff;
+        }
+        
+        .umc-download .navbar,
+        .umc-download #app .sidebar-container {
+            display: none;
+        }
+        
+        @media screen and (max-width: 560px) {
+            .umc-download .main .icon-container .icon {
+                position: static;
+                display: inline-block;
+            }
+            .umc-download .main .app-brief .bg-path,
+            .umc-download .main .scan-tips,
+            .umc-download .main .app-brief .qrcode {
+                display: none;
+            }
+            .umc-download .main {
+                width: auto;
+            }
+            .umc-download .pattern {
+                top: 0px;
+            }
+            .umc-download .main .name {
+                text-align: center;
+            }
+            .umc-download .main .icon-container {
+                height: auto;
+            }
+            .login-container {
+                display: none;
+            }
+        }
+    </style>
+
+    <script>
+        WDK(function($) {
+            $('.login-container').find('form').off('submit').submit(function() {
+                var v = $(this).val();
+                WDK.UI.Command('Settings', "Login", v);
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active" style="z-index: 2100;"><i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content">Switch Size Success</p>
+    </div>
+    <div id="app">
+        <div class="sidebar-container">
+            <div class="sidebar-logo-container">
+
+                <a model="Account" cmd="Self" send="Cashier" class="box-card-component" data-name="">
+                    <img alt="" class="pan-thumb" />
+                </a>
+                <div class="umc-logo-name"></div>
+            </div>
+            <div class="el-scrollbar">
+                <div class="scrollbar-wrapper el-scrollbar__wrap">
+                    <div class="el-scrollbar__view">
+                        <ul id="menubar" class="el-menu" style="background-color: rgb(48, 65, 86);"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-container">
+            <div class="navbar">
+                <div id="hamburger-container" class="hamburger-container" style="padding: 0px 15px;"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="64" height="64" class="hamburger is-active"><path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM142.4 642.1L298.7 519a8.84 8.84 0 0 0 0-13.9L142.4 381.9c-5.8-4.6-14.4-.5-14.4 6.9v246.3a8.9 8.9 0 0 0 14.4 7z"></path></svg></div>
+                <div class="el-breadcrumb app-breadcrumb breadcrumb-container" id="breadcrumb-container">
+                    <span class="no-redirect"><a href="/ddTest.html">首页 / 文档</a></span>
+                </div>
+                <div class="right-menu" id="menu">
+
+                </div>
+                <div class="right-menu el-link-menu">
+                    <!-- <a class="el-button best el-button--small">点赞</a> -->
+                    <a ui-spa class="el-button help el-button--small">帮助文档</a>
+                </div>
+                <div class="right-menu">
+                    <div class="header-search right-menu-item show el-dropdown" id="header-search">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="icon-search" class="svg-icon search-icon"><path d="M124.884 109.812L94.256 79.166c-.357-.357-.757-.629-1.129-.914a50.366 50.366 0 0 0 8.186-27.59C101.327 22.689 78.656 0 50.67 0 22.685 0 0 22.688 0 50.663c0 27.989 22.685 50.663 50.656 50.663 10.186 0 19.643-3.03 27.6-8.201.286.385.557.771.9 1.114l30.628 30.632a10.633 10.633 0 0 0 7.543 3.129c2.728 0 5.457-1.043 7.543-3.115 4.171-4.157 4.171-10.915.014-15.073M50.671 85.338C31.557 85.338 16 69.78 16 50.663c0-19.102 15.557-34.661 34.67-34.661 19.115 0 34.657 15.559 34.657 34.675 0 19.102-15.557 34.661-34.656 34.661"></path></svg>
+                        <form class="el-select header-search-select el-select--small">
+                            <!---->
+                            <div class="el-input el-input--small el-input--suffix">
+                                <input type="search" autocomplete="off" placeholder="Search" class="el-input__inner">
+                            </div>
+
+                        </form>
+                    </div>
+                    <ul role="menu" class="umc-search-menu">
+
+                    </ul>
+                </div>
+            </div>
+            <section class="app-main">
+
+            </section>
+
+        </div>
+    </div>
+    <div class="login-container">
+        <form class="el-form login-form el-form--label-left" autocomplete="on">
+            <div class="title-container">
+
+                <span>欢迎使用 顾家数据平台！</span><img src="https://cdn.yufuid.com/images/appearance/tn-demo-1578467276481.png" alt="">
+            </div>
+            <div class="qrcode_view">
+                <div style="width: 200px; height: 200px; margin: auto; position: relative;">
+                    <div class="context"></div>
+                    <div id="qrcode"></div>
+                    <!--[if IE]> 不支持IE内核的浏览器，推荐使用chrome .如果使用360请切换极速模式<![endif]-->
+                </div>
+            </div>
+            <div class="login_qrcode_text">
+                请使用钉钉或移动端扫描二维码登录
+
+            </div>
+
+
+        </form>
+        <div class="download" onclick="WDK(window).on('page','download','')">
+            <a class="android" href="javascript:void(0)">下载安卓版</a> <a class="ios" href="javascript:void(0)">下载苹果版</a>
+        </div>
+    </div>
+</body>
+
+</html>

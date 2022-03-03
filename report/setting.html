@@ -1,0 +1,100 @@
+<div class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" sort="Times">
+                使用次数
+                <i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="Times">
+                出错次数
+                <i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="Code">
+                默认排序
+            <i></i>
+            </a>
+
+        </div>
+
+        <div class="filter-container-button">
+            <a model="Report" cmd="Setting" send="News" class="el-button filter-item el-button--primary el-button--small">
+                新建报表
+            </a>
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <!-- <col width="110"> -->
+                    <col width="110">
+                    <col width="110">
+                    <col width="110">
+                    <col width="100">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            报表编码
+                        </th>
+                        <th>
+                            报表名称
+                        </th>
+                        <th>
+                            业务组
+                        </th>
+                        <th>
+                            使用次数
+                        </th>
+                        <th>
+                            异常次数
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+                                <a ui-spa href="report/view/{Code}" class="link-type"> {Code}</a>
+                            </td>
+                            <td>
+                                {Caption}
+                            </td>
+                            <!-- <td>
+                                {OutputStoreName}
+                            </td> -->
+                            <td class="is-center">
+                                {GroupName}
+                            </td>
+                            <td>
+                                {Times}
+                            </td>
+                            <td>
+                                {Errors}
+                            </td>
+                            <td class="is-center">
+
+
+                                <a model="Report" cmd="Setting" send="{Id}" class="el-tag el-tag--small "> 编辑</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

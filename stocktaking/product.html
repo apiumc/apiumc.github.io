@@ -1,0 +1,97 @@
+<div class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" sort="0">
+                盘点中
+            
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="8">
+                待确认
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="16">
+                已完成
+            </a>
+        </div>
+        <div class="filter-container-button">
+            <a model="Stocktaking" cmd="Product" send="News" class="el-button filter-item el-button--primary el-button--small">
+                新建商品盘点单
+            </a>
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="110">
+                    <col width="110">
+                    <col width="110">
+                    <col width="110">
+                    <col width="110">
+                    <col width="110">
+                    <col width="80">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            出库单号
+                        </th>
+                        <th>
+                            盘点前总数
+                        </th>
+                        <th>
+                            盘点确认数
+                        </th>
+                        <th>
+                            差异数
+                        </th>
+                        <th>
+                            创建时间
+                        </th>
+                        <th>
+                            提交时间
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+                                {Code}
+                            </td>
+                            <td class="is-center">
+                                {StockQty}
+                            </td>
+                            <td class="is-center">
+                                {ConfrimQty}
+                            </td>
+                            <td class="is-center">
+                                {DiffQty}
+                            </td>
+                            <td>
+                                {CreationTime}
+                            </td>
+                            <td>
+                                {SubmitTime}
+                            </td>
+                            <td class="is-center">
+                                <a ui-spa href="stocktaking/product/{Id}" class="el-tag el-tag--small "> {Status}</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

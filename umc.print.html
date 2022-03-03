@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>云打印</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+
+    <script>
+        function addEvent(element, event, handleFun) {
+            element.addEventListener ? element.addEventListener(event, handleFun, false) :
+                element.attachEvent ? element.attachEvent("on" + event, handleFun) :
+                element["on" + event] = handleFun;
+        }
+
+
+        addEvent(document, 'DOMContentLoaded', function() {
+            addEvent(document.querySelector('form'), 'submit', function(e) {
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                var files = document.querySelector('#file').files;
+                if (files.length == 0) {
+                    alert("请选择打印的文件")
+                    return;
+                }
+                var device = document.querySelector('#key').value;
+                if (!device) {
+                    alert("请输入云打印设置标识");
+                    return
+                }
+                
+                fetch(['https://wdk.oss-cn-hangzhou.aliyuncs.com/Print/', device, device.indexOf('/') > -1 ? '/' : '.', new Date().getTime(), '.pdf'].join(''), {
+                    method: 'PUT',
+                    body: files[0]
+                }).then(res => {
+                    alert("打印文件发送成功")
+                });
+
+            });
+        })
+    </script>
+    <style>
+        form div {
+            padding: 0.4em;
+            text-align: center;
+            ;
+        }
+        
+        form div input {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <div>
+
+            <input id="key" required placeholder="云打印设备标识" />
+        </div>
+        <div>
+            <input id="file" type="file" required accept="application/pdf" /></div>
+        <div>
+            <input type="submit" value="确认打印" /></div>
+    </form>
+
+</body>
+
+</html>

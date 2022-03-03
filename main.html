@@ -1,0 +1,95 @@
+<div data-link-id="main" class="app-container">
+    <script type="text/html" id="menu">
+        <a model="Store" cmd="DesignPage" class="el-button el-button--small"><b class="wdk_cell_icon"  data-icon="&#xf0d0;"></b>商城设计</a>
+        <!-- <a model="Store" cmd="EditUI" class="el-button el-button--small"><b class="wdk_cell_icon"  data-icon="&#xf015;"></b>门店信息</a> -->
+    </script>
+    <div class="el-panel-group el-row">
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xF1c0;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    总收入(今日)
+                </div> <span data-field="TotalAmount" class="card-panel-num">
+
+</span> </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xF0c2;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    线上收入(今日)
+                </div> <span data-field="NetworkAmount" class="card-panel-num">
+
+</span> </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xe936;"></div>
+            <div class="el-card-panel-description">
+
+                <div data-v-6723c96e="" class="card-panel-text">
+                    储值总金额
+                </div> <span data-field="CardAmount" class="card-panel-num">
+
+</span> </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xe925;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    货到收款
+                </div> <span data-field="Receivables" class="card-panel-num">
+
+</span> </div>
+        </div>
+    </div>
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" search-name="type" search-value="day">
+                当日 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="type" search-value="week">
+                当周 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="type" search-value="month">
+                当月 
+            </a>
+
+        </div>
+        <div class="filter-container-button">
+            <div class="el-date-value">
+                <b>2019</b>年<b>11</b>月<b>16</b>日</div>
+
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-card">
+            <div id="charts" class="el-chart"></div>
+        </div>
+    </div>
+
+    <div class="item-container ">
+        <div class="el-table el-report hide">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                </colgroup>
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="pagination-container hide">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+
+</div>

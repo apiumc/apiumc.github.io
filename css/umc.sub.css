@@ -1,0 +1,2177 @@
+                        @charset "utf-8";
+                        #app .main-container {
+                            margin-left: calc(20vw + 1px);
+                            transition: none;
+                        }
+                        
+                        #app .sidebar-container {
+                            background-color: #fafafa;
+                            width: 20vw;
+                            border-right: 1px solid #e8e8e8;
+                            top: 50px;
+                            height: calc(100vh - 50px);
+                        }
+                        
+                        #app .sidebar-container .el-menu-item:hover,
+                        #app .sidebar-container .el-submenu__title:hover,
+                        #app .sidebar-container .el-submenu .el-menu-item:hover,
+                        #app .sidebar-container .nest-menu .el-submenu>.el-submenu__title:hover,
+                        #app .sidebar-container .el-submenu__title:hover,
+                        #app .sidebar-container .submenu-title-noDropdown:hover {
+                            background-color: #fafafa;
+                        }
+                        
+                        .el-submenu__title,
+                        #app .sidebar-container .el-submenu .el-menu-item,
+                        #app .sidebar-container .nest-menu .el-submenu>.el-submenu__title,
+                        .el-menu,
+                        .el-submenu .el-menu {
+                            background-color: #fafafa;
+                        }
+                        
+                        .el-menu-item,
+                        .el-submenu__title,
+                        .el-menu-item a {
+                            color: #595959;
+                        }
+                        
+                        .is-active.el-submenu__title,
+                        .el-menu-item.is-active a,
+                        .el-menu-item.is-active {
+                            color: #1890ff;
+                            background-color: #fafafa;
+                        }
+                        
+                        .el-menu-item.is-active a {
+                            background-color: #e6f7ff;
+                        }
+                        
+                        .el-link-menu .el-button {
+                            background-color: transparent;
+                        }
+                        
+                        .el-link-menu .wdk_cell_icon::before {
+                            padding: 0 0.2em;
+                        }
+                        
+                        .el-submenu__title input {
+                            color: #1890ff;
+                            position: absolute;
+                            line-height: 30px;
+                            height: 30px;
+                            background-color: #fafafa;
+                            background-color: rgb(232, 240, 254);
+                            border: none;
+                            font-size: 14px;
+                            width: calc(100% - 60px);
+                            padding-left: 6px;
+                            left: 30px;
+                            border-radius: 4px;
+                            top: 5px;
+                        }
+                        /* .el-scrollbar__view {
+            padding-top: 32px;
+        } */
+                        
+                        .el-menu-item a {
+                            display: block;
+                            padding-left: 46px;
+                            /* margin-right: 10px; */
+                            text-indent: 0px;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            padding-right: 5px;
+                            position: relative;
+                            height: 40px;
+                            line-height: 40px;
+                        }
+                        
+                        .el-menu-item a::after {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            bottom: 0;
+                            border-right: 3px solid #1890ff;
+                            -webkit-transform: scaleY(.0001);
+                            -ms-transform: scaleY(.0001);
+                            transform: scaleY(.0001);
+                            opacity: 0;
+                            -webkit-transition: opacity .15s cubic-bezier(.215, .61, .355, 1), -webkit-transform .15s cubic-bezier(.215, .61, .355, 1);
+                            transition: opacity .15s cubic-bezier(.215, .61, .355, 1), -webkit-transform .15s cubic-bezier(.215, .61, .355, 1);
+                            transition: transform .15s cubic-bezier(.215, .61, .355, 1), opacity .15s cubic-bezier(.215, .61, .355, 1);
+                            transition: transform .15s cubic-bezier(.215, .61, .355, 1), opacity .15s cubic-bezier(.215, .61, .355, 1), -webkit-transform .15s cubic-bezier(.215, .61, .355, 1);
+                            content: '';
+                        }
+                        
+                        .el-menu-item.is-active a::after {
+                            -webkit-transform: scaleY(1);
+                            -ms-transform: scaleY(1);
+                            transform: scaleY(1);
+                            opacity: 1;
+                            -webkit-transition: opacity .15s cubic-bezier(.645, .045, .355, 1), -webkit-transform .15s cubic-bezier(.645, .045, .355, 1);
+                            transition: opacity .15s cubic-bezier(.645, .045, .355, 1), -webkit-transform .15s cubic-bezier(.645, .045, .355, 1);
+                            transition: transform .15s cubic-bezier(.645, .045, .355, 1), opacity .15s cubic-bezier(.645, .045, .355, 1);
+                            transition: transform .15s cubic-bezier(.645, .045, .355, 1), opacity .15s cubic-bezier(.645, .045, .355, 1), -webkit-transform .15s cubic-bezier(.645, .045, .355, 1);
+                        }
+                        
+                        .el-menu-item a[sub-id]:empty::before {
+                            content: '\7A7A\6587\6863\FF0C\70B9\51FB\65B0\5EFA';
+                            color: #bfbfbf;
+                        }
+                        
+                        .el-submenu__icon-arrow {
+                            right: auto;
+                            left: 15px;
+                            top: 40%;
+                            transform: rotate(45deg);
+                        }
+                        
+                        #menubar>.menu-wrapper>li>.el-submenu__title::before {
+                            /* left: 38px; */
+                            left: auto;
+                            right: 5px;
+                            /* top:2px; */
+                            font-size: 16px;
+                        }
+                        
+                        .el-menu-item,
+                        .el-submenu .el-menu-item {
+                            line-height: 40px;
+                            height: 40px;
+                        }
+                        
+                        .el-submenu__title {
+                            line-height: 40px;
+                            height: 40px;
+                            padding-left: 36px;
+                        }
+                        
+                        .el-submenu__title em {
+                            display: none;
+                        }
+                        
+                        .EditerDoc .el-submenu__title em,
+                        .EditerItem .el-submenu__title em,
+                        .EditerAll .el-submenu__title em {
+                            display: inline;
+                        }
+                        
+                        .el-submenu__title:hover em::before,
+                        .el-submenu__title.editer em::before {
+                            content: '\f014';
+                            font-family: wdk;
+                            left: auto;
+                            right: 0px;
+                            font-size: 16px;
+                            position: absolute;
+                            font-style: normal;
+                            padding: 0 0.5em;
+                            vertical-align: middle;
+                        }
+                        
+                        .el-submenu__title:hover em::before {
+                            content: '\f044';
+                        }
+                        
+                        .el-submenu__title.editer:hover em::before {
+                            content: '\f014';
+                        }
+                        
+                        .sidebar-container .el-link-menu {
+                            box-shadow: 1px 0px 8px rgba(0, 21, 41, .08);
+                            position: relative;
+                            z-index: 1;
+                        }
+                        
+                        .sidebar-container .el-link-menu a {
+                            flex: 1;
+                        }
+                        
+                        .umc-markdown-editer .el-editer-html>textarea,
+                        .umc-markdown-editer .el-editer-html>div[contenteditable] {
+                            height: calc(100vh - 190px);
+                        }
+                        
+                        .wdk-subject-nav {
+                            margin-top: 50px;
+                            max-height: calc(100% - 60px);
+                            overflow: auto;
+                            width: 19vw;
+                            position: absolute;
+                            left: calc(100% - 19vw);
+                        }
+                        
+                        .wdk-subject-nav::-webkit-scrollbar {
+                            width: 0;
+                            height: 0;
+                        }
+                        
+                        .wdk-subject-nav a {
+                            width: 100%;
+                            display: block;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            color: #595959;
+                            transition: color .4s linear;
+                        }
+                        
+                        .el-submenu.is-opened>.el-submenu__title .el-submenu__icon-arrow {
+                            transform: rotate(135deg);
+                        }
+                        
+                        .wdk-subject-nav-item {
+                            box-sizing: border-box;
+                            padding: 3px 10px 3px 16px;
+                            line-height: 25px;
+                            border-left: 2px solid #e8e8e8;
+                            transition: border-color .4s linear;
+                            color: #595959;
+                        }
+                        
+                        .wdk-subject-nav-item.is-active {
+                            border-left: 2px solid #1890ff;
+                            color: #1890ff;
+                        }
+                        
+                        .wdk-subject-nav-item.is-active a {
+                            color: #1890ff;
+                        }
+                        
+                        .box-card-user {
+                            margin: 0;
+                            width: 40px;
+                            height: 40px;
+                            float: left;
+                        }
+                        
+                        .sidebar-logo-container .login-box {
+                            line-height: 40px;
+                            overflow: hidden;
+                            position: relative;
+                            float: left;
+                        }
+                        
+                        .sidebar-logo-container .login-box a {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            left: 0px;
+                            top: 0px;
+                            display: none;
+                            z-index: 1;
+                        }
+                        
+                        .weui_navbar {
+                            z-index: 0;
+                        }
+                        
+                        .sidebar-logo-container .login-box a[ui-spa]:nth-child(3) {
+                            display: block;
+                            width: 50%;
+                        }
+                        
+                        .sidebar-logo-container .login-box a[ui-spa]:nth-child(4) {
+                            display: block;
+                            left: 50%;
+                            width: 50%;
+                        }
+                        /* .sidebar-logo-container .login-box a[ui-spa=dashboard] {
+                            display: block;
+                            margin-left: 45px;
+                        }
+                        
+                        .umc-sub-index .sidebar-logo-container .login-box a[ui-spa=dashboard] {
+                            margin-left: 65px;
+                        }
+                        
+                        .sidebar-logo-container .login-box a[ui-spa=explore] {
+                            display: none;
+                            width: 100%;
+                        } */
+                        
+                        .sidebar-logo-container .login-box::before {
+                            margin: 5px;
+                            content: '';
+                            width: 40px;
+                            background-image: url(../css/zhishi-icon.png);
+                            height: 40px;
+                            /* background-image: url(../css/icon200.jpg); */
+                            background-size: cover;
+                            border-color: #fff;
+                            transition: all .38s ease-out;
+                            /* background-image: none; */
+                            background-color: #36a3f7;
+                            color: #fff;
+                            float: left;
+                            background-size: cover;
+                            border-radius: 50%;
+                            box-sizing: border-box;
+                            border: 2px solid #e8e8e8;
+                        }
+                        
+                        .login-box::after {
+                            content: '\5929\5929\5F55';
+                            border: 1px solid #36a3f7;
+                            padding: 0 6px;
+                            box-shadow: none;
+                            text-shadow: none;
+                            line-height: 20px;
+                            font-size: 12px;
+                            border-radius: 4px;
+                            color: #36a3f7;
+                            font-weight: 400;
+                            float: left;
+                            margin-top: 14px;
+                            margin-left: -10px;
+                            transform: scale(.8);
+                        }
+                        
+                        .sidebar-logo-container #team {
+                            font-weight: 500;
+                            color: #262626;
+                            line-height: 50px;
+                            font-size: 18px;
+                            margin-left: 0.5em;
+                            margin-right: 0.5em;
+                        }
+                        
+                        .sidebar-logo-container {
+                            background-color: transparent;
+                            float: left;
+                            min-width: 20vw;
+                            width: auto;
+                            height: auto;
+                            -webkit-transition: margin-left .38s ease-out;
+                            transition: margin-left .38s ease-out;
+                        }
+                        
+                        .sidebar-logo-container .pan-thumb {
+                            box-sizing: border-box;
+                            border: 2px solid #e8e8e8;
+                        }
+                        
+                        .box-card-user {
+                            margin-top: 7px;
+                            margin-right: 5px;
+                            width: 36px;
+                            height: 36px;
+                        }
+                        
+                        .box-card-user img,
+                        .box-card-user img.pan-thumb {
+                            box-sizing: border-box;
+                            border: 2px solid #e8e8e8;
+                            background-image: url(../css/member.png);
+                        }
+                        
+                        .ui-markdown-editer {
+                            padding-left: 8px;
+                            float: right;
+                            color: #1890ff;
+                            text-shadow: 5px 5px 5px #7d7171;
+                            border-bottom: 1px #1890ff solid;
+                        }
+                        
+                        .wdk-desc:hover .ui-markdown-editer {
+                            color: #1890ff;
+                            display: block;
+                            animation: leftshow .3s infinite ease;
+                            animation-iteration-count: 1;
+                        }
+                        
+                        .ui-markdown-editer::before {
+                            font-family: wdk;
+                            content: '\f040';
+                        }
+                        
+                        .menu-wrapper>li[data-icon].el-menu-item::before,
+                        .menu-wrapper>li>div[data-icon].el-submenu__title::before {
+                            z-index: 1;
+                            left: 10px;
+                            font-size: 14px;
+                            width: 20px;
+                            text-align: center;
+                        }
+                        
+                        .menu-wrapper>li>a {
+                            padding-left: 36px;
+                        }
+                        
+                        .menu-site {
+                            list-style: none;
+                        }
+                        
+                        .menu-site li {
+                            min-width: 72px;
+                            /* border-top: 2px solid transparent; */
+                            float: left;
+                            padding: 0 20px;
+                            white-space: nowrap;
+                            cursor: pointer;
+                            /* box-sizing: border-box; */
+                            position: relative;
+                            text-align: center;
+                        }
+                        
+                        .menu-site li::before {
+                            border-top: 2px solid transparent;
+                            width: 100%;
+                            top: 0px;
+                            left: 0px;
+                            content: '';
+                            position: absolute;
+                            -webkit-transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+                            transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+                        }
+                        
+                        .menu-site li a {
+                            color: #314659;
+                            display: block;
+                            -webkit-transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+                            transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), padding 0.15s cubic-bezier(0.645, 0.045, 0.355, 1);
+                        }
+                        
+                        .menu-site li.is-active a,
+                        .menu-site li:hover a {
+                            color: #1890ff;
+                        }
+                        
+                        .menu-site li.is-active::before {
+                            border-top: 2px solid #1890ff;
+                        }
+                        
+                        .app-breadcrumb.el-breadcrumb {
+                            padding-left: 36px;
+                            border-bottom: 0.5px solid #e8e8e8;
+                            display: block;
+                            /* -webkit-box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+            box-shadow: 0 1px 4px rgba(0, 21, 41, .08); */
+                            /* margin-bottom: 4px; */
+                            margin-left: 0px;
+                        }
+                        
+                        .el-row .el-card-panel+.el-card-panel {
+                            margin-left: 12px;
+                        }
+                        /* .sidebar-logo-container .el-dropdown::after {
+                        position: absolute;
+                        top: 40%;
+                        right: 20px;
+                        -webkit-transition: -webkit-transform .3s;
+                        transition: -webkit-transform .3s;
+                        transition: transform .3s;
+                        transition: transform .3s, -webkit-transform .3s;
+                        font-size: 12px;
+                        content: " ";
+                        display: inline-block;
+                        -webkit-transform: rotate(135deg);
+                        transform: rotate(135deg);
+                        height: 6px;
+                        width: 6px;
+                        border-width: 2px 2px 0 0;
+                        border-color: #c8c8cd;
+                        border-style: solid;
+                    } */
+                        
+                        .umc-project-item::before {
+                            font-family: wdk;
+                            content: '\f040';
+                            padding-right: 0.5em;
+                        }
+                        
+                        .umc-project-item {
+                            float: right;
+                            position: relative;
+                            border: 1px solid #d9d9d9;
+                            color: #314659;
+                            border-top-width: 1.02px;
+                            border-radius: 4px;
+                            padding: 0 0.5em;
+                            line-height: 20px;
+                            margin-top: 14px;
+                        }
+                        
+                        .umc-project-item.is-active,
+                        .umc-project-item:focus,
+                        .umc-project-item:active {
+                            border-color: #40a9ff;
+                            color: #1890ff;
+                            border-right-width: 1px !important;
+                            outline: 0;
+                            -webkit-box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+                            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+                        }
+                        
+                        .umc-project-item::after {
+                            position: relative;
+                            top: -1px;
+                            -webkit-transition: -webkit-transform .3s;
+                            transition: -webkit-transform .3s;
+                            transition: transform .3s;
+                            transition: transform .3s, -webkit-transform .3s;
+                            font-size: 12px;
+                            content: " ";
+                            display: inline-block;
+                            -webkit-transform: rotate(135deg);
+                            transform: rotate(135deg);
+                            height: 6px;
+                            width: 6px;
+                            border-width: 2px 2px 0 0;
+                            border-color: #c8c8cd;
+                            border-style: solid;
+                        }
+                        
+                        .el-dropdown.is-active::after {
+                            transform: rotate(315deg);
+                        }
+                        
+                        .umc-project-item.el-dropdown.is-active::after {
+                            top: 1px;
+                        }
+                        
+                        .umc-project-menu li,
+                        .umc-project-item-menu li {
+                            position: relative;
+                            display: block;
+                            padding: 5px 12px 5px 5px;
+                            overflow: hidden;
+                            color: rgba(0, 0, 0, 0.65);
+                            font-weight: normal;
+                            font-size: 14px;
+                            line-height: 22px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            cursor: pointer;
+                            -webkit-transition: background-color 0.3s ease;
+                            transition: background-color 0.3s ease;
+                        }
+                        
+                        .umc-project-menu img {
+                            width: 20px;
+                            height: 20px;
+                            vertical-align: top;
+                            background-position: 50%;
+                            background-size: cover;
+                            border-radius: 50%;
+                            background-image: url(../css/login.gif);
+                            display: inline-block;
+                        }
+                        
+                        .umc-project-item-menu li a {
+                            display: block;
+                        }
+                        
+                        .umc-project-menu li:hover,
+                        .umc-project-item-menu li:hover {
+                            background-color: #e6f7ff;
+                        }
+                        
+                        .sidebar-container .el-link-menu {
+                            display: none;
+                        }
+                        
+                        .umc-project-menu,
+                        .umc-project-item {
+                            display: none;
+                        }
+                        
+                        .EditerDoc .sidebar-container .el-link-menu,
+                        .EditerItem .sidebar-container .el-link-menu,
+                        .EditerAll .sidebar-container .el-link-menu {
+                            display: flex;
+                        }
+                        
+                        .EditerAll .umc-project-menu {
+                            display: block;
+                        }
+                        
+                        .EditerAll .umc-project-item,
+                        .EditerItem .umc-project-item {
+                            display: inline;
+                        }
+                        
+                        .umc-project-menu li a,
+                        .umc-project-item-menu li a {
+                            display: block;
+                        }
+                        
+                        .umc-toc-caption {
+                            text-align: center;
+                            color: #262626;
+                            font-size: 24px;
+                            margin: 10px 0;
+                        }
+                        
+                        .umc-toc-users img {
+                            width: 32px;
+                            min-width: 32px;
+                            height: 32px;
+                            border-radius: 16px;
+                        }
+                        
+                        .umc-toc-users li {
+                            margin: 8px 8px 0;
+                            display: inline-block;
+                        }
+                        
+                        .umc-toc ul {
+                            list-style: none;
+                        }
+                        
+                        .umc-toc {
+                            position: relative;
+                            border-radius: 5px;
+                            border: 1px solid #e8e8e8;
+                            padding: 88px 0 64px;
+                            background: #fff;
+                            margin: 10px;
+                            min-height: calc(100vh - 230px);
+                        }
+                        
+                        .umc-dynamic {
+                            /* max-width: 1056px; */
+                            margin: 10px;
+                            margin-left: auto;
+                            margin-right: auto;
+                            padding: 0 10px;
+                        }
+                        
+                        .umc-toc-users {
+                            justify-content: center;
+                            align-items: center;
+                            flex-wrap: wrap;
+                            list-style: none;
+                            overflow: hidden;
+                            margin: auto;
+                            text-align: center;
+                            min-height: 46px;
+                            padding: 0 12px;
+                        }
+                        
+                        .umc-toc-nav-items {
+                            margin-left: 20px;
+                            transition: max-height .3s ease-out;
+                            max-height: 1000px;
+                        }
+                        
+                        .umc-toc .is-closed .umc-toc-nav-items {
+                            max-height: 0;
+                            overflow: hidden;
+                        }
+                        
+                        .umc-toc-nav-item {
+                            position: relative;
+                            line-height: 42px;
+                            font-size: 15px;
+                            display: flex;
+                        }
+                        
+                        .umc-toc-nav-item::before {
+                            content: " ";
+                            width: 100%;
+                            border-bottom: 1px dashed #e8e8e8;
+                            position: absolute;
+                            top: 50%;
+                            right: 0;
+                        }
+                        
+                        .umc-toc-nav-left {
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            background: #fff;
+                            color: #595959;
+                            padding-right: 32px;
+                            display: inline-block;
+                            position: relative;
+                        }
+                        
+                        .umc-toc-nav-right a {
+                            color: #bfbfbf;
+                        }
+                        
+                        .umc-toc-nav-left small:empty {
+                            display: none;
+                        }
+                        
+                        .umc-toc-nav-left small {
+                            padding: 1px 2px;
+                            background-color: #e8e8e8;
+                            margin-left: 1em;
+                            border-radius: 5px;
+                            font-size: 12px;
+                        }
+                        
+                        .umc-toc-nav-left a {
+                            color: #595959;
+                        }
+                        
+                        .umc-toc-nav-right {
+                            overflow: hidden;
+                            display: inline-block;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            background: #fff;
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            text-align: right;
+                            padding-left: 32px;
+                        }
+                        
+                        .umc-toc-users-sum {
+                            margin-top: 16px;
+                            font-size: 12px;
+                            text-align: center;
+                            color: #8c8c8c;
+                        }
+                        
+                        .umc-toc-users-sum span {
+                            margin: 0 5px;
+                        }
+                        
+                        .umc-toc-nav-title {
+                            font-weight: 700;
+                            position: relative;
+                            line-height: 32px;
+                            cursor: pointer;
+                        }
+                        
+                        .umc-toc-nav-arrow {
+                            position: absolute;
+                            top: 38%;
+                            left: -20px;
+                            -webkit-transition: -webkit-transform .3s;
+                            transition: -webkit-transform .3s;
+                            transition: transform .3s;
+                            transition: transform .3s, -webkit-transform .3s;
+                            font-size: 12px;
+                            content: " ";
+                            display: inline-block;
+                            -webkit-transform: rotate(135deg);
+                            transform: rotate(135deg);
+                            height: 4px;
+                            width: 4px;
+                            border-width: 2px 2px 0 0;
+                            border-color: #c8c8cd;
+                            border-style: solid;
+                        }
+                        
+                        .umc-toc-nav-right em {
+                            position: absolute;
+                            left: -100px;
+                            /* padding-right: 16px; */
+                            width: 32px;
+                            text-align: center;
+                            color: #bfbfbf;
+                            transition: color .3s;
+                            display: none;
+                        }
+                        
+                        .EditerDoc .umc-toc-nav-right em,
+                        .EditerItem .umc-toc-nav-right em,
+                        .EditerAll .umc-toc-nav-right em {
+                            display: inline;
+                        }
+                        
+                        .umc-toc-nav-item:hover .umc-toc-nav-right em {
+                            left: 0px;
+                        }
+                        
+                        .umc-toc-nav-right em:hover {
+                            color: #8c8c8c;
+                            cursor: pointer;
+                        }
+                        
+                        .umc-toc-nav-right em::before {
+                            font-family: wdk;
+                            content: '\f044';
+                            /* border-bottom: 1px #1890ff solid; */
+                            display: inline-block;
+                            font-style: normal;
+                            vertical-align: middle;
+                            text-align: center;
+                            text-transform: none;
+                            line-height: 1;
+                            font-size: 16px;
+                            text-rendering: auto;
+                            /* color: #8c8c8c; */
+                        }
+                        
+                        .umc-toc .is-closed .umc-toc-nav-arrow {
+                            /* top: 40%; */
+                            transform: rotate(45deg);
+                        }
+                        
+                        .umc-toc-nav-right input {
+                            color: #1890ff;
+                            position: absolute;
+                            line-height: 30px;
+                            height: 30px;
+                            background-color: #fafafa;
+                            background-color: rgb(232, 240, 254);
+                            border: none;
+                            font-size: 14px;
+                            width: 100%;
+                            /* padding-left: 6px; */
+                            left: 0px;
+                            text-indent: 6px;
+                            border-radius: 4px;
+                            top: 5px;
+                        }
+                        
+                        .umc-sub-dynamic-item {
+                            display: flex;
+                            position: relative;
+                            background: #fff;
+                            padding: 14px;
+                            border-radius: 2px;
+                        }
+                        
+                        .umc-sub-dynamic-item,
+                        .umc-dynamic .wdk-cms-three,
+                        .umc-dynamic .wdk-cms-max,
+                        .umc-dynamic .wdk-cms-one {
+                            -webkit-transition: background-color 0.35s ease;
+                            transition: background-color 0.35s ease;
+                            margin: 0px;
+                            padding: 0.5em;
+                        }
+                        
+                        .umc-dynamic .wdk-cms-max:hover,
+                        .umc-dynamic .wdk-cms-three:hover,
+                        .umc-dynamic .wdk-cms-one:hover,
+                        .umc-sub-dynamic-item:hover {
+                            background-color: #f5f7fa;
+                        }
+                        /* .umc-dynamic .wdk-cms-three-image {
+            margin: 0 -0.6em;
+        } */
+                        
+                        .umc-sub-dynamic-item::before {
+                            content: " ";
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            width: 100%;
+                            height: 1px;
+                            border-bottom: 1px solid #d9d9d9;
+                            color: #d9d9d9;
+                            -webkit-transform-origin: 0 100%;
+                            transform-origin: 0 100%;
+                            -webkit-transform: scaleY(.5);
+                            transform: scaleY(.5);
+                        }
+                        
+                        .umc-sub-dynamic-img img {
+                            width: 40px;
+                            height: 40px;
+                            background-position: 50%;
+                            background-size: cover;
+                            border-radius: 50%;
+                            overflow: hidden;
+                            -webkit-transform-origin: 95% 40%;
+                            transform-origin: 95% 40%;
+                            -webkit-transition: all .3s ease-in-out;
+                            transition: all .3s ease-in-out;
+                            position: relative;
+                            display: block;
+                            background-image: url(../css/login.gif);
+                        }
+                        
+                        .umc-sub-dynamic-desc {
+                            color: #8c8c8c;
+                            font-size: 12px;
+                        }
+                        
+                        .umc-sub-dynamic-type {
+                            justify-content: center;
+                            align-items: center;
+                            display: flex;
+                        }
+                        
+                        .umc-subject-footer {
+                            display: flex;
+                            line-height: 2em;
+                            margin-top: 1em;
+                        }
+                        
+                        .umc-subject-footer a {
+                            flex: 1;
+                            padding: 10 10px 10px 10px;
+                            font-size: 16px;
+                            font-weight: 500;
+                            color: #262626;
+                            -webkit-transition: color .35s ease;
+                            transition: color .35s ease;
+                            overflow: hidden;
+                            text-overflow: clip;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 1;
+                            -webkit-box-orient: vertical;
+                        }
+                        
+                        .umc-subject-footer a:hover {
+                            color: #595959;
+                        }
+                        
+                        .umc-subject-right {
+                            text-align: right;
+                        }
+                        
+                        .umc-subject-right::after {
+                            content: '\f061';
+                            /* display: block; */
+                            font-size: 16px;
+                            color: #bfbfbf;
+                            text-align: center;
+                            padding: 0 0.5em;
+                            font-family: wdk;
+                        }
+                        
+                        .umc-subject-left::before {
+                            content: '\f060';
+                            /* display: block; */
+                            text-align: center;
+                            padding: 0 0.5em;
+                            font-size: 16px;
+                            font-family: wdk;
+                            color: #bfbfbf;
+                        }
+                        
+                        .login-box em,
+                        .login-box sub {
+                            display: none;
+                        }
+                        
+                        .box-card-user.reg {
+                            margin: 0;
+                            line-height: 50px;
+                            height: auto;
+                            width: auto;
+                            padding-right: 1em;
+                        }
+                        
+                        #app.hideSidebar .sidebar-container {
+                            display: none;
+                        }
+                        
+                        #app.hideSidebar .main-container {
+                            margin-left: 0px;
+                        }
+                        
+                        .weui_tab_bd_item .wdk-cms-max-title,
+                        .weui_tab_bd_item .wdk-cms-one-title,
+                        .weui_tab_bd_item .wdk-cms-three-title {
+                            color: #262626;
+                            font-weight: 600;
+                            font-size: 16px;
+                        }
+                        
+                        .umc-project-head {
+                            padding: 32px 0 0;
+                            color: #8c8c8c;
+                            text-align: center;
+                        }
+                        
+                        .umc-project-name {
+                            display: block;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            margin-bottom: 4px;
+                            font-size: 20px;
+                            color: #262626;
+                        }
+                        
+                        .umc-project-head img {
+                            width: 76px;
+                            height: 76px;
+                            margin: 10px;
+                            border-radius: 50%;
+                        }
+                        
+                        .umc-project-code,
+                        .umc-project-desc {
+                            margin: 0 auto;
+                            padding: 0 16px;
+                            max-width: 256px;
+                            word-wrap: break-word;
+                        }
+                        
+                        .umc-project-code {
+                            margin-bottom: 4px;
+                            font-size: 12px;
+                        }
+                        
+                        .umc-project-code b {
+                            font-size: 16px;
+                            padding-left: 0.5em;
+                        }
+                        
+                        .umc-search-menu li {
+                            width: 250px;
+                        }
+                        
+                        .umc-search-empty::before {
+                            content: "\672A\641C\7D22\5230\6570\636E";
+                        }
+                        
+                        .umc-search-menu a {
+                            padding: 12px;
+                            color: #337ab7;
+                            display: block;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                        
+                        .umc-search-menu li {
+                            position: relative;
+                            display: block;
+                            overflow: hidden;
+                            color: rgba(0, 0, 0, 0.65);
+                            font-weight: normal;
+                            font-size: 14px;
+                            line-height: 22px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            cursor: pointer;
+                            -webkit-transition: background 0.3s ease;
+                            transition: background 0.3s ease;
+                        }
+                        
+                        .umc-search-menu li:hover {
+                            background-color: #e6f7ff;
+                        }
+                        
+                        .umc-search-menu li.umc-search-empty {
+                            text-align: center;
+                            padding: 12px 0;
+                            color: #aaa;
+                        }
+                        
+                        ul.umc-search-menu[role=menu] {
+                            position: fixed;
+                            transform: translateY(-1000px);
+                            top: 0;
+                            z-index: 2;
+                            left: 0px;
+                            list-style: none;
+                            background-color: #fff;
+                            border-radius: 4px;
+                            outline: none;
+                            -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+                        }
+                        
+                        .umc-subject-view .wdk-top-icon {
+                            right: 1em;
+                        }
+                        
+                        .umc-subject-view {
+                            padding: 0 10px 10px 10px;
+                            flex: 1;
+                            height: calc(100vh - 60px);
+                            overflow: auto;
+                            padding-right: 20vw;
+                        }
+                        
+                        .hideScrollbar .app-main {
+                            overflow: hidden;
+                        }
+                        
+                        .hideSidebar div.ui {
+                            max-width: 1056px;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+                        
+                        .umc-markdown-view {
+                            position: absolute;
+                            /* z-index: 1; */
+                            background-color: #fff;
+                            height: calc(100vh - 186px);
+                            top: 35px;
+                            overflow: auto;
+                            display: none;
+                            width: 100%;
+                        }
+                        
+                        .umc-markdown-view.show {
+                            display: block;
+                        }
+                        
+                        .umc-markdown-view.show~.el-editer-html .el-editer-html-view::after {
+                            content: '\5173\95ED';
+                        }
+                        
+                        .weui_tab_bd_item .weui_cells::before {
+                            display: none;
+                        }
+                        
+                        .weui_tab_bd_item .weui_cells:last-of-type::after {
+                            display: none;
+                        }
+                        
+                        .weui_tab_bd_item .weui_cells *:first-of-type::before {
+                            display: none;
+                        }
+                        
+                        .weui_tab_bd_item .el-table.msg::before {
+                            font-size: 90px;
+                        }
+                        
+                        .weui_tab_bd_item .el-table.msg~.pagination-container {
+                            display: none;
+                        }
+                        
+                        .el-card-panel-description a::before {
+                            content: '\f055';
+                            font-family: wdk;
+                            font-size: 20px;
+                        }
+                        
+                        .el-card-panel-description a {
+                            color: #40c9c6;
+                            border-radius: 10px;
+                            position: absolute;
+                            right: 5px;
+                            top: 6px;
+                            height: 40px;
+                            width: 40px;
+                            line-height: 40px;
+                            text-align: center;
+                            -webkit-transition: all .38s ease-out;
+                            transition: all .38s ease-out;
+                        }
+                        
+                        .el-card-panel-description a:hover {
+                            color: #fff;
+                            background-color: #40c9c6;
+                        }
+                        
+                        .el-row .el-card-panel:nth-child(2) .el-card-panel-description a {
+                            color: #36a3f7;
+                        }
+                        
+                        .el-row .el-card-panel:nth-child(2) .el-card-panel-description a:hover {
+                            color: #fff;
+                            background-color: #36a3f7;
+                        }
+                        
+                        .weui_tab_bd_item .weui_cells:nth-child(1) .wdk-desc:nth-child(1) span {
+                            margin-top: 50px;
+                            display: block;
+                        }
+                        
+                        .header-sub-nav {
+                            display: none;
+                        }
+                        
+                        .umc-sub-app .header-sub-nav {
+                            display: block;
+                            ;
+                        }
+                        
+                        .umc-sub-app #nav {
+                            display: none;
+                        }
+                        
+                        .umc-sub-app .navbar .el-dropdown {
+                            display: none;
+                        }
+                        
+                        .umc-sub-app #header-search {
+                            display: none;
+                        }
+                        
+                        .umc-sub-app .sidebar-logo-container {
+                            margin-left: calc((100vw - 1056px)/2);
+                            min-width: 100px;
+                        }
+                        
+                        .navbar #menu.right-menu a {
+                            color: #fff;
+                            background-color: #1890ff;
+                            border-color: #1890ff;
+                            padding: 9px 15px;
+                            font-size: 12px;
+                            border-radius: 3px;
+                        }
+                        
+                        .umc-sub-app .sidebar-logo-container #team {
+                            display: none;
+                        }
+                        
+                        .umc-sub-app {
+                            background-color: #fff;
+                        }
+                        
+                        .umc-subject-view .weui_cell::before {
+                            display: none;
+                        }
+                        
+                        .umc-project-head.editer div {
+                            position: relative;
+                            cursor: pointer;
+                        }
+                        
+                        .umc-project-head.editer div[data-key]:hover::before {
+                            font-family: wdk;
+                            content: '\f040';
+                            position: absolute;
+                            color: #1890ff;
+                            font-size: 14px;
+                            right: 1em;
+                        }
+                        
+                        .umc-project-code {
+                            display: none;
+                        }
+                        
+                        .umc-project-head.editer .umc-project-code {
+                            display: block;
+                        }
+                        
+                        .umc-dynamic .wdk-cms-max-desc,
+                        .umc-dynamic .wdk-cms-one-desc {
+                            display: -webkit-box;
+                            margin-top: 12px;
+                            /* margin-top: 12px; */
+                            margin-bottom: 5px;
+                        }
+                        
+                        .umc-dynamic .wdk-cms-max-desc:empty,
+                        .umc-dynamic .wdk-cms-one-desc:empty {
+                            display: none;
+                        }
+                        
+                        .umc-dynamic .wdk-cms-one-desc {
+                            -webkit-line-clamp: 4;
+                            max-height: 84px;
+                        }
+                        
+                        .umc-dynamic .wdk-cms-one-title {
+                            -webkit-line-clamp: 1;
+                        }
+                        
+                        .umc-dynamic .wdk-cms-max-image em,
+                        .umc-dynamic .wdk-cms-one-image em,
+                        .umc-dynamic .wdk-cms-three-image em {
+                            border-radius: 5px;
+                            top: 5%;
+                            left: 5%;
+                            width: 90%;
+                            height: 90%;
+                        }
+                        
+                        .umc-sub-logn .login-container {
+                            background-color: transparent;
+                            position: relative;
+                        }
+                        
+                        .umc-sub-logn .login-container .title-container .title {
+                            color: #262626;
+                        }
+                        
+                        .umc-sub-logn .login-container .login-form {
+                            margin-top: 40vh;
+                            padding: 35px;
+                        }
+                        
+                        .login-container .login-footer a {
+                            color: #096dd9;
+                            padding: 0.5em;
+                        }
+                        
+                        .login-container .login-footer {
+                            text-align: center;
+                            ;
+                        }
+                        
+                        .weui_tab_bd_item table th {
+                            color: #8c8c8c;
+                            background: #fafafa;
+                            border-right: 0px solid #dfe6ec;
+                        }
+                        
+                        .weui_tab_bd_item table td {
+                            border-right: 0px solid #dfe6ec;
+                        }
+                        
+                        .weui_tab_bd_item .el-table table {
+                            border-left: 0px solid #dfe6ec;
+                        }
+                        
+                        .weui_tab_bd_item .el-sort,
+                        .weui_tab_bd_item .el-input__inner {
+                            height: 30px;
+                            line-height: 30px;
+                        }
+                        
+                        .weui_tab_bd_item .el-sort {
+                            padding: 0 5px;
+                            min-width: 86px;
+                            text-align: left;
+                            font-size: 13px;
+                            padding-left: 8px;
+                        }
+                        
+                        .weui_tab_bd_item input:focus {
+                            border-color: #40a9ff;
+                            /* color: #1890ff; */
+                            border-right-width: 1px !important;
+                            outline: 0;
+                            -webkit-box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+                            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+                        }
+                        
+                        .weui_tab_bd_item .filter-container-item {
+                            margin-top: 5px;
+                        }
+                        /* .weui_tab_bd_item .el-table.msg {
+                        border-top: 1px solid #dfe6ec;
+                    } */
+                        
+                        .weui_tab_bd_item .el-sort i {
+                            top: 40%;
+                            right: 12px;
+                        }
+                        
+                        .weui_tab_bd_item .el-tag:empty {
+                            display: none;
+                        }
+                        
+                        .umc-sub-logn .el-form .mobile-code {
+                            display: none;
+                        }
+                        
+                        .umc-sub-logn .el-form.mobile-code .mobile-code {
+                            display: block;
+                        }
+                        
+                        .umc-sub-logn .el-form.mobile-code .password {
+                            display: none;
+                        }
+                        
+                        .umc-sub-logn .link-type {
+                            margin-top: -8px;
+                            margin-bottom: 6px;
+                            display: block;
+                        }
+                        
+                        .navbar {
+                            position: relative;
+                            z-index: 1;
+                            box-shadow: 0 0px 4px rgba(0, 21, 41, .4);
+                            transition: all .38s ease-out;
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a {
+                            height: 400px;
+                            background-size: cover;
+                            background-position: center;
+                            position: relative;
+                        }
+                        
+                        #menubar.el-menu:empty::before {
+                            content: "\672A\6709\6587\96C6\5206\7C7B";
+                            font-size: 14px;
+                            color: #bfbfbf;
+                        }
+                        
+                        #menubar.el-menu:empty {
+                            height: 44px;
+                            border-bottom: 0.5px solid #e8e8e8;
+                            line-height: 44px;
+                            text-align: center;
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a:after {
+                            content: " ";
+                            display: block;
+                            width: 100%;
+                            height: 40%;
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            z-index: 0;
+                            pointer-events: none;
+                            background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #666);
+                            background: linear-gradient(rgba(0, 0, 0, 0), #666);
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a.bg1:after {
+                            background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #fb2b2e);
+                            background: linear-gradient(rgba(0, 0, 0, 0), #fb2b2e);
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a.bg2:after {
+                            background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #ffbe00);
+                            background: linear-gradient(rgba(0, 0, 0, 0), #ffbe00);
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a.bg3:after {
+                            background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #46cc47);
+                            background: linear-gradient(rgba(0, 0, 0, 0), #46cc47);
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a.bg4:after {
+                            background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #00aaef);
+                            background: linear-gradient(rgba(0, 0, 0, 0), #00aaef);
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>a.bg5:after {
+                            background: -webkit-linear-gradient(rgba(0, 0, 0, 0), #3e56ea);
+                            background: linear-gradient(rgba(0, 0, 0, 0), #3e56ea);
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article {
+                            position: relative;
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>div.sub {
+                            display: block;
+                            width: 90%;
+                            position: absolute;
+                            left: 5%;
+                            bottom: 20px;
+                            /* z-index: 0; */
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>div.sub .title {
+                            font-size: 24px;
+                            font-weight: 700;
+                            color: #fff;
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>div.sub .desc {
+                            color: #bbb;
+                            font-size: 14px;
+                            margin-top: 8px;
+                        }
+                        
+                        .umc-dynamic #sliders .sliders article>div.sub .desc a {
+                            color: hsla(0, 0%, 100%, .85);
+                        }
+                        
+                        .umc-dynamic #sliders .active {
+                            left: auto;
+                            width: auto;
+                            right: 20px;
+                        }
+                        
+                        .login-container .el-input input {
+                            color: #262626;
+                        }
+                        
+                        .el-link-menu.dragenter * {
+                            pointer-events: none;
+                            display: none;
+                        }
+                        
+                        .el-link-menu.dragenter {
+                            box-shadow: 1px 0px 8px rgba(64, 169, 255, 0.7);
+                            background-color: #e6f7ff;
+                        }
+                        
+                        .el-link-menu.dragenter::before {
+                            content: "\653E\5F00\4E0A\4F20";
+                            font-size: 16px;
+                            text-align: center;
+                            width: 100%;
+                            line-height: 50px;
+                            color: #40a9ff;
+                        }
+                        
+                        .umc-sub-content {
+                            width: calc(75% - 4px);
+                            margin-right: 10px;
+                        }
+                        
+                        .umc-sub-content-right {
+                            flex: 1;
+                        }
+                        
+                        .umc-sub-content-header {
+                            margin: 20px 0;
+                        }
+                        
+                        .header-search-select>div {
+                            position: relative;
+                        }
+                        
+                        .header-search-select>div::after {
+                            content: '\ea0e';
+                            font-family: wdk;
+                            position: absolute;
+                            left: 0em;
+                            top: -4px;
+                        }
+                        
+                        .umc-sidebar-back::after,
+                        .umc-sidebar-menu::after {
+                            content: '\f0c9';
+                            font-family: wdk;
+                            font-size: 20px;
+                        }
+                        
+                        .umc-sidebar-back::after {
+                            content: '\f053';
+                        }
+                        
+                        .show-menu .umc-sidebar-menu::after {
+                            content: '\ea0d';
+                        }
+                        
+                        .header-search .header-search-select input {
+                            text-indent: 2em;
+                        }
+                        
+                        .umc-sub-nav {
+                            float: left;
+                            line-height: 50px;
+                        }
+                        
+                        .umc-sidebar-back,
+                        .umc-sidebar-menu {
+                            display: none;
+                            width: 50px;
+                        }
+                        
+                        .show-menu~#app::after {
+                            content: '';
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, .4);
+                            /* z-index: 1; */
+                            top: 0;
+                            left: 0px
+                        }
+                        
+                        .umc-sub-app .navbar {
+                            padding-right: calc((100vw - 1056px)/2);
+                        }
+                        
+                        .umc-sub-header-bg {
+                            text-align: center;
+                            height: 520px;
+                            background-repeat: no-repeat;
+                            background-position: bottom;
+                            background-size: contain;
+                            background-image: url(images/header_bg.png);
+                        }
+                        
+                        .umc-sub-header-desc {
+                            text-align: center;
+                            font-size: 18px;
+                            padding: 0 3em;
+                        }
+                        
+                        .umc-sub-header-title {
+                            margin-top: 40px;
+                            font-size: 44px;
+                            text-align: center;
+                            font-weight: 700;
+                            color: #262626;
+                            line-height: 1.35;
+                            margin-bottom: 16px;
+                            padding: 0 20px;
+                            text-align: center;
+                        }
+                        
+                        .umc-sub-middle h2 {
+                            font-weight: 700;
+                            font-size: 36px;
+                            line-height: 1.35;
+                            color: #262626;
+                        }
+                        
+                        .umc-sub-middle li {
+                            margin: 32px 0;
+                            padding: 18px 18px 18px 16px;
+                            max-width: 220px;
+                            border-left: 4px solid rgba(0, 0, 0, 0);
+                            cursor: pointer;
+                            border-radius: 0 4px 4px 0;
+                            display: flex;
+                            align-items: center;
+                            font-size: 18px;
+                            font-weight: 700;
+                            color: #8c8c8c;
+                        }
+                        
+                        .umc-sub-middle li.active {
+                            background-color: #f7f7f7;
+                            border-left: 4px solid #1890ff;
+                            color: #262626;
+                        }
+                        
+                        .umc-sub-middle img {
+                            max-width: 100%;
+                        }
+                        
+                        .umc-sub-middle h1,
+                        .umc-sub-middle h2,
+                        .umc-sub-middle h3,
+                        .umc-sub-middle h4,
+                        .umc-sub-middle h5,
+                        .umc-sub-middle h6 {
+                            color: #262626;
+                            line-height: 1.35;
+                        }
+                        
+                        .umc-sub-middle-wrapper h3 {
+                            font-weight: 700;
+                            font-size: 24px;
+                        }
+                        
+                        .umc-sub-middle-wrapper {
+                            padding: 30px 50px;
+                        }
+                        
+                        .umc-sub-middle-wrapper p {
+                            margin-top: 10px;
+                        }
+                        
+                        .umc-sub-index.index #app .main-container {
+                            background-color: #FFF;
+                        }
+                        
+                        .umc-sub-middle-container {
+                            background-repeat: no-repeat;
+                            background-position: 40% 30px;
+                            background-size: 1390px;
+                            padding: 126px 0 26px 0;
+                            background-image: url(images/center_bg.svg);
+                        }
+                        
+                        .umc-sub-middle-tabs>div {
+                            flex-shrink: 0;
+                            width: 100%;
+                            opacity: 1;
+                            -webkit-transition: opacity .45s;
+                            transition: opacity .45s;
+                            display: none;
+                        }
+                        
+                        .umc-sub-middle-tabs>div.active {
+                            display: block;
+                        }
+                        
+                        .umc-sub-index #header-search,
+                        .umc-sub-app #header-search {
+                            display: none;
+                        }
+                        
+                        .umc-sub-index .navbar {
+                            height: 75px;
+                            line-height: 75px;
+                            font-size: 16px;
+                        }
+                        
+                        .navbar::after,
+                        .navbar::before {
+                            display: none;
+                        }
+                        
+                        .umc-sub-index .sidebar-logo-container .login-box,
+                        .umc-sub-index .navbar .right-menu,
+                        .umc-sub-index .umc-sub-nav {
+                            line-height: 75px;
+                            font-size: 16px;
+                        }
+                        
+                        .umc-sub-index .app-main {
+                            height: calc(100vh - 75px);
+                        }
+                        
+                        .umc-sub-index .sidebar-logo-container .login-box::before {
+                            height: 60px;
+                            width: 60px;
+                            margin-top: 8px;
+                        }
+                        
+                        .umc-sub-index .login-box em,
+                        .umc-sub-index .login-box sub {
+                            display: inline;
+                            line-height: 75px;
+                        }
+                        
+                        .login-box em {
+                            font-family: sans-serif;
+                            font-weight: 800;
+                            font-size: 30px;
+                        }
+                        
+                        .login-box sub {
+                            font-size: 30px;
+                            position: inherit;
+                            font-weight: 100;
+                            vertical-align: top;
+                            padding-left: 5px;
+                        }
+                        
+                        .umc-sub-index .login-box::after {
+                            display: none;
+                        }
+                        
+                        .umc-sub-index .right-menu .el-button--small {
+                            padding: 12px 20px;
+                            font-size: 14px;
+                            border-radius: 4px;
+                        }
+                        
+                        .umc-sub-index .box-card-user {
+                            margin-top: 20px;
+                        }
+                        
+                        .navbar .umc-sub-nav,
+                        .navbar .right-menu {
+                            transition: line-height .38s ease-out;
+                            padding-right: 10px;
+                        }
+                        
+                        .umc-subject-view #Subject::after,
+                        .umc-subject-view #Subject::before {
+                            display: none;
+                        }
+                        
+                        .AppDown::after {
+                            display: inline-block;
+                            content: " ";
+                            width: 6px;
+                            height: 6px;
+                            border-radius: 6px;
+                            background-color: #ee3131;
+                            position: relative;
+                            top: -0.5em;
+                            right: -0.3em;
+                            z-index: 10;
+                        }
+                        
+                        .el-link-menu #Import {
+                            position: relative;
+                        }
+                        
+                        .el-link-menu #Markdown {
+                            display: none;
+                        }
+                        
+                        .el-link-menu #Import input {
+                            position: absolute;
+                            width: 100%;
+                            height: 100px;
+                            top: 0px;
+                            left: 0px;
+                            opacity: 0;
+                        }
+                        
+                        .el-link-menu:hover #Import {
+                            transition: max-width .5s ease 1s;
+                            max-width: 100%;
+                        }
+                        
+                        .umc-download .pattern {
+                            position: fixed;
+                            top: 75px;
+                            z-index: 1;
+                            max-width: 312px;
+                            width: 21.66%;
+                            transition: all .5s;
+                        }
+                        
+                        .umc-download .pattern {
+                            width: 18%;
+                        }
+                        
+                        .umc-download .pattern.left {
+                            left: 0;
+                        }
+                        
+                        .umc-download .pattern.right {
+                            right: 0;
+                        }
+                        
+                        .umc-download #wechat_tip,
+                        .umc-download .wechat_tip_content {
+                            display: none;
+                        }
+                        
+                        .umc-download .wechat_tip {
+                            display: -ms-flexbox;
+                            display: flex;
+                            -ms-flex-align: center;
+                            align-items: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            background: #3ab2a7;
+                            color: #fff;
+                            font-size: 14px;
+                            font-weight: 500;
+                            width: 135px;
+                            height: 60px;
+                            border-radius: 10px;
+                            top: 15px;
+                        }
+                        
+                        .umc-download .wechat_tip>i {
+                            top: -10px;
+                            width: 0;
+                            height: 0;
+                            border-left: 6px solid transparent;
+                            border-right: 6px solid transparent;
+                            border-bottom: 12px solid #3ab2a7;
+                        }
+                        
+                        .umc-download .main .icon-container .icon img {
+                            max-width: 100%;
+                            width: 120px;
+                            height: 120px;
+                            border-radius: 17.54%;
+                        }
+                        
+                        .umc-download .main .icon-container {
+                            margin-right: auto;
+                            margin-left: auto;
+                            width: 290px;
+                            position: relative;
+                            height: 290px;
+                        }
+                        
+                        .umc-download .pattern img {
+                            width: 100%;
+                            transition: all 1s;
+                            pointer-events: none;
+                        }
+                        
+                        .umc-download {
+                            height: 100%;
+                        }
+                        
+                        .umc-download .main .icon-container .icon {
+                            top: 0;
+                            left: 0;
+                            padding: 10px;
+                            width: 140px;
+                            height: 140px;
+                        }
+                        
+                        .umc-download section.app-main {
+                            background-color: #Fff;
+                        }
+                        
+                        .umc-download .main .icon-container span {
+                            position: absolute;
+                            z-index: 2;
+                            display: block;
+                            box-sizing: border-box;
+                        }
+                        
+                        .umc-download .main .app-brief .icon-container .qrcode {
+                            background-color: #eff2f2;
+                            transition: all .25s;
+                        }
+                        
+                        .umc-download .main .icon-container .qrcode {
+                            right: 0;
+                            bottom: 0;
+                            width: 140px;
+                            height: 140px;
+                            border: 20px solid transparent;
+                            border-radius: 26px;
+                        }
+                        
+                        .umc-download .main .name {
+                            position: relative;
+                            margin: 20px auto;
+                            width: 290px;
+                            color: #505556;
+                            text-align: left;
+                            font-weight: 400;
+                            font-size: 28px;
+                        }
+                        
+                        .umc-download .main .scan-tips {
+                            margin: 0 auto;
+                            width: 290px;
+                            color: #a9b1b3;
+                            font-size: 14px;
+                            text-align: left;
+                            white-space: nowrap;
+                            line-height: 22px;
+                        }
+                        
+                        .umc-download #actions button {
+                            transition: all .25s;
+                        }
+                        
+                        .umc-download .main .actions button {
+                            display: inline-block;
+                            padding: 12px 46px;
+                            min-width: 200px;
+                            border: 1px solid #32b2a7;
+                            border-radius: 40px;
+                            font-size: 14px;
+                            background: #32b2a7;
+                            color: #fff;
+                        }
+                        
+                        .umc-download .main .actions {
+                            margin: 30px auto 0;
+                            max-width: 290px;
+                        }
+                        
+                        .umc-download .main {
+                            margin: 0 auto;
+                            max-width: 94%;
+                            height: 95%;
+                            display: table;
+                            width: 700px;
+                        }
+                        
+                        .umc-download .wechat_tip,
+                        .umc-download .wechat_tip>i {
+                            position: absolute;
+                            right: 10px;
+                        }
+                        
+                        .umc-download .actions p {
+                            line-height: 1.5;
+                            padding: 12px;
+                            color: #3ab2a7;
+                            font-weight: 500;
+                            font-size: 16px;
+                        }
+                        
+                        .umc-download.wechat #wechat_tip,
+                        .umc-download.wechat .wechat_tip_content {
+                            display: block;
+                        }
+                        
+                        .umc-download.wechat .pattern,
+                        .umc-download.wechat #actions.type-android {
+                            display: none;
+                        }
+                        
+                        .umc-download .main>header .actions p {
+                            line-height: 1.5;
+                            padding: 12px;
+                            color: #3ab2a7;
+                            font-weight: 500;
+                            font-size: 16px;
+                        }
+                        
+                        .umc-download .main .icon-container .qrcode img {
+                            width: 100%;
+                            height: 100%;
+                        }
+                        
+                        .umc-download .main .icon-container:hover .qrcode {
+                            transform: scale(1.6);
+                            box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+                        }
+                        
+                        @media screen and (max-width: 1024px) {
+                            .umc-sub-app .sidebar-logo-container {
+                                margin-left: 0px;
+                            }
+                            .umc-sub-app .navbar {
+                                margin-right: 0px
+                            }
+                        }
+                        
+                        @media screen and (max-width: 560px) {
+                            .umc-download .main .icon-container .icon {
+                                position: static;
+                                display: inline-block;
+                            }
+                            .umc-download .main .app-brief .bg-path,
+                            .umc-download .main .scan-tips,
+                            .umc-download .main .app-brief .qrcode {
+                                display: none;
+                            }
+                            .umc-download .main {
+                                width: auto;
+                            }
+                            .umc-download .pattern {
+                                top: 0px;
+                            }
+                            .umc-download .main .name {
+                                text-align: center;
+                            }
+                            .umc-download .main .icon-container {
+                                height: auto;
+                            }
+                            .navbar .umc-project-item {
+                                display: none;
+                            }
+                            .umc-sub-app .navbar {
+                                margin-right: 0px
+                            }
+                            #app {
+                                position: fixed;
+                                top: 50px;
+                                width: 100%;
+                            }
+                            .umc-download #app {
+                                position: fixed;
+                                top: 0px;
+                                z-index: 1;
+                            }
+                            #app .sidebar-container {
+                                display: none;
+                            }
+                            .umc-sub-content {
+                                width: 100%;
+                                margin-right: 0px;
+                            }
+                            #app .main-container {
+                                margin: 0px;
+                            }
+                            .navbar .right-menu,
+                            .card-panel-text a,
+                            .ui-markdown-editer,
+                            .wdk-subject-nav,
+                            .umc-dynamic .wdk-cms-max-desc,
+                            .umc-dynamic .wdk-cms-one-desc,
+                            .umc-sub-content-right {
+                                display: none;
+                            }
+                            .umc-sub-content-header.el-row {
+                                display: block;
+                                overflow: hidden;
+                            }
+                            .umc-sub-content-header .el-card-panel {
+                                width: 50%;
+                                float: left;
+                            }
+                            .el-row .el-card-panel+.el-card-panel {
+                                margin: 0px;
+                            }
+                            .umc-subject-view {
+                                padding: 0px;
+                                height: calc(100vh - 50px);
+                            }
+                            .umc-subject-view .wdk-top-icon {
+                                right: 10px;
+                            }
+                            .el-card-panel-icon {
+                                margin: 14px 0;
+                            }
+                            .umc-toc {
+                                margin: 0;
+                                padding: 10px;
+                                min-height: calc(100vh - 72px);
+                            }
+                            .umc-dynamic {
+                                padding: 0px;
+                                margin: 0px;
+                            }
+                            .wdk-dialog {
+                                position: fixed;
+                                width: 100% !important;
+                            }
+                            .umc-sub-content-header {
+                                margin: 0px;
+                                margin-bottom: 10px;
+                            }
+                            .umc-sub-logn .login-container .login-form {
+                                width: auto;
+                                margin-top: 10vh;
+                                padding: 20px;
+                            }
+                            .navbar,
+                            .umc-sub-app .sidebar-logo-container {
+                                margin: 0px;
+                                padding: 0px;
+                            }
+                            .navbar {
+                                height: auto;
+                                max-height: 50px;
+                                transition: max-height .28s;
+                            }
+                            .umc-sub-index .navbar {
+                                max-height: 65px;
+                            }
+                            .umc-sub-nav {
+                                float: none;
+                            }
+                            .show-menu .umc-sub-nav {
+                                display: block;
+                            }
+                            .show-menu.navbar {
+                                max-height: 100vh;
+                            }
+                            .header-search.show .header-search-select {
+                                margin: auto;
+                                display: block;
+                                background-color: #f5f5f5;
+                            }
+                            .umc-sub-nav .menu-site li {
+                                float: none;
+                                text-align: left;
+                                border-left: 2px solid transparent;
+                            }
+                            .menu-site li.is-active::before {
+                                border-top: 2px solid transparent;
+                                border-left: 2px solid #1890ff;
+                            }
+                            .menu-site li::before {
+                                height: 60%;
+                                width: auto;
+                                top: 20%;
+                            }
+                            .umc-search-menu li {
+                                width: 300px;
+                            }
+                            ul.umc-search-menu[role=menu] {
+                                left: calc(50vw - 150px);
+                            }
+                            .header-search.show .header-search-select {
+                                width: 300px;
+                            }
+                            .sidebar-logo-container #team {
+                                margin: 0px;
+                            }
+                            .sidebar-logo-container .login-box {
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-top: -5px;
+                            }
+                            .sidebar-logo-container {
+                                text-align: center;
+                                float: none;
+                                position: relative;
+                            }
+                            .umc-sidebar-back,
+                            .umc-sidebar-menu {
+                                position: absolute;
+                                display: block;
+                            }
+                            .umc-sidebar-menu {
+                                right: 0;
+                            }
+                            .umc-sub-app .umc-sidebar-back,
+                            .umc-sub-app .umc-sidebar-menu {
+                                display: none;
+                            }
+                            .sidebar-logo-container .login-box a:first-child {
+                                display: none;
+                            }
+                            .sidebar-logo-container .login-box a:last-child {
+                                display: block;
+                            }
+                            .umc-dynamic #sliders .sliders article>a {
+                                height: 230px;
+                            }
+                            .sidebar-logo-container .login-box {
+                                display: none;
+                            }
+                            .umc-sub-app .sidebar-logo-container .login-box {
+                                display: inline-block;
+                                float: none;
+                            }
+                        }

@@ -1,0 +1,328 @@
+.umc-builder-app #nav-items:before {
+    top: 1.17647059em;
+}
+
+.umc-builder-app #nav-items:before,
+.umc-builder-app #nav-items ul:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    border-left: 1px solid #d9d9d9;
+    color: #d9d9d9;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleX(0.5);
+    transform: scaleX(0.5);
+    z-index: 1;
+}
+
+.umc-builder-app #nav-items ul:before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    border-top: 1px solid #d9d9d9;
+    color: #d9d9d9;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+}
+
+.umc-builder-app #nav-items li {
+    position: relative;
+    float: left;
+    padding: 10px;
+    width: 33.33333333%;
+    box-sizing: border-box;
+    list-style-type: none;
+}
+
+.umc-builder-app #nav-items li .img a {
+    position: absolute;
+    width: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 100%;
+    z-index: 1;
+}
+
+.umc-builder-app #nav-items .weui_cell_bd,
+.umc-builder-app #nav .weui_cell_bd {
+    font-size: 12px;
+}
+
+.umc-builder-app #nav-items li img {
+    display: block;
+    width: 100%;
+}
+
+.umc-builder-app #nav-items:before {
+    top: 1.17647059em;
+}
+
+.umc-builder-app #nav-items,
+.umc-builder-app #nav-items li .img {
+    position: relative;
+}
+
+.umc-builder-app #nav-items ul {
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.umc-builder-app #nav-items li .name {
+    text-align: center;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 1.2em;
+    height: 2.4em;
+}
+
+.umc-builder-app #nav-items li .name {
+    overflow: hidden;
+}
+
+.wdk-tab-body-item {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.umc-builder-app #nav .active .weui_cell_bd p,
+.weui_tabbar_item.weui_bar_item_on .weui_tabbar_label,
+.umc-builder-app .weui_tabbar_item.weui_bar_item_on .weui_tabbar_icon::before {
+    color: #9E9673;
+}
+
+.umc-builder-app .weui_bar_item_on:before {
+    border-bottom-color: #9E9673;
+}
+
+.umc-builder-app {
+    height: calc(100vh - 66px);
+    padding-top: 8px;
+}
+
+.umc-builder-app footer .weui_tabbar_icon::before {
+    content: attr(data-icon);
+    display: block;
+    font-family: wdk;
+    font-size: 20px;
+    color: #888;
+    text-align: center;
+}
+
+.umc-builder-app .wdk-header {
+    height: 44px;
+    /* background-color: #fff !important; */
+    line-height: 44px;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+}
+
+.umc-builder-app .wdk-header h1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 65px;
+    right: 65px;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+.umc-builder-app .weui_tab {
+    width: 360px;
+    margin: auto;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .4);
+}
+
+.umc-builder-app .wdk-cms-max.wdk-itdb {
+    border-bottom: 0px;
+}
+
+
+/* .umc-builder-app .wdk-cms-max:before {
+    display: none;
+} */
+
+.umc-builder-app .wdk-itdb .wdk-cms-max-image {
+    margin: 0;
+}
+
+.umc-builder-app .weui_tabbar_icon::before {
+    content: attr(data-icon);
+    display: block;
+    font-family: wdk;
+    font-size: 20px;
+    color: #888;
+    text-align: center;
+}
+
+.umc-builder-app .weui_navbar {
+    background-color: #fff;
+    z-index: 0;
+}
+
+.umc-builder-app .weui_navbar .weui_bar_item_on:before {
+    right: 20%;
+    width: 60%;
+    border-bottom-width: 4px;
+}
+
+.umc-builder-app .weui_tab_bd>div {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.umc-builder-app .weui_tab_bd>div .header {
+    position: relative;
+    z-index: 1;
+    height: 44px;
+    background: #fff;
+    color: #1a1a1a;
+    line-height: 44px;
+    box-shadow: 0 0 1px #999;
+}
+
+.umc-builder-app .weui_navbar_item:after {
+    display: none;
+}
+
+.umc-builder-app .weui_tab_bd>div .header h1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 65px;
+    right: 65px;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    font-size: 1.05rem;
+    color: #1a1a1a;
+}
+
+.umc-builder-app .weui_tab_bd>div .wdk-header+section {
+    padding: 0px;
+    flex: 1;
+    overflow: auto;
+}
+
+.umc-builder-app .weui_tab_bd>div .header .left,
+.umc-builder-app .weui_tab_bd>div .header .right {
+    padding: 0 10px 0 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    text-align: right;
+    width: 100px;
+    color: #888;
+}
+
+.umc-builder-app .weui_tab_bd>div .header .left {
+    left: 10px;
+    text-align: left;
+}
+
+.umc-builder-app .weui_tab_bd>div .header .left [class*=" icon-"]:before,
+[class^=icon-]:before {
+    font-size: 20px;
+}
+
+.umc-builder-app .weui_tab_bd>div .header .back {
+    display: none;
+}
+
+.umc-builder-app footer.weui_tabbar {
+    z-index: 1;
+}
+
+.umc-builder-app .weui_tab_bd section .wdk_cell_value {
+    display: none;
+}
+
+.umc-builder-app footer .weui_bar_item_on:before,
+body>.umc-builder-app :after {
+    display: none;
+}
+
+.umc-builder-app footer .wdk-max-bar .weui_tabbar_icon::before {
+    font-size: 30px;
+    position: relative;
+    background-color: #f7f7fa;
+    top: -20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border-left: 1px;
+    border-top: 1px solid #979797;
+}
+
+.umc-builder-app footer .wdk-max-bar .weui_tabbar_icon {
+    width: 44px;
+}
+
+.umc-builder-app .uploadifile li {
+    width: 130px;
+    height: 130px;
+    margin-bottom: 25px;
+    position: relative;
+    border: 1px solid #ccc;
+    margin-right: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.umc-builder-app .uploadifile li input {
+    display: block;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.umc-builder-app .uploadifile li::before {
+    width: 6px;
+    height: 50px;
+    top: 40px;
+    left: 62px;
+    background-color: #eaeaf1;
+    content: '';
+    position: absolute;
+}
+
+.umc-builder-app .uploadifile li::after {
+    width: 50px;
+    height: 6px;
+    top: 62px;
+    left: 40px;
+    background-color: #eaeaf1;
+    content: '';
+    position: absolute;
+}
+
+.umc-builder-app #AppName {
+    font-size: 1.05rem;
+    color: #1a1a1a;
+    line-height: 40px;
+    margin-right: 2em;
+}
+
+.umc-builder-app .weui_tab_bd>div .header h1 img {
+    vertical-align: middle;
+    max-height: 90%;
+}

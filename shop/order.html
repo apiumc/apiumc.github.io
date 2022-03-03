@@ -1,0 +1,179 @@
+<div class="lk_content lk_order_cart" style="margin-top: 20px;">
+
+    <script id="address" type="text/html">
+        <li data-id="{Id}">
+            <div class="title">{Province} {Name}</div>
+            <div class="address">{Province}{City}{Region}{Address} {Phone}<a model="Account" cmd="Address" send="type=Edit&Id={Id}">编辑</a><a model="Account" cmd="Address" send="type=Confirm&Id={Id}">删除</a></div>
+        </li>
+    </script>
+    <script id="Point" type="text/html">
+        <label for="{id}">
+                <input type="radio" name="PointId" value="{id}" id="{id}">
+                <div class="wdk-image-pro active">
+                    <div class="wdk-image-pro-image">
+                        <img src="{src}!200?{ts}" alt="">
+                    </div>
+                    <div class="wdk-image-pro-area">
+                        <div class="wdk-image-pro-title"> {city} {region} {name}
+                           <div class="addr">{address}</div> </div>
+                        <div class="wdk-image-pro-bottom">
+                            <!-- <div class="wdk-image-pro-desc">
+                              <span style="font-size:90%">电话</span>:{tel}
+                            </div> -->
+                            <div class="wdk-image-pro-desc"><span style="font-size:90%">服务时间</span>:{hours}</div>
+                        </div>
+                    </div>
+                </div>
+            </label>
+    </script>
+    <script id="order" type="text/html">
+        <div class="lk_order_pro">
+            <div class="lk_order_pro_image">
+
+                <img style="width:80px;margin-right: 5px;" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';" src="{Src}"> </div>
+            <div class="lk_order_pro_context">
+                <div class="lk_order_pro_name">{Name} </div>
+                <div class="lk_order_pro_sku">规格:{Size}</div>
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{Price}
+            </div>
+            <div class="lk_order_pro_qty">
+                X{Quantity}
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{SaleAmount}
+            </div>
+
+        </div>
+    </script>
+    <div style="overflow: hidden;">
+        <div class="stepflex" id="#sflex03">
+            <dl class="first done">
+                <dt class="s-num">1</dt>
+                <dd class="s-text">1.我的购物车
+                    <s></s>
+                    <b></b>
+                </dd>
+            </dl>
+            <dl class="normal doing">
+                <dt class="s-num">2</dt>
+                <dd class="s-text">2.核对订单信息
+                    <s></s>
+                    <b></b>
+                </dd>
+            </dl>
+            <dl class="normal last">
+                <dt class="s-num">3</dt>
+                <dd class="s-text">3.订单结算
+                    <s></s>
+                    <b></b>
+                </dd>
+            </dl>
+        </div>
+        <h1>订单结算</h1>
+    </div>
+    <form>
+        <input type="hidden" id="Sessinid" name="id" />
+        <div class="lk_order_cells">
+            <div class="lk_order_address">
+                <a style="float: right;" model="Account" cmd="Address" send="type=Edit&Id=news">新增收货人信息</a>
+                <h2>收货地址</h2>
+
+                <ul id="myAddress">
+                    <li>
+                        <div style="line-height: 44px">
+                            门店所在地:
+                        </div>
+                        <div style="flex: 1">
+                            <select required style="width: 200px" class="weui_select" name="Province" id="Province">
+                                                <option value="">请选择离您最近的门店</option>
+                                            </select>
+                            <div class="points">
+
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="lk_order_pay">
+
+                <h2>支付方式</h2>
+                <label for="alipay">
+                                    <input type="radio" checked="checked" name="type" id="alipay" value="alipay" />
+                                    <i>支付宝支付</i>
+                                </label>
+                <label for="WeiXin">
+                                    <input type="radio" name="type" id="WeiXin" value="WeiXin" />
+                                    <i>微信支付</i>
+                                </label>
+
+            </div>
+            <!-- <input type="hidden" name="type" value="Wish" /> -->
+            <h2>商品清单</h2>
+
+            <div class="lk_order_goods">
+
+            </div>
+            <div class="lk_order_remark">
+                订单备注：
+                <input placeholder="添加订单备注，不超过45个字" name="Remarks">
+            </div>
+        </div>
+        <div class="lk_order_summary">
+            <div class="summary ">
+                <div class="list">
+                    <span>
+                                        您的订单有
+                                        <em data-field="Quantity">0</em> 件商品，需要：</span>
+                    <em class="price" data-field="TotalAmount">￥7683.00</em>
+                </div>
+                <div class="list">
+                    <span>运费：</span>
+                    <em class="price" data-field="FreeAmount">
+                                    </em>
+                </div>
+                <div class="list">
+                    <span>优惠：</span>
+                    <em class="price" data-field="FreeAmount">
+                                    </em>
+                </div>
+                <div class="list">
+                    <span>已付：</span>
+                    <em class="price" data-field="PaidAmount">
+                                    </em>
+                </div>
+            </div>
+        </div>
+        <div class="lk_order_trade">
+            <div class="lk_cart_footer-frist">
+
+                <a  ui-spa  href="/cart">
+                                        返回购物车
+                                    </a>
+            </div>
+            <div class="summary">
+                <div>
+                    <span>订单总额：</span>
+                    <em class="price" data-field="PayableAmount">.00</em>
+                </div>
+                <div>
+                    <!-- <span>寄送至：
+                                        <i data-field="Address"></i>
+                                    </span>
+                                    <span style="padding-left:2em">收货人：
+                                        <i data-field="Name"></i>
+                                        <i data-field="Phone"></i>
+                                    </span> -->
+                </div>
+            </div>
+            <div class="lk_order_submit">
+                <button type="submit">
+                                    确认付款
+                                </button>
+            </div>
+        </div>
+    </form>
+
+</div>

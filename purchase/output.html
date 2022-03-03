@@ -1,0 +1,96 @@
+<div   class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" sort="8">
+                待出库
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="16">
+                已完成
+            </a>
+
+            <a class="el-sort filter-item el-select--small " sort="0">
+                门店采购中
+            
+            </a>
+        </div>
+    </div>
+    <div class="item-container">
+
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="110">
+                    <col width="200">
+                    <!-- <col width="110"> -->
+                    <col width="110">
+                    <col width="110">
+                    <col width="110">
+                    <col width="100">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            出库单号
+                        </th>
+                        <th>
+                            采购门店
+                        </th>
+                        <!-- <th>
+                            出库门店
+                        </th> -->
+                        <th>
+                            出库总数
+                        </th>
+                        <th>
+                            创建时间
+                        </th>
+                        <th>
+                            提交时间
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+                                {Code}
+                            </td>
+                            <td>
+                                {InputStoreName}
+                            </td>
+                            <!-- <td>
+                                {OutputStoreName}
+                            </td> -->
+                            <td class="is-center">
+                                {PurchaseQty}
+                            </td>
+                            <td>
+                                {CreationTime}
+                            </td>
+                            <td>
+                                {SubmitTime}
+                            </td>
+                            <td class="is-center">
+                                <a href="#purchase/order?Id={Id}" class="el-tag el-tag--small "> {Status}</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+            <!---->
+            <!---->
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

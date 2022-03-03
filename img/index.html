@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title>顾家统一登录桌面</title>
+    <link href="//www.365lu.cn/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.desktop.css?v0.1" rel="stylesheet" type="text/css" />
+    <script src="//www.365lu.cn/js/umc.js?v.01"></script>
+    <script src="/UMC.Conf"></script>
+    <script src="//www.365lu.cn/js/umc.database.js?v.01"></script>
+    <script src="//www.365lu.cn/js/umc.grid.js?v.01"></script>
+    <script src="//www.365lu.cn/js/umc.dialog.js?v.01"></script>
+    <script src="//www.365lu.cn/js/umc.ui.js?v.01"></script>
+    <script src="//www.365lu.cn/js/umc.desktop.js?v.05"></script>
+
+
+    
+
+</head>
+
+
+<body>
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active" style="z-index: 2100;"><i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content">Switch Size Success</p>
+    </div>
+    <div id="win10" style="background-image:url(/img/wallpapers/main.jpg)">
+        <div class="umc-desktop">
+            <div class="umc-shortcuts">
+            </div>
+            <ul role="menu" class="umc-shortcut-menu">
+                <li>
+                    <a data-key="auth"><b class="wdk_cell_icon" data-icon="&#xf26b;"></b> 获取带权网址</a>
+                </li>
+                <li>
+                    <a data-key="pwd"><b class="wdk_cell_icon" data-icon="&#xf214;"></b> 获取临时口令</a>
+                </li>
+                <li>
+                    <a data-key="del"><b class="wdk_cell_icon" data-icon="&#xf127;"></b> 移除关联账户</a>
+
+                </li>
+                <li>
+                    <a data-key="user"><b class="wdk_cell_icon" data-icon="&#xf234;"></b> 设置多个账户</a>
+
+                </li>
+                <li>
+                    <a data-key="about"><b class="wdk_cell_icon" data-icon="&#xf05a;"></b> 关于应用</a>
+
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="umc-task_bar">
+        <div class="umc-bar-item">
+            <a class="el-dropdown"><span data-icon="&#xf015;" class="icon-data"></span></a>
+            <ul role="menu" class="umc-logo-menu">
+                <li>
+                    <img class="umc-logo-icon" alt="" />
+                    <div class="umc-logo-name"></div>
+                </li>
+
+                <li>
+                    <a model="Account" cmd="Self"><b class="wdk_cell_icon" data-icon="&#xf2ba;"></b> 我的信息</a>
+                </li>
+                <li>
+                    <a model="Account" cmd="Close"><b class="wdk_cell_icon" data-icon="&#xf011;"></b> 退出登录</a>
+
+                </li>
+
+            </ul>
+        </div>
+        <div class="umc-bar-item">
+            <a class="umc-task_bar-app el-dropdown hide"><span ></span></a>
+            <ul role="menu">
+                <li>
+                    <a model="Proxy" cmd="App" class="icon-data" data-icon="&#xf05a;">  关于</a>
+                </li>
+                <li>
+                    <a data-key="hide" class="icon-data" data-icon="&#xf24d;">隐藏其他</a>
+                </li>
+                <li>
+                    <a data-key="other" class="icon-data" data-icon="&#xf070;">隐藏其他应用</a>
+                </li>
+                <li>
+                    <a data-key="all" class="icon-data" data-icon="&#xf06e;">显示全部</a>
+
+                </li>
+                <li>
+                    <a data-key="exit" class="icon-data" data-icon="&#xf192;"> 退出</a>
+
+                </li>
+            </ul>
+        </div>
+        <div id="umc-desktop-menu" class="umc-bar-item">
+            <ul class="umc-desktop-menu">
+            </ul>
+
+        </div>
+        <div class="umc-bar-item">
+            <a class="umc-task_bar-wins el-dropdown hide"><span>窗口</span></a>
+            <ul role="menu">
+            </ul>
+        </div>
+        <div id="win10_btn_group_right" class="umc-bar-item umc-bar-item_right">
+
+            <a id="umc-desktop-show"><span  class="icon-data" data-icon="&#xf26c;"></span></a>
+            <a><span  class="icon-data" data-icon="&#xf0ca;"></span></a>
+        </div>
+    </div>
+    <!--bottom dock -->
+    <div class="umc-desktop-dock">
+        <div id="dock-container" class="dock-container">
+            <a class="dock-item " href="# "><span>finder</span><img src="./img/icon/finder.png " alt="finder " /></a>
+            <a class="dock-item " href="# "><span>appstore</span><img src="./img/icon/appstore.png " alt="appstore " /></a>
+            <a class="dock-item " href="# "><span>gamecenter</span><img src="./img/icon/gamecenter.png " alt="gamecenter " /></a>
+            <a class="dock-item " href="# "><span>imusic</span><img src="./img/icon/imusic.png " alt="imusic " /></a>
+            <a class="dock-item " href="# "><span>notes</span><img src="./img/icon/notes.png " alt="notes " /></a>
+            <a class="dock-item " href="# "><span>setting</span><img src="./img/icon/icloud.png " alt="setting " /></a>
+            <a class="dock-item " href="# "><span>iTunes</span><img src="./img/icon/iTunes.png " alt="iTunes " /></a>
+            <a class="dock-item " href="# "><span>mail</span><img src="./img/icon/mail.png " alt="mail " /></a>
+            <a class="dock-item " href="# "><span>maps</span><img src="./img/icon/maps.png " alt="maps " /></a>
+            <a class="dock-item " href="# "><span>trashicon</span><img src="./img/icon/trashicon.png " alt="trashicon " /></a>
+        </div>
+    </div>
+</body>
+
+
+</html>

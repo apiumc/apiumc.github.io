@@ -1,0 +1,345 @@
+<div class="lk_content">
+
+    <script id="product" type="text/html">
+        <div class="lk_order_pro">
+            <a href="/product/{product_id}" class="lk_order_pro_image">
+                <img style="width:80px;margin-right: 5px;" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';" src="{Src}">
+            </a>
+            <div class="lk_order_pro_context">
+                <div class="lk_order_pro_name">{Name} </div>
+                <div class="lk_order_pro_sku">规格:{Size}</div>
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{Price}
+            </div>
+            <div class="lk_order_pro_qty" data-sku="{sku_id}">
+                <a class="wdk-pro-add">
+
+                </a>
+                <input class="wdk-pro-quantity" type="number" value="{Quantity}" />
+                <a class="wdk-pro-reduce">
+
+                </a>
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{SaleAmount}
+            </div>
+            <div class="lk_order_pro_fn">
+                <a data-sku="{sku_id}" class="wdk-pro-del">移除</a>
+                <!-- <a data-sku="{sku_id}" data-pro="{product_id}"  class="wdk-pro-del-favoriter">移到我的收藏</a>
+                    <a data-pro="{product_id}" class="wdk-pro-favoriter">加到我的收藏</a> -->
+            </div>
+
+        </div>
+    </script>
+    <script id="address" type="text/html">
+        <li data-id="{Id}">
+            <div class="title">{Province} {Name}</div>
+            <div class="address">{Province}{City}{Region}{Address} {Phone}<a model="Account" cmd="Address" send="type=Edit&Id={Id}">编辑</a><a model="Account" cmd="Address" send="type=Del&Id={Id}">删除</a></div>
+        </li>
+    </script>
+
+    <script id="Point" type="text/html">
+        <label for="{id}">
+                <input type="radio" name="PointId" value="{id}" id="{id}">
+                <div class="wdk-image-pro active">
+                    <div class="wdk-image-pro-image">
+                        <img src="{src}!200?{ts}" alt="">
+                    </div>
+                    <div class="wdk-image-pro-area">
+                        <div class="wdk-image-pro-title"> {city} {region} {name}
+                           <div class="addr">{address}</div> </div>
+                        <div class="wdk-image-pro-bottom">
+                            <!-- <div class="wdk-image-pro-desc">
+                              <span style="font-size:90%">电话</span>:{tel}
+                            </div> -->
+                            <div class="wdk-image-pro-desc"><span style="font-size:90%">服务时间</span>:{hours}</div>
+                        </div>
+                    </div>
+                </div>
+            </label>
+    </script>
+    <script id="order" type="text/html">
+        <div class="lk_order_pro">
+            <div class="lk_order_pro_image">
+
+                <img style="width:80px;margin-right: 5px;" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';" src="{Src}"> </div>
+            <div class="lk_order_pro_context">
+                <div class="lk_order_pro_name">{Name} </div>
+                <div class="lk_order_pro_sku">规格:{Size}</div>
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{Price}
+            </div>
+            <div class="lk_order_pro_qty">
+                X{Quantity}
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{SaleAmount}
+            </div>
+
+        </div>
+    </script>
+    <div class="lk_content_row">
+        <div class="lk_member_detail">
+            <div class="ui" ui="main">
+                <div style="overflow: hidden;">
+                    <div class="stepflex" id="#sflex03">
+                        <dl class="first doing">
+                            <dt class="s-num">1</dt>
+                            <dd class="s-text">1.我的收藏夹
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                        <dl class="normal ">
+                            <dt class="s-num">2</dt>
+                            <dd class="s-text">2.核对心愿单信息
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                        <dl class="normal last">
+                            <dt class="s-num">3</dt>
+                            <dd class="s-text">3.成功提交心愿单
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                    </div>
+                    <h1>收藏夹</h1>
+                </div>
+                <div id="cells">
+                    <div class="sort-row hide">
+
+                        <div style=" flex:1; width:100px;text-align: center;">商品</div>
+                        <div style="width:100px;text-align: center;">
+                            单价
+                        </div>
+                        <div style="width:200px;text-align: center;">
+                            数量
+                        </div>
+                        <div style="width:100px;text-align: center;">
+                            小计
+                        </div>
+                        <div style="width:126px;text-align: center;">
+                            操作
+                        </div>
+                    </div>
+                    <div class="lk_order hide">
+                        <div class="lk_order_content">
+                            <div class="lk_order_products" id="products">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="empty" style="display:none">
+                        <b>收藏夹是空空的，
+                                <a style="color: #2965B1;" href="/index.html">去选择</a>心愿商品吧</b>
+
+                    </div>
+                    <div id="fixedBottom"></div>
+                    <div id="fixed-bottom hide">
+                        <div class="lk_cart_footer lk_content">
+
+                            <div class="lk_cart_footer-frist">
+
+                                <a model="Ticket" cmd="Clear" href="javascript:void(0);">
+                                        清空收藏夹
+                                    </a>
+                            </div>
+                            <div class="lk_cart_footer-sum">
+
+                                <div class="amount-sum">
+                                    已选择
+                                    <em data-field="Quantity">1</em>件商品
+                                    <span style="padding-left:1em"> 总价：</span>
+
+                                    <em class="amount" data-field="TotalAmount">0.00</em>
+
+                                </div>
+                                已节省：-
+                                <em class="amount" data-field="PromAmount">0.00</em>
+
+
+                            </div>
+
+                            <a class="lk_cart_order" onclick="WDK(window).on('hashchange','Order')">
+                                    去生成心愿单
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ui="Finished">
+                <div style="overflow: hidden;">
+                    <div class="stepflex" >
+                        <dl class="first done">
+                            <dt class="s-num">1</dt>
+                            <dd class="s-text">1.我的收藏夹
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                        <dl class="normal done">
+                            <dt class="s-num">2</dt>
+                            <dd class="s-text">2.核对心愿单信息
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                        <dl class="normal done">
+                            <dt class="s-num">3</dt>
+                            <dd class="s-text">3.成功提交心愿单
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                    </div>
+                    <h1>心愿单</h1>
+                </div>
+
+                <div id="cells">
+                    <div class="weui_msg">
+                        <div class="weui_icon_area">
+                            <i class="weui_icon_success weui_icon_msg"></i>
+                        </div>
+                        <div class="weui_text_area">
+                            <h2 class="weui_msg_title">
+                                心愿单提交成功</h2>
+                            <p class="weui_msg_desc">
+                                <a style="color: #9E9673;" href="/member.html">查看我的心愿单</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ui="Order">
+                <div style="overflow: hidden;">
+                    <div class="stepflex" id="#sflex03">
+                        <dl class="first done">
+                            <dt class="s-num">1</dt>
+                            <dd class="s-text">1.我的收藏夹
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                        <dl class="normal doing">
+                            <dt class="s-num">2</dt>
+                            <dd class="s-text">2.核对心愿单信息
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                        <dl class="normal last">
+                            <dt class="s-num">3</dt>
+                            <dd class="s-text">3.成功提交心愿单
+                                <s></s>
+                                <b></b>
+                            </dd>
+                        </dl>
+                    </div>
+                    <h1>心愿单</h1>
+                </div>
+                <form>
+                    <input type="hidden" id="Sessinid" name="id" />
+                    <div class="lk_order_cells">
+                        <div class="lk_order_address">
+                            <!-- <a style="float: right;" model="Account" cmd="Address" send="type=Edit&Id=news">新增收货人信息</a> -->
+                            <h2>选择门店</h2>
+
+                            <ul>
+                                <li>
+                                    <div style="line-height: 44px">
+                                        门店所在地:
+                                    </div>
+                                    <div style="flex: 1">
+                                        <select required style="width: 200px" class="weui_select" name="Province" id="Province">
+                                                <option value="">请选择离您最近的门店</option>
+                                            </select>
+                                        <div class="points">
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!--   <div class="lk_order_pay">
+
+                                <h2>支付方式</h2>
+                                <label for="alipay">
+                                    <input type="radio" checked="checked" name="type" id="alipay" value="alipay" />
+                                    <i>支付宝支付</i>
+                                </label>
+                                <label for="WeiXin">
+                                    <input type="radio" name="type" id="WeiXin" value="WeiXin" />
+                                    <i>微信支付</i>
+                                </label>
+
+                            </div> -->
+                        <input type="hidden" name="type" value="Wish" />
+                        <h2>心愿清单</h2>
+
+                        <div class="lk_order_goods">
+
+                        </div>
+                        <div class="lk_order_remark">
+                            心愿备注：
+                            <input placeholder="添加订单备注，不超过45个字" name="Remarks">
+                        </div>
+                    </div>
+                    <div class="lk_order_summary">
+                        <div class="summary ">
+                            <div class="list">
+                                <span>
+                                        您的心愿有
+                                        <em data-field="Quantity">0</em> 件商品，完成心愿需要：</span>
+                                <em class="price" data-field="TotalAmount">￥7683.00</em>
+                            </div>
+                            <!-- <div class="list">
+                                    <span>运费：</span>
+                                    <em class="price" data-field="FreeAmount">
+                                    </em>
+                                </div>
+                                <div class="list">
+                                    <span>优惠：</span>
+                                    <em class="price" data-field="FreeAmount">
+                                    </em>
+                                </div>
+                                <div class="list">
+                                    <span>已付：</span>
+                                    <em class="price" data-field="PaidAmount">
+                                    </em>
+                                </div> -->
+                        </div>
+                    </div>
+                    <div class="lk_order_trade">
+                        <div class=summary "">
+                            <div>
+                                <span>心愿总额：</span>
+                                <em class="price" data-field="PayableAmount">￥7683.00</em>
+                            </div>
+                            <!-- <div>
+                                    <span>寄送至：
+                                        <i data-field="Address"></i>
+                                    </span>
+                                    <span style="padding-left:2em">收货人：
+                                        <i data-field="Name"></i>
+                                        <i data-field="Phone"></i>
+                                    </span>
+                                </div> -->
+                        </div>
+                        <div class="lk_order_submit">
+                            <button type="submit">
+                                    提交心愿单
+                                </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>

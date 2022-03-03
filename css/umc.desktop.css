@@ -1,0 +1,706 @@
+#win10 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.umc-window-menu a {
+    padding: 9px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0 5px;
+    transition: .1s;
+    font-weight: 400;
+    color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+}
+
+.umc-window-menu a[data-icon]::before {
+    content: attr(data-icon);
+    font-family: wdk;
+}
+
+.umc-task_bar-wins~ul[role=menu] a {
+    min-width: 150px;
+    max-width: 200px;
+    overflow: hidden;
+}
+
+#umc-desktop-task~ul[role=menu] a::before,
+.umc-task_bar-wins~ul[role=menu] a::before {
+    content: ' ';
+    font-family: wdk;
+    width: 30px;
+    display: inline-block;
+    text-align: center;
+}
+
+#umc-desktop-task~ul[role=menu] a.is-active::before,
+.umc-task_bar-wins~ul[role=menu] a.is-active::before {
+    content: '\f00c';
+}
+
+.umc-window-title {
+    color: #97a8be;
+}
+
+.umc-window-title a {
+    font-size: 15px;
+    padding-right: 10px;
+}
+
+.umc-window-title b::before {
+    content: '/';
+    padding-right: 10px;
+}
+
+.umc-shortcuts {
+    height: calc(100vh - 30px);
+    position: relative;
+}
+
+.umc-shortcuts.shortcuts-hidden .shortcut {
+    display: none
+}
+
+.umc-shortcuts .shortcut {
+    width: 80px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    position: absolute;
+    transition: all 0.5s;
+}
+
+#appstore .shortcut {
+    width: 80px;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.5s;
+    float: left;
+}
+
+.umc-appstore-list>div {
+    overflow: hidden;
+    float: left;
+    padding: 30px;
+    position: relative;
+}
+
+.umc-appstore-list>div>em {
+    position: absolute;
+    transition: font-size 0.5s;
+    top: -20px;
+    right: -20px;
+    color: #fff;
+    font-size: 10px;
+}
+
+.umc-appstore-list>div:hover>em {
+    top: 10px;
+    right: 10px;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.umc-appstore-list>div>em::before {
+    content: '\f055';
+    font-family: wdk;
+    padding: 0 0.5em;
+}
+
+#appstore .shortcut:hover,
+.umc-shortcuts .shortcut:hover {
+    background-color: rgba(255, 255, 255, 0.11);
+}
+
+#appstore .shortcut>.icon,
+.umc-shortcuts .shortcut>.icon {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin: 0 auto;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    text-align: center;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    display: block;
+    font-size: 37px;
+    line-height: 50px;
+}
+
+#appstore .shortcut .title,
+.umc-shortcuts .shortcut .title {
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px;
+    margin-bottom: 5px;
+    font-style: normal;
+}
+
+#appstore .shortcut>i.icon::before,
+.umc-shortcuts .shortcut>i.icon::before {
+    content: attr(data-icon);
+    font-family: wdk;
+}
+
+.umc-desktop {
+    padding-top: 30px;
+}
+
+.umc-task_bar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    height: 30px;
+    line-height: 30px;
+    /* IE9+ */
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 1000;
+    transition: top 1s ease 0.5s;
+}
+
+.umc-task_bar .umc-bar-item {
+    height: 100%;
+    float: left;
+}
+
+.umc-task_bar-app~ul a {
+    min-width: 150px;
+}
+
+.umc-appstore-menu,
+.umc-shortcut-menu {
+    position: fixed;
+    transform: translateY(-1000px);
+    top: 0;
+    z-index: 1002;
+    left: 0px;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 4px;
+    outline: none;
+    -webkit-box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+}
+
+.umc-appstore-menu {
+    z-index: 1006;
+}
+
+.umc-task_bar .umc-bar-item_right {
+    height: 100%;
+    float: right;
+}
+
+.umc-task_bar .umc-bar-item:first-child {
+    margin-left: 10px;
+}
+
+.umc-task_bar-app {
+    font-weight: bold;
+}
+
+.el-message {
+    top: 60px;
+    z-index: 1000;
+}
+
+.umc-bar-item>a {
+    float: left;
+    color: #333;
+    text-align: center;
+    height: 100%;
+    line-height: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition: background-color 0.3s;
+    padding: 0 10px;
+    text-shadow: 0px 0px 2px #fff;
+}
+
+.umc-appstore-menu li a:hover,
+.umc-shortcut-menu li a:hover,
+.umc-bar-item a:hover {
+    color: white;
+    background-color: rgba(49, 156, 241, 0.71);
+    cursor: pointer;
+}
+
+#appstore .shortcut .title,
+.umc-shortcuts .shortcut .title {
+    display: block;
+    text-shadow: 0px 0px 2px #111;
+}
+
+.umc-task_bar .btn.is-active {
+    color: white;
+    background-color: rgba(49, 156, 241, 0.71);
+    cursor: pointer;
+}
+
+ul[role=menu].umc-search-menu li a:hover {
+    background-color: #e6f7ff;
+}
+
+.umc-shortcut-menu li a,
+.umc-desktop-menu li a,
+ul[role=menu] li a {
+    position: relative;
+    display: block;
+    padding: 5px 12px 5px 5px;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    -webkit-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+}
+
+.umc-logo-icon {
+    background-position: 50%;
+    background-size: cover;
+    border-radius: 50%;
+    overflow: hidden;
+    -webkit-transform-origin: 95% 40%;
+    transform-origin: 95% 40%;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    position: relative;
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin: auto;
+}
+
+.el-dropdown img.umc-logo-icon {
+    width: 24px;
+    height: 24px;
+    margin-top: 3px;
+}
+
+.weui_mask {
+    background-color: transparent !important;
+    z-index: 1001;
+}
+
+.weui_dialog_alert~.weui_mask,
+.weui_dialog_confirm~.weui_mask,
+.weui_actionsheet.weui_actionsheet_toggle~.weui_mask {
+    z-index: 1003;
+}
+
+.umc-logo-menu {
+    padding-top: 1em;
+    width: 200px;
+}
+
+body>div[ui] {
+    top: 30px;
+    height: calc(100vh - 30px);
+    box-shadow: -2px 0px 5px #88888888;
+}
+
+.weui_textarea {
+    background-color: transparent;
+}
+
+.wdk-dialog {
+    background: #f0f2f5dd;
+}
+
+div.wdk-dialog.ui {
+    z-index: 1002;
+}
+
+.umc-desktop-menu {
+    list-style: none;
+}
+
+.umc-desktop-menu li {
+    float: left;
+}
+
+.umc-desktop-menu li>a {
+    /* display: block; */
+    padding: 0 10px;
+    line-height: 30px;
+    text-shadow: 0px 0px 2px #fff;
+}
+
+.umc-desktop-menu li>a:hover {
+    color: white;
+    background-color: rgba(49, 156, 241, 0.71);
+    cursor: pointer;
+}
+
+a.el-dropdown.is-active {
+    color: white;
+    background-color: rgba(49, 156, 241, 0.71);
+    cursor: pointer;
+}
+
+.umc-window-top {
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    background-color: #F8F8F8;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+}
+
+.umc-window-title {
+    line-height: 42px;
+    left: 0px;
+    top: 0px;
+    float: left;
+    min-width: 50%;
+}
+
+.umc-window-search>div {
+    border-radius: 50px;
+    border: 1px solid #d9d9d9;
+    padding: 0 15px;
+    margin-top: 5px;
+    position: relative;
+}
+
+.umc-window-search>div::after {
+    content: '\f002';
+    font-family: wdk;
+    position: absolute;
+    right: 10px;
+    top: -4px;
+    color: #aaa;
+}
+
+.umc-window {
+    position: absolute;
+    width: 60vw;
+    height: 60vh;
+    left: 20vw;
+    top: 18vh;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px 0px 5px #88888888;
+    transition: height 0.5s ease, width 0.5s ease, top 0.5s ease, left 0.5s ease;
+}
+
+.umc-window-search input {
+    border-radius: 0;
+    border: 0;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 32px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: transparent;
+    width: 98%;
+}
+
+.umc-window-search,
+.umc-window-menu {
+    position: relative;
+    float: right;
+    height: 42px;
+    line-height: 42px;
+    z-index: 1;
+    margin-right: 1em;
+}
+
+.umc-window-search {
+    float: left;
+}
+
+.umc-window-btns {
+    position: relative;
+    overflow: hidden;
+    float: left;
+}
+
+.umc-window-btns a {
+    position: relative;
+    width: 40px;
+    height: 30px;
+    font-size: 13px;
+    text-align: center;
+    float: left;
+    margin: 0px;
+}
+
+.umc-window-btn-close::before {
+    content: "\f111";
+    color: #FF6057;
+    font: normal normal normal 18px/1 wdk;
+}
+
+.umc-window-btn-min::before {
+    content: "\f111";
+    color: #FFBD2E;
+    font: normal normal normal 18px/1 wdk;
+}
+
+.umc-window-btn-max::before {
+    content: "\f111";
+    color: #28CA40;
+    font: normal normal normal 18px/1 wdk;
+}
+
+.umc-window-btn-min:hover::before {
+    content: "\f056";
+}
+
+.umc-window-btn-max:hover::before {
+    content: "\f055";
+}
+
+.umc-window-btn-close:hover::before {
+    content: "\f057";
+}
+
+.umc-window.max {
+    top: 30px !important;
+    left: 0px !important;
+    width: 100% !important;
+    height: calc(100vh - 30px) !important;
+}
+
+.umc-window.min {
+    z-index: -2 !important;
+}
+
+.umc-window-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.umc-window-move .umc-window .umc-window-content::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    top: 0px;
+}
+
+.icon-data[data-icon]:before {
+    content: attr(data-icon);
+    padding: 0 0.5em;
+}
+
+.umc-bar-item span.icon-data[data-icon]:before {
+    font-size: 20px;
+    padding: 0 2px;
+}
+
+.umc-window-content iframe {
+    overflow: hidden;
+    display: block;
+    border: 0px;
+    width: 100%;
+    height: 100%
+}
+
+.weui_dialog.weui_dialog_alert,
+.weui_dialog.weui_dialog_confirm {
+    z-index: 1004;
+    box-shadow: -2px 0px 5px #88888888;
+}
+
+.umc-search-menu li {
+    width: 250px;
+}
+
+.weui_actionsheet {
+    z-index: 1004;
+}
+
+.umc-search-empty::before {
+    content: "\672a\641c\7d22\5230\6570\636e";
+}
+
+.umc-search-menu a {
+    color: #111;
+    display: block;
+}
+
+.umc-search-menu li {
+    position: relative;
+    display: block;
+    padding: 12px;
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    -webkit-transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease;
+}
+
+.umc-search-menu li:hover {
+    background-color: #e6f7ff;
+}
+
+.umc-search-menu li.umc-search-empty {
+    text-align: center;
+    /* min-height: 50px; */
+    line-height: 50px;
+}
+
+.umc-fullscreen .umc-desktop-dock {
+    bottom: -60px;
+}
+
+.umc-fullscreen .umc-window.max .umc-window-top {
+    display: none;
+}
+
+.umc-fullscreen .umc-task_bar {
+    top: -30px
+}
+
+.umc-fullscreen .umc-window.max {
+    top: 0 !important;
+    left: 0px !important;
+    width: 100% !important;
+    height: 100vh !important;
+}
+
+.umc-shortcuts .shortcut::before {
+    content: attr(data-badge);
+    position: absolute;
+    width: 15px;
+    /* padding-top: 100%; */
+    /* height: 10px; */
+    background: #FF455B;
+    right: 0;
+    top: 0px;
+    /* transform: translateY(-50%); */
+    /* border-radius: 50%; */
+    line-height: 15px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+}
+
+#appstore {
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1004;
+    width: 100%;
+}
+
+.umc-appstore-search {
+    top: 20px;
+    border-radius: 50px;
+    border: 1px solid #d9d9d9;
+    padding: 0 15px;
+    margin-top: 5px;
+    position: fixed;
+    width: 180px;
+    transform: translate(-50%, 0%);
+    left: 50%;
+}
+
+.umc-appstore-search>div::after {
+    content: '\f002';
+    font-family: wdk;
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    color: #d9d9d9;
+    font-size: 18px;
+}
+
+.umc-appstore-search input {
+    border-radius: 0;
+    border: 0;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 32px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: transparent;
+    width: 98%;
+    color: #fff;
+    font-size: 16px;
+    height: 32px;
+    text-shadow: 0px 0px 2px #111;
+}
+
+.umc-appstore-search ::-webkit-input-placeholder {
+    color: #fff;
+}
+
+.umc-appstore-list {
+    margin-top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.umc-appstore-list::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+.umc-appstore-list.not-find::before {
+    content: '\65E0\7ED3\679C';
+    display: block;
+    text-align: center;
+    margin-top: 30vh;
+    font-size: 40px;
+    color: #d9d9d9;
+    text-shadow: 0px 0px 2px #111;
+}
+
+.umc-desktop-bg {
+    top: 0px;
+    left: 0px;
+    content: ' ';
+    position: absolute;
+    background-image: url(/images/2021.jpg);
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    z-index: -1;
+}
+
+#appstore .umc-desktop-bg {
+    filter: blur(6px);
+}
+
+#umc-desktop-task~ul[role=menu] a.umc-desktop-show::before {
+    content: attr(data-icon);
+}

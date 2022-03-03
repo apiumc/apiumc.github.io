@@ -1,0 +1,102 @@
+<div class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <!-- <a class="el-sort filter-item el-select--small is-active" sort="Caption">
+                默认排序
+                <i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="Host">
+                服务器排序
+                <i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="UserId">
+                用户名排序
+            <i></i>
+            </a> -->
+
+        </div>
+
+        <div class="filter-container-button">
+            <a model="Report" cmd="Group" send="News" class="el-button filter-item el-button--primary el-button--small">
+                新建
+            </a>
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="150">
+                    <col width="90">
+                    <col width="110">
+                    <col width="90">
+                    <col width="110">
+                    <col width="110">
+                    <col width="100">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            业务组名
+                        </th>
+                        <th>
+                            数据库类型
+                        </th>
+                        <th>
+                            服务器地址
+                        </th>
+                        <th>
+                            服务器端口
+                        </th>
+                        <th>
+                            数据库账户
+                        </th>
+                        <th>
+                            数据库
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+                                <a class="link-type" model="Report" cmd="Group" send="Id={Id}&type=Caption">{Caption}</a>
+                            </td>
+                            <td>
+                                {Provider}
+                            </td>
+                            <td>
+                                {Host}
+                            </td>
+                            <td class="is-center">
+                                {Port}
+                            </td>
+                            <td>
+                                {UserId}
+                            </td>
+                            <td>
+                                {DataSource}
+                            </td>
+                            <td class="is-center">
+
+                                <a model="Report" cmd="Group" send="{Id}" class="el-tag el-tag--small "> 配置数据库</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

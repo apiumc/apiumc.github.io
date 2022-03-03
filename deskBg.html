@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>主题切换</title>
+    <script src="//www.365lu.cn/js/umc.js" type="text/javascript"></script>
+    <style>
+        /*themesetting*/
+        
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .theme_area {
+            padding: 6px;
+        }
+        
+        .theme_area a {
+            color: #333;
+            text-decoration: none;
+        }
+        
+        div.wallpaper_settingButton,
+        a.theme_setting,
+        div.theme_upload {
+            display: inline;
+            float: left;
+            margin: 5px 8px 5px 8px;
+            width: 172px;
+            height: 140px;
+            cursor: pointer;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px
+        }
+        
+        a.theme_setting {
+            background: #cbe7fc;
+            transition: all 0.5s;
+        }
+        
+        a.theme_setting:hover {
+            background: #75c1f9
+        }
+        
+        div.themeSetting_hover {
+            background: #75c1f9
+        }
+        
+        div.theme_select,
+        a.theme_select {
+            background: #75c1f9
+        }
+        
+        .theme_icon {
+            margin: 5px auto;
+            padding-top: 3px;
+            width: 140px;
+            height: 100px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .theme_icon img {
+            width: 140px;
+            height: 100px;
+        }
+        
+        .theme_text {
+            margin: 5px 0 0 0;
+            text-align: center;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        
+        .theme_text a {
+            text-decoration: none;
+        }
+        
+        .theme_text a:link {
+            text-decoration: none;
+        }
+        
+        div.theme_upload {
+            background: #e9e9e9;
+            transition: all 0.5s;
+        }
+        
+        div.theme_upload:hover {
+            background: #75c1f9
+        }
+        
+        .clear {
+            clear: both;
+        }
+        
+        .h10 {
+            clear: both;
+            height: 10px;
+        }
+        /*end*/
+    </style>
+    <script>
+        UMC(function($) {
+            var callFn = function() {}
+            UMC.UI.Bridge = function(v, fn) {
+                callFn = fn;
+                window.top.postMessage(JSON.stringify({
+                    type: 'umc',
+                    value: v
+                }), "*");
+
+            }
+            $(window).on('message', function(e) {
+                var data = {};
+                try {
+                    data = JSON.parse(e.data);
+                } catch (c) {
+                    return;
+                }
+                switch (data.type) {
+                    case 'umc':
+                        UMC.UI.Ready(data.data, callFn);
+                        break;
+                    default:
+                        break;
+                }
+            })
+
+            //此处预定义了背景数据，其实可以用ajax获取
+            var themes = [{
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg1.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg1_small.jpg",
+                "title": "win10"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg2.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg2_small.jpg",
+                "title": "梦幻光影"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg3.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg3_small.jpg",
+                "title": "扬帆起航"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg4.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg4_small.jpg",
+                "title": "乡土气息"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg5.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg5_small.jpg",
+                "title": "绿色清新"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg6.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg6_small.jpg",
+                "title": "Win8"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg7.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg7_small.jpg",
+                "title": "蓝色海岸"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg8.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg8_small.jpg",
+                "title": "冰天雪地"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg9.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg9_small.jpg",
+                "title": "繁花满树"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg10.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg10_small.jpg",
+                "title": "精灵小鸟"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg11.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg11_small.jpg",
+                "title": "炫酷跑车"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg12.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg12_small.jpg",
+                "title": "中国风"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg13.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg13_small.jpg",
+                "title": "Winxp"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg14.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg14_small.jpg",
+                "title": "淡雅唯美"
+            }, {
+                "pic": "https://www.365lu.cn/css/images/theme_switcher/bg/bg15.jpg",
+                "thumb": "https://www.365lu.cn/css/images/theme_switcher/bg/bg15_small.jpg",
+                "title": "Win7"
+            }, ];
+
+            var theme_area = $("#theme_area");
+            theme_area.on('click', '.theme_setting', function() {
+                var pic = $(this).attr('data-pic');
+                window.top.postMessage(JSON.stringify({
+                    type: 'bgsrc',
+                    value: pic
+                }), "*");
+
+            });
+
+            var bg = $('#btn-upload').find('input').change(function() {
+                var v = this.files;
+                if (v.length > 0) {
+
+                    var file = v[0];
+                    var media_id = Math.random();
+                    var formdata = new FormData();
+                    var path = '/images/user/' + media_id + file.name.substr(file.name.lastIndexOf('.'));
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function() {
+                        UMC.UI.Command('System', 'Dir', {
+                            dir: path,
+                            media_id: media_id
+                        }, function(xhr) {
+                            window.top.postMessage(JSON.stringify({
+                                type: 'bgsrc',
+                                value: path
+                            }), "*");
+                            // upload(files, i + 1, dem);
+                        });
+                    };
+                    xhr.open('PUT', 'https://oss.365lu.cn/TEMP/Static/' + media_id, true);
+                    xhr.send(file);
+
+                    // var media_id = Math.random();
+                    // formdata.append('key', 'TEMP/Static/' + media_id);
+                    // formdata.append('file', v[0]);
+                    // formdata.append('success_action_status', '200');
+
+                }
+            });
+
+
+            themes.forEach(function(t) {
+                var theme = $({
+                    tag: 'a',
+                    cls: 'theme_setting',
+                    'data-pic': t.pic
+                }).html("            <div class=\"theme_icon\"><img src=\"" + t.thumb + "\"></div>\n" +
+                    "            <div class=\"theme_text\">" + t.title + "</div>\n")
+                theme_area.append(theme)
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <!--主题设置-->
+    <div id="theme_body">
+        <div id="theme_area" class="theme_area">
+            <!--主题图片-->
+            <div id="btn-upload" class="theme_upload">
+                <div class="theme_icon" style="background-image: url(https://www.365lu.cn/css/images/theme_switcher/bg/uploadbg.png);background-size:100% 100%;">
+                    <input accept="image/jpg,image/jpeg,image/png,image/gif" style="opacity: 0;display: block;width:100%;height:100px;" type="file">
+                    <div class="theme_text">自定义上传</div>
+                </div>
+            </div>
+        </div>
+        <div class="h10"></div>
+    </div>
+    <div class="clear"></div>
+
+</body>
+
+</html>

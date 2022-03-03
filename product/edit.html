@@ -1,0 +1,129 @@
+<div class="app-container">
+    <script type="text/html" id="menu">
+        <button type="button" class="el-button el-button--primary el-button--small">保存编辑</button>
+    </script>
+    <div class="item-container umc-product">
+        <div class="el-form-item">
+            <p class="el-form-item__label">
+                主图
+            </p>
+            <div class="el-form-item__content">
+
+                <ol id="img_ul" style="min-height: 132px;overflow: hidden;list-style: none;">
+                    <script type="text/html">
+                        <li style="margin-right: 20px;margin-bottom: 20px;float: left;text-align: center;">
+                            <img class="img_li_img" src="{src}" style="border: 1px solid #ccc;display:block;margin-bottom: 5px;" width="130" height="130">
+                            <a seq="{seq}" ui-event="image" class="el-tag el-tag--danger el-tag--small">删除</a>
+                        </li>
+                    </script>
+                </ol>
+                <a id="uploadify" style="position: relative;" class="el-button filter-item el-button--primary el-button--small">
+                    <b class="wdk_cell_icon" data-icon=""></b> 上传主图
+                    <input class="weui_uploader_input" type="file" accept="image/gif,image/png,image/jpg,image/jpeg">
+                </a>
+                <span style="font-size:12px;color:#999">最佳尺寸：800*800的图片</span>
+            </div>
+        </div>
+        <form id="pro">
+            <div class="el-form-item">
+                <p class="el-form-item__label">
+                    商品名称
+                </p>
+                <input type="text" id="txt_name" name="Product_Name" required placeholder="商品名称" class="el-input__inner" style="width: 300px;" />
+                <div class="el-input-check">
+                    <input type="checkbox" name="IsOffLine" id="txt_IsOffLine" value="true" />
+                    <label for="txt_IsOffLine">
+                        商品不上架
+                    </label>
+                </div>
+            </div>
+            <input type="hidden" required name="Id" />
+            <div class="el-form-item">
+                <p class="el-form-item__label">
+                    商品型号
+                </p>
+                <input type="text" id="txt_name_long" name="Product_Code" required placeholder="商品型号" class="el-input__inner" style="width: 300px;" />
+                <a class="el-tag el-tag--small" ui-event="Support">商品服务支持</a>
+            </div>
+            <div class="el-form-item">
+                <p class="el-form-item__label">
+                    商品分类
+                </p>
+                <select class="el-input__inner" id="sltCategroy" required name="Categroy" style="width: 300px; text-indent: 0px">
+                    <option value="">[--请选择--]</option>
+                </select>
+                <a class="el-tag el-tag--small" href="javascript:void(0)" model="Settings" cmd="Category" send="Category">选择更多品类</a>
+            </div>
+            <div class="el-form-item">
+                <p class="el-form-item__label">
+                    商品系列
+                </p>
+
+                <select class="el-input__inner" id="sltSeries" name="series_id" style="width: 300px; text-indent: 0px">
+                    <option value="">[--请选择--]</option>
+                </select>
+                <a class="el-tag el-tag--small" href="javascript:void(0)" model="Settings" cmd="Brand" send="Brand">管理品牌系列</a>
+            </div>
+            <div id="i_no_sku_price_wrap" class="el-form-item">
+                <p class="el-form-item__label">
+                    价格
+                </p>
+                <input type="text" style="width: 150px;" name="RetailPrice" required class="el-input__inner" />&nbsp;元 &nbsp;&nbsp;<a class="el-button el-button--primary el-button--small" ui-event="Barcode" href="javascript:void(0)"><b class="wdk_cell_icon" data-icon="&#xf02a;"></b>管理条码</a>
+            </div>
+            <div id="sku_div" class="el-form-item">
+                <p class="el-form-item__label">
+                    规格
+                </p>
+                <div class="el-form-item__content el-card" id="jqData">
+
+                </div>
+            </div>
+        </form>
+        <div class="el-form-item" style="overflow: hidden;">
+            <div class="el-form-item__content">
+                <a ui-event="addsku" class="el-button el-button--primary el-button--small">+ 添加规格</a>
+                <a ui-event="copysku" class="el-button  el-button--primary el-button--small">+ 复制规格</a>
+            </div>
+        </div>
+        <div class="el-form-item">
+            <p class="el-form-item__label">
+                描述
+            </p>
+            <div id="i_des" style="height: auto;" class="el-editer-html el-form-item__content el-card">
+                <div class="tool">
+                    <a class="cssUploader">
+                        <input type="file" accept="image/gif,image/png,image/jpg,image/jpeg" style="position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 100%; opacity: 0;" />
+                    </a>
+                    <a class="cssImage"></a>
+                    <a class="cssColor">
+                        <input type="color" />
+                    </a>
+                    <a data-name="text-align" value="left" class="cssleft">
+                    </a>
+                    <a data-name="text-align" value="center" class="csscenter"></a>
+                    <a data-name="text-align" value="right" class="cssright"></a>
+                    <a class="cssFont">
+                        <input type="range" name="font" min="12" data-name="font-size" suffix="px" max="56" value="15" />
+                    </a>
+                </div>
+                <div id="des" contenteditable="true" style="height: 300px; overflow: auto; line-height: normal; padding: 0.5em;">
+                </div>
+            </div>
+        </div>
+        <div class="el-form-item" style="display: none;">
+            <p class="el-form-item__label">
+                品类属性
+            </p>
+            <div class="el-form-item__content el-card" style="padding: 0.5em;">
+                <div>
+                    <a class="el-button el-button--primary el-button--small" ui-event="attr">增加属性</a>
+                    <a class="el-button el-button--primary el-button--small" ui-event="import">导入属性</a>
+                </div>
+                <div id="attributes">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="app-container">
+
+    <div class="filter-container">
+        <div class="filter-container-item">
+            <div id="Options" style="float:left">
+
+                <script type="text/html">
+                    <a class="el-sort" chart-type="{Type}" data-index="{Id}">
+                {Caption}<em></em> </a>
+                </script>
+            </div>
+
+
+        </div>
+        <div class="filter-container-button">
+            <a ui-event="add" class="el-button el-icon-add el-button--primary el-button--small">图表分析</a>
+            <a ui-event="export" class="el-button el-icon-export el-button--primary el-button--small">数据导出</a>
+
+            <a ui-event="exce" class="el-button el-icon-exce el-button--danger el-button--small">
+                执行报表
+            </a>
+
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-card el-pivot">
+            <div id="charts" class="el-chart"></div>
+            <div class="el-pivot-table">
+                <div class="el-table el-report">
+                    <table cellspacing="0" cellpadding="0" border="0">
+
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <script type="text/html">
+                                <tr>{html}</tr>
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-container">
+                    <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+                    <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+                    <input type="number" autocomplete="off" min="1" max="1" />
+                    <span class="total"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-container">
+        <div id="table" class="el-table el-report hide">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                </colgroup>
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="table" class="pagination-container hide">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+
+
+</div>

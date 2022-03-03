@@ -1,0 +1,61 @@
+<div class="lk_content">
+    <script id="cell" type="text/html">
+        <div class="lk_content_cell3">
+            <div class="goods">
+                <a ui-spa href="/product/{Id}">
+                    <img alt="{Name}" style="background-image: url({Src}!350);" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+                </a>
+                <a ui-spa href="/product/{Id}" class="pro">
+                    <div class="name">{Name}</div>
+                    <div class="price">{Price}</div>
+                </a>
+
+                <!-- <a ui-spa href="/product/{Id}" class="desc">{Long}</a> -->
+
+
+            </div>
+        </div>
+    </script>
+    <div class="lk_category_top">
+
+        <div id="sliders">
+            <img   />
+        </div>
+    </div>
+    <div class="lk_content_row">
+        <div class="lk_category_filter">
+
+
+        </div>
+        <div class="lk_product_detail">
+            <div class="sort-row">
+
+                <ul>
+                    <li class="active">默认</li>
+                    <li data-sort="RetailPrice" data-dir="desc" class="Price desc">价格</li>
+                    <li data-sort="Sales" class="Sales">热门</li>
+                </ul>
+                <div class="page-count">
+                    <a href="javascript:void(0);" class="prev"> </a>
+                    <em class="page"></em>
+                    <a href="javascript:void(0);" class="next"> </a>
+
+                </div>
+            </div>
+            <div id="cells">
+
+
+            </div>
+            <div class="sort-row">
+
+                <div class="page-count" data-total="0">
+                    <a href="javascript:void(0);" class="prev"> </a>
+                    <em class="page">1/2</em>
+                    <a href="javascript:void(0);" class="next"> </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

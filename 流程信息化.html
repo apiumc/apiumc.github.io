@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>UMC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="css/base.css" rel="stylesheet" type="text/css" />
+    <link href="css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="css/umc.css" rel="stylesheet" type="text/css" />
+    <script src="js/umc.js" type="text/javascript"></script>
+    <script>
+        UMC.UI.Config({
+            posurl: 'https://sso.kukahome.com/UMC/HwTNesE9FU-__INy9dlb8w',
+            'domain': 'https://sso.kukahome.com'
+        });
+
+        WDK.Src = '/';
+    </script>
+    <script src="js/umc.database.js"></script>
+    <script src="js/umc.grid.js"></script>
+    <script src="js/umc.dialog.js"></script>
+    <script src="js/umc.ui.js"></script>
+
+    <script>
+        WDK(function($) {
+
+            var tbody = $('table tbody');
+
+            function User(dept_id, depName) {
+                WDK.UI.Command('Settings', 'DingTalk', {
+                    Path: '/topapi/v2/user/list',
+                    "cursor": 0,
+                    "contain_access_limit": false,
+                    "size": 100,
+                    "order_field": "modify_desc",
+                    "language": "zh_CN",
+                    "dept_id": dept_id
+                }, function(x) {
+                    var data = x.result.list || [];
+                    var ls = [];
+                    var sdata = [];
+                    for (var i = 0; i < data.length; i++) {
+                        var v = data[i];
+                        v.Username = v.job_number || v.mobile || v.userid;
+                        ls.push(v.Username);
+                        var d = {
+                            Username: v.Username,
+                            name: v.name
+                        }
+                        sdata.push(d)
+                    }
+
+                    WDK.UI.Command('Proxy', 'User', {
+                        Key: 'oa',
+                        User: ls.join(',')
+                    }, function(x) {
+                        // root.on('title', x.caption);
+                        var resKey = x.data;
+                        for (var i = 0; i < sdata.length; i++) {
+                            var v = sdata[i];
+
+                            var tr = $({
+                                tag: 'tr'
+                            }); //.appendTo()
+                            $({
+                                tag: 'td'
+                            }).text(depName).appendTo(tr);
+                            $({
+                                tag: 'td'
+                            }).text(v.Username).appendTo(tr);
+                            $({
+                                tag: 'td'
+                            }).text(v.name).appendTo(tr);
+                            $({
+                                tag: 'td'
+                            }).text(resKey[v.Username] || '未使用').appendTo(tr);
+                            tbody.append(tr);
+                        }
+
+                    });
+
+                });
+            }
+
+            // var users = [];
+            User('55399438', '信息信息化');
+
+            function Dep(depid, name) {
+                UMC.UI.Command('Settings', 'DingTalk', {
+                    Path: '/topapi/v2/department/listsub',
+                    dept_id: depid,
+                    "language": "zh_CN"
+                }, function(r) {
+                    var xhr = r.result;
+                    if (xhr.length > 0) {
+                        for (var i = 0; i < xhr.length; i++) {
+                            var x = xhr[i];
+                            var dep = name + '-' + x.name;
+                            User(x.dept_id, dep);
+                            Dep(x.dept_id, dep);
+                        }
+                    }
+                });
+            }
+            Dep('55399438', '信息信息化')
+
+        });
+    </script>
+    <style>
+        #menu.right-menu a {
+            padding: 9px 15px;
+            font-size: 12px;
+            border-radius: 3px;
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid #dcdfe6;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            margin: 0 5px;
+            transition: .1s;
+            font-weight: 400;
+            color: #fff;
+            background-color: #1890ff;
+            border-color: #1890ff;
+        }
+        
+        #menu.right-menu a[data-icon]::before {
+            content: attr(data-icon);
+            font-family: wdk;
+        }
+        
+        #breadcrumb-container a:nth-of-type(n+1)::before {
+            content: '/';
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table cellspacing="0" cellpadding="0" border="0">
+        <thead>
+            <tr>
+                <th>
+                    部门模块
+                </th>
+                <th>
+                    用户名
+                </th>
+                <th>
+                    别名
+                </th>
+                <th>
+                    OA使用情况
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</body>
+
+</html>

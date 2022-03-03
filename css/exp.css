@@ -1,0 +1,31 @@
+#showMenuDiv {
+    display: none !important;
+}
+
+#tableTools.showtools {
+    height: 100vh !important;
+}
+
+#menutab {
+    display: none !important;
+}
+
+
+/* .modal-tab-menu span {
+    display: none !important;
+}
+
+.modal-tab-menu span.active {
+    display: block !important;
+    width: 100%;
+} */
+
+.pinglun ,.ptclasee,
+.myUpFile {
+    display: none !important;
+}
+
+
+/* #up_west.myUpFile {
+    display: inline !important;
+} */

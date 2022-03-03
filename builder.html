@@ -1,0 +1,124 @@
+<div class="umc-builder-app">
+    <script type="text/html" id="menu">
+        <a model="Design" cmd="Page" class="el-button el-button--small"><b class="wdk_cell_icon"  data-icon="&#xf0d0;"></b>主页设计</a>
+        <a model="UI" cmd="App" send="News" class="el-button el-button--small"><b class="wdk_cell_icon"  data-icon="&#xf0fe;"></b>增加Bar</a>
+    </script>
+    <script id="singleCategory" type="text/html">
+        <li>
+            <div class="img">
+                <a target="_blank" style="background-image:url({src})" {Click}></a>
+                <img alt="{name}" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+            </div>
+            <div class="name">{name}</div>
+        </li>
+    </script>
+    <script id="tabs" type="text/html">
+        <header class="wdk-header header">
+
+        </header>
+        <div class="wdk-tabs" style="position: relative; flex:1;overflow: auto">
+            <div class="weui_navbar">
+            </div>
+            <div class="wdk_tab_bd">
+            </div>
+        </div>
+    </script>
+    <script id="Category" type="text/html">
+        <div style="display: flex;height: 100%;flex-direction: column;">
+            <div class="wdk-header">
+                <h1>
+                    分类
+                </h1>
+            </div>
+            <div style="flex: 1; display: flex;overflow: auto;">
+                <div style="height: 100%; overflow-y: auto; width: 6.5em; font-size:12px" id="nav">
+                    <div class="weui_cells weui_cells_access">
+                    </div>
+                </div>
+                <div id="nav-items" style="flex: 1; height: 100%; overflow-y: auto;">
+                </div>
+            </div>
+        </div>
+    </script>
+
+
+    <div style="display: flex;">
+        <div style="width: 500px;height:calc(100vh - 66px);">
+            <div class="weui_tab">
+                <div class="weui_tab_bd">
+                    <script type="text/html">
+                        <div class="wdk-tab-body-item">
+                        </div>
+                    </script>
+                </div>
+                <footer class="weui_tabbar">
+                    <script type="text/html">
+                        <a href="javascript:;" data-key="{key}" class="weui_tabbar_item">
+                            <div class="weui_tabbar_icon" data-icon="{icon}"></div>
+                            <p class="weui_tabbar_label">{text}</p>
+                        </a>
+                    </script>
+                </footer>
+            </div>
+        </div>
+        <div>
+            <div class="item-container">
+
+                <div class="el-form-item">
+                    <p class="el-form-item__label">
+                        应用名称
+                    </p>
+                    <div class="el-form-item__content">
+                        <a id="AppName">未设置</a>
+                        <a class="el-tag el-tag--small" model="UI" cmd="App" send="AppName">修改</a>
+                    </div>
+                    <!-- <input type="text" id="txt_name" name="AppName" required placeholder="应用名称" class="el-input__inner" style="width: 300px;" /> -->
+
+                </div>
+                <div class="el-form-item">
+                    <p class="el-form-item__label">
+                        应用图标
+                    </p>
+                    <div class="el-form-item__content">
+
+                        <ol class="uploadifile" style="min-height: 132px;overflow: hidden;list-style: none;">
+
+                            <li data-key="IconSrc">
+                                <input class="weui_uploader_input" type="file" accept="image/gif,image/png,image/jpg,image/jpeg">
+                            </li>
+                        </ol>
+                        <span style="font-size:12px;color:#999">最佳尺寸：512*512的图片</span>
+                    </div>
+                </div>
+                <div class="el-form-item">
+                    <p class="el-form-item__label">
+                        启动背景图
+                    </p>
+                    <div class="el-form-item__content">
+
+                        <ol class="uploadifile" style="min-height: 132px;overflow: hidden;list-style: none;">
+
+                            <li data-key="BgSrc">
+                                <input class="weui_uploader_input" type="file" accept="image/gif,image/png,image/jpg,image/jpeg">
+                            </li>
+                        </ol>
+                        <span style="font-size:12px;color:#999">最佳尺寸：1080*1920的图片</span>
+                    </div>
+                </div>
+                <div class="el-form-item">
+                    <p class="el-form-item__label">
+
+                    </p>
+                    <div class="el-form-item__content">
+                        <a ui-event='Builder' class="el-button el-button--primary el-button--small">开始生成APP</a>
+                        <a model="UI" cmd="App" send='IOS' class="el-button el-button--primary el-button--small">设置IOS下载地址</a>
+                        <a model="UI" cmd="App" send="Reset" class="el-button el-button--primary el-button--small">初始界面架构</a></div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>

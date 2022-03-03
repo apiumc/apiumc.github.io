@@ -1,0 +1,55 @@
+<div class="lk_content">
+
+    <script id="cell" type="text/html">
+        <div class="lk_content_cell3">
+            <div class="goods">
+                <a ui-spa  style="background-image: url({Src}!350?{Time})" href="/product/{Id}">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+                </a>
+                <a ui-spa href="/product/{Id}" class="pro">
+                    <div class="name">{Name}</div>
+                    <div class="price">{Price}</div>
+                </a>
+
+                <!-- <a ui-spa href="/product/{Id}" class="desc">{Long}</a> -->
+
+            </div>
+        </div>
+    </script>
+    <div class="lk_search_top">
+
+        <div>
+            <a ui-spa href="/">首页</a> &gt; 搜索 “
+            <em id="keyword"></em>”</div>
+    </div>
+    <div class="lk_content_row" style="margin-top: 0px;">
+        <div class="lk_category_filter">
+            <div class="filter">
+                <div data-key="BrandId" class="filter_title">品牌</div>
+                <ul>
+                    <li class="active">不限</li>
+                </ul>
+            </div>
+        </div>
+        <div class="lk_product_detail">
+            <div class="sort-row">
+
+                <ul>
+                    <li class="active">默认</li>
+                    <li data-sort="RetailPrice" data-dir="desc" class="Price desc">价格</li>
+                    <li data-sort="Sales" class="Sales">热门</li>
+                </ul>
+                <div class="page-count">
+                    <a href="javascript:void(0);" class="prev"> </a>
+                    <em class="page">0/0</em>
+                    <a href="javascript:void(0);" class="next"> </a>
+
+                </div>
+            </div>
+            <div id="cells">
+                <div class="empty">未搜索到“”商品</div>
+            </div>
+        </div>
+    </div>
+
+</div>

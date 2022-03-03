@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1440px" height="632px" viewBox="0 0 1440 632" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Group 43</title>
+    <desc>Created with Sketch.</desc>
+    <g id="定稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="官网首页" transform="translate(0.000000, -809.000000)">
+            <g id="Group-43" transform="translate(0.000000, 809.000000)">
+                <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="1440" height="632"></rect>
+                <path d="M559,120 C576.673112,120 591,105.673112 591,88 C591,70.326888 576.673112,56 559,56 C541.326888,56 527,70.326888 527,88 C527,105.673112 541.326888,120 559,120 Z M559,168 C514.81722,168 479,132.18278 479,88 C479,43.81722 514.81722,8 559,8 C603.18278,8 639,43.81722 639,88 C639,132.18278 603.18278,168 559,168 Z" id="Oval" fill="#CAE0D9" fill-rule="nonzero" opacity="0.4"></path>
+                <path d="M1335,624 L1335,619 C1335,597.460895 1317.53911,580 1296,580 L1291,580 L1291,534 L1296,534 C1342.9442,534 1381,572.055796 1381,619 L1381,624 L1335,624 Z" id="Path" fill="#CAE0D9" fill-rule="nonzero" opacity="0.4"></path>
+            </g>
+        </g>
+    </g>
+</svg>

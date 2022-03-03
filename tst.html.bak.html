@@ -1,0 +1,305 @@
+<!doctype  html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>全屏问题</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <style type="text/css">
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        
+        body #videobox {
+            width: 400px;
+            height: 320px;
+            margin: 100px auto;
+            background-color: #000;
+        }
+        
+         :-webkit-full-screen {}
+        
+         :-moz-full-screen {}
+        
+         :-ms-fullscreen {}
+        
+         :-o-fullscreen {}
+        
+         :full-screen {}
+        
+         :fullscreen {}
+        
+         :-webkit-full-screen #videobox {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(224, 60, 60);
+        }
+        
+         :-moz-full-screen video {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="videobox">
+
+        <div controls="controls" preload="preload" id="video" poster="poster.jpg">
+
+
+        </div>
+        <button id="fullScreenBtn">全屏</button>
+    </div>
+
+
+    <script type="text/javascript">
+        //反射調用
+        var ls = [{
+            "title": "BPM",
+            "root": "bpm",
+            "url": "https://bpm-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/a6e4c42d-eafb-a7b8-f828-efa9aec7d7ad/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://bpm-sso.kukahome.com/Docs/"
+        }, {
+            "title": "Confluence",
+            "root": "wiki",
+            "url": "https://wiki-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/a27b4bd5-7175-f0a2-0b38-ed9273b974f2/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://wiki-sso.kukahome.com/Docs/"
+        }, {
+            "title": "IT环境监控",
+            "root": "cacti",
+            "url": "https://cacti-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/11f4384f-9177-59e8-8021-3136bb816569/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://cacti-sso.kukahome.com/Docs/"
+        }, {
+            "title": "jira",
+            "root": "jira",
+            "url": "https://jira-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/1e780cd2-8394-feeb-ddba-f38eeb88fdf7/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://jira-sso.kukahome.com/Docs/"
+        }, {
+            "title": "KOBS",
+            "root": "kobs",
+            "url": "https://kobs-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/16590e93-ce5a-2e1b-5e6a-c23b4e35e633/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://kobs-sso.kukahome.com/Docs/"
+        }, {
+            "title": "OMS",
+            "root": "oms",
+            "url": "https://oms-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/3eb3fd9f-80f5-4621-e555-cf9e1082e314/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://oms-sso.kukahome.com/Docs/"
+        }, {
+            "title": "U9",
+            "root": "u9",
+            "url": "https://u9-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/9f258654-019c-19e2-9ac7-cddcae3b383d/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://u9-sso.kukahome.com/Docs/"
+        }, {
+            "title": "WMS",
+            "root": "wms",
+            "url": "https://wms-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/495d71de-bb79-a7e0-78bb-9a23267dce51/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://wms-sso.kukahome.com/Docs/"
+        }, {
+            "title": "堡垒机",
+            "root": "sas",
+            "url": "https://sas-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/ef4ca6a8-2a26-de04-4872-b68b63ab7cd8/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://sas-sso.kukahome.com/Docs/"
+        }, {
+            "title": "常用软件",
+            "root": "ehr",
+            "url": "http://help.kukasofa.com/",
+            "src": "https://image.365lu.cn/1loatcr/images/aae7ea77-f3eb-d09f-c8be-f84e58b37cfd/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://ehr-sso.kukahome.com/Docs/"
+        }, {
+            "title": "电商管理",
+            "root": "drp",
+            "url": "https://drp-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/3530fad7-3976-1943-4c71-2ce9d95e3c4f/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://drp-sso.kukahome.com/Docs/"
+        }, {
+            "title": "工作管理",
+            "root": "excel",
+            "url": "https://excel-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/06c957bf-7dfa-b62b-6d07-372e41585d96/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://excel-sso.kukahome.com/Docs/"
+        }, {
+            "title": "河北MES",
+            "root": "hbmes",
+            "url": "https://hbmes-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/db304bc1-0ae6-144c-1cad-c9a48ac2d62e/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://hbmes-sso.kukahome.com/Docs/"
+        }, {
+            "title": "黄冈MES",
+            "root": "hgmes",
+            "url": "https://hgmes-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/4a6b34ec-30bf-a5cd-9ee1-349de9e002a7/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://hgmes-sso.kukahome.com/Docs/"
+        }, {
+            "title": "嘉兴MES",
+            "root": "jxmes",
+            "url": "https://jxmes-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/18eb873b-8b02-b18d-66f3-1d1a4d5fcb32/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://jxmes-sso.kukahome.com/Docs/"
+        }, {
+            "title": "江东MES",
+            "root": "jdmes",
+            "url": "https://jdmes-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/cfe24679-2b95-1b2e-49ca-33e607456dd7/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://jdmes-sso.kukahome.com/Docs/"
+        }, {
+            "title": "零售分销",
+            "root": "retail",
+            "url": "https://retail-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/36b93833-0011-120c-bea4-1bcd7e9ad8c1/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://retail-sso.kukahome.com/Docs/"
+        }, {
+            "title": "渠道管理",
+            "root": "sims",
+            "url": "https://sims-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/86c2d525-7589-5bab-f3b8-33874be70cab/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://sims-sso.kukahome.com/Docs/"
+        }, {
+            "title": "商城-店铺",
+            "root": "bshop",
+            "url": "https://bshop-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/e6fa7a75-693f-0aea-3892-9c29bddcb830/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://bshop-sso.kukahome.com/Docs/"
+        }, {
+            "title": "商品管理",
+            "root": "pm",
+            "url": "https://pm-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/5dd80951-fe95-78ce-16d9-704e6e5b1279/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://pm-sso.kukahome.com/Docs/"
+        }, {
+            "title": "数据平台",
+            "root": "data",
+            "url": "https://data-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/387f778d-3d5d-c8fe-815d-20f7496026dc/1/0.jpg!100",
+            "target": "max",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://data-sso.kukahome.com/Docs/"
+        }, {
+            "title": "下沙MES",
+            "root": "xsmes",
+            "url": "https://xsmes-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/68b08b5a-b708-eb3d-aaa2-60e8cba89805/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://xsmes-sso.kukahome.com/Docs/"
+        }, {
+            "title": "销售层级测试",
+            "root": "fatsales",
+            "url": "https://fatsales-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/573dcc82-1474-1e8c-a275-0c0681603f44/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://fatsales-sso.kukahome.com/Docs/"
+        }, {
+            "title": "销售层级管理",
+            "root": "salesadmin",
+            "url": "https://salesadmin-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/fa500afc-6377-8f83-1ecb-2f2b15d73258/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://salesadmin-sso.kukahome.com/Docs/"
+        }, {
+            "title": "协同办公",
+            "root": "oa",
+            "url": "https://oa-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/c15fcfbd-4f8e-9901-0300-ed0d0a306428/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": true,
+            "docs": "https://oa-sso.kukahome.com/Docs/"
+        }, {
+            "title": "用户经营",
+            "root": "mgruser",
+            "url": "https://mgruser-sso.kukahome.com/?login",
+            "src": "https://image.365lu.cn/1loatcr/images/cc0028e2-05dd-ff13-1a9c-5a2195dd45f8/1/0.jpg!100",
+            "target": "_blank",
+            "badge": "",
+            "desktop": false,
+            "docs": "https://mgruser-sso.kukahome.com/Docs/"
+        }]
+        var cs = [];
+        ls.forEach(r => cs.push(r.title));
+        document.write('videobox').innerHTML = (cs.join(', '))
+    </script>
+</body>
+
+</html>

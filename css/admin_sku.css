@@ -1,0 +1,113 @@
+       .umc-product #jqData {
+           border-right: 1px solid #dfe6ec;
+           border-top: 1px solid #dfe6ec;
+           border-left: 1px solid #dfe6ec;
+           overflow: hidden;
+       }
+       
+       .umc-product #jqData ul li.off input {
+           width: auto;
+       }
+       
+       .umc-product #jqData ul li.price {
+           flex: none;
+           width: 100px;
+       }
+       
+       .umc-product #jqData ul li.code {
+           position: relative;
+       }
+       
+       .umc-product #jqData ul li.code i {
+           position: absolute;
+           top: 0px;
+           right: 0;
+           padding-right: 0.5em;
+           font-style: normal;
+           cursor: pointer;
+       }
+       
+       .umc-product #jqData ul li.code i::before {
+           content: '\f02a';
+           font-family: wdk;
+       }
+       
+       .umc-product #jqData ul {
+           list-style: none;
+           display: flex;
+           line-height: 35px;
+           border-bottom: 1px solid #dfe6ec;
+       }
+       
+       .umc-product #jqData ul li {
+           border-right: 1px solid #dfe6ec;
+           position: relative;
+           -webkit-box-flex: 1;
+           -webkit-flex: 1;
+           -ms-flex: 1;
+           flex: 1;
+           text-align: center;
+           display: block;
+       }
+       
+       .umc-product #jqData ul li[wdk-id] {
+           text-decoration: solid;
+           color: #337ab7;
+           cursor: pointer;
+       }
+       
+       .umc-product #jqData ul input[type=text] {
+           border: none;
+           height: 35px;
+           line-height: 35px;
+           width: 100%;
+           text-indent: 0.5em;
+           font-size: 16px;
+           background-color: #fff;
+           /* text-align: center; */
+           border-radius: 0;
+           padding: 0;
+           margin: 0;
+           text-indent: 0.4em;
+           display: block;
+       }
+       
+       .umc-product #jqData ul li.off {
+           flex: none;
+           width: 50px;
+           border-right: 0px;
+           text-align: center;
+       }
+       
+       .umc-product #attributes ul {
+           list-style: none;
+           margin-left: 2em;
+       }
+       
+       .umc-product #attributes ul li {
+           float: left;
+           width: 50%;
+           line-height: 35px;
+           color: #337ab7;
+       }
+       
+       .umc-product #attributes ul li a:first-child {
+           width: 120px;
+           float: left;
+           text-align: right;
+       }
+       
+       .umc-product #attributes ul li a:first-child::after {
+           content: ":　";
+           color: #111;
+       }
+       
+       .umc-product #attributes ul li a:last-child::after {
+           display: block;
+           margin-left: 120px;
+       }
+       
+       .umc-product #attributes .caption {
+           line-height: 35px;
+           border-bottom: 1px solid #dfe6ec;
+       }

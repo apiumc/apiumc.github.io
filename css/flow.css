@@ -1,0 +1,230 @@
+.wdk-flow #service,
+#sub {
+    display: block;
+    overflow: hidden;
+}
+
+.wdk-flow-title {
+    cursor: pointer
+}
+
+.wdk-flow-title::after {
+    content: '\f040';
+    font-family: wdk;
+    padding-left: 15px;
+    color: #aaa;
+    font-size: 18px;
+}
+
+.wdk-flow #service a,
+.wdk-flow #sub a {
+    float: left;
+    width: 33.3333%;
+    font-size: 12px;
+    text-align: center;
+}
+
+.wdk-flow #service a.responder::before,
+.wdk-flow #sub a.induceLine::before,
+.wdk-flow #sub a.shape::before,
+.wdk-flow #sub a.line::before {
+    content: '\f178';
+    font-family: wdk;
+    display: block;
+    font-size: 30px;
+    height: 50px;
+}
+
+.wdk-flow #sub a.induceLine::before {
+    content: '\f177';
+    color: brown;
+}
+
+.wdk-flow #service a.responder::before {
+    content: '\f085';
+}
+
+.wdk-flow #sub a.shape::before {
+    content: '\f007';
+}
+
+.wdk-flow #sub a.shape.ComplexShape::before {
+    content: '\f0c0';
+}
+
+.wdk-flow .node rect {
+    stroke: #333;
+    fill: #fff;
+    stroke-width: 1.5px;
+}
+
+.wdk-flow .edgePath path.path {
+    stroke: #333;
+    fill: #333;
+    stroke-width: 2.5px;
+}
+
+.edgePath.sel path.path {
+    stroke-dasharray: 10;
+    animation: sel-rect 1s ease-in-out infinite;
+}
+
+.wdk-flow .edgePath.wf.induce path.path {
+    stroke: brown;
+}
+
+.wdk-flow .edgePath.wf.induce marker path {
+    stroke: brown;
+    fill: brown;
+}
+
+.wdk-flow .arrowhead {
+    stroke: blue;
+    fill: blue;
+    stroke-width: 1.5px;
+}
+
+.wdk-flow .node rect {
+    stroke: #333;
+    fill: #fff;
+    stroke-width: 1.5px;
+}
+
+.wdk-flow .node.sel rect {
+    stroke-dasharray: 10;
+    animation: sel-rect 1s ease-in-out infinite;
+}
+
+.wdk-flow .edgePath path.path {
+    stroke: #333;
+    fill: #333;
+    stroke-width: 2.5px;
+}
+
+.wdk-flow .edgePath.sel path.path {
+    stroke-dasharray: 10;
+    animation: sel-rect 1s ease-in-out infinite;
+}
+
+.wdk-flow .edgePath.wf.induce path.path {
+    stroke: brown;
+}
+
+.wdk-flow .edgePath.wf.induce marker path {
+    stroke: brown;
+    fill: brown;
+}
+
+.wdk-flow .Passed.edgePath path.path {
+    stroke: #00d600;
+    fill: #00d600;
+}
+
+.wdk-flow .Passed.edgePath.wf marker path {
+    stroke: #00d600;
+    fill: #00d600;
+}
+
+.wdk-flow .Destructive.edgePath path.path {
+    stroke: #aaa;
+    fill: #aaa;
+}
+
+.wdk-flow .Destructive.edgePath.wf marker path {
+    stroke: #aaa;
+    fill: #aaa;
+}
+
+.wdk-flow .footer {
+    box-shadow: 0px 0px 5px #aaa;
+    height: 50px;
+    padding: 1em 0;
+}
+
+.wdk-flow #services a {
+    float: left;
+    padding: 0 0.5em;
+    border: 1px #aaa solid;
+    margin-left: 1em;
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    min-width: 60px;
+    text-align: center;
+    font-size: 12px;
+    box-shadow: 0px 0px 5px #aaa;
+}
+
+.wdk-flow #services a.sel {
+    /* border: 1px #FF9800 solid; */
+    box-shadow: 2px 2px 5px #333333;
+}
+
+.wdk-flow #services a::before {
+    font-size: 18px;
+    content: '\f085';
+    text-align: center;
+    font-family: wdk;
+    display: block;
+}
+
+.wdk-flow .wdk-shape {
+    position: relative;
+}
+
+.wdk-flow .wdk-shape:before {
+    font-size: 30px;
+    content: '\f007';
+    text-align: center;
+    font-family: wdk;
+}
+
+.wdk-flow .Approved .wdk-shape::before {
+    color: #00d600;
+}
+
+.wdk-flow .node.Approved rect {
+    stroke: #00d600;
+}
+
+.wdk-flow .Unworking .wdk-shape::before {
+    color: #aaa;
+}
+
+.wdk-flow .node.Unworking rect {
+    stroke: #aaa;
+}
+
+.wdk-flow .Activation .wdk-shape::before {
+    color: #ff9800;
+}
+
+.wdk-flow .node.Activation rect {
+    stroke: #ff9800;
+}
+
+.wdk-flow .wdk-shape i {
+    position: absolute;
+    display: block;
+    right: 0;
+    top: -4px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.wdk-flow .wdk-shape {
+    width: 100px;
+    height: 60px;
+}
+
+@keyframes sel-rect {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 15;
+    }
+    100% {
+        stroke-dashoffset: 5;
+    }
+}

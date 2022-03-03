@@ -1,0 +1,299 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>云打印技术文档 · 天天录</title>
+    <meta name="keywords" content=" 云打印安装 注册到平台 测试云打印 API打印PDF格式文件 各语言代码实例 获取打印设备列表 获取最近激活时间云打印设备列表 获取单个云打印设备详情 ">
+    <meta name="description" content=" 云打印技术文档零售资讯提供新零售的资讯内容已关注云打印安装下载云打印安装包，安装好的云打印，打开Super Printer云打印程序，在电脑右下角出现云打印图标。注册到平台第一次打开需要我们的注册云打印。点击注册到平台如下图：输入注册码Key（如果没有请向我们获取），点击确认；通过后，则表示云打印">
+    <link href="//www.365lu.cn/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.css" rel="stylesheet" type="text/css" />
+    <link href="//www.365lu.cn/css/umc.sub.css?ddd" rel="stylesheet" type="text/css" />
+
+
+</head>
+
+<body>
+    <div class="weui_cells weui_cells_access umc-not-separatorline" id="Subject" section-index="0">
+        <div class="wdk-desc umc-cell-not-separatorline" style="white-space: pre-line;line-height:1.5;padding:55px 10px 10px 10px;border:none;font-weight:bold;font-size: 30px;text-align: center;" row-index="0" data-json="c0"><span style="border:none;font-weight:bold;/* font-size:18px; */">云打印技术文档</span></div>
+        <div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="2" data-json="c2">1、云打印安装</div>
+        <div class="wdk-cms-text " style="" row-index="3" data-json="c3"><a style="" target="_blank" href="https://wdk.oss-cn-hangzhou.aliyuncs.com/SuperPrinter.rar">下载云打印安装包</a>，安装好的云打印，打开Super Printer云打印程序，在电脑右下角出现云打印图标。</div>
+        <div data-key="4" class="wdk-cms-text " style="font-weight:bold;font-size:20px;" row-index="4"
+            data-json="c4">1.1、注册到平台</div>
+        <div class="wdk-cms-text " style="" row-index="5" data-json="c5">第一次打开需要我们的注册云打印。点击注册到平台如下图：</div>
+        <a style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="6" data-json="c6"><img style="" src="http://www.365lu.cn/UserResources/1usm4ih/1604482960903/image.png" alt=""></a>
+        <div class="wdk-cms-text " style="" row-index="7" data-json="c7">输入注册码Key（如果没有请向我们获取），点击确认；通过后，则表示云打印设备注册成功了，同时选择本地对接的打印机（默认会对接默认打印机）</div>
+        <div data-key="4" class="wdk-cms-text " style="font-weight:bold;font-size:20px;" row-index="8" data-json="c8">1.2、测试云打印</div>
+        <div class="wdk-cms-text " style="" row-index="9" data-json="c9">打开<a style="" target="_blank" href="https://printapi.boomingshop.cn/.well-known/demo.html">打印测试页面</a>,输入云打印设备标识--选择pdf文件，点击确认打印；如下图：</div>
+        <a style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="10" data-json="c10"><img style="" src="http://www.365lu.cn/UserResources/1usm4ih/1604551857035/image.png" alt=""></a>
+        <div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="11" data-json="c11">2、API打印PDF格式文件</div>
+        <div class="wdk-cms-text " style="" row-index="12" data-json="c12">
+            <blockquote>PUT https://wdk.oss-cn-hangzhou.aliyuncs.com/Print/<span style="color:#cc6600;">device</span>.<span style="color:#cc6600;">time</span>.pdf</blockquote>
+        </div>
+        <div class="wdk-cms-grid" row-index="13" data-json="c13">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">参数名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">device</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">云打印设备标识</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">time</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">当前时间点</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="wdk-cms-text " style="" row-index="14" data-json="c14"><span style="font-weight:bold;">备注</span>：如何获取云打印设备标识，点击云打印图标，再点击菜单中的<span style="text-decoration:underline;">所属。。。</span>，则云打印标识就会自动复制到粘贴板；如下图：</div>
+        <a style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="15" data-json="c15"><img style="" src="http://www.365lu.cn/UserResources/1usm4ih/1604545218282/image.png" alt=""></a>
+        <div data-key="4" class="wdk-cms-text " style="font-weight:bold;font-size:20px;" row-index="16" data-json="c16">2.1、各语言代码实例</div>
+        <div class="wdk-cms-text " style="" row-index="17" data-json="c17"><pre><span style="color:#008000;">//js实例</span>
+<span style="color:#2196f3;">fetch</span>([<span style="color:#c00;">'https://wdk.oss-cn-hangzhou.aliyuncs.com/Print/'</span>
+    , device,<span style="color:#c00;">'.'</span>,new <span style="color:#2196f3;">Date</span>().<span style="color:#2196f3;">getTime</span>(),<span style="color:#c00;">'.pdf'</span>].<span style="color:#2196f3;">join</span>(<span style="color:#c00;">''</span>), {
+    method: <span style="color:#c00;">'PUT'</span>,
+    body: file
+}).<span style="color:#2196f3;">then</span>(res =&gt; {
+});
+
+<span style="color:#008000;">//Java实例</span>
+
+String sfmt=<span style="color:#c00;">"https://wdk.oss-cn-hangzhou.aliyuncs.com/Print/%s.%d.pdf"</span>;
+URL url = <span style="color:#00f;">new</span> <span style="color:#2196f3;">URL</span>(String.<span style="color:#2196f3;">format</span>(sfmt, device,System.<span style="color:#2196f3;">currentTimeMillis</span>()));
+HttpURLConnection conn = (HttpURLConnection)url.<span style="color:#2196f3;">openConnection</span>();
+conn.<span style="color:#2196f3;">setRequestMethod</span>(<span style="color:#c00;">"PUT"</span>);
+conn.<span style="color:#2196f3;">setDoInput</span>(true);
+OutputStream os = conn.<span style="color:#2196f3;">getOutputStream</span>();   
+<span style="color:#2196f3;">Copy</span>(file,os);
+os.<span style="color:#2196f3;">flush</span>();
+os.<span style="color:#2196f3;">close</span>();    
+conn.<span style="color:#2196f3;">getResponseCode</span>();
+
+
+<span style="color:#008000;">//C#实例</span>
+<span style="color:#00f;">var</span> httpCleint = <span style="color:#00f;">new</span> <span style="color:#2196f3;">HttpClient</span>();
+<span style="color:#00f;">var</span> sfmt=<span style="color:#c00;">"https://wdk.oss-cn-hangzhou.aliyuncs.com/Print/{0}.{1}.pdf"</span>;
+<span style="color:#00f;">var</span> result = httpCleint.<span style="color:#2196f3;">PutAsync</span>(String.<span style="color:#2196f3;">Format</span>(sfmt, device,DateTime.Now.Ticks)
+    ,new System.Net.Http.<span style="color:#2196f3;">StreamContent</span>(file)).Result;</pre></div>
+        <div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="18" data-json="c18">3、获取打印设备列表</div>
+        <div class="wdk-cms-text " style="" row-index="19" data-json="c19">
+            <blockquote>GET https://printapi.boomingshop.cn/<span style="color:#cc6600;">key</span>/Check/Message/Print?<span style="color:#cc6600;">start</span>=0&amp;<span style="color:#cc6600;">limit</span>=25</blockquote>
+        </div>
+        <div class="wdk-cms-grid" row-index="20" data-json="c20">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">参数名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">key</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">注册码</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">start</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">开始行号</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">limit</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">连续数量</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="wdk-cms-text " style="" row-index="21" data-json="c21">此接口返回以register注册时间为排序的云打印设备列表，格式如下:</div>
+        <div class="wdk-cms-text " style="" row-index="22" data-json="c22"><pre>{
+    <span style="color:#c00;">"data"</span>: [{
+	<span style="color:#c00;">"device"</span>: <span style="color:#c00;">"...."</span>,
+	<span style="color:#c00;">"active"</span>: <span style="color:#c00;">"1604301935"</span>,
+	<span style="color:#c00;">"register"</span>: <span style="color:#c00;">"1604300479"</span>
+    }],
+    <span style="color:#c00;">"total"</span>: 1
+}</pre></div>
+        <div class="wdk-cms-grid" row-index="23" data-json="c23">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">字典名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">.device</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">云打印设备标识</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">.active</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">最后心跳时间</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">.register</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">注册时间</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">total</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">云打印设备总数</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="24" data-json="c24">4、获取最近激活时间云打印设备列表</div>
+        <div class="wdk-cms-text " style="" row-index="25" data-json="c25">
+            <blockquote>GET https://printapi.boomingshop.cn/<span style="color:#cc6600;">key</span>/Check/Message/Print/<span style="color:#cc6600;">time</span></blockquote>
+        </div>
+        <div class="wdk-cms-grid" row-index="26" data-json="c26">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">参数名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">key</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">注册码</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">time</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">不小于此激活时间</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="wdk-cms-text " style="" row-index="27" data-json="c27">此接口返回以最近active激活时间排序的云打印设备列表，格式如下:</div>
+        <div class="wdk-cms-text " style="" row-index="28" data-json="c28"><pre>{
+    <span style="color:#c00;">"data"</span>: [{
+	<span style="color:#c00;">"device"</span>: <span style="color:#c00;">"...."</span>,
+	<span style="color:#c00;">"active"</span>: <span style="color:#c00;">"1604301935"</span>,
+	<span style="color:#c00;">"register"</span>: <span style="color:#c00;">"1604300479"</span>
+    }],
+    <span style="color:#c00;">"total"</span>: 1
+<span style="color:#008000;">//只会返回100个设备列表</span>
+}</pre></div>
+        <div class="wdk-cms-grid" row-index="29" data-json="c29">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">字典名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">.device</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">云打印标识</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">.active</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">最后心跳时间</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">.register</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">注册时间</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">total</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">满足激活时间设备总数</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="30" data-json="c30">5、获取单个云打印设备详情</div>
+        <div class="wdk-cms-text " style="" row-index="31" data-json="c31">
+            <blockquote>GET https://printapi.boomingshop.cn/<span style="color:#cc6600;">key</span>/Check/Message/Print/<span style="color:#cc6600;">device</span></blockquote>
+        </div>
+        <div class="wdk-cms-grid" row-index="32" data-json="c32">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">参数名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">key</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">注册码</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">device</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">设备标识</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="wdk-cms-text " style="" row-index="33" data-json="c33">此接口返回单个云打印设备，格式如下:</div>
+        <div class="wdk-cms-text " style="" row-index="34" data-json="c34"><pre>{ 
+	<span style="color:#c00;">"device"</span>: <span style="color:#c00;">"...."</span>,
+	<span style="color:#c00;">"active"</span>: <span style="color:#c00;">"1604301935"</span>,
+	<span style="color:#c00;">"register"</span>: <span style="color:#c00;">"1604300479"</span> 
+}</pre></div>
+        <div class="wdk-cms-grid" row-index="35" data-json="c35">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">字典名称</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">类型</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">说明</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">device</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">String</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">设备标识</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">active</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">最后心跳时间</span></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">register</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">int</span></td>
+                        <td style="text-align:left;flex:2"><span style="text-align:left;flex:2;">注册时间</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="padding:7px" class="weui_cell  no_access" row-index="36" data-json="c36">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p><span style="color:#999;font-size:14px;"><span style="font-family:wdk;"></span> UMC | 阅读(177) | 评论(0)</span>
+                </p>
+            </div>
+            <div class="weui_cell_ft wdk-button"></div>
+        </div>
+        <div style="padding:10px 20px 10px 20px" class="weui_cell  no_access" row-index="37" data-json="c37">
+            <div class="weui_cell_bd weui_cell_primary wdk-button" style="text-align:center">
+                <a click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Best&quot;,&quot;send&quot;:{&quot;Key&quot;:&quot;4613f48a-4273-4eac-9395-9b4a53879ab4&quot;}}}" style="min-width:80px;color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span style="color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span style="font-family:wdk;"></span>赞</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

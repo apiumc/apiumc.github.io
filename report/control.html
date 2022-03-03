@@ -1,0 +1,94 @@
+<div class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <!-- <a class="el-sort filter-item el-select--small is-active" sort="Caption">
+                默认排序
+                <i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="Host">
+                服务器排序
+                <i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="UserId">
+                用户名排序
+            <i></i>
+            </a> -->
+
+        </div>
+
+        <div class="filter-container-button">
+            <a model="Report" cmd="Control" send="News" class="el-button filter-item el-button--primary el-button--small">
+                新建业务组
+            </a>
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="110">
+                    <col width="150">
+                    <col width="110">
+                    <col width="90">
+                    <col width="90">
+                    <col width="110">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            代码
+                        </th>
+                        <th>
+                            名称
+                        </th>
+                        <th>
+                            类型
+                        </th>
+                        <th>
+                            数据连接
+                        </th>
+                        <th>
+                            测试
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>{Code}
+                            </td>
+                            <td>
+                                {Caption}
+                            </td>
+                            <td class="is-center">
+                                {Type}
+                            </td>
+                            <td class="is-center">
+                                {GroupName}
+                            </td>
+                            <td class="is-center"> <a model="Report" cmd="${Code}" class="el-tag el-tag--small "> 测试</a>
+
+                            </td>
+                            <td class="is-center">
+
+                                <a model="Report" cmd="Control" send="{Id}" class="el-tag el-tag--small "> 配置</a>
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

@@ -1,0 +1,104 @@
+<div class="umc-dynamic">
+    <div class="umc-sub-content-header el-panel-group el-row">
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xF0c0;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    项目成员
+                </div> <span data-field="MemberCount" class="card-panel-num"></span>人 </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xF02d;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    文章总数
+                </div> <span data-field="Count" class="card-panel-num"></span>篇</div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf06e;"></div>
+            <div class="el-card-panel-description">
+
+                <div data-v-6723c96e="" class="card-panel-text">
+                    浏览总数
+                </div> <span data-field="Look" class="card-panel-num"></span> </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf0e6;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    评论总数
+                </div> <span data-field="Reply" class="card-panel-num"></span> </div>
+        </div>
+    </div>
+
+    <div style=" display: flex;">
+        <div class="el-card umc-sub-content">
+            <div class="wdk-tabs" style="position: relative; flex:1;overflow: auto">
+                <div class="weui_navbar">
+                    <div class="weui_navbar_item weui_bar_item_on" data-index="0"> 专栏</div>
+                    <div class="weui_navbar_item " data-index="1"> 动态</div>
+
+                </div>
+                <div class="wdk_tab_bd">
+                    <div class="weui_tab_bd_item" style="display: block;">
+                        <section>
+
+                        </section>
+                    </div>
+                    <div class="weui_tab_bd_item ">
+                        <div class="el-table">
+                            <div>
+                                <script type="text/html">
+                                    <div data-id="{id}" data-time="{tid}" class="umc-sub-dynamic-item">
+                                        <div class="umc-sub-dynamic-img">
+                                            <img src="{src}">
+                                        </div>
+                                        <div style="flex:1; padding-left:12px">
+                                            <div>{title}</div>
+                                            <div class="umc-sub-dynamic-desc">{alias} {time} {desc}</div>
+                                        </div>
+                                        <div class="umc-sub-dynamic-type" style="">{type}</div>
+                                    </div>
+                                </script>
+                            </div>
+                        </div>
+                        <div class="pagination-container">
+                            <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+                            <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+                            <input type="number" autocomplete="off" min="1" max="1" />
+                            <span class="total"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="umc-sub-content-right">
+            <div class="el-card">
+                <div class="umc-project-head">
+                    <div data-key="Icon"> <img data-field="Src"></div>
+
+
+                    <div class="umc-project-code" data-key="Code">简码 :<b data-field="Code"></b></div>
+                    <div class="umc-project-name" data-key="Caption" data-field="Name"></div>
+                    <div class="umc-project-desc" data-key="Description" data-field="Desc"></div>
+                    <div style="margin: 1em 0;">
+                        <a id="join" data-field="joinText" class="el-button filter-item el-button--primary el-button--small">
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="el-card" style=" margin-top:10px;">
+                <div style="padding: 1em; text-align: center;"><img width="80%" data-field="FollowSrc"></div>
+                <div style="text-align: center; padding-bottom: 10px; ">用<span style="color:#1890ff" data-field="Scans"> </span>扫码加入</div>
+
+            </div>
+        </div>
+    </div>
+</div>

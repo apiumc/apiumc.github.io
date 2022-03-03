@@ -1,0 +1,133 @@
+<div ui="paylog" class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" sort="CreationTime">
+                时间日期<i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="total_fee">
+                应收金额<i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="origin_fee">
+                实收金额<i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="Posdaily">
+                交班对账<i></i>
+            </a>
+
+        </div>
+        <div class="filter-container-button">
+
+            <a model="Pay" cmd="Query" class="el-button filter-item el-button--primary el-button--small">
+                核查订单
+            </a>
+        </div>
+    </div>
+    <form class="filter-container el-card">
+        <div class="filter-container-item">
+            开始日期:
+            <input type="date" id="startDate" placeholder="默认后7天" class="el-input el-input__inner" name="startDate"> 结束日期:
+            <input type="date" id="endDate" name="endDate" placeholder="默认当前日期" class="el-input el-input__inner">
+
+        </div>
+
+        <div class="filter-container-button">
+
+            <input type="submit" class="el-button el-button--primary el-button--medium" value="查询">
+            <input type="button" id="exportCsv" class="el-button el-button--primary el-button--medium" value="导出">
+            <input type="button" id="total" class="el-button el-button--primary el-button--medium" value="合计">
+        </div>
+    </form>
+    <div class="item-container">
+
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="160">
+                    <col width="180">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="100">
+                    <col width="138">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            单号
+                        </th>
+                        <th>
+                            门店
+                        </th>
+                        <th>
+                            应收金额
+                        </th>
+                        <th>
+                            实收金额
+                        </th>
+                        <th>
+                            优惠金额
+                        </th>
+                        <th>
+                            商铺分摊
+                        </th>
+                        <th>
+                            补贴金额
+                        </th>
+                        <th>
+                            合计入账
+                        </th>
+                        <th>
+                            类型
+                        </th>
+                        <th>
+                            时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+                                {Order}
+                            </td>
+                            <td>
+                                {Store}
+                            </td>
+                            <td>{total_fee}&nbsp;</td>
+                            <td>
+                                {origin_fee}&nbsp;
+                            </td>
+                            <td>
+                                {promotion_fee}&nbsp;
+                            </td>
+                            <td>
+                                {seller_share_fee}&nbsp;
+                            </td>
+                            <td>
+                                {share_fee}&nbsp;
+                            </td>
+                            <td>
+                                {revenue_fee}&nbsp;
+                            </td>
+                            <td>{Type}</td>
+                            <td>{Time}</td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+            <!---->
+            <!---->
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

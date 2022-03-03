@@ -1,0 +1,121 @@
+<div class="lk_content" style="margin-top: 20px;">
+    <script id="product" type="text/html">
+        <div class="lk_order_pro">
+            <a ui-spa href="/product/{product_id}" class="lk_order_pro_image">
+                <img style="width:80px;margin-right: 5px;" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';" src="{Src}">
+            </a>
+            <div class="lk_order_pro_context">
+                <div class="lk_order_pro_name">{Name} </div>
+                <div class="lk_order_pro_sku">规格:{Size}</div>
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{Price}
+            </div>
+            <div class="lk_order_pro_qty" data-sku="{sku_id}">
+                <a class="wdk-pro-add">
+
+                </a>
+                <input class="wdk-pro-quantity" type="number" value="{Quantity}" />
+                <a class="wdk-pro-reduce">
+
+                </a>
+            </div>
+            <div class="lk_order_pro_price">
+                ￥{SaleAmount}
+            </div>
+            <div class="lk_order_pro_fn">
+                <a data-sku="{sku_id}" class="wdk-pro-del">移除</a>
+                <!-- <a data-sku="{sku_id}" data-pro="{product_id}"  class="wdk-pro-del-favoriter">移到我的收藏</a>
+                    <a data-pro="{product_id}" class="wdk-pro-favoriter">加到我的收藏</a> -->
+            </div>
+
+        </div>
+    </script>
+    <div style="overflow: hidden;">
+        <div class="stepflex" id="#sflex03">
+            <dl class="first doing">
+                <dt class="s-num">1</dt>
+                <dd class="s-text">1.我的购物车
+                    <s></s>
+                    <b></b>
+                </dd>
+            </dl>
+            <dl class="normal ">
+                <dt class="s-num">2</dt>
+                <dd class="s-text">2.核对订单信息
+                    <s></s>
+                    <b></b>
+                </dd>
+            </dl>
+            <dl class="normal last">
+                <dt class="s-num">3</dt>
+                <dd class="s-text">3.订单结算
+                    <s></s>
+                    <b></b>
+                </dd>
+            </dl>
+        </div>
+        <h1>购物车</h1>
+    </div>
+    <div id="cells">
+        <div class="sort-row hide">
+
+            <div style=" flex:1; width:100px;text-align: center;">商品</div>
+            <div style="width:100px;text-align: center;">
+                单价
+            </div>
+            <div style="width:200px;text-align: center;">
+                数量
+            </div>
+            <div style="width:100px;text-align: center;">
+                小计
+            </div>
+            <div style="width:126px;text-align: center;">
+                操作
+            </div>
+        </div>
+        <div class="lk_order hide">
+            <div class="lk_order_content">
+                <div class="lk_order_products" id="products">
+
+                </div>
+            </div>
+        </div>
+        <div class="empty" style="display:none">
+            <b>购物车是空空的，
+                                <a style="color: #2965B1;" href="/index.html">去选择</a>商品吧</b>
+
+        </div>
+        <div id="fixedBottom"></div>
+        <div id="fixed-bottom hide">
+            <div class="lk_cart_footer lk_content">
+
+                <div class="lk_cart_footer-frist">
+
+                    <a model="Ticket" cmd="Clear" href="javascript:void(0);">
+                                        清空购物车
+                                    </a>
+                </div>
+                <div class="lk_cart_footer-sum">
+
+                    <div class="amount-sum">
+                        已选择
+                        <em data-field="Quantity">1</em>件商品
+                        <span style="padding-left:1em"> 总价：</span>
+
+                        <em class="amount" data-field="TotalAmount">0.00</em>
+
+                    </div>
+                    已节省：-
+                    <em class="amount" data-field="PromAmount">0.00</em>
+
+
+                </div>
+
+                <a class="lk_cart_order" ui-spa href="/order">
+                                    生成订单
+                                </a>
+            </div>
+        </div>
+    </div>
+</div>

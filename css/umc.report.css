@@ -1,0 +1,122 @@
+        .el-table.el-report.msg:before {
+            font-size: 50px;
+            display: none;
+        }
+        
+        .el-table.el-report.msg::after {
+            padding: 50px;
+        }
+        
+        .el-report thead th {
+            position: relative;
+        }
+        
+        .el-report thead th i {
+            position: absolute;
+            right: 0.5em;
+            cursor: pointer;
+        }
+        
+        .el-icon-exce::before,
+        .el-icon-export::before,
+        .el-icon-add::before {
+            /* position: absolute;  */
+            /* cursor: pointer; */
+            content: '\f067';
+            padding-right: 0.2em;
+            font-family: wdk;
+        }
+        
+        .el-icon-exce::before {
+            content: '\f074';
+        }
+        
+        .el-icon-export::before {
+            content: '\f02f';
+        }
+        
+        .el-report thead th i::before {
+            content: '\f1e5';
+            color: #c0c4cc;
+            font-family: wdk;
+            font-style: normal;
+        }
+        
+        .el-report thead th i.is-active::before {
+            color: #1890ff;
+        }
+        
+        .el-report thead th.is-active::after {
+            border-color: #1890ff;
+        }
+        
+        .el-report thead th::after {
+            /* position: absolute; */
+            /* top: 45%;
+    right: 16px; */
+            -webkit-transition: -webkit-transform .3s;
+            transition: -webkit-transform .3s;
+            transition: transform .3s;
+            transition: transform .3s, -webkit-transform .3s;
+            font-size: 12px;
+            content: " ";
+            display: inline-block;
+            height: 6px;
+            width: 6px;
+            border-width: 2px 2px 0 0;
+            border-color: #fff;
+            border-style: solid;
+            -webkit-transform: rotate(315deg);
+            transform: rotate(315deg);
+            margin-left: 0.5em;
+        }
+        
+        .el-report thead th.is-active.desc::after {
+            -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+        }
+        
+        .el-table.el-report.msg table {
+            display: table;
+        }
+        
+        .el-table.el-report.msg table tbody {
+            display: none;
+        }
+        
+        .el-pivot .el-pivot-table {
+            display: none;
+        }
+        
+        .el-pivot[chart=Pivot] .el-pivot-table {
+            display: block;
+        }
+        
+        .el-pivot[chart=Pie] .el-chart {
+            height: 560px;
+        }
+        
+        .el-pivot[chart=Pivot] .el-chart {
+            display: none;
+        }
+        
+        .el-pivot-table .el-table {
+            overflow: auto;
+        }
+        
+        .el-pivot-table th {
+            min-width: 120px;
+        }
+        
+        #Options a {
+            position: relative;
+        }
+        
+        #Options a.is-active em::before {
+            content: '\f013';
+            color: #fff;
+            font-family: wdk;
+            position: absolute;
+            right: 0.5em;
+            font-style: normal;
+        }

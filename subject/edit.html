@@ -1,0 +1,46 @@
+<div class="app-container">
+
+    <form class="filter-container el-card">
+
+        <div class="filter-container-item">
+            <input type="hidden" name="Id" />
+
+            <input type="text" name="Title" placeholder="内容标题" style="width: 98%;" class="el-input el-input__inner">
+        </div>
+        <div class="filter-container-button">
+
+            <input type="submit" class="el-button el-button--primary el-button--medium" value="保存">
+        </div>
+    </form>
+    <div class="item-container">
+
+        <div class=" el-card">
+
+            <div id="i_des" class="el-editer-html markdown" style="height: auto;">
+                <div class="tool">
+                    <a class="cssUploader">
+                        <input type="file" accept="image/gif,image/png,image/jpg,image/jpeg" style="position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 100%; opacity: 0;" />
+                    </a>
+                    <a class="cssColor">
+                        <input type="color" />
+                    </a>
+                    <a data-name="text-align" value="left" class="cssleft">
+                    </a>
+                    <a data-name="text-align" value="center" class="csscenter"></a>
+                    <a data-name="text-align" value="right" class="cssright"></a>
+                    <a class="cssFont">
+                        <input type="range" name="font" min="12" data-name="font-size" suffix="px" max="56" value="15" />
+                    </a>
+                    <a data-icon="H1" data-name="font-size" value="26" class="font-size"></a>
+                    <a data-icon="H2" data-name="font-size" value="24" class="font-size"></a>
+                    <a data-icon="H3" data-name="font-size" value="22" class="font-size"></a>
+                    <a data-icon="H4" data-name="font-size" value="20" class="font-size"></a>
+                    <button id="markdown" class="el-button el-button--small" style=" float: right;   margin:1px .5em;"></button>
+                </div>
+                <div id="des" contenteditable="true" style="overflow: auto; ">
+                </div>
+                <textarea id="textarea"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

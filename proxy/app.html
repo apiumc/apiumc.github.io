@@ -1,0 +1,139 @@
+<div class="app-container">
+    <div class="filter-container">
+        <div class="filter-container-item">
+        </div>
+        <div class="filter-container-button">
+            <a class="el-sort filter-item el-select--small is-active" search-name="status" search-value="200">
+                应用日志 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="status" search-value="400">
+                异常日志 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="user" search-value="user">
+                用户日志 
+            </a>
+
+        </div>
+    </div>
+    <div class="el-panel-group el-row" style="margin: 16px 0;">
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf0c0;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    <span data-field="title"></span>有
+                </div> <span data-field="total" class="card-panel-num"></span> 个用户 </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf074;">
+            </div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    发送请求
+                </div>
+                <div style="position: relative;">
+                    <span data-field="quantity" class="card-panel-num"></span> 次
+
+                </div>
+            </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf252;"></div>
+            <div class="el-card-panel-description">
+
+                <div data-v-6723c96e="" class="card-panel-text">
+                    响应耗时
+                </div> <span data-field="duration" class="card-panel-num"></span> </div>
+        </div>
+    </div>
+
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" search-name="type" search-value="day">
+                当日 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="type" search-value="week">
+                当周 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="type" search-value="month">
+                当月 
+            </a>
+
+        </div>
+        <div class="filter-container-button">
+            <div class="el-date-value">
+                <b>2019</b>年<b>11</b>月<b>16</b>日</div>
+
+        </div>
+    </div>
+    <div class="item-container">
+        <div class="el-card" style="padding: 10px;">
+            <div class="umc-proxy-logs">
+
+            </div>
+
+
+        </div>
+        <div class="el-table " style="display: none;">
+            <div class="el-empty-msg" style="text-align: center; padding-bottom: 20px;">
+                未有找到
+                <a ui-event="user" class="el-tag el-tag--small"></a>用户的应用日志
+            </div>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="200">
+                    <col width="30">
+                    <col width="30">
+                    <col width="30">
+                    <col width="40">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            <a ui-event="user" id="user" style="white-space:normal" class="el-tag el-tag--small"></a>访问的网址
+                        </th>
+                        <th>
+                            <a ui-event="Quantity" style="white-space:normal" class="el-tag el-tag--small">页面加载</a>
+
+                        </th>
+                        <th>
+                            交互时长
+                        </th>
+                        <th>
+                            日志数
+                        </th>
+                        <th>
+                            访问时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html ">
+                        <tr>
+                            <td>
+                                <a class="link-type" href="{Referrer}" target="_blank" style="height: 23px;
+    overflow: hidden;
+    display: block;">{Referrer}</a>
+                            </td>
+                            <td class="is-center">{Status}ms
+                            </td>
+                            <td class="is-center">{Duration}ms
+                            </td>
+                            <td class="is-center">
+                                {Quantity}
+                            </td>
+                            <td class="is-center">
+                                {fmt}
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>

@@ -1,0 +1,154 @@
+<div class="lk_content">
+    <script id="spread" type="text/html">
+        <div class="goods">
+            <a ui-spa style="background-image: url({src})" href="/product/{id}">
+                <img alt="{name}" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" />
+            </a>
+            <a ui-spa href="/product/{id}" class="pro">
+                <div class="name">{name}</div>
+                <div class="price">{price}</div>
+            </a>
+            <!-- <a ui-spa href="/product/{id}" class="desc">{longname}</a> -->
+
+        </div>
+    </script>
+    <div class="lk_content_nav">
+
+    </div>
+    <div class="lk_content_row">
+        <div class="lk_product_image">
+            <div class="image">
+                <div class="zooms-handle"></div>
+                <div class="zooms">
+                    <div class="maxImage">
+
+                    </div>
+                </div>
+            </div>
+            <div class="thumb">
+                <div class=" prev ">
+                    <a href="javascript:void(0);" class="icon"></a>
+                </div>
+                <div class="thumbnail-list">
+                    <ul>
+
+                    </ul>
+
+                </div>
+                <div class="next">
+                    <a href="javascript:void(0);" class="icon"></a>
+                </div>
+            </div>
+
+        </div>
+        <div class="product-main">
+            <div class="product-main-ara">
+
+                <div class="product-title" data-field="Product_Name">
+
+                </div>
+
+                <div class="product-concerns">
+                    <ul>
+                        <li>
+                            <span class="label">型　号：</span>
+                            <span class="detail">
+                                    <em data-field="Product_Code"></em>
+                                    <!-- <ins class="action-price" data-field="DownPrice"></ins> -->
+
+                                </span>
+                        </li>
+                        <li>
+                            <span class="label">品　牌：</span>
+                            <span class="detail">
+                                    <a data-field="BrandName" ui-spa href="/brand/{BrandId}">
+                                        {BrandName}
+                                    </a>
+                                </span>
+                        </li>
+                        <li>
+                            <span class="label">系　列：</span>
+                            <span class="detail">
+                                    <a data-field="SeriesName" ui-spa href="/series/{series_id}">
+                                    </a>
+                                </span>
+                        </li>
+                        <li>
+                            <span class="label">销售价：</span>
+                            <span class="detail">
+                                    <b class="price">
+                                        <em data-field="RetailPrice"></em>
+                                        <!-- <ins class="action-price" data-field="DownPrice"></ins> -->
+                                    </b>
+                                </span>
+                        </li>
+                        <!-- <li>
+                                <span class="label">市场价：</span>
+                                <span class="detail">
+                                    <del data-field="OriginalPrice">￥2180.00
+
+                                    </del>
+                                </span>
+                            </li> -->
+                    </ul>
+                </div>
+                <div class="product-buy wdk-sku">
+
+                    <div class="wdk-sku-content">
+                        <div class="wdk-sku-items"></div>
+                        <div class="wdk-sku-qty">
+                            <div>
+                                <a class="wdk-sku-reduce">-</a>
+                                <input value="1" type="number" min="1" style="width: 68px;">
+                                <a class="wdk-sku-add">+</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <button id="favoriter">立即购买</button>
+                        <button id="buy">
+                                加入购物车
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lk_content_row">
+        <div class="lk_product_spread">
+            <h6>
+                <b>热门产品推荐</b>
+            </h6>
+
+        </div>
+        <div class="lk_product_detail">
+            <div class="product-tab-main">
+                <ul class="tabs">
+                    <li class="product-detail-tab active">商品详情</li>
+                    <li class="product-comment-tab ">规格参数</li>
+                    <li class="product-comment-tab ">商品评论</li>
+                </ul>
+                <div class="detail-content">
+                    <div class="desc">
+                    </div>
+                    <div>
+                        <div class="attribute"></div>
+                    </div>
+                    <div>
+                        <div class="weui_panel weui_panel_access">
+                            <div class="weui_panel_bd">
+
+                            </div>
+                            <a class="weui_panel_ft " id="More" model="Product" cmd="Comment">
+                                <b></b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

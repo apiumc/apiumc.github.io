@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>Group 84</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="官网首页" transform="translate(-208.000000, -2318.000000)">
+            <g id="Group-33" transform="translate(208.000000, 2318.000000)">
+                <g id="Group-32">
+                    <g id="Group-84">
+                        <circle id="Oval" fill="#F5F5F5" cx="28" cy="28" r="28"></circle>
+                        <g id="Group-28" transform="translate(14.000000, 14.000000)">
+                            <rect id="Rectangle" x="0" y="0" width="28" height="28"></rect>
+                            <path d="M9.8,14 L16.1,14" id="Path-13" stroke="#434F59" stroke-width="1.4"></path>
+                            <rect id="Rectangle" fill="#434F59" opacity="0.75" x="19.6" y="1.4" width="7" height="7" rx="1.4"></rect>
+                            <rect id="Rectangle-Copy-33" fill="#434F59" opacity="0.5" x="14.7" y="11.2" width="5.6" height="5.6" rx="1.4"></rect>
+                            <rect id="Rectangle-Copy-34" fill="#434F59" x="19.6" y="19.6" width="7" height="7" rx="1.4"></rect>
+                            <path d="M19.6,4.9 L9.8,4.9 C8.2536027,4.9 7,6.1536027 7,7.7 L7,20.3 C7,21.8463973 8.2536027,23.1 9.8,23.1 L20.3,23.1" id="Path-12" stroke="#434F59" stroke-width="1.4"></path>
+                            <rect id="Rectangle" fill="#434F59" x="1.4" y="9.8" width="8.4" height="8.4" rx="1.4"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

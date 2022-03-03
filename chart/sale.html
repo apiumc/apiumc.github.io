@@ -1,0 +1,51 @@
+<div class="app-container">
+
+    <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" search-name="type" search-value="day">
+                当日 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="type" search-value="week">
+                当周 
+            </a>
+            <a class="el-sort filter-item el-select--small" search-name="type" search-value="month">
+                当月 
+            </a>
+
+        </div>
+        <div class="filter-container-button">
+            <div class="el-date-value">
+                <b>2019</b>年<b>11</b>月<b>16</b>日</div>
+
+        </div>
+    </div>
+    <div class="item-container"> 
+        <div class="el-card">
+            <div id="charts" class="el-chart"></div>
+        </div>
+    </div>
+
+    <div class="item-container ">
+        <div class="el-table el-report hide">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                </colgroup>
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="pagination-container hide">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+
+
+</div>

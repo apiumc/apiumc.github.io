@@ -1,0 +1,124 @@
+<div data-link-id="casher" class="umc-cashier">
+
+    <div style="height: 100%; flex: 5;
+    position: relative; overflow: hidden; ">
+
+        <div class="app-container">
+            <div style="position: relative; height: 4em;">
+                <div class="el-scrollbar__wrap" style="overflow-x:auto;width: 100%; position:absolute; ">
+                    <div class="filter-container">
+                        <script type="text/html"> <a class="el-sort el-select--small" sort-key="Category" sort="{id}">
+                {text}</a>
+                        </script>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-container">
+
+                <div class="el-table ">
+                    <div class="ui-products" >
+                        <script type="text/html">
+                            <a model="Product" cmd="ProCode" send="{Code}" data-id="{Id}" class="goods">
+                                <img alt="{Name}" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" style="background-image: url({Src}!350);" />
+
+                                <div class="pro">
+                                    <div class="price">{Price}</div>
+                                    <div class="name">{Name}</div>
+                                </div>
+
+
+                            </a>
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="pagination-container">
+                <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+                <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+                <input type="number" autocomplete="off" min="1" max="1" />
+                <span class="total"></span>
+            </div>
+        </div>
+        <div class="ui-keyboard ">
+            <div class="cashier-form">
+                <form>
+                    <div style="overflow: hidden">
+                        <label class="cashier-label">
+                            <i class="amount"></i>(元)</label>
+                        <a id="caption"></a>
+                    </div>
+                    <div class="cashier-field">
+                        <i class="money-text">¥</i><span class="cashier-price"></span><i class="cursor"></i>
+                        <input type="number" />
+                    </div>
+                </form>
+            </div>
+            <div style="margin: 10px;">
+                <div class="keyboard">
+                    <ul class="ui-keyboard-numbers js-num">
+                        <li val="1">1</li>
+                        <li val="2">2</li>
+                        <li val="3">3</li>
+                        <!-- <li val="+">+</li> -->
+                        <li val="4">4</li>
+                        <li val="5">5</li>
+                        <li val="6">6</li>
+                        <!-- <li val="-">-</li> -->
+                        <li val="7">7</li>
+                        <li val="8">8</li>
+                        <li val="9">9</li>
+                        <!-- <li val="×">×</li> -->
+                        <li val="Clear">清空</li>
+                        <li val="0">0</li>
+                        <li val=".">•</li>
+                        <!-- <li val="÷">÷</li> -->
+                    </ul>
+                    <ul class="ui-keyboard-buttons">
+                        <li class="btn-del js-del" val="Delete">&lt;</li>
+                        <li class="btn-ok js-ok" val="OK">完成</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="wdk-sku">
+            <div class="wdk-sku-image">
+
+            </div>
+            <div class="wdk-sku-header">
+                <div class="wdk-sku-price">0.25</div>
+                <div class="wdk-sku-text"> </div>
+            </div>
+            <div class="wdk-sku-content">
+                <div class="wdk-sku-items"></div>
+                <div class="wdk-sku-qty">
+                    <div>
+                        <a class="wdk-sku-reduce">-</a>
+                        <input value="1" type="number" min="1" style="width: 68px;">
+                        <a class="wdk-sku-add">+</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="wdk-sku-footer">
+                <!-- <a ui-event="SKUOrder" class="weui_btn wdk-sku-order"></a> -->
+                <a ui-event="SKUBuy" style="margin-top:0px;color:#Fff" class="weui_btn wdk-footer-button bgcolor wdk-sku-buy"></a>
+
+            </div>
+        </div>
+        <div class="weui_mask"></div>
+    </div>
+
+    <div id="body" style="width: 330px;box-shadow: 0px 0px 5px #aaa;height: 100%;">
+
+        <header class="hide">
+        </header>
+        <section>
+
+
+        </section>
+        <footer style="left: auto; width: 330px;  z-index: 0;" class="wdk-footer"></footer>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿.login-container {
+    background: no-repeat url(images/login_bg.png) #2d3a4b center border-box;
+    background-size: cover;
+}
+
+.title-container {
+    background-color: #fff;
+    padding: 30px;
+    margin: 0 auto;
+    line-height: 40px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-container .qrcode_view .context:empty {
+    background-image: url(/favicon.ico);
+}
+
+.loginFunc {
+    display: none;
+}
+
+#ICPFiling {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: #999;
+    display: block;
+    z-index: 1;
+}
+
+#ICPFiling::after {
+    content: '\6D59ICP\5907 11025180\53F7-1';
+}

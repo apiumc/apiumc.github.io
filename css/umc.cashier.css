@@ -1,0 +1,349 @@
+    .umc-cashier {
+        display: flex !important;
+        position: relative;
+        height: calc(100vh - 50px);
+    }
+    
+    .umc-cashier .wdk-footer-icon {
+        width: 40px;
+    }
+    
+    .umc-cashier .wdk-footer-button {
+        font-size: 14px;
+    }
+    
+    .umc-cashier-menu {
+        line-height: 34px;
+        color: rgb(64, 158, 255);
+    }
+    
+    .umc-cashier section .weui_cells:nth-child(2) {
+        margin-top: 0px;
+    }
+    
+    .umc-cashier #body {
+        width: 330px;
+        box-shadow: 0px 0px 5px #aaa;
+        height: 100%;
+        overflow: scroll;
+        height: 100%;
+        overflow-x: hidden;
+    }
+    
+    .umc-cashier #body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+    
+    .cashier-form .cashier-label {
+        float: left;
+        width: 32%;
+        font-size: 14px
+    }
+    
+    .cashier-form a {
+        float: right;
+        width: 33.33%;
+        font-size: 14px;
+        text-decoration: none;
+        text-align: right;
+        color: #00a0f8
+    }
+    
+    .action-container {
+        padding: 0 10px;
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 0
+    }
+    
+    .cashier-avatar {
+        width: 300px;
+        margin: 0 auto;
+        padding: 25px 0 5px
+    }
+    
+    .cashier-form {
+        margin: 0 10px;
+        padding: 12px 15px 0;
+        background-color: #fff;
+        border: 1px solid #e5e5e5
+    }
+    
+    .cashier-form .cashier-field {
+        position: relative;
+        padding: 10px 0 0 0;
+        line-height: 50px
+    }
+    
+    .cashier-form .money-text {
+        font-size: 20px;
+        float: left
+    }
+    
+    .cashier-form .cashier-price {
+        width: 95%;
+        padding: 0 5px;
+        border: 0;
+        font-size: 50px;
+        outline: 0;
+        word-wrap: break-word;
+        word-break: break-all;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none
+    }
+    
+    .cursor {
+        position: relative;
+        top: 1px;
+        width: 2px;
+        height: 50px;
+        background: #333;
+        display: inline-block;
+        vertical-align: top;
+        -webkit-animation: cursor 1s infinite;
+        -moz-animation: cursor 1s infinite;
+        animation: cursor 1s infinite
+    }
+    
+    @-webkit-keyframes cursor {
+        50% {
+            opacity: 0
+        }
+        100% {
+            opacity: 1
+        }
+    }
+    
+    @-moz-keyframes cursor {
+        50% {
+            opacity: 0
+        }
+        100% {
+            opacity: 1
+        }
+    }
+    
+    @keyframes cursor {
+        50% {
+            opacity: 0
+        }
+        100% {
+            opacity: 1
+        }
+    }
+    
+    .ui-keyboard.on {
+        transform: translate3d(-50%, -60%, 0);
+    }
+    
+    .ui-keyboard-numbers {
+        width: 75%
+    }
+    
+    .ui-keyboard-numbers,
+    .ui-keyboard-buttons {
+        float: left
+    }
+    
+    .ui-keyboard-numbers li {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font: inherit;
+        font-size: 100%;
+        vertical-align: baseline;
+        list-style: none;
+        width: 33.333333333%;
+        line-height: 54px;
+        font-size: 24px;
+        color: #030303;
+        font-family: arail;
+        float: left;
+        border-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGAQMAAADaAn0LAAAABlBMVEUAAADl5eX5J7raAAAAAXRSTlMAQObYZgAAAA5JREFUCNdj+MPQAoV/ABg8BAlEsqabAAAAAElFTkSuQmCC) 2 stretch;
+        border-bottom: 2px solid #e5e5e5;
+        border-right: 2px solid #e5e5e5;
+        text-align: center;
+        box-sizing: border-box
+    }
+    
+    .ui-keyboard-numbers li.zero {
+        width: 66.666666667%
+    }
+    
+    .ui-keyboard {
+        transform: translate3d(-50%, -200%, 0);
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s;
+        position: absolute;
+        width: 50%;
+        z-index: 2;
+        left: 50%;
+        background-color: #f0f2f5;
+        padding-top: 10px;
+        top: 50%
+    }
+    
+    .ui-keyboard .keyboard {
+        border: 1px solid #e5e5e5;
+        background: #fff;
+        height: 220px;
+        bottom: 0;
+        overflow: hidden;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-top: 1px solid #ececec;
+    }
+    
+    .ui-keyboard-buttons {
+        width: 25%;
+        height: 100%
+    }
+    
+    .ui-keyboard-buttons li {
+        list-style: none;
+        width: 100%;
+        height: 50%;
+        text-align: center;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        line-height: 110px
+    }
+    
+    .ui-keyboard-buttons li.btn-ok {
+        background-color: #54c153;
+        color: #fff;
+        font-size: 20px
+    }
+    
+    .ui-keyboard-buttons li.btn-del {
+        text-indent: -999em;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAgCAMAAABemGpIAAAAP1BMVEUAAAADAwMEBAQHBwcDAwMFBQUFBQUGBgYEBAQEBAQFBQUDAwMGBgYDAwMDAwMDAwMDAwMEBAQEBAQKCgoDAwPtx6+KAAAAFHRSTlMA4zYi8GJeW8m9ZlMq+PPy20VAGbylT/kAAACSSURBVDjLndTJDoUgEERR1Dfg8Ebr/7/VjVrR1pBrrSA5C6CbTtv0Xx3mnbu0z13naceylTWwUgesMrD6rPahcojVka2Hypvbv3kZB6tfaqrV1mmQsa3BrL00fsoxiVa2QQcr26gXa9xLZ3qxxt4GbQswOAa7IHs6VBRWbtJIvEV58xPNPizQ+dqQKeuWDUY0cieMsVE1lE2K2gAAAABJRU5ErkJggg==") no-repeat;
+        background-size: 22px 16px;
+        background-position: center center
+    }
+    
+    .cashier-field input {
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        line-height: 50px;
+        opacity: 0;
+    }
+    
+    .ui-products {
+        background: #fff;
+        overflow: hidden;
+        padding-left: 0.5em;
+        min-height: 450px;
+    }
+    
+    .ui-products .goods {
+        width: 200px;
+        position: relative;
+        float: left;
+        margin-top: 0.5em;
+        margin-right: 0.5em;
+        background-color: #fff;
+        display: block;
+        border-radius: 4px;
+    }
+    
+    .ui-products .goods img {
+        width: 100%;
+        background-size: cover;
+        display: block;
+        border-radius: 4px;
+    }
+    
+    .ui-products .goods .pro {
+        position: absolute;
+        bottom: 0px;
+        background-color: rgba(170, 170, 170, 0.46);
+        z-index: 1;
+        width: 96%;
+        display: block;
+        left: 0px;
+        padding-left: 2%;
+        padding-right: 2%;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+    
+    .ui-products a[data-quantity].goods::before {
+        content: attr(data-quantity);
+        position: absolute;
+        padding: 0.1em 0.5em;
+        color: #fff;
+        background-color: #00a0f8;
+    }
+    
+    .ui-products .price::before {
+        content: '¥'
+    }
+    
+    .ui-products .goods .pro .price {
+        color: #ff4949;
+        font-size: 16px;
+    }
+    
+    .ui-products .goods .pro .name {
+        color: #1890ff;
+    }
+    
+    .umc-cashier .weui_mask {
+        display: none;
+    }
+    
+    .umc-cashier .ui-keyboard.on~.weui_mask {
+        display: block;
+    }
+    
+    .umc-cashier #body section {
+        padding-bottom: 54px;
+    }
+    
+    .umc-cashier .wdk-sku {
+        width: calc(100% - 2em);
+        position: absolute;
+        left: 1em;
+    }
+    
+    .umc-cashier .wdk-sku.show~.weui_mask {
+        display: block;
+    }
+    
+    .umc-cashier .wdk-sku-footer:before {
+        border-top: 1px solid #1890ff;
+    }
+    
+    .umc-cashier .wdk-sku-group a.selected {
+        border-color: #1890ff;
+        color: #1890ff;
+    }
+    
+    .umc-cashier input::-webkit-outer-spin-button,
+    .umc-cashier input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    
+    .umc-cashier input[type="number"] {
+        -moz-appearance: textfield;
+    }
+    
+    .umc-cashier .ui-products {
+        overflow: auto;
+        height: calc(100vh - 230px);
+    }
+    
+    .umc-cashier .ui-products ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }

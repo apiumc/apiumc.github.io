@@ -1,0 +1,75 @@
+<div class="wdk-flow" style="display: flex;position: relative;height: calc(100vh - 50px);">
+    <div style="height: 100%; flex: 5; box-shadow: 0px 0px 5px #aaa; display: flex;
+        flex-direction: column; z-index: 1">
+
+        <div style="flex: 1;position: relative;">
+            <div style="width: 100%;overflow: auto;position: absolute;height: 100%;">
+                <svg style="width: 100%;">
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="footer" id="services">
+        </div>
+    </div>
+
+    <div style="width: 300px; ">
+        <div id="body" style="height: 100%;">
+            <div style="display: flex; flex-direction: column;background: #f8f8f8;">
+            
+                <section>
+                    <div class="weui_cell_primary" id="Debug" style="overflow: auto">
+                        <div class="weui_cells weui_cells_access">
+                            <a model="WorkFlow" cmd="Open" class="weui_cell">
+                                <b class="wdk_cell_icon" data-icon="&#xF115;"></b>
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <p>打开新建</p>
+                                </div>
+                                <div class="weui_cell_ft"></div>
+                            </a>
+
+                        </div>
+                        <div class="weui_cells_title">流程组件</div>
+                        <div class="weui_cells ">
+                            <div class="weui_cell" id="sub">
+                            </div>
+                        </div>
+                        <div class="weui_cells_title">服务组件</div>
+                        <div class="weui_cells">
+                            <div class="weui_cell" id="service"></div>
+                        </div>
+                        <div class="weui_cells weui_cells_access">
+                            <a ui-event="Control" send="News" class="weui_cell">
+                                <b class="wdk_cell_icon" data-icon="&#xF0d0;"></b>
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <p>表单设计</p>
+                                </div>
+                            </a>
+                            <a ui-event="UI" class="weui_cell">
+                                <b class="wdk_cell_icon" data-icon="&#xF188;"></b>
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <p>表单测试</p>
+                                </div>
+                            </a>
+                            <a ui-event="Button" class="weui_cell">
+                                <b class="wdk_cell_icon" data-icon="&#xf024;"></b>
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <p>审批按钮</p>
+                                </div>
+                            </a>
+                            <a ui-event="Subscribe" class="weui_cell">
+                                <b class="wdk_cell_icon" data-icon="&#xf1d9;"></b>
+                                <div class="weui_cell_bd weui_cell_primary">
+                                    <p>流程订阅</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+</div>

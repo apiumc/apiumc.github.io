@@ -1,0 +1,203 @@
+ #body {
+     position: relative;
+     width: 100%;
+     overflow: hidden;
+     box-shadow: 0px 0px 5px #aaa;
+ }
+ 
+ #body .wdk-header {
+     position: absolute;
+ }
+ 
+ #body .wdk-footer {
+     width: 28.57%;
+     right: 0;
+     left: auto;
+ }
+ 
+ #body>div[ui] {
+     position: absolute;
+     width: 100%;
+     overflow: auto;
+     height: 100%;
+     right: 100%;
+     -webkit-transition: right .3s ease;
+     transition: right .3s ease;
+ }
+ 
+ #body>div.left {
+     right: -100%;
+ }
+ 
+ #body>div.ui {
+     right: 0;
+     z-index: 1;
+     display: block;
+ }
+ 
+ .header {
+     position: relative;
+     z-index: 20;
+     height: 44px;
+     background: #3199e8;
+     color: #fff;
+     line-height: 44px;
+ }
+ 
+ body {
+     position: absolute;
+     background-color: #FAFCFF;
+     display: flex;
+     /* flex-direction: column; */
+     height: 100%;
+     width: 100%;
+ }
+ 
+ #wdk-msg {
+     max-width: 300px;
+     min-width: 200px;
+     padding: 20px;
+     border-radius: 4px;
+     margin: 0 auto;
+     color: #fff;
+     left: 50%;
+     -webkit-transform: translate(-50%, -50%);
+     transform: translate(-50%, -50%);
+     z-index: 1000;
+     top: 45%;
+     display: none;
+     text-align: center;
+     font-size: 16px;
+     position: fixed;
+     background-color: #433736;
+     background-color: rgba(47, 34, 33, .9);
+ }
+ 
+ .leters .header,
+ .leter .header {
+     height: 45px;
+     position: relative;
+     background-color: transparent;
+     border-bottom: 1px #3199e9;
+ }
+ 
+ .leter .header .sender {
+     position: relative;
+ }
+ 
+ .leters .header:before,
+ .leter .header:before {
+     position: absolute;
+     content: '';
+     width: 100%;
+     left: 0px;
+     bottom: 0px;
+     font-size: 0px;
+     height: 1px;
+     background: #3199e8;
+ }
+ 
+ #custmer,
+ #talking {
+     padding-left: 45px;
+     padding-right: 1em;
+     color: #333;
+ }
+ 
+ #custmer.on::before {
+     color: #3cc51f;
+ }
+ 
+ #custmer.on a {
+     color: #3cc51f;
+ }
+ 
+ #custmer::before {
+     content: '\f188';
+     font-family: wdk;
+     color: #666;
+     font-style: normal;
+     font-weight: 400;
+     speak: none;
+     text-align: center;
+     position: absolute;
+     line-height: 35px;
+     top: 5px;
+     left: 5px;
+     font-size: 25px;
+     width: 35px;
+     height: 35px;
+     border: 1px solid;
+     border-radius: 40px;
+ }
+ 
+ #wdk-msg.animate {
+     display: block;
+     animation: wdk-msg 3s ease 3s 1 both;
+ }
+ 
+ .log {
+     padding: 2px;
+ }
+ 
+ .log .res em {
+     color: #999999;
+     font-size: 12px;
+ }
+ 
+ .log .res {
+     white-space: pre;
+ }
+ 
+ .log .res .error {
+     color: #ef4f4f;
+ }
+ 
+ .log .res {
+     white-space: pre;
+ }
+ 
+ .Local {
+     position: absolute;
+     right: 1em;
+     top: 8px;
+ }
+ 
+ .info {
+     position: relative;
+ }
+ 
+ .info::before {
+     content: 'UMC调试终端日志窗口';
+     font-family: wdk;
+     color: #ccc;
+     font-style: normal;
+     font-weight: 400;
+     speak: none;
+     text-align: center;
+     position: absolute;
+     line-height: 35px;
+     top: 50%;
+     left: 50%;
+     font-size: 25px;
+     height: 35px;
+     transform: translate(-50%, -50%)
+ }
+ 
+ @keyframes wdk-msg {
+     0% {
+         opacity: 1
+     }
+     100% {
+         opacity: 0
+     }
+ }
+ 
+ @keyframes wdk-remove {
+     0% {
+         height: inherit
+     }
+     100% {
+         height: 1px
+     }
+ }

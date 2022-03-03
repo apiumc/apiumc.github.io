@@ -1,0 +1,142 @@
+<div class="app-container">
+    <script type="text/html" id="menu">
+        <a model="Stocktaking" cmd="PurchaseSubmit" class="el-button filter-item el-button--primary el-button--small hide">
+            确认提交
+        </a>
+    </script>
+    
+    <div style="position: relative;" class="el-card">
+        <div class="el-row">
+            <span class="el-tag el-tag--small " style="
+    transform: rotate( 45deg);
+    position: absolute;
+    right: -30px;
+    top: 20px;
+    width: 120px;
+    text-align: center;" data-field="Status"></span>
+            <p class="el-form-item__label">
+                采购单号:
+            </p>
+            <div style="flex: 1;">
+                <span data-field="Code"></span>
+
+
+            </div>
+            <p class="el-form-item__label">
+                采购门店:
+            </p>
+            <div style="flex: 1;">
+                <span data-field="InputStoreName"></span>
+
+            </div>
+            <p class="el-form-item__label">
+                发货门店:
+            </p>
+            <div style="flex: 1;">
+                <span data-field="OutputStoreName"></span>
+
+            </div>
+
+        </div>
+        <div class="el-row">
+            <p class="el-form-item__label">
+                创建人:
+            </p>
+            <div style="flex: 1;">
+                <span data-field="Creator"></span>
+                <i data-field="CreationDate"></i>
+
+            </div>
+            <p class="el-form-item__label">
+                提交人:
+            </p>
+            <div style="flex: 1;">
+                <span data-field="Submiter"></span>
+                <i data-field="SubmitDate"></i>
+
+            </div>
+            <p class="el-form-item__label">
+                审核人:
+            </p>
+            <div style="flex: 1;">
+                <span data-field="Approver"></span>
+                <i data-field="ApproveDate"></i>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="filter-container">
+
+
+    </div>
+    <div class="item-container">
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="90">
+                    <col width="150">
+                    <col width="150">
+                    <col width="80">
+                    <col width="80">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            商品编码
+                        </th>
+                        <th>
+                            商品名称
+                        </th>
+                        <th>
+                            型号
+                        </th>
+                        <th>
+                            库存数量
+                        </th>
+                        <th>
+                            采购数量
+
+                            <script id="editer" type="text/html">
+
+                                <input type="number" sku_id="{sku_id}" product_id="{product_id}" purchase_id="{purchase_id}" value="{PurchaseQty}">
+                            </script>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr>
+                            <td rowspan="{rowspan}">
+                                {Code}
+                            </td>
+                            <td rowspan="{rowspan}" class="is-center">
+                                {Name}
+                            </td>
+                            <td class="is-center">
+                                {SKUName}
+                            </td>
+                            <td class="is-center">
+                                {StockQty}
+                            </td>
+                            <td class="is-center {editer}">
+                                {PurQty}
+                            </td>
+                        </tr>
+                        {html}
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>

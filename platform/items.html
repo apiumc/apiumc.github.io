@@ -1,0 +1,97 @@
+<div class="app-container">
+    <!-- <div class="filter-container">
+        <div class="filter-container-item">
+
+            <a class="el-sort filter-item el-select--small is-active" sort="store">
+                我的商家<i class="desc"></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="parcard">
+                商家金额<i></i>
+            </a>
+            <a class="el-sort filter-item el-select--small" sort="Checked">
+                银行卡审批<i></i>
+            </a>
+
+
+        </div>
+        <div class="filter-container-button">
+            <a model="Platform" cmd="Setup" class="el-button filter-item el-button--primary el-button--small">
+                创建商家
+            </a>
+        </div>
+    </div> -->
+    <div class="item-container">
+
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="300">
+                    <col width="110">
+                    <col width="100">
+                    <col width="120">
+                    <col width="100">
+                    <col width="100">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            主体信息
+                        </th>
+                        <th>
+                            标识
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            邮箱
+                        </th>
+                        <th>
+                            联系人
+                        </th>
+                        <th>
+                            生成时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+
+                                <a model="Platform" cmd="Search" send="{Id}" class="link-type">  {Name}</a>
+
+                            </td>
+                            <td>
+                                {Root}
+                            </td>
+                            <td>
+                                {Tel}
+                            </td>
+                            <td>
+                                {Email}
+                            </td>
+                            <td>
+
+                                {Contact}
+                            </td>
+                            <td class="is-center">
+                                {Time}
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+            <!---->
+            <!---->
+        </div>
+    </div>
+    <div class="pagination-container">
+        <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+        <input type="number" autocomplete="off" min="1" max="1" />
+        <span class="total"></span>
+    </div>
+
+</div>
