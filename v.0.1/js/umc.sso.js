@@ -180,10 +180,9 @@
                         if (uss.msg) {
                             if (uss.msg == 'OK') {
                                 if (uss.code) {
-                                    $.UI.Command('Account', 'Login', {
-                                        'type': 'dingtalk',
-                                        'code': uss.code,
-                                        appid: uss.corpId
+                                    $.UI.Command('Exp', 'Login', {
+                                        'Code': uss.code,
+                                        CorpId: uss.corpId
                                     });
                                 } else {
                                     location.reload(false);

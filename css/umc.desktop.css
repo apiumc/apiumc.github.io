@@ -690,7 +690,7 @@ a.el-dropdown.is-active {
     left: 0px;
     content: ' ';
     position: absolute;
-    background-image: url(/images/2021.jpg);
+    background-image: url(/css/images/2021.jpg);
     background-size: cover;
     height: 100vh;
     width: 100%;
