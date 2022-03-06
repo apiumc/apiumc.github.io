@@ -590,8 +590,6 @@
                         return c.hide ? 'class="hide"' : ""
                     }
                 })).find('li').eq(xhr.selectIndex || 0).addClass('is-active');
-
-
                 $.UI.On('Portfolio.List', xhr);
 
                 var disabled = navbar.css('transition').indexOf('max-height') > -1;
