@@ -1205,8 +1205,11 @@ div[ui]>.wdk-header {
 .wdk-cms-max-left,
 .wdk-cms-one-left,
 .wdk-cms-three-left {
-    font-size: 9pt;
-    flex: 1
+    /* font-size: 9pt !important; */
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 25px;
 }
 
 .wdk-cms-max-right span,
@@ -1720,7 +1723,7 @@ a.wdk-image-pro:before {
 }
 
 .wdk-cms-one-bottom {
-    line-height: 1em
+    line-height: 25px
 }
 
 .wdk-dialog {
@@ -1864,7 +1867,6 @@ form.wdk-search input {
 .weui_tabbar_item {
     padding: 3px 0 0;
 }
-
 
 .wdk-itdb-items {
     width: 100%;

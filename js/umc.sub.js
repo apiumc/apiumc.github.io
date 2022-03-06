@@ -662,7 +662,7 @@
 
         });
 
-        $.UI.On('Subject.Menu', location.pathname.indexOf($.SPA) == 0 ? { code: location.pathname.substring($.SPA.length) } : '');
+      //  $.UI.On('Subject.Menu', location.pathname.indexOf($.SPA) == 0 ? { code: location.pathname.substring($.SPA.length) } : '');
 
         $('.el-dropdown').menu().siblings('*[role]').click('a', function () {
             var me = $(this);

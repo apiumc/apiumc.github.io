@@ -2,8 +2,8 @@ UMC.UI.Config({ 'posurl': 'https://ali.365lu.cn/UMC/' + (UMC.cookie('device') ||
 UMC.Src = '/v.0.1/';
 UMC.SPA = '/';
 UMC(function ($) {
-    requestAnimationFrame(() => {
-        function ns() {
+    requestAnimationFrame(function () {
+        $(window).on("popstate", function () {
             var path = location.pathname;
             $('.header-sub-nav .menu-site').find('li').cls('is-active', 0).find('a').each(function () {
                 var m = $(this);
@@ -15,10 +15,7 @@ UMC(function ($) {
                     return false;
                 }
             });
-        };
-
-        $(window).on("popstate", ns);
-        ns();
+        }).on('popstate');
     });
 
 });
