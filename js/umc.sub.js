@@ -30,13 +30,13 @@
             var pathname = location.pathname.substring(1);
             ag.Key = pathname || 'sub.html';
             var json = JSON.stringify({ title: title, key: key, desc: desc, html: body.html() });
-            WDK.uploader(new File([json], 'a.json', { type: 'text/json' }),
+            UMC.uploader(new File([json], 'a.json', { type: 'text/json' }),
                 function () {
                     $.UI.API('Subject', 'Publish', ag);
                 }, pathname, true);
         })
 
-    WDK(function ($) {
+    $(function ($) {
         $.page('subject');
         $.page('download');
 
@@ -128,7 +128,7 @@
             });
         })();
         var menubar = $('#menubar').click('a[sub-id]', function (e) {
-            WDK.UI.Command('Subject', 'News', $(this).attr('sub-id'))
+            UMC.UI.Command('Subject', 'News', $(this).attr('sub-id'))
             return false;
 
         }).click('.el-submenu__title em', function () {
@@ -342,7 +342,7 @@
         $(window).off('popstate').on('popstate', function (e, v) {
             var pathKey = location.pathname;
             var pKey = pathKey.substring($.SPA.length);
-            switch (pKey) {
+            switch (pKey || 'index') {
                 case 'index':
                 case 'explore':
                 case 'login':
@@ -355,18 +355,14 @@
                     v ? $(window).on('page', 'subject/self', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
                     return;
             }
-            if (!pKey) {
-                $(window).on('page', 'subject/index', '');
-                return;
-            }
+
             if ($.UI.SPAPfx) {
-                if ($.UI.SPAPfx.indexOf(pathKey) == 0) {
+                if ($.UI.SPAPfx.toUpperCase().indexOf(pathKey.toUpperCase()) == 0) {
                     $(window).on('page', 'subject/dynamic', '');
                     return;
                 } else if (pathKey.indexOf($.UI.SPAPfx) == 0) {
                     var key = pathKey.substring($.UI.SPAPfx.length);
                     if ($.check(key)) {
-
                         $(window).on('page', key, location.search.substring(1));
                         return;
                     }
@@ -419,7 +415,7 @@
             return IsOk;
 
         });
-        let active = false
+        var active = false
         $.UI.On('Sub.Title.Change', function (e, v) {
             if (active && active.attr('data-id') == v.Id) {
                 active.text(v.Title || '请输入标题');
@@ -573,29 +569,14 @@
             })
         }).On('Subject.Menu', function (e, v) {
             $.UI.Command("Subject", 'Menu', v || '', function (xhr) {
-                // if (xhr.DingTalk) {
-                //     $.script('https://g.alicdn.com/dingding/dingtalk-jsapi/2.10.3/dingtalk.open.js')
-                //         .wait(function () {
-                //             dd.ready(function () {
-                //                 dd.runtime.permission.requestAuthCode({
-                //                     corpId: xhr.DingTalk,
-                //                     onSuccess: function (info) {
-                //                         WDK.UI.Command('Subject', 'Login', {
-                //                             Project: xhr.id,
-                //                             'Code': info.code
-                //                         });
-                //                     }
-                //                 });
-
-                //             });
-                //         });
-                // }
                 if (xhr.type) {
+                    if (xhr.type == 'index') {
+                        history.replaceState(null, null, '/')
+                    }
                     $(window).on('page', 'subject/' + xhr.type, '');
                     return;
                 }
                 team.text(xhr.text);
-
 
                 document.body.className = xhr.Auth;
                 $.UI.ProjectId = xhr.id;
@@ -722,17 +703,17 @@
         $('.wdk-footer-icon').click(function () {
             switch (this.id) {
                 case 'News':
-                    WDK.UI.Command('Subject', 'News', $('.el-submenu__title.is-active', menubar).attr('data-id') || $('.el-submenu__title', menubar).eq(0).addClass('is-active').attr('data-id'))
+                    UMC.UI.Command('Subject', 'News', $('.el-submenu__title.is-active', menubar).attr('data-id') || $('.el-submenu__title', menubar).eq(0).addClass('is-active').attr('data-id'))
                     break;
                 case "Markdown":
-                    WDK.UI.Command('Subject', 'News', {
+                    UMC.UI.Command('Subject', 'News', {
                         Id: $('.el-submenu__title.is-active', menubar).attr('data-id') || $('.el-submenu__title', menubar).eq(0).addClass('is-active').attr('data-id'),
                         Type: 'markdown'
 
                     });
                     break;
                 case "Rich":
-                    WDK.UI.Command('Subject', 'News', {
+                    UMC.UI.Command('Subject', 'News', {
                         Id: $('.el-submenu__title.is-active', menubar).attr('data-id') || $('.el-submenu__title', menubar).eq(0).addClass('is-active').attr('data-id'),
                         Type: 'text/html'
                     })
@@ -805,8 +786,8 @@
 
                 if (root.iso('searchValue')) {
                     root.on('searchValue', value, input);
-                } else if (WDK.UI.ProjectId) {
-                    WDK.UI.API('Subject', 'Keyword', { Keyword: value, Project: WDK.UI.ProjectId }, function (xhr) {
+                } else if (UMC.UI.ProjectId) {
+                    UMC.UI.API('Subject', 'Keyword', { Keyword: value, Project: UMC.UI.ProjectId }, function (xhr) {
                         showMenu(xhr);
                     });
                 }
@@ -863,7 +844,7 @@
                 }
             });
         } checkInfo();
-        WDK.UI.On('User', function () {
+        UMC.UI.On('User', function () {
             checkInfo();
             delete $.UI.SPAPfx;
             requestAnimationFrame(function () { $(window).on('popstate') });
@@ -888,10 +869,8 @@
             c ? dom.ui(c, function () {
                 dom.addClass('right').removeClass('ui');
             }) : 0;
-
-
-            if (WDK.UI.On("UI.Show", dom, key, v) !== false) {
-                new WDK.UI.Pager(v, dom);
+            if (UMC.UI.On("UI.Show", dom, key, v) !== false) {
+                new UMC.UI.Pager(v, dom);
                 dom.addClass('ui');
             }
         }).ui('Key.Subject', function (e, v) {
