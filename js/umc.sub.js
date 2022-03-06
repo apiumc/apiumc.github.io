@@ -341,8 +341,8 @@
         navSort.option('disabled', true);
         $(window).off('popstate').on('popstate', function (e, v) {
             var pathKey = location.pathname;
-            var pKey = pathKey.substring($.SPA.length);
-            switch (pKey || 'index') {
+            var pKey = pathKey.substring($.SPA.length) || 'index';
+            switch (pKey ) {
                 case 'index':
                 case 'explore':
                 case 'login':
