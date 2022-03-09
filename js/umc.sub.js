@@ -624,8 +624,6 @@
                 }
 
             });
-
-
         }).On('Subject.DingTalk', function (e, xhr) {
             $.script('https://g.alicdn.com/dingding/dingtalk-jsapi/2.10.3/dingtalk.open.js')
                 .wait(function () {
@@ -836,7 +834,7 @@
             $.UI.API("Account", "Check", "Info", function (xhr) {
                 $.UI.Device = xhr.Device;
                 if (xhr.Src) {
-                    uBox.html(['<a model="Account" cmd="Self" send="User" class="box-card-user"><img src="', xhr.Src, '" class="pan-thumb"></a>'].join(''));
+                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
                 } else {
                     uBox.html('<a ui-page="subject/login" class="el-button--small el-button">登录</a> <a model="Account" cmd="Register" class="el-button--small el-button el-button--primary">快速注册</a> ')
                 }

@@ -240,9 +240,25 @@
                         
                         .box-card-user {
                             margin: 0;
-                            width: 40px;
-                            height: 40px;
+                            text-align: center;
+                            line-height: 36px;
+                            font-size: 20px;
                             float: left;
+                            transition: color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), margin-top .38s ease-out;
+                            color: #001528;
+                        }
+                        
+                        .box-card-user::before {
+                            content: '\f2c0';
+                            font-family: wdk;
+                        }
+                        
+                        .box-card-user.dashboard::before {
+                            content: '\f298';
+                        }
+                        
+                        .box-card-user:hover {
+                            color: #1890ff;
                         }
                         
                         .sidebar-logo-container .login-box {
@@ -268,7 +284,7 @@
                         
                         .sidebar-logo-container .login-box a[ui-spa]:nth-child(3) {
                             display: block;
-                            width: 50%;
+                            width: 100%;
                         }
                         
                         .sidebar-logo-container .login-box a[ui-spa]:nth-child(4) {
@@ -309,8 +325,7 @@
                             box-sizing: border-box;
                             border: 2px solid #e8e8e8;
                         }
-                        
-                        .login-box::after {
+                        /* .login-box::after {
                             content: '\5929\5929\5F55';
                             border: 1px solid #36a3f7;
                             padding: 0 6px;
@@ -325,7 +340,7 @@
                             margin-top: 14px;
                             margin-left: -10px;
                             transform: scale(.8);
-                        }
+                        } */
                         
                         .sidebar-logo-container #team {
                             font-weight: 500;
@@ -1726,6 +1741,7 @@
                         
                         .umc-sub-index .box-card-user {
                             margin-top: 20px;
+                            font-size: 26px;
                         }
                         
                         .navbar .umc-sub-nav,
