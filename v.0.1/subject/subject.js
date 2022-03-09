@@ -495,7 +495,6 @@
                             pager.model = 'Subject'
                             pager.cmd = 'Account'
                             pager.search = { NextKey: 'Self', selectIndex: 1 }
-
                             root.on('hash', function () {
                                 pager.query();
                             })

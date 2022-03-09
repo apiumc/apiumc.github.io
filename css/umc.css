@@ -370,6 +370,18 @@
             line-height: 46px;
         }
         
+        .umc-proxy-acounts a.home::before {
+            content: '\f26c';
+        }
+        
+        .umc-proxy-acounts a.login::before {
+            content: '\f090';
+        }
+        
+        .umc-proxy-acounts a.signout::before {
+            content: '\f011';
+        }
+        
         .el-scrollbar {
             overflow: hidden;
             position: relative;
@@ -1002,6 +1014,7 @@
             border-radius: 2px;
             height: 28px;
             line-height: 28px;
+            box-sizing: border-box;
         }
         
         .weui_bar_item_on:before {

@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html>
 
 <head>
@@ -16,8 +17,9 @@
     <script src="https://g.alicdn.com/dingding/dingtalk-jsapi/2.7.13/dingtalk.open.js"></script>
     <script src="/UMC.Conf" type="text/javascript"></script>
     <script>
+        var config = UMC.UI.Config(); 
         UMC.UI.Bridge = function(v, fn) {
-            fetch([UMC.UI.Config().posurl, '?', v.replace(/^&+/, '')].join('') + '&_v=proxy', {
+            fetch([config.domain, config.posurl, '?', v.replace(/^&+/, '')].join('') + '&_v=proxy', {
                     method: 'POST'
                 })
                 .then(response => response.json())
@@ -25,7 +27,7 @@
 
         }
         UMC.UI.Ver = 'proxy';
-        UMC.Src = 'https://oss.365lu.cn/v0.1/';
+        UMC.Src = 'https://www.365lu.cn/v0.1/';
     </script>
     <script src="//www.365lu.cn/js/umc.database.js?v.02"></script>
     <script src="//www.365lu.cn/js/umc.grid.js?v.02"></script>
@@ -70,6 +72,26 @@
         .weui_cell[click-data]:after {
             display: none;
         }
+        
+        .weui_btn_primary,
+        .weui_btn_warn,
+        .wdk-footer-button.bgcolor {
+            background: #1890ff !important;
+        }
+        
+        .wdk-sku-footer::before,
+        .wdk-footer::before {
+            border-top-color: #1890ff;
+        }
+        
+        .iframe {
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .iframe.iphone {
+            height: 95vh;
+        }
     </style>
 
     <script>
@@ -79,9 +101,9 @@
                 var app = $(document.body);
                 app.children('div[ui].ui').cls('ui', false).remove().on('backstage');
                 app.append(xhr.root.cls('ui', true).on('active'));
-            }).Off('Prompt').On("Prompt", function(e, p) {
-                alert(p.Text);
-            });
+            }).On("Close", function() {
+                location.reload(true);
+            }).Off('Prompt');
             var viewConfig;
             UMC.page('main', '主页', false, function(root, title, menu) {
 
@@ -91,6 +113,11 @@
                     model: 'Exp',
                     "icon": "\uf1b3"
                 }, {
+                    "text": "管理者视窗",
+                    cmd: 'MenuTop',
+                    model: 'Exp',
+                    "icon": "\uf219"
+                }, {
                     "text": "主题看板",
                     cmd: 'Menu',
                     model: 'Exp',
@@ -98,6 +125,7 @@
                 }];
                 var tabs = [];
                 root.ui('Key.Report', function(e, item) {
+
                     WDK.UI.Command('Exp', 'ReportATT', item.Key);
                 }).ui('Report.Open', function(e, v) {
                     viewConfig = v;
@@ -156,22 +184,25 @@
                 }).eq(0).click(true);
             }).page('Exp', 'Exp', function(root) {
                 root.on('active', function() {
-                    $(document.body).addClass('wdk-loading');
                     var iframe = root.find('iframe');
                     if (iframe.attr('url') != viewConfig.Url) {
+                        $(document.body).addClass('wdk-loading');
                         iframe.attr('src', viewConfig.Url).attr('url', viewConfig.Url);
                     }
 
                     dd.biz.navigation.setRight({
                         show: true,
                         control: true,
-                        text: '收藏',
+                        text: viewConfig.right.text || '收藏',
                         onSuccess: function(result) {
                             if (WDK(document.body).children('div[ui=Exp]').is('.ui')) {
                                 UMC.Click(viewConfig.right.click);
                             }
                         }
                     });
+                }).ui('Report.Open', function(e, v) {
+                    viewConfig = v;
+                    requestAnimationFrame(r => root.on('active'));
                 }).on('hash', function(e, v) {
                     root.find('iframe').attr('src', 'about:blank');
                     requestAnimationFrame(r => root.on('active'));
@@ -180,7 +211,22 @@
                 })
             });
             $(function() {
-                $(window).on('popstate');
+
+                var userAgent = navigator.userAgent.toLowerCase();
+                if (userAgent.indexOf('iphone') > 0) {
+                    $('iframe').addClass('iphone');
+                }
+                $.UI.Command("Account", "Check", "Info", function(xhr) {
+                    $.UI.Device = xhr.Device;
+                    if (xhr.IsCashier) {
+                        $.UI.On("Prompt", function(e, p) {
+                            alert(p.Text);
+                        });
+                        $(window).on('popstate');
+                    } else if ($.UI.Device) {
+                        $.UI.On('Close', {});
+                    }
+                });
             });
         })(WDK);
     </script>
@@ -188,7 +234,7 @@
 
 <body>
     <div ui="Exp">
-        <iframe frameborder="0" style="width: 100vw; height: 100vh;"></iframe>
+        <iframe class="iframe" frameborder="0"></iframe>
     </div>
     <div ui="main">
         <div class="weui_tab">
