@@ -241,12 +241,18 @@
 
         next: function () {
             if (this.destData && !$.UI.loading) {
-                var total = parseInt(this.destData.total) || 0;
-                var start = (this.parms.start || 0) + this.Header.pageSize;
-                if (start && start < total) {
-                    this.parms.start = start;
+                if ('start' in this.destData) {
+                    this.parms.start = this.destData.start;
                     this.refresh();
                     return true;
+                } else {
+                    var total = parseInt(this.destData.total) || 0;
+                    var start = (this.parms.start || 0) + this.Header.pageSize;
+                    if (start && start < total) {
+                        this.parms.start = start;
+                        this.refresh();
+                        return true;
+                    }
                 }
             }
             return false;

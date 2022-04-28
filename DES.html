@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>移动登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <script src="http://oa.kukahome.com/seeyon/common/js/crypto.js"></script>
+   <script>
+                  var us = CryptoJS.enc.Utf8.parse('VDuuovloEUqnbQIHfzKb2Q');
+            var nowpassword_encrypted = CryptoJS.DES.decrypt('U2FsdGVkX18pfH96YLVdQRwBJulCCRGF+RQRjAn5ebebQOIjwGGUTA==', 'kb9jhhf0879ce35bb00');
+            // CryptoJS.DES.U2FsdGVkX18pfH96YLVdQRwBJulCCRGF+RQRjAn5ebebQOIjwGGUTA==
+            var txt=nowpassword_encrypted.toString(CryptoJS.enc.Utf8);
+            console.log(txt);
+   </script>
+</head>
+ 
+
+</html>

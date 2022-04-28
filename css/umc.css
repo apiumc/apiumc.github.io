@@ -914,9 +914,7 @@
             -webkit-transition: .1s;
             transition: .1s;
             font-weight: 400;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
+            user-select: none;
             padding: 12px 20px;
             font-size: 14px;
             border-radius: 4px;

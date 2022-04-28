@@ -161,7 +161,7 @@
             if (!mp.attr('mqtt')) {
                 mp.attr('mqtt', 'YES');
                 $.script('js/mqttws31.min.js').script('js/qrcode.min.js').wait(function () {
-                    $.api('Message', 'mqtt', cfg => {
+                    $.UI.API("Account", "Check", 'Mqtt', function(cfg){
                         var client = new Paho.MQTT.Client(cfg.broker, 443, cfg.client);
 
                         root.find(".qrcode_view .context").click('a', function () {

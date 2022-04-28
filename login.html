@@ -1,8 +1,11 @@
+
+
+
 <!doctype html>
 <html>
 
 <head>
-    <title>门神网关</title>
+    <title>顾家·统一登录平台</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <link href="/css/weui.css" rel="stylesheet" type="text/css" />
@@ -44,7 +47,7 @@
                 }
             });
 
-            var login = $('.login-container');
+            var login = $('.login-container').css({'background-image':'url(/css/images/20220426.jpg)'})
             login.find('.loginFunc').click(function() {
                 var mp = $(this).parent().cls('scanning');
 
@@ -67,8 +70,8 @@
 
                     if (!cfg.client) {
 
-                        login.find(".qrcode_view .context").html("<a>扫码配置不正确</a>");
-                        // login.find('.loginFunc').click();
+                        login.find(".qrcode_view .context").html("<a>请尝试刷新</a>");
+                        login.find('.loginFunc').click();
                         return;
                     }
                     var client = new Paho.MQTT.Client(cfg.broker, 443, cfg.client);
@@ -120,7 +123,7 @@
                         });
                     });
 
-                    // login.on(UMC.query(location.search.substring(1)).un ? 'disconnect' : 'connect');
+                    login.on(UMC.query(location.search.substring(1)).un ? 'disconnect' : 'connect');
                 });
 
             });
@@ -138,13 +141,13 @@
         <p class="el-message__content"></p>
     </div>
     <div class="login-container">
-        <form class="el-form login-form el-form--label-left" style="border-radius: 6px; box-shadow: 0 4px 8px 0 rgba(42, 93, 158, .16), 0 0 4px 0 rgba(42, 93, 158, .08); background-color: #fff;width: 300px;" autocomplete="on">
+        <form class="el-form login-form el-form--label-left scanning" style="border-radius: 6px; box-shadow: 0 4px 8px 0 rgba(42, 93, 158, .16), 0 0 4px 0 rgba(42, 93, 158, .08); background-color: #fff;width: 300px;" autocomplete="on">
             <div class="loginFunc">
                 <div class="qrcode"></div>
                 <div class="account"></div>
             </div>
             <div class="title-container" style="padding-top:15px; margin-bottom:15px">
-                欢迎使用 门神网关！
+                欢迎使用 顾家·统一登录平台！
             </div>
             <div class="qrcode_view" style="top: 28%;">
                 <div style="width: 200px; height: 200px; margin: auto; position: relative;">
