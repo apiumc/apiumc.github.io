@@ -6,6 +6,8 @@
         });
         root.ui('Link', function (e, v) {
             root.find('iframe').src(v.link.Url);
+        }).on('backstage', function () {
+            return false;
         })
     });
 })(WDK);

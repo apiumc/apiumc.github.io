@@ -4,7 +4,7 @@
 
         menu.html(root.find('#menu').text()).cls('right-menu-item el-link-menu ', 1)
         var thmls = ' <td rowspan="{length}" class="is-center"> <a class="el-tag el-tag--small" model="Settings" cmd="Menu" send="Id=News&ParentId={id}"><b class="wdk_cell_icon" data-icon="{icon}"></b> </a> </td><td rowspan="{length}" > <a class="link-type" model="Settings" cmd="Menu" send="{id}">{text}</a> </td>'
-
+        var site = 0;
         root.ui('Settings.Menu', function () {
             $.UI.Command("Settings", "Menu", function (xhr) {
 

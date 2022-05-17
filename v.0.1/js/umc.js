@@ -821,10 +821,10 @@
         return click;
     }
     UMC.query = function (q, k) {
+        var e = decodeURIComponent;
         if ((typeof q) == 'string') {
             var value = {};
             var ks = k || [];
-            var e = decodeURIComponent;
             each(q.split('&'), function () {
                 var vs = this.split('=');
                 value[e(vs[0])] = e(vs[1] || '');
@@ -833,7 +833,6 @@
             return value;
         } else {
             var vs = [];
-            var e = encodeURIComponent;
             for (var k in q)
                 vs.push(e(k) + '=' + e(q[k]));
 
@@ -1002,7 +1001,19 @@
     function imageShow(title, url, context, href) {
         dialog(title, ['<a ', href ? ('target="_blank" href="' + href + '"') : '', '><img style="max-width: 100%;" src="', url, '"/></a><p>', context, '</p>'].join(''));
     }
+    var uiEvent = {};
+    __p.On('UI.Event', function (e, v) {
+        var ev = uiEvent[v.key];
+        if (ev) {
+            v.value;
+            var send = $.extend({}, ev.send);
+            send[ev.Name] = ev.Value;
+            send[ev.Name_Text] = ev.Text;
+            __p.Command(ev.model, ev.cmd, send);
+            delete uiEvent[v.key];
 
+        }
+    });
     function check(v, cfn) {
         __p.loading = false;
         __p.On('XHR', 1, v);
@@ -1030,6 +1041,10 @@
                         break;
                     case 'Grid':
                         __p.On("Grid", p, v, cfn);
+                        break;
+                    case "UI.Event":
+                        uiEvent[p.Id] = { Name: p.Name, Click: p.Submit };
+                        $.Click(p.Click);
                         break;
                     default:
                         __p.On('Form.' + p.Type, p, v, cfn) === false ? 0 : __p.On("Form", p, v, cfn);
@@ -1145,9 +1160,6 @@
         };
         xhr.open('GET', ['https://api.365lu.cn/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''), true);
         xhr.send();
-
-        // fetch(['https://api.365lu.cn/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''))
-        //     .then(function (r) { return r.json()}).then(function(j){check(j,call)});
     };
 
     __p.Ready = check;

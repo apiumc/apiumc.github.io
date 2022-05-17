@@ -734,7 +734,7 @@
             '<form class="weui_search_outer">',
             '<div class="weui_search_inner">',
             '<i class="weui_icon_search"></i>',
-            '<input type="search" class="weui_search_input" id="gridSearchHeader', searchCount, '" placeholder="', (data.placeholder || '搜索'), '">',
+            '<input type="search" class="weui_search_input" data-key="', data.key || '', '" id="gridSearchHeader', searchCount, '" placeholder="', (data.placeholder || '搜索'), '">',
             '<a class="weui_icon_clear"></a>',
             '</div>',
             '<label for="gridSearchHeader', searchCount, '" class="weui_search_text">',
@@ -760,7 +760,7 @@
             if (value.model && value.cmd) {
 
 
-                requestAnimationFrame(function ()  {
+                requestAnimationFrame(function () {
                     var m = section.find('#' + key);
                     if (value.event) {
                         m.parent('div[ui]').ui(value.event, m)
@@ -977,7 +977,7 @@
 
         });
     });
-    $(function(){ $.UI.On('SKU.Init', $('.wdk-sku'))});
+    $(function () { $.UI.On('SKU.Init', $('.wdk-sku')) });
     var _tt = false;
     $.UI.Start = function () {
         _tt ? $('div[ui].ui').ui('Change', _tt) : $.UI.Command({ _start: true });
@@ -1355,7 +1355,7 @@
                 if (section.children().each(function (i) {
                     $(this).attr('row-index', i + '');
                 }).length == 0) {
-                    requestAnimationFrame(function()  {
+                    requestAnimationFrame(function () {
                         t.start = 0;
                         t.next();
                     });
@@ -1436,7 +1436,8 @@
                         }).on('click', '.weui_search_cancel', function () {
                             search_bar.removeClass('weui_search_focusing');
                         }).find('form').on('submit', function () {
-                            me.query($(this).find('input').val());
+                            var s = $(this).find('input');
+                            me.query(s.val(), s.attr('data-key') || '');
                             return false;
                         }).find('.weui_search_input').on('focus', function () {
                             search_bar.addClass('weui_search_focusing');

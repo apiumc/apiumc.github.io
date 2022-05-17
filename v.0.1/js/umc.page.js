@@ -317,22 +317,6 @@
             xhr.open('GET', ($.Src || '') + path + '.html', true);
             xhr.send('');
 
-            // fetch(($.Src || '') + path + '.html').then(function(res) {return res.text()}).then(function (text) {
-            //     $(document.createElement("div")).html(text).children("div").each(function () {
-            //         var m = $(this);
-            //         if (!m.attr('ui')) {
-            //             m.attr('ui', path);
-            //         }
-            //     }).appendTo(UMC.UI.EventUI || 'body');
-            //     $.script(path + '.js').wait(function () {
-            //         if (Page[path] === true) {
-            //             delete Page[path];
-            //         }
-            //         win.on("page", path, hashValue);
-            //     });
-
-            // });
-
         } else if (ps.root) {
             $.UI.On('UI.Push', ps, path);
             var em = ps.root;
