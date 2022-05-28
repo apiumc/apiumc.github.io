@@ -2,7 +2,7 @@
 
 
 (function ($) {
-    let Page = {};
+    var Page = {};
     $(function ($) {
         $.UI.On('XHR', function (e, v) {
             $(document.body).cls('wdk-loading', v == 0);
@@ -40,7 +40,7 @@
         }
     });
 
-    let links = {};
+    var links = {};
     function pager() {
         this.page = function (u, t, s, f, i) {
             UMC.page(u, t, s, f, i);
@@ -153,7 +153,7 @@
 
     }
 
-    let tplt = {};
+    var tplt = {};
     $.tpl = function (p, s, f, t) {
         switch (typeof f) {
             case 'string':
@@ -370,7 +370,6 @@
                 };
                 xhr.open('GET', ($.Src || '') + path + '.html', true);
                 xhr.send('');
-
             }
         }
 
@@ -419,6 +418,14 @@
         return false;
 
     });
+    $.nav = function (key) {
 
+        if ($.SPA) {
+            history.pushState(null, null, key);
+            requestAnimationFrame(function () { win.on('popstate') });
+        } else {
+            location.hash = href;
+        }
+    }
 
 })(UMC)
