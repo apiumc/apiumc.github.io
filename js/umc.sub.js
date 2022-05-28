@@ -601,7 +601,7 @@
                         $.UI.On('Page.Menu',   [{
                             title: '项目成员', url: '#subject/team', icon: '\uf0c0'
                         }, {
-                            title: '回收站', url: '#subject/recycle', icon: '\uf0c0'
+                            title: '回收站', url: '#subject/recycle', icon: '\ue940'
                         }]);
                         // $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
                         break;
@@ -612,7 +612,7 @@
                         $.UI.On('Page.Menu',   [{
                             title: '项目成员', url: '#subject/team', icon: '\uf0c0'
                         }, {
-                            title: '回收站', url: '#subject/recycle', icon: '\uf0c0'
+                            title: '回收站', url: '#subject/recycle', icon: '\ue940'
                         }]);
                         // $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
                         break;
