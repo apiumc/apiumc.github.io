@@ -342,7 +342,7 @@
         $(window).off('popstate').on('popstate', function (e, v) {
             var pathKey = location.pathname;
             var pKey = pathKey.substring($.SPA.length) || 'index';
-            switch (pKey ) {
+            switch (pKey) {
                 case 'index':
                 case 'explore':
                 case 'login':
@@ -598,15 +598,29 @@
                     case 'EditerAll':
                         navSort.option('disabled', disabled);
                         menuSort.option('disabled', disabled);
-                        $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
+                        $.UI.On('Page.Menu',   [{
+                            title: '项目成员', url: '#subject/team', icon: '\uf0c0'
+                        }, {
+                            title: '回收站', url: '#subject/recycle', icon: '\uf0c0'
+                        }]);
+                        // $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
                         break;
                     case 'EditerDoc':
                         menuSort.option('disabled', disabled);
                         navSort.option('disabled', true);
-                        $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
+
+                        $.UI.On('Page.Menu',   [{
+                            title: '项目成员', url: '#subject/team', icon: '\uf0c0'
+                        }, {
+                            title: '回收站', url: '#subject/recycle', icon: '\uf0c0'
+                        }]);
+                        // $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
                         break;
                     default:
-                        $.page('subject/team', '项目成员', '\uf0c0').menu();
+                        $.UI.On('Page.Menu',   [{
+                            title: '项目成员', url: '#subject/team', icon: '\uf0c0'
+                        }]);
+                        // $.page('subject/team', '项目成员', '\uf0c0').menu();
                         menuSort.option('disabled', true);
                         navSort.option('disabled', true);
                         break;
@@ -660,7 +674,7 @@
 
         });
 
-      //  $.UI.On('Subject.Menu', location.pathname.indexOf($.SPA) == 0 ? { code: location.pathname.substring($.SPA.length) } : '');
+        //  $.UI.On('Subject.Menu', location.pathname.indexOf($.SPA) == 0 ? { code: location.pathname.substring($.SPA.length) } : '');
 
         $('.el-dropdown').menu().siblings('*[role]').click('a', function () {
             var me = $(this);
