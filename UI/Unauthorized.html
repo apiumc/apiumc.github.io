@@ -27,8 +27,6 @@
         };
 
         UMC(function($) {
-
-
             $.UI.Off('Prompt').On("Prompt", function(e, p) {
                 var msg = $('.el-message').removeClass('el-message-fade-leave-active');
                 msg.find('.el-message__content').html(p.Text);
@@ -47,7 +45,6 @@
             var login = $('.login-container');
             login.find('.loginFunc').click(function() {
                 var mp = $(this).parent().cls('scanning');
-
                 login.on(mp.is('.scanning') ? "connect" : 'disconnect');
             });
             var root = $('.login-container');
@@ -68,7 +65,6 @@
                     if (!cfg.client) {
 
                         login.find(".qrcode_view .context").html("<a>扫码配置不正确</a>");
-                        // login.find('.loginFunc').click();
                         return;
                     }
                     var client = new Paho.MQTT.Client(cfg.broker, 443, cfg.client);
