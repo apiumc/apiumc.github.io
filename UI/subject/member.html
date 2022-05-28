@@ -1,0 +1,109 @@
+<div data-link-id="dynamic" hidesidebar="true" class="umc-dynamic">
+
+    <div style="margin: 20px 0;" class="el-panel-group el-row">
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xF02d;">
+            </div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    知识创作
+                </div>
+                <div style="position: relative;">
+                    <span data-field="Count" class="card-panel-num"></span>篇
+
+                </div>
+            </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xF19d;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    参与项目
+                </div> <span data-field="ProjectCount" class="card-panel-num"></span>个 </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf06e;"></div>
+            <div class="el-card-panel-description">
+
+                <div data-v-6723c96e="" class="card-panel-text">
+                    被浏览数
+                </div> <span data-field="Look" class="card-panel-num"></span> </div>
+        </div>
+        <div class="el-card-panel">
+            <div class="el-card-panel-icon" data-icon="&#xf0e6;"></div>
+            <div class="el-card-panel-description">
+
+                <div class="card-panel-text">
+                    被评论数
+                </div> <span data-field="Reply" class="card-panel-num"></span> </div>
+        </div>
+    </div>
+
+    <div style=" display: flex;">
+        <div class="el-card" style="width: 70%; margin-right: 1em;">
+            <div class="wdk-tabs" style="position: relative; flex:1;overflow: auto">
+                <div class="weui_navbar">
+                    <div class="weui_navbar_item weui_bar_item_on" data-index="0"> 我的知识</div>
+                    <div class="weui_navbar_item " data-index="1"> 我的动态</div>
+
+                </div>
+                <div class="wdk_tab_bd">
+                    <div class="weui_tab_bd_item" style="display: block;">
+                        <section>
+
+                        </section>
+                    </div>
+                    <div class="weui_tab_bd_item ">
+                        <div class="el-table">
+                            <div>
+                                <script type="text/html">
+                                    <div class="umc-sub-dynamic-item">
+                                        <div class="umc-sub-dynamic-img">
+                                            <img src="{src}">
+                                        </div>
+                                        <div style="flex:1; padding-left:12px">
+                                            <div>{title}</div>
+                                            <div class="umc-sub-dynamic-desc">{name} {time} {desc}</div>
+                                        </div>
+                                        <div class="umc-sub-dynamic-type" style="">{type}</div>
+                                    </div>
+                                </script>
+                            </div>
+                        </div>
+                        <div class="pagination-container">
+                            <button type="button" class="btn-prev" disabled="disabled">  &lt;</button>
+                            <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+                            <input type="number" autocomplete="off" min="1" max="1" />
+                            <span class="total"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="el-card " style="flex: 1;">
+
+            <div class="umc-project-head editer">
+                <a model="Account" cmd="Setting" send="Icon"><img data-field="Src"></a>
+
+                <div class="umc-project-name">
+                    <a model="Account" cmd="Setting" send="Alias" data-field="Alias"></a>
+                </div>
+                <div class="umc-project-desc">
+                    <a model="Account" cmd="Setting" send="Signature" data-field="Signature"></a>
+                </div>
+            </div>
+            <div style=" position: relative; padding:10px 16px; ">
+                <h5 class="title"><span>参与项目</span></h5>
+            </div>
+            <div id="myProject">
+                <section>
+
+                </section>
+            </div>
+
+        </div>
+    </div>
+</div>

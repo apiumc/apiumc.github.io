@@ -1,0 +1,53 @@
+<div app-cls="umc-sub-index umc-sub-app" hidesidebar="true" class="umc-dynamic">
+
+
+    <div style=" display: flex;">
+        <div class="umc-sub-content">
+
+            <div id="sliders" style="margin-bottom: 1em;">
+            </div>
+            <div class="el-card">
+                <div class="weui_tab_bd_item" style="display: block;">
+                    <section>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="umc-sub-content-right">
+            <div class="el-card" style="margin-bottom: 1em;">
+                <div style=" position: relative; padding:10px 16px; border-bottom: 1px solid #e5e5e5;">
+                    <h5 class="title"><span>推荐项目</span></h5>
+                </div>
+                <div id="myProject">
+                    <script type="text/html">
+                        <a ui-spa href="{Path}" class=" weui_media_box weui_media_appmsg">
+                            <div class="weui_media_hd"><img class="weui_media_appmsg_thumb" src="{src}"></div>
+                            <div class="weui_media_bd">
+                                <h4 class="weui_media_title">{title}</h4>
+                                <p class="weui_media_desc">知识{subs}篇，成员{members}位</p>
+                            </div>
+                        </a>
+                    </script>
+                </div>
+            </div>
+            <div class="el-card">
+                <div style=" position: relative; padding:10px 16px;border-bottom: 1px solid #e5e5e5;">
+                    <h5 class="title"><span>新加项目</span></h5>
+                </div>
+                <div id="newProject">
+                    <script type="text/html">
+                        <a ui-spa href="{Path}" class=" weui_media_box weui_media_appmsg">
+                            <div class="weui_media_hd"><img class="weui_media_appmsg_thumb" src="{src}"></div>
+                            <div class="weui_media_bd">
+                                <h4 class="weui_media_title">{title}</h4>
+                                <p class="weui_media_desc">知识{subs}篇，成员{members}位</p>
+                            </div>
+                        </a>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
