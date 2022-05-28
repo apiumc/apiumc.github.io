@@ -19,12 +19,14 @@
                     cms.push(f.config.text);
                 }
             }
+            this.IsClose = !param.CloseEvent;
             this.fields = fields;
             this.columns = cms;
-            this.parms = {};
+            // this.parms = {};
+            this.Name = param.Name;
             header.pageSize = parseInt(header.pageSize) || 0;
-            var search = this.search = param.search || {};
-            var parm = this.parms = this.search.params || {};
+            var search = this.search = param.Submit || param.search || {};
+            var parm = this.parms = $.extend({}, search.send || {});
             if (search.model) {
                 $.extend(parm, { _model: search.model, _cmd: search.cmd });
             }
@@ -108,7 +110,6 @@
                 content.on('defer', true);
             }
             if (header.type == 'dialog') {
-                me.send = header.send || header.ValueField;
                 me.items.addClass('weui_cells_access');
                 me.items.on('click', 'a', function () {
                     me.submit($(this));
@@ -133,23 +134,22 @@
             if (t) {
                 var value = this.values[parseInt(t)];
                 var me = this;
-                var su = me.search.submit;
+                var su = me.Header.ValueField;
                 if (su) {
-                    if (su.send) {
-                        if (typeof value == 'object') {
-                            UMC.extend(su.send, value)
-                        } else {
-                            su.send[me.send] = value;
+                    if (typeof su == 'object') {
+                        var send = $.extend({}, su.send);
+                        for (var k in su) {
+                            send[k] = value[su[k]];
                         }
-                        $.UI.Command(su.model, su.cmd, su.send);
+                        $.UI.Command(su.model, su.cmd, send)
                     } else {
-                        $.UI.Command(su.model, su.cmd, value)
+                        var v = $.extend({}, su.send);
+                        v[me.Name || ''] = value[su];
+                        $.UI.Command(su.model, su.cmd, v)
                     }
-                } else {
-                    $.UI.Command(value);
-                    this.dom.addClass('right').removeClass('ui');
                 }
             }
+            this.IsClose ? this.dom.addClass('right').removeClass('ui') : 0;
         },
 
         refresh: function () {
@@ -241,18 +241,12 @@
 
         next: function () {
             if (this.destData && !$.UI.loading) {
-                if ('start' in this.destData) {
-                    this.parms.start = this.destData.start;
+                var total = parseInt(this.destData.total) || 0;
+                var start = (this.parms.start || 0) + this.Header.pageSize;
+                if (start && start < total) {
+                    this.parms.start = start;
                     this.refresh();
                     return true;
-                } else {
-                    var total = parseInt(this.destData.total) || 0;
-                    var start = (this.parms.start || 0) + this.Header.pageSize;
-                    if (start && start < total) {
-                        this.parms.start = start;
-                        this.refresh();
-                        return true;
-                    }
                 }
             }
             return false;

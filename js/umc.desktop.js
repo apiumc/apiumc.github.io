@@ -243,8 +243,10 @@
 
         var t = apps[id] = this;
         this.cfg.menu = $(document.createElement("ul")).addClass('umc-desktop-menu').click('a', function () {
-            t._click($(this));
-            return false;
+            if (!this.target) {
+                t._click($(this));
+                return false;
+            }
         });
         this.cfg.win = $(document.createElement("ul")).attr('role', 'menu');
 
@@ -320,9 +322,11 @@
             v.icon ? a.attr('data-icon', v.icon) : 0;
             v.href ? a.attr('href', v.href) : 0;
             v.id ? li.attr('id', 'n' + v.id) : 0;
+            v.target ? a.attr('target', v.target) : 0
             a.appendTo(li);
             var menu = v.menu || [];
             if (menu.length > 0) {
+                a.addClass('el-dropdown').menu();
                 this._menu($(document.createElement('ul')).attr('role', 'menu').appendTo(li), menu);
             }
             return li;
@@ -548,7 +552,7 @@
                     }
 
                 } else {
-                    $(document.createElement('span')).text(vs).appendTo(wtitle);
+                    $(document.createElement('span')).text(vs || '').appendTo(wtitle);
                 }
                 menuWin.text(wtitle.text());
             }).on('menu', function (e, vs) {

@@ -3,14 +3,8 @@
     var __p = $.UI;
     __p.Cells = {};
     __p.Headers = {};
-    var d = 0;
-    UMC.UI.Click = function (e) {
-        switch (e.key) {
-            case 'Url':
-                return e.send;
-                break;
-        }
-    };
+
+  
     UMC.prototype.more = function () {
         return this.click(function (e, v) {
             var m = WDK(this);

@@ -821,10 +821,10 @@
         return click;
     }
     UMC.query = function (q, k) {
+        var e = decodeURIComponent;
         if ((typeof q) == 'string') {
             var value = {};
             var ks = k || [];
-            var e = decodeURIComponent;
             each(q.split('&'), function () {
                 var vs = this.split('=');
                 value[e(vs[0])] = e(vs[1] || '');
@@ -833,7 +833,6 @@
             return value;
         } else {
             var vs = [];
-            var e = encodeURIComponent;
             for (var k in q)
                 vs.push(e(k) + '=' + e(q[k]));
 
@@ -948,7 +947,7 @@
     };
     var ___c, ___cb;
     var ___b = 0;
-    var posurl = { "posurl": sessionStorage.posurl || "/UMC/" };
+    var posurl = { "posurl": "/UMC/" };
 
 
     var __p = {
@@ -981,6 +980,13 @@
                 return posurl;
             }
         },
+        Click: function (e) {
+            switch (e.key) {
+                case 'Url':
+                    return e.send;
+                    break;
+            }
+        },
         Msg: function (text) {
             __p.On('Prompt', { Text: text });
         },
@@ -1002,7 +1008,21 @@
     function imageShow(title, url, context, href) {
         dialog(title, ['<a ', href ? ('target="_blank" href="' + href + '"') : '', '><img style="max-width: 100%;" src="', url, '"/></a><p>', context, '</p>'].join(''));
     }
-
+    var uiEvent = {};
+    __p.On('UI.Event', function (e, v) {
+        var ue = uiEvent[v.key];
+        if (ue) {
+            var val = v.value;
+            __cmd(ue.Submit, ue.Name, val.Value, val.Text);
+            delete uiEvent[k.key];
+        }
+    });
+    function __cmd(c, n, v, t) {
+        var s = UMC.extend({}, c.send || {});
+        s[n] = v;
+        t ? (s[n + '_Text'] = t) : 0;
+        __p.Command(c.model, c.cmd, s);
+    }
     function check(v, cfn) {
         __p.loading = false;
         __p.On('XHR', 1, v);
@@ -1016,20 +1036,26 @@
                     case 'Select':
                     case 'RadioGroup':
                         actionSheet(p.Title || '请选择', p.DataSource || [], function (v) {
-                            v.Value ? __p.Command(v.Value) : UMC.Click(v)
+                            v.Value ? (p.Submit ? __cmd(p.Submit, p.Name, v.Value || 'OK') : __p.Command(v.Value)) : UMC.Click(v)
                         }, 'Text', p.Cells || 1);
                         break;
                     case "Prompt":
                         dialog(p.Title || '提示', p.Text);
                         break;
                     case "Confirm":
-                        dialog(p.Title || '提示', p.Text, function (v) { __p.Command(p.DefaultValue || 'OK') });
+                        dialog(p.Title || '提示', p.Text, function (v) {
+                            p.Submit ? __cmd(p.Submit, p.Name, p.DefaultValue || 'OK') : __p.Command(p.DefaultValue || 'OK')
+                        });
                         break;
                     case "Image":
                         imageShow(p.Title || '图片', p.Url, p.Text, p.Href);
                         break;
                     case 'Grid':
                         __p.On("Grid", p, v, cfn);
+                        break;
+                    case "UI.Event":
+                        uiEvent[p.Key] = { Name: p.Name, Submit: p.Submit };
+                        UMC.Click(p.Click);
                         break;
                     default:
                         __p.On('Form.' + p.Type, p, v, cfn) === false ? 0 : __p.On("Form", p, v, cfn);
@@ -1055,7 +1081,7 @@
                             }) : __p.On("Debug", p, v);
                             break;
                         case "Click":
-                            $.Click(p.Click);
+                            UMC.Click(p.Click);
                         default:
                             if (p.type) {
                                 __p.On("DataEvent", p);
@@ -1135,20 +1161,17 @@
         __p.Bridge(args[0], function (xhr) { ISFN(call) ? call(xhr) : 0 });
         return __p;
     };
-    UMC.api = function (m, c, t, b) {
-        var args = encodeUArgs(m, c, t);
-        var call = b || args[1];
+    // UMC.api = function (m, c, t, b) {
+    //     var args = encodeUArgs(m, c, t);
+    //     var call = b || args[1];
 
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            check(JSON.parse(xhr.responseText), call);
-        };
-        xhr.open('GET', ['https://api.365lu.cn/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''), true);
-        xhr.send();
-
-        // fetch(['https://api.365lu.cn/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''))
-        //     .then(function (r) { return r.json()}).then(function(j){check(j,call)});
-    };
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.onload = function () {
+    //         check(JSON.parse(xhr.responseText), call);
+    //     };
+    //     xhr.open('GET', ['https://api.365lu.cn/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''), true);
+    //     xhr.send();
+    // };
 
     __p.Ready = check;
     var dlgIndex = 0;

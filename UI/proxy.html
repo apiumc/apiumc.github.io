@@ -1,0 +1,60 @@
+<div class="app-container">
+
+
+    <div class="item-container">
+
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="80">
+                    <col width="120">
+                    <col width="80">
+                    <col width="300">
+                    <col width="80">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            应用
+                        </th>
+                        <th>
+                            标题
+                        </th>
+                        <th>
+                            类型
+                        </th>
+                        <th>
+                            网址
+                        </th>
+                        <th>
+                            授权
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr>
+                            <td class="is-center">
+                                <a class="link-type" model="Proxy" cmd="Site" send="{root}">{root}</a>
+                            </td>
+                            <td class="is-center">{name}</td>
+                            <td class="is-center">
+                                {module}
+                            </td>
+                            <td class="is-center">
+                                <a class="link-type" model="Proxy" cmd="Site" send="Key={root}&Model=Domain">  {domain}</a>
+                            </td>
+                            <td class="is-center rel">
+                                {auth}
+                                <a class="swipe el-button--danger" model="Proxy" cmd="Site" send="Key={root}&Model=Delete"> 移除</a>
+                            </td>
+
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

@@ -6,8 +6,6 @@
     $(function ($) {
         $.UI.On('XHR', function (e, v) {
             $(document.body).cls('wdk-loading', v == 0);
-        }).On('Page.Del', function (e, v) {
-            delete Page[v];
         });
         $(document.body).on('click', 'a[model]', function () {
             var m = $(this);
@@ -20,28 +18,41 @@
             return false;
 
         });
+
+        if ($.SPA) {
+            $(window).on('hashchange', function () {
+                var hash = location.hash.substring(1);
+                var path = hash.split('?')[0];
+                if (Page[path]) {
+                    history.replaceState(null, null, $.SPA + hash);
+                    requestAnimationFrame(function () { win.on('popstate') });
+                } else {
+                    for (var k in tplt) {
+                        if (path.indexOf(k + '/') == 0) {
+                            history.replaceState(null, null, $.SPA + hash);
+                            requestAnimationFrame(function () { win.on('popstate') });
+                            break;
+                        }
+                    }
+                }
+
+            })
+        }
     });
 
     let links = {};
-    let Menu = [];
-    function pager(menu) {
+    function pager() {
         this.page = function (u, t, s, f, i) {
-            UMC.page(u, t, s, f, i, menu);
-            return this;
-        }
-        this.menu = function (url, title) {
-            menu.push({ title: title, url: url });
+            UMC.page(u, t, s, f, i);
             return this;
         }
     }
-    $.page = function (u, t, s, f, i, m) {
+    $.page = function (u, t, s, f) {
         if ($.isfn(t)) {
             f = t;
-            i = s;
             t = null;
             s = true;
         } else if ($.isfn(s)) {
-            i = f;
             f = s
             s = true;
         }
@@ -52,13 +63,8 @@
                 search: s,
                 init: f
             }
-            if (i) {
-                (m || Menu).push({
-                    icon: i === true ? '' : i,
-                    url: '#' + u,
-                    title: t
-                })
-            }
+        } else if (arguments.length == 0) {
+            return Page;
         } else {
             switch (typeof Page[u]) {
                 case 'string':
@@ -66,32 +72,10 @@
                     Page[u] = true;
                     break;
             }
-            if (t && s !== false) {
-                (m || Menu).push({
-                    icon: s === true ? '' : s,
-                    url: '#' + u,
-                    title: t
-                })
-
-            }
         }
         return $;
     }
 
-    $.menu = function (i, t) {
-        if (arguments.length) {
-            var ts = {
-                icon: i,
-                menu: [],
-                title: t
-            };
-            Menu.push(ts)
-            return new pager(ts.menu);
-        } else {
-            $.UI.On('Page.Menu', Menu);
-            Menu = [];
-        }
-    }
     $.shift = function (t, k) {
         Page[t] = k;
         return $;
@@ -268,17 +252,6 @@
                         xhr.open('GET', ($.Src || '') + tpl.src + '.html', true);
                         xhr.send('');
 
-
-                        // fetch(($.Src || '') + tpl.src + '.html').then(function (res) { return res.text() }).then(function (text) {
-                        //     tpl.root = $(document.createElement("div")).html(text).children("div").remove()[0];
-                        //     if (tpl.root) {
-                        //         tpl.init ? win.on('page', path, hashValue) : $.script(tpl.src + '.js')
-                        //             .wait(function () {
-                        //                 win.on("page", path, hashValue);
-                        //             });
-                        //     }
-
-                        // });
                     }
                 }
             } else {
@@ -316,22 +289,6 @@
             };
             xhr.open('GET', ($.Src || '') + path + '.html', true);
             xhr.send('');
-
-            // fetch(($.Src || '') + path + '.html').then(function(res) {return res.text()}).then(function (text) {
-            //     $(document.createElement("div")).html(text).children("div").each(function () {
-            //         var m = $(this);
-            //         if (!m.attr('ui')) {
-            //             m.attr('ui', path);
-            //         }
-            //     }).appendTo(UMC.UI.EventUI || 'body');
-            //     $.script(path + '.js').wait(function () {
-            //         if (Page[path] === true) {
-            //             delete Page[path];
-            //         }
-            //         win.on("page", path, hashValue);
-            //     });
-
-            // });
 
         } else if (ps.root) {
             $.UI.On('UI.Push', ps, path);
@@ -414,18 +371,12 @@
                 xhr.open('GET', ($.Src || '') + path + '.html', true);
                 xhr.send('');
 
-                // fetch(($.Src || '') + path + '.html').then(function (res) {return res.text() }).then(function (text) {
-                //     $(document.createElement("div")).html(text).children("div")
-                //         .attr('ui', path).appendTo(UMC.UI.EventUI || 'body').length ?
-                //         win.on("page", path, hashValue) : 0
-
-                // });
             }
         }
 
     }).on('popstate', function (e) {
         if ($.SPA) {
-            win.on('page', location.pathname.substring(($.SPA || '/').length), location.search.substring(1));
+            win.on('page', location.pathname.substring(($.SPA || '/').length) || 'main', location.search.substring(1));
         } else {
             var hash = location.hash.substring(1);
             var pindex = hash.indexOf('?');
