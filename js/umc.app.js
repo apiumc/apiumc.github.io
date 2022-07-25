@@ -316,23 +316,23 @@
 
 
 
+
+        UMC.UI.On('Cashier', function (e, v) {
+            $('.sidebar-logo-container a')
+                .attr('data-name', v.Alias.substr(0, 1)).find('img').attr('src', v.Src);
+            $('.umc-logo-name').text(v.Alias);
+
+        }).On('Close', function () {
+            location.href = '/UMC.Reset'
+        });
+
         $.UI.Command("Account", "Check", "Info", function (xhr) {
             $.UI.Device = xhr.Device;
             if (xhr.IsCashier) {
                 $.UI.On('Cashier', xhr);
             } else {
-                location.href = '/UMC.Reset'
+                $.UI.On('Close');//, location.href = '/UMC.Reset'
             }
-        });
-
-        WDK.UI.On('Cashier', function (e, v) {
-            $('.sidebar-logo-container a')
-                .attr('data-name', v.Alias.substr(0, 1)).find('img').attr('src', v.Src);
-            $('.umc-logo-name').text(v.Alias);
-            $('.login-container').cls('hide', 1);
-
-        }).On('Close', function () {
-            location.href = '/UMC.Reset'
         });
 
     });

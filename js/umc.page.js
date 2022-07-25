@@ -178,7 +178,10 @@
         return $;
     }
     $.check = function (u) {
-        return (tplt[u] || Page[u]) ? true : false;
+        var k = u.split('/')[0];
+        return (tplt[u] || Page[u]) ? true : ((tplt[k] || Page[k]) ? true : false);
+
+
     }
     $.UI.On("DataEvent", function (e, p, v) {
         var eKey = p.type;

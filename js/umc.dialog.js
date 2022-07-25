@@ -121,7 +121,7 @@
                 htmls.push('<div class="weui_cell_ft">', v.Text || defaultValue || v.placeholder, '</div></a>');
                 break;
             case "Textarea":
-                htmls.push('<div class="weui_cell">', '<div class="weui_cell_bd weui_cell_primary">', '<textarea class="weui_textarea" ', v.required ? '' : 'required', ' placeholder="', v.placeholder || v.Title, '"  name="', key, '" rows="', v.Rows || '3', '">', defaultValue , '</textarea></div></div>');
+                htmls.push('<div class="weui_cell">', '<div class="weui_cell_bd weui_cell_primary">', '<textarea class="weui_textarea" ', v.required ? '' : 'required', ' placeholder="', v.placeholder || v.Title, '"  name="', key, '" rows="', v.Rows || '3', '">', defaultValue, '</textarea></div></div>');
                 break;
             case "File":
                 htmls.push('<div class="weui_cell">', '<div class="weui_cell_bd weui_cell_primary">', '<input type="hidden" ', v.required ? '' : 'required', ' value="', defaultValue || '', '"  name="', key, '" />', '<div class="weui_uploader_input_wrp" style="background-size:100%;background-image: url(', v.DefaultValue || '', ');">', '<input class="weui_uploader_input" type="file" name="_f" data-key="', key, '" accept="', v.Accept || 'image/jpg,image/jpeg,image/png,image/gif', '"></div></div>'
@@ -272,7 +272,7 @@
                             htmls.push('</div>');
                         }
                         isSubmit = true;
-                        createSubmit(v.submit, htmls);
+                        createSubmit(v.Submit || v.submit, htmls);
                     }
 
 
@@ -294,7 +294,7 @@
                 break;
         }
         if (!isSubmit) {
-            var smt = v.submit;
+            var smt = v.Submit || v.submit;
             createSubmit(smt === false ? smt : (smt || { text: isInput ? '确认提交' : '关闭' }), htmls);
         }
         var headers = ['<div class="header"><a class="back"></a><h1>', v.Title || "请输入", '</h1> '];
@@ -555,7 +555,7 @@
                     }
                 }
             }
-            var submit = this.param.submit;
+            var submit = this.param.Submit || this.param.submit;
             switch (typeof submit) {
                 case 'object':
                     var vs = v || {};
@@ -621,7 +621,7 @@
             wx.scanQRCode({
                 needResult: 1,
                 success: function (res) {
-                    WDK.UI.Command(escape(res.resultStr));
+                    WDK.UI.Command(encodeURIComponent(res.resultStr));
                 }
             });
             return false;

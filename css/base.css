@@ -13,13 +13,7 @@
             animation: none !important;
         }
         
-        .weui_cells>div div {
-            font-size: 14px;
-        }
-        
-        .weui_cells>a div {
-            font-size: 14px;
-        }
+       
         
         body>div[ui] {
             position: fixed;

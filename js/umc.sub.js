@@ -20,25 +20,192 @@
             setTimeout(function () {
                 msg.addClass('el-message-fade-leave-active');
             }, 3000);
-        }).On("UI.Publish", function (e, title, key, desc, t) {
+        }).On("UI.Publish", function (e, title, keyword, desc, t) {
 
             var ag = t || {};
             var body = $(document.body.cloneNode(true));
             body.find('div[ui]').attr('ui', false).addClass('hide');
             body.find('#app').cls('hideSidebar', true)
 
-            var pathname = location.pathname.substring(1);
-            ag.Key = pathname || 'sub.html';
-            var json = JSON.stringify({ title: title, key: key, desc: desc, html: body.html() });
-            UMC.uploader(new File([json], 'a.json', { type: 'text/json' }),
-                function () {
-                    $.UI.API('Subject', 'Publish', ag);
-                }, pathname, true);
+            ag.key = location.pathname;
+            var json = $.extend({ title: title, keyword: keyword, desc: desc, html: body.html() }, ag);
+
+            $.UI.API('Subject', 'Publish', json);
+
         })
 
     $(function ($) {
         $.page('subject');
         $.page('download');
+        var comment, preview;
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            comment = $(document.createElement("div")).html(xhr.responseText).children("div").remove().on('uploader', function (e, file) {
+                var media_id = Math.random();
+                var fname = file.name.substr(file.name.lastIndexOf('.')).toLocaleLowerCase();
+                switch (fname) {
+                    case '.jpg':
+                    case '.png':
+                    case '.gif':
+                    case '.webp':
+                    case '.jpeg':
+                        break;
+                    default:
+                        $.UI.Msg("文件格式不支持")
+                        return;
+                }
+                $.UI.Config().res
+                var path = ($.UI.Config().possrc || 'https://oss.365lu.cn/') + 'TEMP/Static/' + media_id + fname;
+
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    var a = $(document.createElement('a'));
+                    a.html(['<img src="', path, '!50"/><i></i>'].join('')).attr('data-src', path);
+                    comment.find('.umc-subject-comment-toolbar-images').append(a);
+
+                };
+                xhr.open('PUT', path, true);
+                xhr.send(file);
+            });
+            comment.find('input').change(function () {
+                var v = this.files;
+                if (v.length > 0) {
+                    var me = this;
+                    var file = v[0];
+
+                    comment.on('uploader', file);
+                    me.value = '';
+
+                }
+            });
+            comment.find('.umc-subject-comment-toolbar-images').click('a>i', function () {
+                $(this).parent().remove();
+            });
+            comment.find('textarea').on('paste', function (e) {
+                var cb = e.clipboardData;
+                if (!(cb && cb.items)) {
+                    return;
+                }
+                var items = cb.items;
+                for (var i = 0; i < items.length; i++) {
+                    cbd = items[i];
+                    switch (cbd.kind) {
+                        case 'file':
+                            var blob = cbd.getAsFile();
+                            if (blob && blob.size > 0) {
+                                comment.on('uploader', blob);
+                            }
+                            return false;
+
+                    }
+                }
+            });
+            var textarea = comment.find('textarea').on('keydown', function (e) {
+
+                if (e.keyCode == 13 && (e.metaKey || e.ctrlKey)) {
+                    comment.on('submit');
+                    return false;
+                }
+            });
+            comment.on('submit', function () {
+                var d = { Content: textarea.val() };
+                if (d.Content.length >= 4) {
+                    var ls = [];
+                    comment.find('.umc-subject-comment-toolbar-images a').each(function () {
+                        ls.push(this.getAttribute('data-src'));
+                    });
+                    if (ls.length > 0) {
+                        d.image = ls.join(',');
+                        comment.find('.umc-subject-comment-toolbar-images').html('');
+                    }
+                    UMC.UI.Command(submit.model, submit.cmd, $.extend(d, submit.send));
+                    comment.remove();
+                    textarea.val('');
+                } else {
+                    $.UI.Msg('内容不能少于4个字符')
+                }
+            })
+
+            comment.find('.umc-subject-comment-toolbar-right a').click(function () {
+                switch (this.getAttribute('data-type')) {
+                    case 'submit':
+                        comment.on('submit');
+                        break;
+                    default:
+                        comment.remove();
+                        break;
+                }
+
+            });
+            var submit = {};
+            $.UI.On("Comment", function (e, v) {
+                comment.attr('data-type', 'Comment');
+                submit = v.submit;
+                $('div[page-name=' + submit.send.UI + '] .umc-subject-footer').before(comment);
+                textarea.attr('placeholder', submit.text).val(submit.value || '');
+                textarea.focus();
+            });
+
+            $.UI.On("Reply", function (e, v) {
+                submit = v.submit;
+                comment.attr('data-type', 'Reply');
+                $('div[page-name=' + submit.send.UI + '] div[section-index="' + submit.send.section + '"] div[row-index="' + submit.send.row + '"] .wdk-cms-comment-info').append(comment);
+                textarea.attr('placeholder', submit.text).val(submit.value || '');
+                comment.find('.umc-subject-comment-toolbar-images').html('');
+                textarea.focus();
+            });
+
+        };
+        xhr.open('GET', ($.Src || '') + 'subject/comment.html', true);
+        xhr.send('');
+
+        xhr2 = new XMLHttpRequest();
+        xhr2.onload = function () {
+            preview = $(document.createElement("div")).html(xhr2.responseText).children("div").remove();
+            preview.find('img').on('load', function () {
+
+                var rect = this.getBoundingClientRect();
+                var winWidth = (window.innerWidth || document.body.clientWidth) - rect.width;
+                var winHeight = (window.innerHeight || document.body.clientHeight) - rect.height;
+                $(this).css('transform', ['translate(', (winWidth / 2), 'px,', (winHeight / 2), 'px)'].join(''))
+
+            });
+            preview.find('.weui_mask').click(function () {
+                preview.remove();
+            });
+            preview.find('.umc-preview-left').click(function () {
+                var index = parseInt($(this).attr('data-index'));
+                if (!isNaN(index)) {
+                    $.UI.On("Image.Preview", $('.weui_cells img[original-src]').eq(index - 1));
+                }
+            });
+
+            preview.find('.umc-preview-right').click(function () {
+                var index = parseInt($(this).attr('data-index'));
+                if (!isNaN(index)) {
+                    $.UI.On("Image.Preview", $('.weui_cells img[original-src]').eq(index + 1));
+                }
+
+            });
+            $.UI.On("Image.Preview", function (e, v) {
+                var rect = v[0].getBoundingClientRect();
+                preview.find('img').attr('src', v.attr('original-src')).css('transform', ['translate(', (rect.left), 'px,', (rect.top), 'px)'].join(''))
+                preview.appendTo(document.body);
+                var index = -1;
+                var len = $('.weui_cells img[original-src]').each(function (i) {
+                    if (this == v[0]) {
+                        index = i;
+                        return false;
+                    }
+                }).length;
+                preview.find('.umc-preview-left').attr('data-index', index == 0 ? 'start' : index);
+                preview.find('.umc-preview-right').attr('data-index', (index == (len - 1)) ? 'end' : index.toString());
+                preview.find('.umc-preview-original').attr('href', v.attr('original-src'))
+            });
+
+        };
+        xhr2.open('GET', ($.Src || '') + 'subject/preview.html', true);
+        xhr2.send('');
 
         var navbar = $('.navbar');
         (function () {
@@ -352,7 +519,7 @@
                     $(window).on('page', 'download', '');
                     return;
                 case 'dashboard':
-                    v ? $(window).on('page', 'subject/self', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
+                    v ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
                     return;
             }
 
@@ -577,8 +744,8 @@
                     return;
                 }
                 team.text(xhr.text);
-
-                document.body.className = xhr.Auth;
+                $(document.body).removeClass('EditerItem,EditerDoc,EditerAll').addClass(xhr.Auth);
+                
                 $.UI.ProjectId = xhr.id;
                 $.UI.SPAPfx = $.SPA + xhr.code + '/';
 
@@ -598,29 +765,26 @@
                     case 'EditerAll':
                         navSort.option('disabled', disabled);
                         menuSort.option('disabled', disabled);
-                        $.UI.On('Page.Menu',   [{
+                        $.UI.On('Page.Menu', [{
                             title: '项目成员', url: '#subject/team', icon: '\uf0c0'
                         }, {
                             title: '回收站', url: '#subject/recycle', icon: '\ue940'
                         }]);
-                        // $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
                         break;
                     case 'EditerDoc':
                         menuSort.option('disabled', disabled);
                         navSort.option('disabled', true);
 
-                        $.UI.On('Page.Menu',   [{
+                        $.UI.On('Page.Menu', [{
                             title: '项目成员', url: '#subject/team', icon: '\uf0c0'
                         }, {
                             title: '回收站', url: '#subject/recycle', icon: '\ue940'
                         }]);
-                        // $.page('subject/team', '项目成员', '\uf0c0').page('subject/recycle', '回收站', '\ue940').menu();
                         break;
                     default:
-                        $.UI.On('Page.Menu',   [{
+                        $.UI.On('Page.Menu', [{
                             title: '项目成员', url: '#subject/team', icon: '\uf0c0'
                         }]);
-                        // $.page('subject/team', '项目成员', '\uf0c0').menu();
                         menuSort.option('disabled', true);
                         navSort.option('disabled', true);
                         break;
@@ -695,20 +859,7 @@
                     $.UI.On('Subject.Menu', me.attr('data-code'))
                     break;
             }
-        }).find('input').change(function () {
-            let items = this.files;
-            var sid = $('.el-submenu__title.is-active', menubar).attr('data-id');
-            if (sid) {
-                for (let i = 0; i < items.length; i++) {
-                    scanFiles(items[i], sid);
-                }
-            } else {
-                $.UI.Msg('请选择文集');
-
-            }
-
-
-        });
+        })
 
         $('.wdk-footer-icon').click(function () {
             switch (this.id) {
@@ -762,14 +913,32 @@
 
             }
 
+        }).find('input').change(function () {
+            var items = this.files;
+            var sid = $('.el-submenu__title.is-active', menubar).attr('data-id') || $('.el-submenu__title', menubar).attr('data-id');
+
+            if (sid) {
+                for (var i = 0; i < items.length; i++) {
+                    scanFiles(items[i], sid);
+                }
+            } else {
+                $.UI.Msg('请选择文集');
+
+            }
         });
 
         function scanFiles(item, sid) {
             var name = item.name;
-            if (name.substring(name.lastIndexOf('.') + 1).toUpperCase() == 'MD') {
-                $.uploader(item, function (xhr) {
-                    $.UI.Command('Subject', "Upload", { Id: sid, Key: xhr.key });
-                });
+            switch (name.substring(name.lastIndexOf('.') + 1).toUpperCase()) {
+                case 'MD':
+                case 'JSON':
+                    $.uploader(item, function (xhr) {
+                        $.UI.Command('Subject', "Upload", { Id: sid, Key: xhr.key });
+                    });
+                    break;
+                default:
+                    $.UI.Msg('文件格式不支持')
+                    break;
             };
         }
         var search = $('#header-search');

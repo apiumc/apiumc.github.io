@@ -1,4 +1,4 @@
-<div class="umc-dynamic">
+<div app-cls="umc-sub-index umc-sub-app" hidesidebar="true" class="umc-dynamic">
 
     <div class=" umc-sub-content-header el-panel-group el-row">
         <div class="el-card-panel">
@@ -44,11 +44,11 @@
     </div>
 
     <div style=" display: flex;">
-        <div class="el-card umc-sub-content">
+        <div class="el-card umc-sub-content" style="min-height: calc(100vh - 230px);">
             <div class="wdk-tabs" style="position: relative; flex:1;overflow: auto">
                 <div class="weui_navbar">
-                    <div class="weui_navbar_item " data-index="0">我的项目 </div>
-                    <div class="weui_navbar_item weui_bar_item_on" data-index="1"> 我的知识 </div>
+                    <div class="weui_navbar_item" data-index="0">我的关注 </div>
+                    <div class="weui_navbar_item" data-index="1"> 我的知识 </div>
                     <div class="weui_navbar_item" data-index="2"> 我的动态</div>
 
                 </div>
@@ -58,8 +58,10 @@
 
                         </section>
                     </div>
-                    <div class="weui_tab_bd_item">
-                        <div class="filter-container" style="margin:0.1em 0.5em">
+                    <div class="weui_tab_bd_item"><section>
+
+                    </section>
+                        <!-- <div class="filter-container" style="margin:0.1em 0.5em">
 
                             <div class="filter-container-item">
 
@@ -121,11 +123,11 @@
                             <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
                             <input type="number" autocomplete="off" min="1" max="1" />
                             <span class="total"></span>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="weui_tab_bd_item ">
-                        <div class="el-table">
+                        <div class="el-table" style="min-height: calc(100vh - 380px);">
                             <div>
                                 <script type="text/html">
                                     <div data-id="{id}" data-time="{tid}" class="umc-sub-dynamic-item">
@@ -136,7 +138,7 @@
                                             <div>{title}</div>
                                             <div class="umc-sub-dynamic-desc">{name} {time} {desc}</div>
                                         </div>
-                                        <div class="umc-sub-dynamic-type" style="">{type}</div>
+                                        <div class="umc-sub-dynamic-type" >{type}</div>
                                     </div>
                                 </script>
                             </div>
@@ -153,7 +155,7 @@
 
         </div>
         <div class="umc-sub-content-right">
-            <!-- <div class="el-card "> -->
+              <div class="el-card " style="min-height: calc(100vh - 230px);"> 
 
                 <!-- <div class="umc-project-head">
                     <a model="Account" cmd="Setting" send="Icon"><img data-field="Src"></a>
@@ -164,17 +166,17 @@
                     <div class="umc-project-desc">
                         <a model="Account" cmd="Setting" send="Signature" data-field="Signature"></a>
                     </div>
-                </div>
-                <div style=" position: relative; padding:10px 16px; ">
-                    <h5 class="title"><span> </span></h5>
                 </div> -->
+                <div style=" position: relative; ">
+                    <h5 class="weui_navbar_item" style="padding-left: 16px;text-align: left;"><span>我的项目 </span></h5>
+                </div>
                  <div id="myProject">
                     <section>
 
                     </section>
                 </div>
 
-            <!-- </div> -->
+            </div>
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-UMC.UI.Config({ 'posurl': 'https://ali.365lu.cn/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+UMC.UI.Config({ 'posurl': 'http://fc.365lu.cn/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
 UMC.Src = '/UI/';
 UMC.SPA = '/';
 UMC(function ($) {

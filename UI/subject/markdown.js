@@ -35,21 +35,27 @@
                     pro.Content = desc.html || desc.markdown;
                     pro.DataJSON = JSON.stringify(desc.list);
                 }
-                pro._model = 'Subject';
-                pro._cmd = 'Submit';
-                var blob = new Blob([JSON.stringify(pro)]);
-                blob.name = 'cmd.json';
-                WDK.uploader(blob, function (xhr) {
-                    WDK.UI.API('Upload', 'Command', xhr, d => {
-                        root.on('title', "保存于" + d.Headers.DataEvent.time);
-                        $.UI.On("Page.Del", 'subject/' + pro.Id);
-                    });
-                }, false, true);
+                // pro._model = 'Subject';
+                // pro._cmd = 'Submit';
+                // var blob = new Blob([JSON.stringify(pro)]);
+                // blob.name = 'cmd.json';
+                // WDK.uploader(blob, function (xhr) {
+                WDK.UI.API('Subject', 'Submit', pro);
+                // , d => {
+                //     root.on('title', "保存于" + d.Headers.DataEvent.time);
+                //     delete $.page()['subject/' + pro.Id];
+                //     // $.UI.On("Page.Del", 'subject/' + pro.Id);
+                // });
+                // }, false, true);
 
 
             }
         });
-        root.find('#des,textarea').on('input', function () {
+        root.ui('Subject.Submit', function (e, v) { 
+                root.on('title', "保存于" + v.time);
+                delete $.page()['subject/' + v.id]; 
+
+        }).find('#des,textarea').on('input', function () {
             isChange = true;
         })
         form.find('input.el-input').on('input', function () {

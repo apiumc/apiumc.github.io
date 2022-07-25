@@ -188,7 +188,8 @@
                         'z-index': '0'
                     }).appendTo(document.body);
 
-                var menu = m.siblings('*[role=menu]').css('transform', ['translate(', (rect.left), 'px,', (rect.top + rect.height + 5), 'px)'].join(''))
+                var menu = m.siblings('*[role=menu]')
+                .css('transform', ['translate(', (rect.left), 'px,', (rect.top + rect.height + 5), 'px)'].join(''))
                     .click(function () {
                         mask.click();
                     }, 1);

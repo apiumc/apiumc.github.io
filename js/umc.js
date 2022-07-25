@@ -821,21 +821,21 @@
         return click;
     }
     UMC.query = function (q, k) {
-        var e = decodeURIComponent;
         if ((typeof q) == 'string') {
+            var d = decodeURIComponent;
             var value = {};
             var ks = k || [];
             each(q.split('&'), function () {
                 var vs = this.split('=');
-                value[e(vs[0])] = e(vs[1] || '');
+                value[d(vs[0])] = d(vs[1] || '');
                 ks.push(vs[0]);
             });
             return value;
         } else {
+            var e = encodeURIComponent;
             var vs = [];
             for (var k in q)
                 vs.push(e(k) + '=' + e(q[k]));
-
             return vs.join("&");
         }
     };
@@ -1158,7 +1158,7 @@
     __p.API = function (m, c, t, b) {
         var args = encodeUArgs(m, c, t);
         var call = b || args[1];
-        __p.Bridge(args[0], function (xhr) { ISFN(call) ? call(xhr) : 0 });
+        __p.Bridge(args[0], function (xhr) { check(xhr, call) });
         return __p;
     };
     // UMC.api = function (m, c, t, b) {

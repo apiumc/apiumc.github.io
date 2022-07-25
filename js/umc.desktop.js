@@ -750,7 +750,7 @@ UMC(function ($) {
         $(window).on('open', {
             title: '桌面图片',
             id: 'Desktop',
-            src: '/v.0.1/bgcolor.html'
+            src: '/UMC.UI/bgcolor.html'
         })
     }).click('#umc-desktop-apps', function () {
         $('#appstore').removeClass('hide');

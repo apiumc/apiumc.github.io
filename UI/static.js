@@ -13,30 +13,28 @@
             }
 
             var file = files[i]
-            var formdata = new FormData();
+
             var path = file.webkitRelativePath || file.name;
             if (prefix) {
                 path = prefix + path;
 
             }
-            var media_id = Math.random();
-            formdata.append('key', 'TEMP/Static/' + media_id);
-            formdata.append('file', file);
-            formdata.append('success_action_status', '200');
 
-            fetch('https://oss.365lu.cn', {
-                method: 'POST',
-                body: formdata
-            }).then(res => {
-                UMC.UI.Command('System', 'Dir', { dir: path, media_id: media_id }, function (xhr) {
+            var url = ($.UI.Config().possrc || 'https://oss.365lu.cn/') + 'TEMP/Static/' + Math.random();
+
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                UMC.UI.Command('System', 'Dir', { dir: path, media_id: url }, function () {
                     upload(files, i + 1, dem);
                 });
-            });
+            };
+            xhr.open('PUT', url, true);
+            xhr.send(file);
 
         }
         $('.filter-container', root).change('input', function () {
             upload(this.files, 0, $(this).parent('.el-button'));
-            this.value='';
+            this.value = '';
         });
 
         var prefix = '';

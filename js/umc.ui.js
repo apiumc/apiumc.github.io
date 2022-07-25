@@ -145,7 +145,7 @@
         delete style.padding;
         var maxWidth = style["max-width"];
 
-        return ['<a style="', padding(padd), '"', formatClick(value.click), '  class="wdk-cms-image"><img style="', maxWidth ? ('max-width:' + maxWidth + "px") : '', '"  src="', value.src, '" alt=""/></a>'].join('');
+        return ['<a style="', padding(padd), '"', formatClick(value.click), '  class="wdk-cms-image"><img style="', maxWidth ? ('max-width:' + maxWidth + "px") : '', '" original-src="', value.original || value.src, '"  src="', value.src, '" alt=""/></a>'].join('');
     }
     $.UI.Cells.CMSText = function (value, fmt, style) {
 
@@ -296,7 +296,11 @@
             , $.format(fmt.left || '{left}', value, style), '</div>'
 
 
-            , '<div class="wdk-cms-max-right">', $.format(fmt.right || '{right}', value, style), '</div>', '</div>', '</a>');
+            , '<div class="wdk-cms-max-right">', $.format(fmt.right || '{right}', value, style), '</div>', '</div>')
+            if (value.tag) {
+                htmls.push('<div class="wdk-cell-tag" style="background-color:', value.color, '">', $.format(fmt.tag || '{tag}', value, style), '</div>');
+            }
+            htmls.push('</a>');
         return htmls.join('');
     }
     $.UI.Cells.CMSLook = function (value, fmt, style) {
@@ -368,7 +372,7 @@
         return htmls.join('');
     }
     $.UI.Cells.Comment = function (data, fmt, style) {
-        var htmls = ['<div class="weui_cell wdk-cms-comment">',
+        var htmls = ['<div class="wdk-cms-comment">',
             '<div class="wdk-cms-comment-icon">',
             '<a ', formatClick(data['image-click']), ' style="background-image: url(', data.src, ')"></a>&nbsp;</div>',
             '<div class="wdk-cms-comment-info"><ul>',
@@ -383,13 +387,47 @@
 
         if (images.length > 0) {
             htmls.push('<dl class="wdk-cms-comment-images">');
-            htmls.push($.format('<dt><img max="{max}" src="{src}"></dt>', images));
+            htmls.push($.format('<dt><img original-src="{max}" src="{src}"></dt>', images));
             htmls.push('</dl>');
         }
         htmls.push('</li>');
         if (data.buttons) {
             htmls.push('<li class="wdk-cms-comment-bottom"><div class="wdk-cms-comment-time">', $.format(fmt.time || '{time}', data, style), '</div><div class="wdk-cms-comment-button">',
                 $.format('{H}', data.buttons || [], {
+                    H: function (x) {
+                        var c = x.color;
+                        var sty = $.extend({ color: c }, x.style);
+                        var hs = ['<a ', formatClick(x.click), 'style="'];
+
+                        $.style(sty || {}, hs);
+                        hs.push('">', $.format(x.format || '{text}', x, sty), '</a> ')
+                        return hs.join('');
+                    }
+                }), '</div></li>');
+        }
+        if (data.Icons) {
+            htmls.push('<li class="wdk-cms-comment-icons"><dl>');
+            var more = data.Icons.more;//.icons
+            var style = data.Icons.style;
+            var icons = data.Icons.icons;
+            for (var i = 0; i < icons.length; i++) {
+                var ic = icons[i];
+
+                var sle = (ic.style || style).icon || {};
+                htmls.push('<dt ', ic.badge ? ('data-badge="' + ic.badge + '"') : '', '><a style="display: block; color: ', sle.color || '#fd9d21', ';" ', formatClick(ic.click), '>');
+                if (ic.icon) {
+                    htmls.push('<span data-icon="', ic.icon, '" ></span>');
+                } else {
+                    htmls.push('<img src="', ic.src, '"/>');
+
+                }
+                htmls.push('</a> </dt>');
+            }
+            htmls.push('</dt><a ', formatClick(more.click), ' class="wdk-cms-comment-icon-more">', $.format(more.format || '{text}', more, more.style || style), '</a>')
+            htmls.push('</li>')
+
+            htmls.push('<div class="wdk-cms-comment-button">',
+                $.format('{H}', data.Icons.buttons || [], {
                     H: function (x) {
                         var c = x.color;
                         var sty = $.extend({ color: c }, x.style);
@@ -414,7 +452,11 @@
                     '<div class="wdk-cms-comment-desc">', $.format(fmt2.content || '{content}', value, style2),
                     '</div>')
             }
-            htmls.push('</li>');
+
+            if (data.replyClick) {
+                htmls.push('<a ', formatClick(data.replyClick), ' class="wdk-cms-comment-reply-more">', data.replyClick.text, '</a>');
+            }
+            htmls.push('</li>')
         }
         htmls.push('</ul>',
             '</div></div>');
@@ -635,7 +677,7 @@
                     , $.format(fmt.title || '{title}', it, sye), '</div>'
                     , '<div class="wdk-items-desc">', $.format(fmt.desc || '{desc}', it, sye), '</div>');
 
-            htmls.push('<div class="wdk-items-image">', '<a ', formatClick(it.click), ' data-src="', it.src, '"></a>', '<img style="width:', width, '" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>', '</div></li>');
+            htmls.push('<div class="wdk-items-image">', '<a ', formatClick(it.click), ' original-src="', it.src, '"></a>', '<img style="width:', width, '" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/>', '</div></li>');
         }
         htmls.push('</ul></div>');
         return htmls.join('');
@@ -760,7 +802,7 @@
             if (value.model && value.cmd) {
 
 
-                requestAnimationFrame(function ()  {
+                requestAnimationFrame(function () {
                     var m = section.find('#' + key);
                     if (value.event) {
                         m.parent('div[ui]').ui(value.event, m)
@@ -977,7 +1019,7 @@
 
         });
     });
-    $(function(){ $.UI.On('SKU.Init', $('.wdk-sku'))});
+    $(function () { $.UI.On('SKU.Init', $('.wdk-sku')) });
     var _tt = false;
     $.UI.Start = function () {
         _tt ? $('div[ui].ui').ui('Change', _tt) : $.UI.Command({ _start: true });
@@ -1210,7 +1252,7 @@
                         case 'Click':
                             click = click.send;
                             var send = click.send || {};
-                            send.ui = t.r.attr('page-name');
+                            send.UI = t.r.attr('page-name');
                             send.row = row.attr('row-index') || -1
                             send.section = row.parent().attr('section-index') || -1;
                             click.send = send;
@@ -1257,7 +1299,9 @@
                 t.nextKey = me.attr('next');
                 t.next();
 
-            })
+            }).click('img[original-src]', function () {
+                $.UI.On("Image.Preview", $(this));
+            });
             t.h = dom.children('header').click('div.wdk-tab-item', function () {
                 var me = $(this);
                 var index = me.attr('data-index');
@@ -1355,7 +1399,7 @@
                 if (section.children().each(function (i) {
                     $(this).attr('row-index', i + '');
                 }).length == 0) {
-                    requestAnimationFrame(function()  {
+                    requestAnimationFrame(function () {
                         t.start = 0;
                         t.next();
                     });
@@ -1593,7 +1637,7 @@
                             case 'Click':
                                 click = click.send;
                                 var send = click.send || {};
-                                send.ui = t.r.attr('page-name');
+                                send.UI = t.r.attr('page-name');
                                 send.row = -1
                                 send.section = -1;
                                 click.send = send;
