@@ -991,14 +991,15 @@
             __p.On('Prompt', { Text: text });
         },
         Bridge: function (v, fn) {
-            __p.loading = true;
             if (__p.On('XHR.Bridge', v, fn) !== false) {
-                window['j__' + (++___b)] = fn;
-                var srcs = [posurl.posurl, '?jsonp=j__', ___b, v, __p.Ver ? "&_v=" + __p.Ver : ''];
-                var script = document.createElement("script");
-                script.src = srcs.join('');
-                add(script, 'load', script.remove);
-                UMC("Head").append(script);
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    var res = JSON.parse(xhr.responseText);
+                    __p.On('XHR.Bridged', v, res, fn) === false ? 0 : fn(res);
+                };
+                xhr.open('POST', [posurl.posurl, __p.Ver ? "?_v=" + __p.Ver : ''].join(''), true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send(v);
             }
         },
         Sheet: actionSheet,

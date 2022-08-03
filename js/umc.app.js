@@ -70,17 +70,12 @@
             })
         })
     }
-    UMC.UI.Bridge = function (v, fn) {
+    UMC.UI.On('XHR.Bridged', function (e, s, v, fn) {
         var form = $('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('win-id') || 'self';
-        var bridge = new Bridge(form, fn)
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            bridge.bridge(JSON.parse(xhr.responseText));
-        };
-        xhr.open('POST', UMC.UI.Config().posurl, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(v.replace(/(^\&*)/g, ""));
-    }
+
+        new Bridge(form, fn).bridge(v);
+        return false;
+    })
 
     document.title = UMC.UI.Config().title || 'API UMC';
     $.Src = '/UMC.UI/';
@@ -124,7 +119,15 @@
         $(document.body).cls(ocls || '', 0).cls(cls || '', 1);
 
         $(window).on('title', xhr.title).on("menu", xhr.menu || []);
+    }).On('Cashier', function (e, v) {
+        $('.sidebar-logo-container a')
+            .attr('data-name', v.Alias.substr(0, 1)).find('img').attr('src', v.Src);
+        $('.umc-logo-name').text(v.Alias);
+
+    }).On('Close', function () {
+        location.href = '/UMC.Reset'
     });
+
     $(function ($) {
 
 
@@ -177,6 +180,9 @@
                 }
             }
         }).on('search', function (e, vs) {
+            if (!Array.isArray(vs)) {
+                return false;
+            }
             var m = search;
             var menu = m.siblings('*[role=menu]');
             if (m.is('.is-active') == false) {
@@ -214,7 +220,6 @@
                     }
                 }
             }
-
 
 
         }).on('message', function (e) {
@@ -316,15 +321,6 @@
 
 
 
-
-        UMC.UI.On('Cashier', function (e, v) {
-            $('.sidebar-logo-container a')
-                .attr('data-name', v.Alias.substr(0, 1)).find('img').attr('src', v.Src);
-            $('.umc-logo-name').text(v.Alias);
-
-        }).On('Close', function () {
-            location.href = '/UMC.Reset'
-        });
 
         $.UI.Command("Account", "Check", "Info", function (xhr) {
             $.UI.Device = xhr.Device;

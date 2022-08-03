@@ -122,17 +122,22 @@
             })
         })
     }
-    UMC.UI.Bridge = function (v, fn) {
+    UMC.UI.On('XHR.Bridged', function (e, s, v, fn) {
         var form = parseInt($('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('form'));;
-        var bridge = new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn)
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            bridge.bridge(JSON.parse(xhr.responseText));
-        };
-        xhr.open('POST', UMC.UI.Config().posurl, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(v.replace(/(^\&*)/g, ""));
-    }
+         new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn).bridge(v)
+        return false;
+    })
+    // UMC.UI.Bridge = function (v, fn) {
+    //     var form = parseInt($('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('form'));;
+    //     var bridge = new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn)
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.onload = function () {
+    //         bridge.bridge(JSON.parse(xhr.responseText));
+    //     };
+    //     xhr.open('POST', UMC.UI.Config().posurl, true);
+    //     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //     xhr.send(v.replace(/(^\&*)/g, ""));
+    // }
 
 
     var apps = {};

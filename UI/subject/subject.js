@@ -154,7 +154,7 @@
             }, true);
         }).Send('Subject', 'Spread', 'Favs', function (xhr) {
             var d = xhr.data || xhr;
-            $('#sliders').html(Slider(d.length > 0 ? d : [{
+            $('#sliders',root).html(Slider(d.length > 0 ? d : [{
                 'src': '/css/slider.png'
             }]));
             xhr.isPublish ? requestAnimationFrame(function () {
@@ -212,8 +212,8 @@
             }
         }).ui('Markdown', function (e, v) {
             $(window).on('page', 'subject/markdown', 'id=' + v.Id);
-        }).on('event', function (e, key) {
-            $(window).on('page', 'subject/markdown', 'id=' + key);
+        // }).on('event', function (e, key) {
+        //     $(window).on('page', 'subject/markdown', 'id=' + key);
         }).on('active', function () {
             if (root.attr('data-id'))
                 $.UI.On('Subject.Show', { Id: root.attr('data-id') });
@@ -458,21 +458,25 @@
         })
 
     }, false).page('subject/index', '我的主页', false, function (root) {
-        $('.umc-sub-middle-container ul', root).click('li', function () {
+        root.find('ul[type=tabs] li').on('mouseenter', function () {
             var me = $(this);
-            me.parent('.el-row').find('.umc-sub-middle-tabs>div').cls('active', 0)
+            var pem= me.parent();
+            if (!me.is('li[data-index]')) {
+                pem.children('li').each(function (i) {
+                    $(this).attr('data-index', i + '')
+                });
+            }
+            root.find(pem.attr('for')).children('div').cls('active', 0)
                 .eq(parseInt(me.attr('data-index')) || 0).cls('active', 1);
             me.cls('active', 1).siblings().cls('active', 0);
 
-        }).find('li').each(function (i) {
-            $(this).attr('data-index', i + '')
         });
 
         if ($('div.navbar').css('transition').indexOf('max-height') > -1) {
             $(window).on('page', 'download', '');
         } else {
 
-            WDK.UI.API('Subject', 'Publish', { key: 'index.html', 'type': 'Check' }, function (xhr) {
+            $.UI.API('Subject', 'Publish', { key: 'index.html', 'type': 'Check' }, function (xhr) {
                 if (xhr.isPublish) {
                     requestAnimationFrame(function () {
                         $.UI.On('UI.Publish', "为创作而生", root.text().replace(/\s+/g, ' '), root.text().replace(/\s+/g, ' '), {
@@ -510,29 +514,10 @@
                             var pager = new WDK.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'Self'
-                            pager.search = { NextKey: 'Self', Type: 'PC'  };
+                            pager.search = { NextKey: 'Self', Type: 'PC' };
 
                             pager.query();
-
-                            // root.on('hash', function () {
-                            // })
-
                             break;
-                        // case 1:
-                        //     body.find('.pagination-container').paging("Subject", "Self", body.find('.el-table>table tbody').click('tr', function () {
-                        //         var m = $(this);
-
-                        //         var path = m.attr('path') || ('Editer/' + m.attr('sub-id'));
-                        //         $.UI.On('Subject.Path', { Path: path });
-                        //     })).on('param', { Type: 'PC' }).on('sort', body.find('.el-sort')).on('search');
-                        //     body.find('form').submit(function () {
-                        //         var input = $(this).find('input');
-                        //         var value = input.val();
-                        //         body.find('.pagination-container').on('search', value);
-                        //         return false;
-                        //     });
-
-                        //     break;
                         case 2:
                             body.find('.pagination-container').paging("Subject", "Dynamic", body.find('.el-table>div').click('div[data-time]', function () {
                                 var m = $(this);//.attr
@@ -547,8 +532,8 @@
         var pager2 = new WDK.UI.Pager(root.find("#myProject"));
         pager2.model = 'Subject'
         pager2.cmd = 'Account'
-        pager2.search =  { NextKey: 'Self', selectIndex: 1 };
-        
+        pager2.search = { NextKey: 'Self', selectIndex: 1 };
+
         $.UI.Command('Subject', 'Project', 'self', function (xhr) {
             root.find('*[data-field]').each(function () {
                 var m = $(this);
@@ -570,10 +555,6 @@
         }, true).ui('Subject.Project', function (e, v) {
             root.on('hash');
             $.UI.On('Subject.Path', { Path: v.code || v.Code });
-        // }).ui('Markdown', function (e, v) {
-        //     //   history.pushState(null, null, $.SPA + 'Editer/' + v.Id);
-        //     $(window).on('page', 'subject/markdown', 'id=' + v.Id);
-        //     root.ui('image');
         });
         root.ui('Subject.Portfolio.New,Subject.Del', function () {
             root.ui('image');
@@ -602,7 +583,7 @@
         }).on('search', function (e, v) {
             return false;
 
-        }).ui('Subject.Project,image', function () {
+        }).ui('Subject.Project,System.Picture', function () {
             $.UI.Command('Subject', 'Project', WDK.UI.ProjectId, function (xhr) {
                 root.find('*[data-field]').each(function () {
                     var m = $(this);

@@ -1293,6 +1293,7 @@
                         .umc-sub-logn .login-container .login-form {
                             margin-top: 40vh;
                             padding: 35px;
+                            width: 380px;
                         }
                         
                         .login-container .login-footer a {
