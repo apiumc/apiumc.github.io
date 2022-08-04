@@ -578,7 +578,7 @@
         })
         var projectInfo = false;
         root.on('dynamic', function () {
-            root.ui('image')
+            root.ui('Subject.Project')
             paging.on('search', { Id: WDK.UI.ProjectId });
         }).on('search', function (e, v) {
             return false;
