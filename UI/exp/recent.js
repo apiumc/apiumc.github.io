@@ -16,7 +16,11 @@
 
         root.on('searchValue', function (e, v) {
             WDK.UI.Command('Exp', 'Nav', { name: v, type: 'search' }, function (xhr) {
-                WDK.UI.On('Tip.Search', xhr);
+                if (Array.isArray(xhr)) {
+                    var vs = [];
+                    xhr.forEach((item, index) => vs.push({ text: item.text, click: { key: 'Url', send: item.href } }));
+                    $(window).on('select', vs);
+                }
             });
         })
 

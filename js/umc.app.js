@@ -179,7 +179,7 @@
                     }
                 }
             }
-        }).on('search.menu', function (e, vs) {
+        }).on('select', function (e, vs) {
             var m = search;
             var menu = m.siblings('*[role=menu]');
             if (m.is('.is-active') == false) {

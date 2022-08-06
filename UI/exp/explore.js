@@ -48,7 +48,7 @@
                 if (Array.isArray(xhr)) {
                     var vs = [];
                     xhr.forEach((item, index) => vs.push({ text: item.text, click: { key: 'Url', send: item.href } }));
-                    $(window).on('search', vs);
+                    $(window).on('select', vs);
                 }
             });
         }).ui('Check.Pass', function () {

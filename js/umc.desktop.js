@@ -152,7 +152,7 @@
             case 'close':
             case 'open':
             case 'nav':
-            case 'search.menu':
+            case 'select':
             case 'page':
             case 'title':
             case 'menu':
@@ -591,11 +591,8 @@
                     }
                 }
 
-            }).on('search.menu', function (e, vs) {
+            }).on('select', function (e, vs) {
 
-                // if (!Array.isArray(vs)) {
-                //     return false;
-                // }
                 var menu = $(this).find('.umc-window-search ul[role=menu]');
                 var m = menu.siblings('.el-dropdown');
                 if (m.is('.is-active') == false) {
