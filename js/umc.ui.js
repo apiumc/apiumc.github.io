@@ -642,7 +642,7 @@
         if (icons.length > 0)
             htmls.push('</ul>');
 
-        htmls.push('<div>');
+        htmls.push('</div>');
         return htmls.join('');
     }
 

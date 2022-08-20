@@ -1,4 +1,4 @@
-<div class="umc-builder-app">
+<div app-cls="umc-sub-index umc-sub-app" class="umc-builder-app" hidesidebar="true">
     <script type="text/html" id="menu">
         <a model="Design" cmd="Page" class="el-button el-button--small"><b class="wdk_cell_icon"  data-icon="&#xf0d0;"></b>主页设计</a>
         <a model="UI" cmd="App" send="News" class="el-button el-button--small"><b class="wdk_cell_icon"  data-icon="&#xf0fe;"></b>增加Bar</a>
@@ -43,7 +43,7 @@
 
 
     <div style="display: flex;">
-        <div style="width: 500px;height:calc(100vh - 66px);">
+        <div style="width: 500px;height:688px;">
             <div class="weui_tab">
                 <div class="weui_tab_bd">
                     <script type="text/html">
@@ -110,9 +110,17 @@
 
                     </p>
                     <div class="el-form-item__content">
+                        <a model="UI" cmd="App" send='News' class="el-button el-button--primary el-button--small">增加Bar</a>
+                        <a model="Design" cmd="Page"  class="el-button el-button--primary el-button--small">主页设计</a></div>
+                </div> <div class="el-form-item">
+                    <p class="el-form-item__label">
+
+                    </p>
+                    <div class="el-form-item__content">
                         <a ui-event='Builder' class="el-button el-button--primary el-button--small">开始生成APP</a>
                         <a model="UI" cmd="App" send='IOS' class="el-button el-button--primary el-button--small">设置IOS下载地址</a>
-                        <a model="UI" cmd="App" send="Reset" class="el-button el-button--primary el-button--small">初始界面架构</a></div>
+                        <a model="UI" cmd="App" send="Reset" class="el-button el-button--primary el-button--small">初始界面架构</a>
+                    </div> 
                 </div>
             </div>
 

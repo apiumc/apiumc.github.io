@@ -200,7 +200,7 @@
             arguments[0] = 'UI.' + es.join(',UI.');
             return this.on.apply(this, arguments);
         },
-        iso: function (k) {
+        has: function (k) {
             if (this.length > 0)
                 return (this[0]._event || {}).hasOwnProperty(k);
             return false;

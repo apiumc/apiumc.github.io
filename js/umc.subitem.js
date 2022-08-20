@@ -107,7 +107,7 @@
                 $.UI.On('Subject.Show', { Id: root.attr('data-id') });
         });
 
-    }).tpl('toc', 'subject/toc', function (root) {
+    }).tpl('item', 'subject/item', function (root) {
         root.find('.umc-toc-nav').click('.umc-toc-nav-title', function () {
             var m = $(this).parent();
             m.cls('is-closed', !m.is('.is-closed'));
@@ -116,7 +116,7 @@
 
         root.on('hash', function (e, v) {
             if (v.key) {
-                WDK.UI.Command('Subject', 'Toc', v.key, function (xhr) {
+                WDK.UI.Command('Subject', 'Item', v.key, function (xhr) {
                     $('.umc-toc-caption', root).text(xhr.caption);
                     root.find('.umc-toc-users').format(xhr.users, true);
                     var htmls = [];
@@ -281,7 +281,7 @@
                         break;
                     }
                 }
-                $(window).on('page', 'toc/' + navBar.menu[selectIndex].id, '');
+                $(window).on('page', 'item/' + navBar.menu[selectIndex].id, '');
             }
 
 

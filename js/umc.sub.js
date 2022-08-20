@@ -419,7 +419,7 @@
                 if (!subs.length) {
                     subs.push({ create: true });
                 }
-                htmls.push($.format('<li class="el-menu-item"><a data-id="{id}" ui-spa {url} >{text}</a></li>', it.subs || [], {
+                htmls.push($.format('<li class="el-menu-item"><a class="{cls}" data-id="{id}" ui-spa {url} >{text}</a></li>', it.subs || [], {
                     url: function (x) {
                         if (x.create) {
                             return 'sub-id="' + it.id + '"'
@@ -488,7 +488,7 @@
             if (key != skey) {
                 history.pushState(null, null, skey);
             }
-            requestAnimationFrame(function () { $(window).on('page', 'subject/toc/' + m.attr('data-id'), '') });
+            requestAnimationFrame(function () { $(window).on('page', 'subject/item/' + m.attr('data-id'), '') });
             return false;
         });
 
@@ -510,7 +510,10 @@
             var pathKey = location.pathname;
             var pKey = pathKey.substring($.SPA.length) || 'index';
             switch (pKey) {
+                case 'index.html':
                 case 'index':
+                    $(window).on('page', 'subject/page/index', '');
+                    return
                 case 'explore':
                 case 'login':
                     $(window).on('page', 'subject/' + pKey, '');
@@ -521,11 +524,17 @@
                 case 'dashboard':
                     v ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
                     return;
+                default:
+                    if (pKey.indexOf('/') == -1 && /[A-Z]+/.test(pKey)) {
+                        $(window).on('page', 'subject/page/' + pKey, '');
+                        return;
+                    }
+                    break;
             }
 
             if ($.UI.SPAPfx) {
                 if ($.UI.SPAPfx.toUpperCase().indexOf(pathKey.toUpperCase()) == 0) {
-                    $(window).on('page', 'subject/dynamic', '');
+                    $(window).on('page', 'subject/dynamic/' + $.UI.ProjectId, '');
                     return;
                 } else if (pathKey.indexOf($.UI.SPAPfx) == 0) {
                     var key = pathKey.substring($.UI.SPAPfx.length);
@@ -575,7 +584,7 @@
                 ps.shift();
                 if ($(window).on('page', ps.join('/'), location.search.substring(1)) === false) {
                     if ($.UI.SPAPfx && pathKey.indexOf($.UI.SPAPfx) == 0) {
-                        $(window).on('page', 'subject/dynamic', '');
+                        $(window).on('page', 'subject/dynamic/' + $.UI.ProjectId, '');
                     }
                 }
             }
@@ -737,24 +746,29 @@
         }).On('Subject.Menu', function (e, v) {
             $.UI.Command("Subject", 'Menu', v || '', function (xhr) {
                 if (xhr.type) {
+                    
                     if (xhr.type == 'index') {
-                        history.replaceState(null, null, '/')
+                        
+                        $(window).on('page', 'subject/page' + (location.pathname.substring($.SPA.length) || 'index'), '');
+            
+                    }else{
+
+                        $(window).on('page', 'subject/' + xhr.type, '');
                     }
-                    $(window).on('page', 'subject/' + xhr.type, '');
                     return;
                 }
                 team.text(xhr.text);
                 $(document.body).removeClass('EditerItem,EditerDoc,EditerAll').addClass(xhr.Auth);
-                
+
                 $.UI.ProjectId = xhr.id;
                 $.UI.SPAPfx = $.SPA + xhr.code + '/';
 
                 team.attr('href', $.SPA + xhr.code);
-                nav.html($.format('<li {Hide}><a ui-spa href="{Path}" data-id="{id}">{text}</a></li>', xhr.menu, {
+                nav.html($.format('<li class="{cls}"><a ui-spa href="{Path}" data-id="{id}">{text}</a></li>', xhr.menu, {
                     Path: function (x) {
                         return $.SPA + x.path;
-                    }, Hide: function (c) {
-                        return c.hide ? 'class="hide"' : ""
+                    // }, Hide: function (c) {
+                    //     return c.hide ? 'hide' : ""
                     }
                 })).find('li').eq(xhr.selectIndex || 0).addClass('is-active');
                 $.UI.On('Portfolio.List', xhr);
@@ -766,8 +780,6 @@
                         navSort.option('disabled', disabled);
                         menuSort.option('disabled', disabled);
                         $.UI.On('Page.Menu', [{
-                            title: '项目成员', url: '#subject/team', icon: '\uf0c0'
-                        }, {
                             title: '回收站', url: '#subject/recycle', icon: '\ue940'
                         }]);
                         break;
@@ -776,15 +788,11 @@
                         navSort.option('disabled', true);
 
                         $.UI.On('Page.Menu', [{
-                            title: '项目成员', url: '#subject/team', icon: '\uf0c0'
-                        }, {
                             title: '回收站', url: '#subject/recycle', icon: '\ue940'
                         }]);
                         break;
                     default:
-                        $.UI.On('Page.Menu', [{
-                            title: '项目成员', url: '#subject/team', icon: '\uf0c0'
-                        }]);
+                        $.UI.On('Page.Menu', [])
                         menuSort.option('disabled', true);
                         navSort.option('disabled', true);
                         break;
@@ -797,35 +805,11 @@
                         $(window).on('page', 'subject/' + xhr.spa.id, '');
                     } else {
                         history.replaceState(null, null, $.SPA + xhr.code);
-                        $(window).on('page', 'subject/dynamic', '');
+                        $(window).on('page', 'subject/dynamic/' + xhr.id, '');
                     }
                 }
 
             });
-        }).On('Subject.DingTalk', function (e, xhr) {
-            $.script('https://g.alicdn.com/dingding/dingtalk-jsapi/2.10.3/dingtalk.open.js')
-                .wait(function () {
-                    dd.config(xhr.Sign);
-
-                    dd.ready(function () {
-                        switch (xhr.method) {
-                            case 'pickConversation':
-                                dd.biz.chat.pickConversation({
-                                    corpId: xhr.Sign.corpId,
-                                    isConfirm: false,
-                                    onSuccess: function (v) {
-                                        var ms = xhr.Params;
-                                        ms[xhr.Key] = v.cid
-                                        ms[xhr.Key + "-Text"] = v.title
-                                        $.UI.Command(ms);
-                                    },
-                                    onFail: function (e) { }
-                                })
-                                break;
-                        }
-
-                    });
-                });
         }).On('Subject.Portfolio.Del', function (e, xhr) {
             $('.el-submenu__title', menubar).each(function () {
                 var a = $(this);
@@ -837,8 +821,6 @@
             })
 
         });
-
-        //  $.UI.On('Subject.Menu', location.pathname.indexOf($.SPA) == 0 ? { code: location.pathname.substring($.SPA.length) } : '');
 
         $('.el-dropdown').menu().siblings('*[role]').click('a', function () {
             var me = $(this);
@@ -946,9 +928,9 @@
             var input = $(this).find('input');
             var value = input.val();
             var root = $('section.app-main>div[ui].ui');
-            if (root.iso('search') == false) {
+            if (root.has('search') == false) {
                 var paging = root.find('.pagination-container');
-                if (paging.iso('search')) {
+                if (paging.has('search')) {
                     paging.on('search', value);
                 } else {
                     input.on('input')
@@ -962,13 +944,12 @@
             var value = input.val();
             if (value) {
                 var root = $('section.app-main>div[ui].ui');
-
-                if (root.iso('searchValue')) {
-                    root.on('searchValue', value, input);
-                } else if (UMC.UI.ProjectId) {
-                    UMC.UI.API('Subject', 'Keyword', { Keyword: value, Project: UMC.UI.ProjectId }, function (xhr) {
-                        showMenu(xhr);
-                    });
+                if (!root.has('searchValue') || root.on('searchValue', value, input) === false) {
+                    if (UMC.UI.ProjectId) {
+                        UMC.UI.API('Subject', 'Keyword', { Keyword: value, Project: UMC.UI.ProjectId }, function (xhr) {
+                            showMenu(xhr);
+                        });
+                    }
                 }
             }
 

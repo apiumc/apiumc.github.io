@@ -268,7 +268,7 @@ input.weui_btn_mini {
     overflow: hidden
 }
 
-.weui_btn:after {
+/* .weui_btn:after {
     content: " ";
     width: 200%;
     height: 200%;
@@ -282,7 +282,7 @@ input.weui_btn_mini {
     transform-origin: 0 0;
     box-sizing: border-box;
     border-radius: 10px
-}
+} */
 
 .weui_btn.weui_btn_inline {
     display: inline-block

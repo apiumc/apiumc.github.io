@@ -1,10 +1,8 @@
 (function ($) {
 
     WDK.page('subject/markdown', "图文编辑", false, function (root) {
-
         $.script('js/editable.min.js')
             .wait();
-
         let isChange = false;
         var form = root.find('form').submit(function () {
             var form = $(this);
@@ -35,20 +33,7 @@
                     pro.Content = desc.html || desc.markdown;
                     pro.DataJSON = JSON.stringify(desc.list);
                 }
-                // pro._model = 'Subject';
-                // pro._cmd = 'Submit';
-                // var blob = new Blob([JSON.stringify(pro)]);
-                // blob.name = 'cmd.json';
-                // WDK.uploader(blob, function (xhr) {
                 WDK.UI.API('Subject', 'Submit', pro);
-                // , d => {
-                //     root.on('title', "保存于" + d.Headers.DataEvent.time);
-                //     delete $.page()['subject/' + pro.Id];
-                //     // $.UI.On("Page.Del", 'subject/' + pro.Id);
-                // });
-                // }, false, true);
-
-
             }
         });
         root.ui('Subject.Submit', function (e, v) { 
@@ -73,15 +58,9 @@
         })
         var timeid = 0;
 
-        // var viewPage = new WDK.UI.Pager(view);
-
-        // viewPage.model = 'Subject'
-        // viewPage.cmd = 'View'
-
         root.find('#des').on("toHtml", function (x, m) {
             form.on('save', m);
         });
-
 
         root.on('backstage', function () {
             clearInterval(timeid);
@@ -105,7 +84,6 @@
         }).on('hash', function (e, v) {
             WDK.UI.Command("Subject", 'Search', v.id || 'News', function (xhr) {
                 root.on('active');
-                // view.cls('show', 0);
                 var editer = WDK.UI.Editable($('#des', root));
                 form.on('save').reset().val(xhr);
                 var ContentType = xhr.ContentType || '';

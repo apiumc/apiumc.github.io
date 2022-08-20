@@ -99,7 +99,7 @@
         }
     }
 
-    $.page('subject/project', 'subject/explore', function (root) {
+    $.page('subject/explore', 'subject/explore', function (root) {
         var myProject = new WDK.UI.Pager($('.weui_tab_bd_item', root));
         myProject.model = 'Subject'
         myProject.cmd = 'UI';
@@ -118,43 +118,7 @@
             }, true);
         }).Send('Subject', 'Spread', 'Favs', function (xhr) {
             var d = xhr.data || xhr;
-            $('#sliders').html(Slider(d.length > 0 ? d : [{
-                'src': '/css/slider.png'
-            }]));
-            xhr.isPublish ? requestAnimationFrame(function () {
-                $.UI.On('UI.Publish', "发现", $('#newProject', root).text().replace(/\s+/g, ' '), $('#myProject', root).text().replace(/\s+/g, ' '), {
-                    type: 'Explore'
-                });
-            }) : 0;
-
-        }).Send(myProject.model, myProject.cmd, WDK.extend({
-            limit: 30
-        }, myProject.search), function (xhr) {
-            myProject.b.html('');
-            myProject.dataSource(xhr);
-        }).Send();
-
-
-    }, false).page('subject/explore', 'subject/explore', function (root) {
-        var myProject = new WDK.UI.Pager($('.weui_tab_bd_item', root));
-        myProject.model = 'Subject'
-        myProject.cmd = 'UI';
-        $.UI.Send('Subject', 'Spread', 'Project', function (xhr) {
-            $('#myProject', root).format(xhr, {
-                Path: (x) => {
-                    return $.SPA + x.path
-                }
-            }, true);
-
-        }).Send('Subject', 'Spread', 'NewProject', function (xhr) {
-            $('#newProject', root).format(xhr, {
-                Path: (x) => {
-                    return $.SPA + x.path
-                }
-            }, true);
-        }).Send('Subject', 'Spread', 'Favs', function (xhr) {
-            var d = xhr.data || xhr;
-            $('#sliders',root).html(Slider(d.length > 0 ? d : [{
+            $('#sliders', root).html(Slider(d.length > 0 ? d : [{
                 'src': '/css/slider.png'
             }]));
             xhr.isPublish ? requestAnimationFrame(function () {
@@ -212,15 +176,15 @@
             }
         }).ui('Markdown', function (e, v) {
             $(window).on('page', 'subject/markdown', 'id=' + v.Id);
-        // }).on('event', function (e, key) {
-        //     $(window).on('page', 'subject/markdown', 'id=' + key);
+        }).on('event', function (e, key) {
+            $(window).on('page', 'subject/markdown', 'id=' + key);
         }).on('active', function () {
             if (root.attr('data-id'))
                 $.UI.On('Subject.Show', { Id: root.attr('data-id') });
         });
 
-    }, '正文').tpl('subject/toc', 'subject/toc', function (root) {
-        var nav = root.find('.umc-toc-nav').click('.umc-toc-nav-title', function () {
+    }, '正文').tpl('subject/item', 'subject/item', function (root) {
+        var nav = root.find('.umc-subitem-nav').click('.umc-subitem-nav-title', function () {
             var m = $(this).parent();
             m.cls('is-closed', !m.is('.is-closed'));
         }).click('em', function () {
@@ -255,15 +219,15 @@
 
         root.on('hash', function (e, v) {
             if (v.key) {
-                WDK.UI.Command('Subject', 'Toc', v.key, function (xhr) {
-                    $('.umc-toc-caption', root).text(xhr.caption);
-                    root.find('.umc-toc-users').format(xhr.users, true);
+                WDK.UI.Command('Subject', 'Item', v.key, function (xhr) {
+                    $('.umc-subitem-caption', root).text(xhr.caption);
+                    root.find('.umc-subitem-users').format(xhr.users, true);
                     var htmls = [];
                     var keys = [];
                     xhr.data.forEach(it => {
                         keys.push(it.text);
-                        htmls.push('<li>', '<div class="umc-toc-nav-title"><i class="umc-toc-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-toc-nav-items">')
-                        htmls.push($.format('<li class="umc-toc-nav-item"><span class="umc-toc-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-toc-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
+                        htmls.push('<li>', '<div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-subitem-nav-items">')
+                        htmls.push($.format('<li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-subitem-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
                             Path: function (x) {
                                 keys.push(x.text);
                                 return $.SPA + x.path;
@@ -271,8 +235,8 @@
                         }), '</ul></li>');
 
                     });
-                    root.find('.umc-toc-nav>ul').html(htmls.join(''));
-                    root.find('.umc-toc-users-sum span').text(xhr.users.length);
+                    root.find('.umc-subitem-nav>ul').html(htmls.join(''));
+                    root.find('.umc-subitem-users-sum span').text(xhr.users.length);
                     if (xhr.releaseId)
                         $.UI.On('UI.Publish', xhr.caption, keys.join(','), keys.join(','), {
                             type: 'Item', Id: xhr.releaseId
@@ -281,11 +245,11 @@
 
             }
         }).ui('Subject.Change', function (e, xhr) {
-            nav.find('.umc-toc-nav-right a').each(function () {
+            nav.find('.umc-subitem-nav-right a').each(function () {
                 var m = $(this);
                 if (m.attr('data-id') == xhr.id) {
                     m.text(xhr.code);
-                    m.parent('li').find('.umc-toc-nav-left a')
+                    m.parent('li').find('.umc-subitem-nav-left a')
                         .attr('href', ($.SPA || '/') + xhr.path);
                     return false;
                 }
@@ -320,27 +284,6 @@
 
         }).on('active');
 
-    }, false).page('subject/team', '项目成员', function (root) {
-        var paging = root.find('.pagination-container').paging("Subject", "Team", root.find('table tbody'))
-            .on('param', { Project: WDK.UI.ProjectId })
-            .on('sort', root.find('.el-sort'));
-
-
-        root.ui('Subject.Team', function () {
-            paging.on('search');
-        }).on('searchValue', function () {
-        })
-        root.find('table').thead();
-
-        root.on('active', function () {
-            var pid = root.attr('project-id');
-            if (pid != WDK.UI.ProjectId) {
-                root.attr('project-id', WDK.UI.ProjectId);
-
-                paging.on('param', { Project: WDK.UI.ProjectId }).on('search');
-            }
-
-        }).on('active');
     }, false).page('subject/login', '登录', function (root) {
         var frm = root.find('form').submit(function () {
             var m = $(this);
@@ -456,11 +399,40 @@
                 }
             }, 1000);
         })
+    }, false).tpl('subject/page', 'subject/page', function (root) {
 
-    }, false).page('subject/index', '我的主页', false, function (root) {
+
+        var xhr2 = new XMLHttpRequest();
+        xhr2.onload = function () {
+            if (xhr2.status < 400) {
+                root.find('.umc-sub-page-container').html(xhr2.responseText)
+                root.find('ul[type=tabs] li').on('mouseenter', function () {
+                    var me = $(this);
+                    var pem = me.parent();
+                    if (!me.is('li[data-index]')) {
+                        pem.children('li').each(function (i) {
+                            $(this).attr('data-index', i + '')
+                        });
+                    }
+                    root.find(pem.attr('for')).children('div').cls('active', 0)
+                        .eq(parseInt(me.attr('data-index')) || 0).cls('active', 1);
+                    me.cls('active', 1).siblings().cls('active', 0);
+
+                });
+
+            } else {
+                delete $.page()['subject/page/' + root.attr('ui-key')];
+                $.nav('/');
+            }
+
+        };
+        xhr2.open('GET', [$.Src || '', 'subject/page/', root.attr('ui-key'), '.html'].join(''), true);
+        xhr2.send('');
+    }, '我的主页').page('subject/index', '我的主页', false, function (root) {
+        // root.on('menu', {  text: '编辑文档' });
         root.find('ul[type=tabs] li').on('mouseenter', function () {
             var me = $(this);
-            var pem= me.parent();
+            var pem = me.parent();
             if (!me.is('li[data-index]')) {
                 pem.children('li').each(function (i) {
                     $(this).attr('data-index', i + '')
@@ -472,20 +444,6 @@
 
         });
 
-        if ($('div.navbar').css('transition').indexOf('max-height') > -1) {
-            $(window).on('page', 'download', '');
-        } else {
-
-            $.UI.API('Subject', 'Publish', { key: 'index.html', 'type': 'Check' }, function (xhr) {
-                if (xhr.isPublish) {
-                    requestAnimationFrame(function () {
-                        $.UI.On('UI.Publish', "为创作而生", root.text().replace(/\s+/g, ' '), root.text().replace(/\s+/g, ' '), {
-                            type: 'Index'
-                        });
-                    })
-                }
-            })
-        }
 
     }, false).page('subject/dashboard', '我的工作台', false, function (root) {
 
@@ -503,7 +461,6 @@
                             var pager = new WDK.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'Follow'
-                            // pager.search = { NextKey: 'Self', selectIndex: 1 }
 
                             root.on('hash', function () {
                                 pager.query();
@@ -562,29 +519,30 @@
             root.find('.pagination-container').on('search');
         }, true).ui('UI.Setting')
 
-    }, false).page('subject/dynamic', '项目专栏', function (root) {
+    }, false).tpl('subject/dynamic', 'subject/dynamic', function (root) {
         root.attr('project-id', WDK.UI.ProjectId);
 
-        var paging = root.find('.pagination-container').paging("Subject", "Dynamic", root.find('.el-table>div')
-            .click('div[data-time]', function () {
-                var m = $(this);//.attr
-                $.UI.Command('Subject', 'Dynamic', { Id: m.attr('data-id'), Time: m.attr('data-time') });
-            })
-        );
         var editer = root.find('.umc-project-head').click('*[data-key]', function () {
             if (editer.is('.editer')) {
-                WDK.UI.Command("Subject", 'ProjectUI', { Id: WDK.UI.ProjectId, Model: $(this).attr('data-key') });
+                WDK.UI.Command("Subject", 'ProjectUI', { Id: root.attr('project-id'), Model: $(this).attr('data-key') });
             }
         })
         var projectInfo = false;
-        root.on('dynamic', function () {
-            root.ui('Subject.Project')
-            paging.on('search', { Id: WDK.UI.ProjectId });
-        }).on('search', function (e, v) {
-            return false;
+        root.on('search', function (e, v) {
+            var active = root.find('.weui_bar_item_on');
+            var index = parseInt(active.attr('data-index')) || 0;
+            switch (index) {
+                case 0:
+                    return false;
+                default:
 
-        }).ui('Subject.Project,System.Picture', function () {
-            $.UI.Command('Subject', 'Project', WDK.UI.ProjectId, function (xhr) {
+                    active.parent().siblings('.wdk_tab_bd').children('div').eq(index).find('.pagination-container')
+                        .on('search', v);
+                    break;
+            }
+
+        }).ui('Subject.Project,System.Picture,Subject.Member', function () {
+            $.UI.Command('Subject', 'Project', root.attr('project-id'), function (xhr) {
                 root.find('*[data-field]').each(function () {
                     var m = $(this);
                     if (m.is('img')) {
@@ -604,25 +562,24 @@
                 projectInfo = xhr;
             });
 
-        }).on('tab.page', function () {
-            if (projectInfo && projectInfo.releaseId) {
-                $.UI.On('UI.Publish', projectInfo.Name, projectInfo.Desc, projectInfo.Desc, {
-                    type: 'Project', Id: projectInfo.releaseId
-                });
-            } else {
-                projectInfo = true;
+        }).on('searchValue', function () {
+
+            var active = root.find('.weui_bar_item_on');
+            var index = parseInt(active.attr('data-index')) || 0;
+            switch (index) {
+                case 1:
+                case 2: break;
+                case 0:
+                    return false;
             }
-        }).on('dynamic');
-        root.ui('Subject.Member', function () {
-            root.on('dynamic');
-        });
+        }).ui('Subject.Project');
 
 
         root.find('#join').click(function () {
             var me = $(this);
-            $.UI.Command('Subject', 'Team', { Project: $.UI.ProjectId, Id: 'Self' }, (xhr) => me.text(xhr.text));
+            $.UI.Command('Subject', 'Team', { Project: root.attr('project-id'), Id: 'Self' }, (xhr) => me.text(xhr.text));
         });
-        let pager = null;
+
         $('.weui_navbar', root)
             .on('click', 'div.weui_navbar_item', function () {
                 var me = $(this);
@@ -636,33 +593,35 @@
                     body.attr('inited', 'OK');
                     switch (index) {
                         case 0:
-                            body.on('defer', function () {
-                                root.on('tab.page');
-                            });
-                            pager = new WDK.UI.Pager(body);
+                            var pager = new WDK.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'UI'
-                            pager.search = { Project: WDK.UI.ProjectId }
+                            pager.search = { Project: root.attr('project-id') }
                             pager.query();
+                            break;
+                        case 1:
+                            var paging = body.find('.pagination-container').paging("Subject", "Team", body.find('.el-table>div'))
+                                .on('param', { Project: root.attr('project-id') })
+                                .on('search');
+
+
+                            root.ui('Subject.Team', function () {
+                                paging.on('search');
+                            })
+                            break;
+                        case 2:
+                            var paging = body.find('.pagination-container').paging("Subject", "Dynamic", body.find('.el-table>div')
+                                .click('div[data-time]', function () {
+                                    var m = $(this);
+                                    $.UI.Command('Subject', 'Dynamic', { Id: m.attr('data-id'), Time: m.attr('data-time') });
+                                }));
+
+                            paging.on('search', { Id: root.attr('project-id') });
                             break;
                     }
                 }
 
             }).find('div.weui_navbar_item').eq(0).click();
 
-        root.on('active', function () {
-            var pid = root.attr('project-id');
-            if (pid != WDK.UI.ProjectId) {
-                projectInfo = false;
-                root.attr('project-id', WDK.UI.ProjectId);
-                if (pager) {
-                    pager.search = { Project: WDK.UI.ProjectId }
-                    pager.query();
-                }
-                root.on('dynamic');
-            }
-
-        });
-
-    }, false);
+    }, '项目专栏');
 })(WDK)

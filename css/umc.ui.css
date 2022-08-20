@@ -1405,7 +1405,11 @@ div[ui]>.wdk-header {
     margin-left: .5em
 }
 
-.wdk-icon [data-icon]:before {
+.wdk-icon span[data-icon]{
+    display: block;
+}
+.wdk-icon span[data-icon]::before {
+    display: block !important;
     content: attr(data-icon);
     font-family: wdk;
     font-size: 24px

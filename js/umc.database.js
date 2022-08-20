@@ -4,7 +4,7 @@
     __p.Cells = {};
     __p.Headers = {};
 
-  
+
     UMC.prototype.more = function () {
         return this.click(function (e, v) {
             var m = WDK(this);
@@ -96,39 +96,39 @@
         return htmls.join('');
     }
 
-    __p.Cells.UI=
-    __p.Cells.Cell = function (data, fmt, style) {
-        var click = data.click;
-        var htmls = ['<'];
-        var tag = tagUrl(click, htmls);
-        htmls.push('  class="weui_cell">');
-        if (data.src) {
-            htmls.push('<div class="weui_cell_hd">', '<img src="', data.src, '"');
-            var wdth = style['image-width'];
-            if (wdth) {
-                htmls.push(' style="width:', wdth, 'px;height:', wdth, 'px"')
+    __p.Cells.UI =
+        __p.Cells.Cell = function (data, fmt, style) {
+            var click = data.click;
+            var htmls = ['<'];
+            var tag = tagUrl(click, htmls);
+            htmls.push('  class="weui_cell">');
+            if (data.src) {
+                htmls.push('<div class="weui_cell_hd">', '<img src="', data.src, '"');
+                var wdth = style['image-width'];
+                if (wdth) {
+                    htmls.push(' style="width:', wdth, 'px;height:', wdth, 'px;border-radius:', style['image-radius'] || 2, 'px"')
+                }
+                htmls.push('/></div>');
+            } else if (data.Icon) {
+                htmls.push('<b class="wdk_cell_icon" data-icon="', data.Icon, '" ', data.Color ? ('style="color:' + data.Color + '"') : '', '></b>');
+
             }
-            htmls.push('/></div>');
-        } else if (data.Icon) {
-            htmls.push('<b class="wdk_cell_icon" data-icon="', data.Icon, '" ', data.Color ? ('style="color:' + data.Color + '"') : '', '></b>');
 
+            htmls.push('<div class="weui_cell_bd weui_cell_primary"><p>',
+                $.format(fmt.text || '{text}', data, style), '</p></div>',
+                '<div class="wdk_cell_value" >',
+                $.format(fmt.value || '{value}', data, style));
+
+            if (tag == 'div' && (data.icon || fmt.icon)) {
+                htmls.push('<a class="wdk_cell_icon" ', hashUrl((style.icon || {}).click), ' data-icon="', $.format(fmt.icon || '{icon}', data, {}),
+
+                    '"></a>');
+            }
+
+
+            htmls.push('</div></', tag, '>');
+            return htmls.join('');
         }
-
-        htmls.push('<div class="weui_cell_bd weui_cell_primary"><p>',
-            $.format(fmt.text || '{text}', data, style), '</p></div>',
-            '<div class="wdk_cell_value" >',
-            $.format(fmt.value || '{value}', data, style));
-
-        if (tag == 'div' && (data.icon || fmt.icon)) {
-            htmls.push('<a class="wdk_cell_icon" ', hashUrl((style.icon || {}).click), ' data-icon="', $.format(fmt.icon || '{icon}', data, {}),
-
-                '"></a>');
-        }
-
-
-        htmls.push('</div></', tag, '>');
-        return htmls.join('');
-    }
 
 
     __p.Cells.ImageTextDesc = function (data, fmt, style) {

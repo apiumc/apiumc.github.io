@@ -1,6 +1,6 @@
 ($ => {
     WDK.page('builder', '生成移动应用', false, function (root) {
-        root.on('menu', [{ text: '主页设计', click: { model: 'Design', cmd: 'Page' } }, { text: '增加Bar', click: { model: 'UI', cmd: 'App', send: "News" } }])
+        // root.on('menu', [{ text: '主页设计', click: { model: 'Design', cmd: 'Page' } }, { text: '增加Bar', click: { model: 'UI', cmd: 'App', send: "News" } }])
         root.find('.weui_uploader_input').change(function () {
             if (this.files.length > 0) {
                 var me = $(this);

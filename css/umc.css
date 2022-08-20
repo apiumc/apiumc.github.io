@@ -928,7 +928,7 @@ svg:not(:root) {
 
 .el-table td.rel:hover .swipe {
 
-    transform: translateX(-5rem);
+    transform: translateX(-100%);
 }
 
 .el-table td.rel .swipe {
@@ -945,6 +945,14 @@ svg:not(:root) {
     justify-content: center;
     text-align: center;
     font-size: 13px;
+}
+.el-table td.rel .swipe  a{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    flex: 1;
 }
 .el-button {
     display: inline-block;
