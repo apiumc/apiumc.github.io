@@ -598,7 +598,7 @@
 .top-content .top-content-try .top-content-concat-button,
 .top-content .top-content-try .top-content-try-button {
     width: 120px;
-    height: 44px;
+    /* height: 44px; */
     border-radius: 3px;
     background-image: linear-gradient(to right, #ff6a4c, #f24e24 100%);
     cursor: pointer;
@@ -607,7 +607,16 @@
     text-align: center;
     color: #fff;
     vertical-align: top;
-    font-size: 18px;
+    font-size: 16px;
+    border: solid 1px #f24e24;
+}
+
+.top-content .top-content-try .top-content-try-button.help{
+    background-image:none;
+
+    background: #fff;
+    border: 1px solid #dcdfe6;
+    color: #606266;
 }
 
 .index-solution-card {
@@ -794,7 +803,7 @@
 }
 
 .umc-sub-footer-container {
-    background-color: #303030;
+    /* background-color: #303030; */
     padding: 60px 0 0;
 }
 
@@ -849,7 +858,7 @@
 .umc-sub-footer-container.ICP {
 
     padding: 16px 0;
-    background-color: #303030;
+    /* background-color: #303030; */
 }
 
 .umc-sub-footer-container.ICP>footer>div {
@@ -995,4 +1004,646 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     box-sizing: border-box;
+}
+.introduction-title {
+    height: 48px;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 2.56px;
+    color: #1d1e20;
+    margin: 140px 0 20px;
+    text-align: center;
+}
+
+.about-us .content .content-text {
+    display: flex;
+    font-size: 16px;
+    line-height: 28px;
+    color: #1d1e20;
+    font-weight: 400;
+    margin-top: 20px;
+}
+.about-us .content .content-text:first-child {
+    margin-top: 40px;
+}
+.about-us .content .content-jonus {
+    color: #1d1e20;
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+    margin-top: 20px;
+}.introduction-line {
+    height: 1px;
+    background: #dadde3;
+    width: 100%;
+}
+.contact-us .contact-us-info .contact-us-info-title {
+    height: 30px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #212326;
+    vertical-align: middle;
+    margin-bottom: 14px;
+}.contact-us .contact-us-info .contact-us-info-image {
+    vertical-align: middle;
+    height: 24px;
+    margin-right: 10px;
+    line-height: 24px;
+    display: inline-block;
+}.contact-us .contact-us-info .contact-us-info-text {
+    display: inline-block;
+}.contact-us .contact-us-info .contact-us-info-content {
+    height: 24px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #1d1e20;
+    margin-left: 32px;
+    margin-bottom: 10px;
+}.contact-us .contact-map {
+    vertical-align: top;
+    height: 371px;
+    width: 480px;
+    float: right;
+}
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes lightCircle {
+    0% {
+        opacity: .5;
+        transform: translateX(-50%) scale(100%)
+    }
+
+    55% {
+        opacity: 0;
+        transform: translateX(-50%) scale(147%)
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) scale(147%)
+    }
+}
+
+@keyframes sloganEnter {
+    from {
+        opacity: 0;
+        transform: translateX(10px) scale(0)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1)
+    }
+}
+
+@keyframes sloganRunning {
+    0% {
+        transform: translateY(0)
+    }
+
+    25% {
+        transform: translateY(2.5px)
+    }
+
+    50% {
+        transform: translateY(0)
+    }
+
+    75% {
+        transform: translateY(-2.5px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+
+@keyframes sloganOut {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1)
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(10px) scale(0)
+    }
+}
+
+@keyframes dotLeftEnter {
+    from {
+        opacity: 0;
+        transform: translate(30px, -10px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, 0)
+    }
+}
+
+@keyframes dotLeftRunning {
+    0% {
+        transform: translateY(0)
+    }
+
+    25% {
+        transform: translateY(-2.5px)
+    }
+
+    50% {
+        transform: translateY(0)
+    }
+
+    75% {
+        transform: translateY(2.5px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+
+@keyframes dotRightTopEnter {
+    from {
+        opacity: 0;
+        transform: translate(-30px, 20px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, 0)
+    }
+}
+
+@keyframes dotRighTopRunning {
+    0% {
+        transform: translateY(0)
+    }
+
+    25% {
+        transform: translateY(2.5px)
+    }
+
+    50% {
+        transform: translateY(0)
+    }
+
+    75% {
+        transform: translateY(-2.5px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+
+@keyframes dotRightBottomEnter {
+    from {
+        opacity: 0;
+        transform: translate(-30px, -20px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, 0)
+    }
+}
+
+@keyframes dotRighBottomRunning {
+    0% {
+        transform: translateY(0)
+    }
+
+    25% {
+        transform: translateY(2.5px)
+    }
+
+    50% {
+        transform: translateY(0)
+    }
+
+    75% {
+        transform: translateY(-2.5px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+#clue.loading {
+    display: none
+}
+
+#clue .clue-components-wrapper {
+    /* z-index: 200; */
+    position: fixed;
+    bottom: 120px;
+    right: 20px
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button {
+    margin: 5px 0;
+    width: 62px;
+    height: 54px;
+    border-radius: 3px;
+    background-color: #ebf3ff;
+    padding-top: 10px;
+    cursor: pointer;
+    position: relative;display: block;
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation.only-mobile {
+    display: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc {
+    padding-top: 0;
+    height: 27px;
+    line-height: 27px;
+    position: relative
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc.active .avatar .normal,
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc.hover .avatar .normal,
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc:hover .avatar .normal {
+    display: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc.active .avatar .hover,
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc.hover .avatar .hover,
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc:hover .avatar .hover {
+    display: inline-block
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .light-circle {
+    width: 68px;
+    height: 68px;
+    opacity: .5;
+    background-color: #a6c9ff;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+    border-radius: 50%;
+    z-index: -2;
+    transform-origin: center;
+    animation: 1s linear 0s infinite normal both running lightCircle;
+    pointer-events: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .avatar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 13px;
+    z-index: -1;
+    width: 62px;
+    overflow: visible;
+    display: flex;
+    justify-content: center
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .avatar img {
+    pointer-events: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .avatar .hover {
+    display: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .slogan {
+    position: absolute;
+    right: 85%;
+    top: -60px;
+    pointer-events: none;
+    visibility: hidden
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .slogan.animate {
+    visibility: visible;
+    animation: 1s linear 0s 1 normal both running sloganEnter, 2s linear 1s 7 normal forwards running sloganRunning, .5s linear 15s 1 normal forwards running sloganOut
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .dot-left {
+    position: absolute;
+    left: -20px;
+    top: -40px;
+    animation: .5s linear 0s 1 normal none running dotLeftEnter, 1.5s linear .5s infinite normal forwards running dotLeftRunning;
+    pointer-events: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .dot-right-top {
+    position: absolute;
+    right: -2px;
+    top: -70px;
+    animation: .5s linear 0s 1 normal none running dotRightTopEnter, 1.5s linear .5s infinite normal forwards running dotRighTopRunning;
+    pointer-events: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.clue-button_wechat-consultation:not(.only-mobile).only-pc .dot-right-bottom {
+    position: absolute;
+    right: 0;
+    top: -12px;
+    animation: .5s linear 0s 1 normal none running dotRightBottomEnter, 1.5s linear .5s infinite normal forwards running dotRighBottomRunning;
+    pointer-events: none
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button:first-child {
+    margin-top: 0
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button:last-child {
+    margin-bottom: 0
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button:hover {
+    background-color: #f5f9ff
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.active::after,
+#clue .clue-components-wrapper .clue-buttons .clue-button.hover::after,
+#clue .clue-components-wrapper .clue-buttons .clue-button:hover::after {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+    border: solid 1px #a7caff;
+    display: block;
+    border-radius: 3px
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button.active {
+    background-color: #d1e3ff
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button-icon {
+    width: 16px;
+    height: 16px;
+    margin: 0 auto 5px auto
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button-icon img {
+    width: 16px;
+    height: 16px
+}
+
+#clue .clue-components-wrapper .clue-buttons .clue-button-text {
+    font-size: 12px;
+    color: #0b5dd9;
+    text-align: center
+}
+
+#clue .clue-cards {
+    position: fixed;
+    bottom: 120px;
+    right: 92px;
+    z-index: 201
+}
+
+#clue .clue-cards .clue-card.hover {
+    z-index: 1
+}
+
+#clue .clue-cards .clue-card_wechat-consultation {
+    display: none;
+    width: 250px;
+    height: 306px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 20px 24px 0 rgba(48, 48, 48, .1), 0 0 1px 0 rgba(48, 48, 48, .2);
+    position: absolute;
+    bottom: 86px;
+    right: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#clue .clue-cards .clue-card_wechat-consultation.active,
+#clue .clue-cards .clue-card_wechat-consultation.hover {
+    display: block
+}
+
+#clue .clue-cards .clue-card_wechat-consultation .info {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    margin-bottom: 20px
+}
+
+#clue .clue-cards .clue-card_wechat-consultation .info .avatar {
+    width: 36px;
+    height: 36px;
+    margin-right: 10px
+}
+
+#clue .clue-cards .clue-card_wechat-consultation .info .name-desc-wrapper .name-wrapper {
+    display: flex;
+    align-items: center
+}
+
+#clue .clue-cards .clue-card_wechat-consultation .info .name-desc-wrapper .name-wrapper .name {
+    color: #1d1e20;
+    line-height: 1.71;
+    font-size: 14px;
+    font-weight: 500
+}
+
+#clue .clue-cards .clue-card_wechat-consultation .info .name-desc-wrapper .name-wrapper .sex {
+    margin-left: 5px
+}
+
+#clue .clue-cards .clue-card_wechat-consultation .info .name-desc-wrapper .desc {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #c5c7c9
+}
+
+#clue .clue-cards .clue-card_app-download {
+    /* width: 207px;
+    height: 76px; */
+    border-radius: 5px;
+    box-shadow: 0 20px 24px 0 rgba(48, 48, 48, .1), 0 0 1px 0 rgba(48, 48, 48, .2);
+    background-color: #fff;
+    padding: 15px;
+    display: none;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    bottom: 48px
+}
+
+#clue .clue-cards .clue-card_app-download.active,
+#clue .clue-cards .clue-card_app-download.hover {
+    display: flex
+}
+
+
+#clue .clue-modals .clue-modal_wechat-consultation {
+    touch-action: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(36, 38, 41, .4)
+}
+
+#clue .clue-modals .clue-modal_wechat-consultation.hide {
+    display: none
+}
+
+#clue .clue-modals .clue-modal_wechat-consultation .wechat-business-card {
+    position: absolute;
+    width: 300px;
+    height: 390px;
+    overflow: hidden;
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+#clue .clue-modals .clue-modal_wechat-consultation .wechat-business-card_img {
+    width: 300px
+}
+
+#clue .clue-modals .clue-modal_wechat-consultation .close-icon {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    left: calc(50% + 142.5px);
+    top: calc(50% - 212.5px);
+    transform: translate(-50%, -50%);
+    cursor: pointer
+}
+
+#clue .clue-modals .clue-modal_pre-sales-call {
+    touch-action: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(36, 38, 41, .4)
+}
+
+#clue .clue-modals .clue-modal_pre-sales-call.hide {
+    display: none
+}
+
+#clue .clue-modals .modal-window {
+    position: absolute;
+    width: 300px;
+    height: 247px;
+    overflow: hidden;
+    border-radius: 5px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefffe
+}
+
+#clue .clue-modals .modal-window_head {
+    text-align: center;
+    height: 145px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column
+}
+
+#clue .clue-modals .modal-window_head-title {
+    font-size: 14px;
+    line-height: 24px;
+    color: #1d1e20
+}
+
+#clue .clue-modals .modal-window_head-content {
+    margin-top: 5px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 1.2px;
+    text-align: center;
+    color: #1d1e20
+}
+
+#clue .clue-modals .modal-window_action {
+    text-align: center;
+    height: 50px;
+    border-top: 1px solid #edeff2;
+    line-height: 49px;
+    cursor: pointer
+}
+
+#clue .clue-modals .modal-window_action.action-copy {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #0b5dd9
+}
+
+#clue .clue-modals .modal-window_action.action-cancel {
+    letter-spacing: 1px;
+    color: #6c6f75;
+    font-size: 16px
+}
+
+#clue .clue-tip {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: none;
+    width: 130px;
+    height: 48px;
+    z-index: 1000;
+    position: fixed;
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(36, 38, 41, .8);
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 48px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #fff
+}
+
+#clue .clue-tip.hide {
+    transition: visibility .5s .2s linear, opacity .5s .2s linear;
+    visibility: hidden;
+    opacity: 0
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
 }

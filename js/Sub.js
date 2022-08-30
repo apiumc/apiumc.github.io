@@ -3,7 +3,7 @@ UMC.Src = '/UI/';
 UMC.SPA = '/';
 UMC(function ($) {
     requestAnimationFrame(function () {
-        $(window).on("popstate", function () {
+        $(window).on("page", function () {
             var path = location.pathname;
             $('.header-sub-nav .menu-site').find('li').cls('is-active', 0).find('a').each(function () {
                 var m = $(this);
@@ -15,6 +15,8 @@ UMC(function ($) {
                     return false;
                 }
             });
+            var m=$('.box-card-user.dashboard');
+            m.cls('is-active', m.attr('href')==path);
         }).on('popstate');
     });
 

@@ -20,17 +20,17 @@
             setTimeout(function () {
                 msg.addClass('el-message-fade-leave-active');
             }, 3000);
-        }).On("UI.Publish", function (e, title, keyword, desc, t) {
+            }).On("UI.Publish", function (e, title, keyword, desc, t) {
 
-            var ag = t || {};
-            var body = $(document.body.cloneNode(true));
-            body.find('div[ui]').attr('ui', false).addClass('hide');
-            body.find('#app').cls('hideSidebar', true)
+            // var ag = t || {};
+            // var body = $(document.body.cloneNode(true));
+            // body.find('div[ui]').attr('ui', false).addClass('hide');
+            // body.find('#app').cls('hideSidebar', true)
 
-            ag.key = location.pathname;
-            var json = $.extend({ title: title, keyword: keyword, desc: desc, html: body.html() }, ag);
+            // ag.key = location.pathname;
+            // var json = $.extend({ title: title, keyword: keyword, desc: desc, html: body.html() }, ag);
 
-            $.UI.API('Subject', 'Publish', json);
+            // $.UI.API('Subject', 'Publish', json);
 
         })
 
@@ -275,9 +275,11 @@
                     for (var i = 0; i < vs.length; i++) {
                         var v = vs[i];
                         if (typeof v == 'object') {
-                            var a = $(document.createElement('a')).text(v.text).attr('key', v.key || false);
+                            var a = $(document.createElement('a'));
                             v.click ? a.attr('click-data', JSON.stringify(v.click)) : 0;
-                            v.icon ? a.attr('data-icon', v.icon) : 0
+                            v.key ? a.attr('key', v.key) : 0;
+                            v.icon ? a.attr('data-icon', v.icon) : 0;
+                            v.text ? a.text(v.text) : 0
                             a.appendTo(dom);
                         } else if (istext) {
                             $(document.createElement('a')).text(v + '').appendTo(dom);
@@ -514,12 +516,8 @@
                 case 'index':
                     $(window).on('page', 'subject/page/index', '');
                     return
-                case 'explore':
                 case 'login':
                     $(window).on('page', 'subject/' + pKey, '');
-                    return;
-                case 'download':
-                    $(window).on('page', 'download', '');
                     return;
                 case 'dashboard':
                     v ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
@@ -746,16 +744,19 @@
         }).On('Subject.Menu', function (e, v) {
             $.UI.Command("Subject", 'Menu', v || '', function (xhr) {
                 if (xhr.type) {
-                    
-                    if (xhr.type == 'index') {
-                        
-                        $(window).on('page', 'subject/page' + (location.pathname.substring($.SPA.length) || 'index'), '');
-            
-                    }else{
-
-                        $(window).on('page', 'subject/' + xhr.type, '');
+                    switch (xhr.type) {
+                        case 'index':
+                            $(window).on('page', 'subject/page' + (location.pathname.substring($.SPA.length) || 'index'), '');
+                            return;
+                        case 'dashboard':
+                            if (!xhr.id){
+                                $(window).on('page', 'subject/' + xhr.type, '');
+                            };
+                            break;
+                        default:
+                            $(window).on('page', 'subject/' + xhr.type, '');
+                            return;
                     }
-                    return;
                 }
                 team.text(xhr.text);
                 $(document.body).removeClass('EditerItem,EditerDoc,EditerAll').addClass(xhr.Auth);
@@ -767,8 +768,6 @@
                 nav.html($.format('<li class="{cls}"><a ui-spa href="{Path}" data-id="{id}">{text}</a></li>', xhr.menu, {
                     Path: function (x) {
                         return $.SPA + x.path;
-                    // }, Hide: function (c) {
-                    //     return c.hide ? 'hide' : ""
                     }
                 })).find('li').eq(xhr.selectIndex || 0).addClass('is-active');
                 $.UI.On('Portfolio.List', xhr);
@@ -810,6 +809,15 @@
                 }
 
             });
+        }).On('Subject.Portfolio.Add', function (e, xhr) {
+            var input = $('.el-submenu__title input', menubar);
+            var ntext = document.createTextNode(xhr.Text)
+            var title = input.parent();
+            title[0].replaceChild(ntext, input[0]);
+            var pid = xhr.Id;
+            title.attr('data-id', xhr.Id)
+                .siblings('ul').append('<li class="el-menu-item"><a sub-id="' + pid + '"  ></a></li>');
+
         }).On('Subject.Portfolio.Del', function (e, xhr) {
             $('.el-submenu__title', menubar).each(function () {
                 var a = $(this);
@@ -872,13 +880,6 @@
                                     KEY_DIALOG_ID: 'Caption', Key: 'EDITER', 'Caption': this.value,
                                     ItemId: pId,
                                     Id: 'News'
-                                }, function (xhr) {
-                                    var pid = xhr.Headers.DataEvent.Id;
-                                    $.UI.On('Subject.Sequence', m.parent().html(m.val() + '<i class="el-submenu__icon-arrow"></i>')
-                                        .attr('data-id', pid)
-                                        .siblings('ul')
-                                        .append('<li class="el-menu-item"><a sub-id="' + pid + '"  ></a></li>')[0]);
-                                    m.remove();
                                 });
                             } else {
                                 m.parent('.menu-wrapper').remove();
@@ -895,7 +896,8 @@
 
             }
 
-        }).find('input').change(function () {
+        })
+        $('#Import input').change(function () {
             var items = this.files;
             var sid = $('.el-submenu__title.is-active', menubar).attr('data-id') || $('.el-submenu__title', menubar).attr('data-id');
 
@@ -1000,7 +1002,7 @@
                 if (xhr.Src) {
                     uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
                 } else {
-                    uBox.html('<a ui-page="subject/login" class="el-button--small el-button">登录</a> <a model="Account" cmd="Register" class="el-button--small el-button el-button--primary">快速注册</a> ')
+                    uBox.html('<a ui-page="subject/login" class="el-button--small el-button">登录</a> <a model="Account" cmd="Register" class="el-button--small el-button el-button--primary">注册</a> ')
                 }
             });
         } checkInfo();

@@ -41,12 +41,12 @@
     });
 
     var links = {};
-    function pager() {
-        this.page = function (u, t, s, f, i) {
-            UMC.page(u, t, s, f, i);
-            return this;
-        }
-    }
+    // function pager() {
+    //     this.page = function (u, t, s, f) {
+    //         UMC.page(u, t, s, f);
+    //         return this;
+    //     }
+    // }
     $.page = function (u, t, s, f) {
         if ($.isfn(t)) {
             f = t;

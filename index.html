@@ -32,7 +32,6 @@
         style="z-index: 2100;">
         <i class="el-message__icon el-icon-success"></i>
         <p class="el-message__content"></p>
-        <!---->
     </div>
     <script type="text/html" id="menu-wrapper">
         <div class="menu-wrapper">
@@ -61,6 +60,10 @@
                     </a>
                 </li>
                 <li><a data-key="AddItem"><b class="wdk_cell_icon" data-icon="&#xf067;"></b> 增加栏位</a></li>
+                <li><a id="Import">
+                        <b class="wdk_cell_icon" data-icon="&#xf0ee;"></b> 图文导入
+                        <input accept="text/*" type="file" />
+                    </a></li>
 
             </ul>
         </div>
@@ -70,13 +73,12 @@
             <!--%publish%-->
             <div class="header-sub-nav">
                 <ul class="menu-site">
-                    <ul class="menu-site">
-                        <li><a ui-spa href="/dashboard">工作台</a></li>
-                        <li><a ui-spa href="/Wiki">知识库</a></li>
-                        <li><a ui-spa href="/Gateway">门神网关</a></li>
-                        <li><a ui-spa href="/Bridge">内网穿透</a></li>
-                        <li><a class="AppDown" ui-spa href="/download">移动端下载</a></li>
-                    </ul>
+                    <li><a ui-spa href="/">主页</a></li>
+                    <li><a ui-spa href="/Gateway">门神网关</a></li>
+                    <li><a ui-spa href="/Wiki">知识库</a></li>
+                    <li><a ui-spa href="/Bridge">内网穿透</a></li>
+                    <li><a ui-spa href="/About">关于我们</a></li>
+                    <!-- <li><a class="AppDown" ui-spa href="/download">移动端下载</a></li> -->
                 </ul>
             </div>
             <!--%end%-->
@@ -137,9 +139,8 @@
                 <a class="wdk-footer-icon" id="Markdown" title="新建Markdown格式">
                     <i>&#xf198;</i><em>新建文档</em>
                 </a>
-                <a class="wdk-footer-icon" id="Import">
-                    <i>&#xf0ee;</i><em>文件导入</em>
-                    <input accept="text/*" type="file" />
+                <a class="wdk-footer-icon" ui-spa href="/365lu/help">
+                    <i>&#xf059;</i><em>帮助手册</em>
                 </a>
             </div>
         </div>

@@ -99,43 +99,44 @@
         }
     }
 
-    $.page('subject/explore', 'subject/explore', function (root) {
-        var myProject = new WDK.UI.Pager($('.weui_tab_bd_item', root));
-        myProject.model = 'Subject'
-        myProject.cmd = 'UI';
-        $.UI.Send('Subject', 'Spread', 'Project', function (xhr) {
-            $('#myProject', root).format(xhr, {
-                Path: (x) => {
-                    return $.SPA + x.path
-                }
-            }, true);
+    // $.page('subject/explore', 'subject/explore', function (root) {
+    //     var myProject = new WDK.UI.Pager($('.weui_tab_bd_item', root));
+    //     myProject.model = 'Subject'
+    //     myProject.cmd = 'UI';
+    //     $.UI.Send('Subject', 'Spread', 'Project', function (xhr) {
+    //         $('#myProject', root).format(xhr, {
+    //             Path: (x) => {
+    //                 return $.SPA + x.path
+    //             }
+    //         }, true);
 
-        }).Send('Subject', 'Spread', 'NewProject', function (xhr) {
-            $('#newProject', root).format(xhr, {
-                Path: (x) => {
-                    return $.SPA + x.path
-                }
-            }, true);
-        }).Send('Subject', 'Spread', 'Favs', function (xhr) {
-            var d = xhr.data || xhr;
-            $('#sliders', root).html(Slider(d.length > 0 ? d : [{
-                'src': '/css/slider.png'
-            }]));
-            xhr.isPublish ? requestAnimationFrame(function () {
-                $.UI.On('UI.Publish', "发现", $('#newProject', root).text().replace(/\s+/g, ' '), $('#myProject', root).text().replace(/\s+/g, ' '), {
-                    type: 'Explore'
-                });
-            }) : 0;
+    //     }).Send('Subject', 'Spread', 'NewProject', function (xhr) {
+    //         $('#newProject', root).format(xhr, {
+    //             Path: (x) => {
+    //                 return $.SPA + x.path
+    //             }
+    //         }, true);
+    //     }).Send('Subject', 'Spread', 'Favs', function (xhr) {
+    //         var d = xhr.data || xhr;
+    //         $('#sliders', root).html(Slider(d.length > 0 ? d : [{
+    //             'src': '/css/slider.png'
+    //         }]));
+    //         xhr.isPublish ? requestAnimationFrame(function () {
+    //             $.UI.On('UI.Publish', "发现", $('#newProject', root).text().replace(/\s+/g, ' '), $('#myProject', root).text().replace(/\s+/g, ' '), {
+    //                 type: 'Explore'
+    //             });
+    //         }) : 0;
 
-        }).Send(myProject.model, myProject.cmd, WDK.extend({
-            limit: 30
-        }, myProject.search), function (xhr) {
-            myProject.b.html('');
-            myProject.dataSource(xhr);
-        }).Send();
+    //     }).Send(myProject.model, myProject.cmd, WDK.extend({
+    //         limit: 30
+    //     }, myProject.search), function (xhr) {
+    //         myProject.b.html('');
+    //         myProject.dataSource(xhr);
+    //     }).Send();
 
 
-    }, false).tpl('subject', 'subject/subject', function (root) {
+    // }, false)
+    $.tpl('subject', 'subject/subject', function (root) {
         var view = root.find('#view');
         root.ui('UI.Edit', function (e, v) {
             requestAnimationFrame(function () {
@@ -163,7 +164,7 @@
                     var tt = xhr.Title;
                     if (tt && tt.Id) {
                         $.UI.On('Subject.Show', { Id: tt.Id });
-                        tt.Editer ? root.on('menu', { key: tt.Id, text: '编辑文档' }) : 0
+                        tt.Editer ? root.on('menu', { key: tt.Id, icon: '\uf044' }) : 0
 
                     }
                     subNav(t, root);
@@ -282,6 +283,7 @@
                 paging.on('search', { Project: WDK.UI.ProjectId });
             }
 
+        }).on('searchValue', function () {
         }).on('active');
 
     }, false).page('subject/login', '登录', function (root) {
@@ -400,12 +402,10 @@
             }, 1000);
         })
     }, false).tpl('subject/page', 'subject/page', function (root) {
-
-
-        var xhr2 = new XMLHttpRequest();
-        xhr2.onload = function () {
-            if (xhr2.status < 400) {
-                root.find('.umc-sub-page-container').html(xhr2.responseText)
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.status < 400) {
+                root.find('.umc-sub-page-container').html(xhr.responseText)
                 root.find('ul[type=tabs] li').on('mouseenter', function () {
                     var me = $(this);
                     var pem = me.parent();
@@ -419,6 +419,16 @@
                     me.cls('active', 1).siblings().cls('active', 0);
 
                 });
+                root.find('.clue-button_wechat-consultation').on('mouseenter',function(){
+                    root.find('.clue-card_wechat-consultation').addClass('hover')
+                }).on('mouseleave',function(){
+                    root.find('.clue-card_wechat-consultation').removeClass('hover')
+                })
+                root.find('.clue-button_app-download').on('mouseenter',function(){
+                    root.find('.clue-card_app-download').addClass('hover')
+                }).on('mouseleave',function(){
+                    root.find('.clue-card_app-download').removeClass('hover')
+                })
 
             } else {
                 delete $.page()['subject/page/' + root.attr('ui-key')];
@@ -426,26 +436,9 @@
             }
 
         };
-        xhr2.open('GET', [$.Src || '', 'subject/page/', root.attr('ui-key'), '.html'].join(''), true);
-        xhr2.send('');
-    }, '我的主页').page('subject/index', '我的主页', false, function (root) {
-        // root.on('menu', {  text: '编辑文档' });
-        root.find('ul[type=tabs] li').on('mouseenter', function () {
-            var me = $(this);
-            var pem = me.parent();
-            if (!me.is('li[data-index]')) {
-                pem.children('li').each(function (i) {
-                    $(this).attr('data-index', i + '')
-                });
-            }
-            root.find(pem.attr('for')).children('div').cls('active', 0)
-                .eq(parseInt(me.attr('data-index')) || 0).cls('active', 1);
-            me.cls('active', 1).siblings().cls('active', 0);
-
-        });
-
-
-    }, false).page('subject/dashboard', '我的工作台', false, function (root) {
+        xhr.open('GET', [$.Src || '', 'subject/page/', root.attr('ui-key'), '.html'].join(''), true);
+        xhr.send('');
+    }, '我的主页').page('subject/dashboard', '我的工作台', false, function (root) {
 
         $('.weui_navbar', root)
             .on('click', 'div.weui_navbar_item', function () {
@@ -464,8 +457,7 @@
 
                             root.on('hash', function () {
                                 pager.query();
-                            })
-
+                            });
                             break;
                         case 1:
                             var pager = new WDK.UI.Pager(body);
@@ -477,7 +469,7 @@
                             break;
                         case 2:
                             body.find('.pagination-container').paging("Subject", "Dynamic", body.find('.el-table>div').click('div[data-time]', function () {
-                                var m = $(this);//.attr
+                                var m = $(this);
                                 $.UI.Command('Subject', 'Dynamic', { Id: m.attr('data-id'), Time: m.attr('data-time') });
                             })).on('search');
                             break;

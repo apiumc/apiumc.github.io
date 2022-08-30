@@ -558,7 +558,8 @@ input.weui_btn_plain_default {
     display: block;
     width: 105px;
     word-wrap: break-word;
-    word-break: break-all
+    word-break: break-all;
+    font-size: 14px;
 }
 
 .weui_input {

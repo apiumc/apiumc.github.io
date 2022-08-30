@@ -297,10 +297,10 @@
 
 
             , '<div class="wdk-cms-max-right">', $.format(fmt.right || '{right}', value, style), '</div>', '</div>')
-            if (value.tag) {
-                htmls.push('<div class="wdk-cell-tag" style="background-color:', value.color, '">', $.format(fmt.tag || '{tag}', value, style), '</div>');
-            }
-            htmls.push('</a>');
+        if (value.tag) {
+            htmls.push('<div class="wdk-cell-tag" style="background-color:', value.color, '">', $.format(fmt.tag || '{tag}', value, style), '</div>');
+        }
+        htmls.push('</a>');
         return htmls.join('');
     }
     $.UI.Cells.CMSLook = function (value, fmt, style) {
@@ -376,13 +376,24 @@
             '<div class="wdk-cms-comment-icon">',
             '<a ', formatClick(data['image-click']), ' style="background-image: url(', data.src, ')"></a>&nbsp;</div>',
             '<div class="wdk-cms-comment-info"><ul>',
-            '<li class="wdk-cms-comment-header"><div class="wdk-cms-comment-name">', $.format(fmt.name || '{name}', data, style), '</div><div class="wdk-cms-comment-desc">', $.format(fmt.desc || '{desc}', data, style), '</div></li>',
-            // '<li class="wdk-cms-comment-time">',
-            // $.format(fmt.time || '{time}', data, style),
-            '<li>',
+            '<li class="wdk-cms-comment-header"><div class="wdk-cms-comment-name">', $.format(fmt.name || '{name}', data, style), '</div><div class="wdk-cms-comment-desc">', $.format(fmt.desc || '{desc}', data, style), '</div>'];
+        if (data.tag) {
+            htmls.push('<div class="wdk-cms-comment-button">',
+                $.format('{H}', data.tag || [], {
+                    H: function (x) {
+                        var c = x.color;
+                        var sty = $.extend({ color: c }, x.style);
+                        var hs = ['<a ', formatClick(x.click), 'style="'];
+
+                        $.style(sty || {}, hs);
+                        hs.push('">', $.format(x.format || '{text}', x, sty), '</a> ')
+                        return hs.join('');
+                    }
+                }), '</div>');
+        }
+        htmls.push('</li><li>',
             '<div class="wdk-cms-comment-content">', $.format(fmt.content || '{content}', data, style),
-            '</div>'
-        ];
+            '</div>')
         var images = data.image || [];
 
         if (images.length > 0) {
@@ -391,9 +402,11 @@
             htmls.push('</dl>');
         }
         htmls.push('</li>');
-        if (data.buttons) {
-            htmls.push('<li class="wdk-cms-comment-bottom"><div class="wdk-cms-comment-time">', $.format(fmt.time || '{time}', data, style), '</div><div class="wdk-cms-comment-button">',
-                $.format('{H}', data.buttons || [], {
+        if (data.bottom) {
+            htmls.push('<li class="wdk-cms-comment-bottom"><div class="wdk-cms-comment-time">', $.format(fmt.time || '{time}', data.bottom, style), '</div>');
+
+            htmls.push('<div class="wdk-cms-comment-button">',
+                $.format('{H}', data.bottom.right || [], {
                     H: function (x) {
                         var c = x.color;
                         var sty = $.extend({ color: c }, x.style);
@@ -403,18 +416,16 @@
                         hs.push('">', $.format(x.format || '{text}', x, sty), '</a> ')
                         return hs.join('');
                     }
-                }), '</div></li>');
+                }), '</div>');
+            htmls.push('</li>');
         }
-        if (data.Icons) {
+        if (data.icons) {
             htmls.push('<li class="wdk-cms-comment-icons"><dl>');
-            var more = data.Icons.more;//.icons
-            var style = data.Icons.style;
-            var icons = data.Icons.icons;
+            var icons = data.icons.value;
             for (var i = 0; i < icons.length; i++) {
                 var ic = icons[i];
 
-                var sle = (ic.style || style).icon || {};
-                htmls.push('<dt ', ic.badge ? ('data-badge="' + ic.badge + '"') : '', '><a style="display: block; color: ', sle.color || '#fd9d21', ';" ', formatClick(ic.click), '>');
+                htmls.push('<dt ', ic.badge ? ('data-badge="' + ic.badge + '"') : '', '><a style="color: ', ic.color || '#fd9d21', ';" ', formatClick(ic.click), '>');
                 if (ic.icon) {
                     htmls.push('<span data-icon="', ic.icon, '" ></span>');
                 } else {
@@ -423,24 +434,28 @@
                 }
                 htmls.push('</a> </dt>');
             }
-            htmls.push('</dt><a ', formatClick(more.click), ' class="wdk-cms-comment-icon-more">', $.format(more.format || '{text}', more, more.style || style), '</a>')
-            htmls.push('</li>')
+            htmls.push('</dl>');
+            var more = data.icons.more;
+            more ? htmls.push('<a ', formatClick(more.click), ' class="wdk-cms-comment-icon-more">', $.format(more.format || '{text}', more, more.style || style), '</a>') : 0;
+            if (data.icons.right) {
+                htmls.push('<div class="wdk-cms-comment-button">',
+                    $.format('{H}', data.icons.right, {
+                        H: function (x) {
+                            var c = x.color;
+                            var sty = $.extend({ color: c }, x.style);
+                            var hs = ['<a ', formatClick(x.click), 'style="'];
 
-            htmls.push('<div class="wdk-cms-comment-button">',
-                $.format('{H}', data.Icons.buttons || [], {
-                    H: function (x) {
-                        var c = x.color;
-                        var sty = $.extend({ color: c }, x.style);
-                        var hs = ['<a ', formatClick(x.click), 'style="'];
+                            $.style(sty || {}, hs);
+                            hs.push('">', $.format(x.format || '{text}', x, sty), '</a> ')
+                            return hs.join('');
+                        }
+                    }), '</div>');
+            }
+            htmls.push('</li>');
 
-                        $.style(sty || {}, hs);
-                        hs.push('">', $.format(x.format || '{text}', x, sty), '</a> ')
-                        return hs.join('');
-                    }
-                }), '</div></li>');
         }
-        if (data.replys && data.replys.length > 0) {
-            var rep = data.replys;
+        if (data.replys) {
+            var rep = data.replys.value;
             htmls.push('<li class="wdk-cms-comment-reply">');
             for (var index = 0; index < rep.length; index++) {
                 var el = rep[index];
@@ -452,11 +467,10 @@
                     '<div class="wdk-cms-comment-desc">', $.format(fmt2.content || '{content}', value, style2),
                     '</div>')
             }
-
-            if (data.replyClick) {
-                htmls.push('<a ', formatClick(data.replyClick), ' class="wdk-cms-comment-reply-more">', data.replyClick.text, '</a>');
-            }
-            htmls.push('</li>')
+            var more = data.replys.more;
+            more ? htmls.push('<a ', formatClick(more.click), ' class="wdk-cms-comment-reply-more">', $.format(more.format || '{text}', more, more.style || style), '</a>') : 0;
+          
+            htmls.push('</li>');
         }
         htmls.push('</ul>',
             '</div></div>');

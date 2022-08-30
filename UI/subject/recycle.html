@@ -1,7 +1,8 @@
 <div class="app-container">
     <div class="item-container">
 
-        <div class="el-table">
+        <div class="el-table" style="min-height: calc(100vh - 174px);
+        background: #fff;">
             <table cellspacing="0" cellpadding="0">
                 <colgroup>
                     <col width="300">
@@ -31,9 +32,7 @@
                         <tr class="el-table__row" data-id="{id}">
                             <td class="rel">
                                 <a class="link-type" model="Subject" cmd="UIMin" send="{id}"> {title}  </a>
-                                <div class="swipe" style="flex-direction: row; width: 10rem;">
-                                    <a model="Subject" cmd="Recycle" send="Id={id}&Type=Restore" class="el-button--primary">还原</a>    <a model="Subject" cmd="Recycle" send="Id={id}&Type=Del" class="el-button--danger">删除</a>
-                                </div>
+                             
                             </td>
                             <td class="is-center">
                                 {poster}
@@ -43,18 +42,21 @@
                             </td>
                             <td class="is-center rel">
                                 {lastTime}
+                                <div class="swipe" style="flex-direction: row; width: 10rem;">
+                                    <a model="Subject" cmd="Recycle" send="Id={id}&Type=Restore" class="el-button--primary">还原</a>    <a model="Subject" cmd="Recycle" send="Id={id}&Type=Del" class="el-button--danger">删除</a>
+                                </div>
                             </td>
                         </tr>
                     </script>
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="pagination-container">
-        <button type="button" class="btn-prev" disabled="disabled"> &lt;</button>
-        <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
-        <input type="number" autocomplete="off" min="1" max="1" />
-        <span class="total"></span>
+        <div class="pagination-container">
+            <button type="button" class="btn-prev" disabled="disabled"> &lt;</button>
+            <ul class="el-pager"></ul><button type="button" class="btn-next" disabled="disabled"> &gt;</button> Go to
+            <input type="number" autocomplete="off" min="1" max="1" />
+            <span class="total"></span>
+        </div>
     </div>
 
 </div>

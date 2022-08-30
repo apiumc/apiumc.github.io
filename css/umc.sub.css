@@ -42,8 +42,9 @@
                             color: #1890ff;
                             background-color: #fafafa;
                         }
+
                         .el-menu-item a.unrelease,
-                        .el-menu-item a.warn{
+                        .el-menu-item a.warn {
                             font-style: italic;
                         }
 
@@ -260,7 +261,13 @@
                         }
 
                         .box-card-user.dashboard::before {
-                            content: '\f298';
+                            content: '\f212';
+                            vertical-align: top;
+                        }
+
+                        .box-card-user.dashboard::after {
+                            content: '工作台';
+                            font-size: 12px;
                         }
 
                         .box-card-user:hover {
@@ -299,66 +306,34 @@
                             width: 50%;
                         }
 
-                        /* .sidebar-logo-container .login-box a[ui-spa=dashboard] {
-                            display: block;
-                            margin-left: 45px;
-                        }
-                        
-                        .umc-sub-index .sidebar-logo-container .login-box a[ui-spa=dashboard] {
-                            margin-left: 65px;
-                        }
-                        
-                        .sidebar-logo-container .login-box a[ui-spa=explore] {
-                            display: none;
-                            width: 100%;
-                        } */
 
                         .sidebar-logo-container .login-box::before {
                             margin: 5px;
-                            content: '';
                             width: 40px;
-                            background-image: url(../css/zhishi-icon.png);
                             height: 40px;
-                            /* background-image: url(images/apiunc.login.png); */
-                            /* background-size: 80%; */
+                            content: '\f0e9';
+                            font-family: wdk;
+                            font-size: 30px;
+                            text-align: center;
+                            line-height: 40px;
                             background-position: center;
                             border-color: #fff;
                             transition: all .38s ease-out;
-                            /* background-image: none; */
-                            background-color: #fff;
-                            color: #fff;
+                            color: #1890ff;
                             float: left;
                             background-size: cover;
                             border-radius: 50%;
                             box-sizing: border-box;
-                            border: 2px solid #fcfcfc;
+                            border: 2px solid #ffffff;
                             background-repeat: no-repeat;
+                            box-sizing: border-box;
                         }
-
-                        /* .login-box::after {
-                            content: '\5929\5929\5F55';
-                            border: 1px solid #36a3f7;
-                            padding: 0 6px;
-                            box-shadow: none;
-                            text-shadow: none;
-                            line-height: 20px;
-                            font-size: 12px;
-                            border-radius: 4px;
-                            color: #36a3f7;
-                            font-weight: 400;
-                            float: left;
-                            margin-top: 14px;
-                            margin-left: -10px;
-                            transform: scale(.8);
-                        } */
 
                         .sidebar-logo-container #team {
                             font-weight: 500;
                             color: #262626;
                             line-height: 50px;
                             font-size: 18px;
-                            margin-left: 0.5em;
-                            margin-right: 0.5em;
                         }
 
                         .sidebar-logo-container {
@@ -376,11 +351,31 @@
                             border: 2px solid #e8e8e8;
                         }
 
+                        .box-card-user.dashboard::after {
+
+                            content: '工作台';
+                            top: 11px;
+                            left: 0px;
+                            position: absolute;
+                            transform: scale(.65);
+                        }
+
+                        .box-card-user.is-active {
+                            color: #1890ff;
+                        }
+
+                        .umc-sub-index .box-card-user.dashboard::after {
+
+                            top: 14px;
+                            transform: scale(.7);
+                        }
+
                         .box-card-user {
                             margin-top: 7px;
                             margin-right: 5px;
                             width: 36px;
                             height: 36px;
+                            position: relative;
                         }
 
                         .box-card-user img,
@@ -438,7 +433,8 @@
                             position: relative;
                             text-align: center;
                         }
-                        .menu-site li.warn{
+
+                        .menu-site li.warn {
                             font-style: italic;
                         }
 
@@ -606,6 +602,16 @@
                             display: block;
                         }
 
+                        .umc-project-item-menu li a input {
+
+                            position: absolute;
+                            width: 100%;
+                            height: 100px;
+                            top: 0px;
+                            left: 0px;
+                            opacity: 0;
+                        }
+
                         .umc-subitem-caption {
                             text-align: center;
                             color: #262626;
@@ -690,7 +696,7 @@
                             overflow: hidden;
                             text-overflow: ellipsis;
                             white-space: nowrap;
-                            /* background: #fff; */
+                            background: #fff;
                             color: #595959;
                             padding-right: 32px;
                             display: inline-block;
@@ -722,7 +728,7 @@
                             display: inline-block;
                             text-overflow: ellipsis;
                             white-space: nowrap;
-                            /* background: #fff; */
+                            background: #fff;
                             position: absolute;
                             right: 0;
                             top: 0;
@@ -1157,7 +1163,9 @@
                             -webkit-transition: all .38s ease-out;
                             transition: all .38s ease-out;
                             font-size: 20px;
-                        }.umc-sub-title a:hover {
+                        }
+
+                        .umc-sub-title a:hover {
                             color: #fff;
                             background-color: #40c9c6;
                         }
@@ -1228,12 +1236,19 @@
                         }
 
                         .navbar #menu.right-menu a {
-                            color: #fff;
-                            background-color: #1890ff;
-                            border-color: #1890ff;
-                            padding: 9px 15px;
+                            padding: 0px 8px;
                             font-size: 12px;
                             border-radius: 3px;
+                            line-height: 36px;
+                            height: 36px;
+                            vertical-align: middle;
+                        }
+
+                        .navbar #menu.right-menu a[data-icon]::before {
+                            content: attr(data-icon);
+                            font-family: wdk;
+                            font-size: 20px;
+
                         }
 
                         .umc-sub-app .sidebar-logo-container #team {
@@ -1696,6 +1711,8 @@
                             height: 60px;
                             width: 60px;
                             margin-top: 8px;
+                            line-height: 60px;
+                            font-size: 50px;
                         }
 
                         .umc-sub-index .login-box em,
