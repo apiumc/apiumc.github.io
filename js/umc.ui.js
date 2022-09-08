@@ -469,7 +469,7 @@
             }
             var more = data.replys.more;
             more ? htmls.push('<a ', formatClick(more.click), ' class="wdk-cms-comment-reply-more">', $.format(more.format || '{text}', more, more.style || style), '</a>') : 0;
-          
+
             htmls.push('</li>');
         }
         htmls.push('</ul>',
@@ -853,14 +853,15 @@
         arguments[0] = 'Event.' + arguments[0].split(',').join(',Event.');
         return $.UI.On.apply($.POS, arguments);
     };
-    var CartEvent = false;
-    WDK.UI.On('SKU.Init', function (e, dom) {
+    // var CartEvent = false;
+    WDK.UI.On('SKU.Init', function (e) {
+        var dom = $(document.createElement('div')).addClass('wdk-sku').appendTo(document.body);
+        dom.html('<div class="wdk-sku-image"></div><div class="wdk-sku-header"><div class="wdk-sku-price">0.25</div><div class="wdk-sku-text"> </div></div><div class="wdk-sku-content"><div class="wdk-sku-items"></div><div class="wdk-sku-qty"><div><a class="wdk-sku-reduce">-</a><input value="1" type="number" min="1" ><a class="wdk-sku-add">+</a></div></div></div><div class="wdk-sku-footer"><a ui-event="SKUOrder" class="wdk-sku-order"></a><a ui-event="SKUBuy" class="wdk-sku-buy"></a></div>');
 
         var selectItem;
 
-        var _sku = JSON.parse(dom.attr('wdk-sku')) || { data: [], sku: [] };
-        dom.siblings('.wdk-sku-mask').click(function () { dom.removeClass('show') });
-
+        var _sku = { data: [], sku: [] };
+        $(document.createElement('div')).addClass('wdk-sku-mask').appendTo(document.body).click(function () { dom.removeClass('show') });
 
         dom.find('.wdk-sku-qty').on('click', 'a', function () {
             var m = $(this);
@@ -1010,7 +1011,7 @@
             $.UI.Start();
 
         }).Event('SKUShow', function () {
-            CartEvent = false;
+            // CartEvent = false;
             dom.addClass('show');
         }).Event('SKUBuy', function () {
             dom.on('SKUBuy');
@@ -1033,18 +1034,18 @@
 
         });
     });
-    $(function () { $.UI.On('SKU.Init', $('.wdk-sku')) });
-    var _tt = false;
-    $.UI.Start = function () {
-        _tt ? $('div[ui].ui').ui('Change', _tt) : $.UI.Command({ _start: true });
-    };
+    // $(function () { $.UI.On('SKU.Init', $('.wdk-sku')) });
+    // var _tt = false;
+    // $.UI.Start = function () {
+    //     _tt ? $('div[ui].ui').ui('Change', _tt) : $.UI.Command({ _start: true });
+    // };
 
-    $.UI.On('Change', function (e, t) {
-        _tt = t;
-        if (CartEvent) {
-            WDK.UI.Command('Schedule', 'Order');
-        }
-    });
+    // $.UI.On('Change', function (e, t) {
+    //     _tt = t;
+    //     if (CartEvent) {
+    //         WDK.UI.Command('Schedule', 'Order');
+    //     }
+    // });
 
     var footerKey = 0;
     var FFFN = {
@@ -1665,10 +1666,10 @@
 
             }
 
-            if (xhr.Header && xhr.Header.sku) {
-                $.UI.On('SKUSheet', xhr.Header.sku);
-                $.UI.Start();
-            }
+            // if (xhr.Header && xhr.Header.sku) {
+            //     $.UI.On('SKUSheet', xhr.Header.sku);
+            //     $.UI.Start();
+            // }
             requestAnimationFrame(function () {
                 me.r.on('defer');
             });

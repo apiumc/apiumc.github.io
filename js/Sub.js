@@ -1,5 +1,5 @@
 UMC.UI.Config({ 'posurl': 'https://api.apiumc.com/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
-UMC.Src = '/UMC.UI/';
+UMC.Src = '/UI/';
 UMC.SPA = '/';
 UMC(function ($) {
     requestAnimationFrame(function () {

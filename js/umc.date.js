@@ -672,9 +672,9 @@
     };
 
     // 关闭日期框
-    WDK.prototype.date = function () {
+    UMC.prototype.date = function () {
         return this.click(function () {
             mydate();
         });
     }
-})(window, WDK);
+})(window, UMC);

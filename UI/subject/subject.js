@@ -1,29 +1,5 @@
-($ => {
+(function ($) {
 
-    function Slider(data) {
-        var htmls = [];
-        for (var i = 0; i < data.length && i < 5; i++) {
-            htmls.push('<input ', i == 0 ? 'checked="checked"' : '', ' class="slider-', i + 1, '" type="radio" name="slider" id="disslider', i + 1, '"/>');
-        }
-        htmls.push('<div class="sliders"><div id="overflow"><div class="inner">');
-
-
-        htmls.push($.format('<article><a ui-spa href="{Path}" style="background-image:url({src})"></a><div class="sub"><a ui-spa href="{Path}" class="title">{title}</a><div class="desc"><a model="Subject" cmd="Account" send="{uid}">{poster}</a> 发布于 <a ui-spa  href="{PPath}">{project}</a>  {last}</div></div></article>', data, { Path: d => $.SPA + d.path, PPath: d => $.SPA + d.ppath }));
-        htmls.push('</div></div></div>');
-
-        htmls.push('<div id="controls" class="controls">');
-        for (var i = 0; i < data.length && i < 5; i++) {
-            htmls.push('<label for="disslider', i + 1, '"></label>');
-        }
-        htmls.push('</div>');
-
-        htmls.push('<div id="active" class="active">');
-        for (var i = 0; i < data.length && i < 5; i++) {
-            htmls.push('<label for="disslider', i + 1, '"></label>');
-        }
-        htmls.push('</div>');
-        return htmls.join('');
-    }
     function subNav(t, root) {
 
         var keys = [];
@@ -46,7 +22,7 @@
             emKeys = new $(ps);
         }
         var navs = root.find('#nav').format(keys, {
-            value: x => {
+            value: function (x) {
                 return (parseInt(x.index) || 0) * 10 + 'px'
             }
         }, true).find('.wdk-subject-nav-item')
@@ -99,43 +75,6 @@
         }
     }
 
-    // $.page('subject/explore', 'subject/explore', function (root) {
-    //     var myProject = new WDK.UI.Pager($('.weui_tab_bd_item', root));
-    //     myProject.model = 'Subject'
-    //     myProject.cmd = 'UI';
-    //     $.UI.Send('Subject', 'Spread', 'Project', function (xhr) {
-    //         $('#myProject', root).format(xhr, {
-    //             Path: (x) => {
-    //                 return $.SPA + x.path
-    //             }
-    //         }, true);
-
-    //     }).Send('Subject', 'Spread', 'NewProject', function (xhr) {
-    //         $('#newProject', root).format(xhr, {
-    //             Path: (x) => {
-    //                 return $.SPA + x.path
-    //             }
-    //         }, true);
-    //     }).Send('Subject', 'Spread', 'Favs', function (xhr) {
-    //         var d = xhr.data || xhr;
-    //         $('#sliders', root).html(Slider(d.length > 0 ? d : [{
-    //             'src': '/css/slider.png'
-    //         }]));
-    //         xhr.isPublish ? requestAnimationFrame(function () {
-    //             $.UI.On('UI.Publish', "发现", $('#newProject', root).text().replace(/\s+/g, ' '), $('#myProject', root).text().replace(/\s+/g, ' '), {
-    //                 type: 'Explore'
-    //             });
-    //         }) : 0;
-
-    //     }).Send(myProject.model, myProject.cmd, WDK.extend({
-    //         limit: 30
-    //     }, myProject.search), function (xhr) {
-    //         myProject.b.html('');
-    //         myProject.dataSource(xhr);
-    //     }).Send();
-
-
-    // }, false)
     $.tpl('subject', 'subject/subject', function (root) {
         var view = root.find('#view');
         root.ui('UI.Edit', function (e, v) {
@@ -164,9 +103,8 @@
                     var tt = xhr.Title;
                     if (tt && tt.Id) {
                         $.UI.On('Subject.Show', { Id: tt.Id });
-                        tt.Editer ? root.on('menu', { key: tt.Id, icon: '\uf044' }) : 0
-
                     }
+                    root.on('menu', tt.Editer ? { key: tt.Id, icon: '\uf044' } : []);
                     subNav(t, root);
                     if (tt.releaseId)
                         $.UI.On('UI.Publish', tt.title, root.find('#nav').text().replace(/\s+/g, ' '), view.text().replace(/\s+/g, ' '), {
@@ -225,7 +163,8 @@
                     root.find('.umc-subitem-users').format(xhr.users, true);
                     var htmls = [];
                     var keys = [];
-                    xhr.data.forEach(it => {
+                    for (var i = 0; i < xhr.data.length; i++) {
+                        var it = xhr.data[i];
                         keys.push(it.text);
                         htmls.push('<li>', '<div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-subitem-nav-items">')
                         htmls.push($.format('<li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-subitem-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
@@ -235,7 +174,7 @@
                             }
                         }), '</ul></li>');
 
-                    });
+                    }
                     root.find('.umc-subitem-nav>ul').html(htmls.join(''));
                     root.find('.umc-subitem-users-sum span').text(xhr.users.length);
                     if (xhr.releaseId)
@@ -404,7 +343,7 @@
     }, false).tpl('subject/page', 'subject/page', function (root) {
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
-            if (xhr.status < 400) {
+            if (xhr.status < 400 && xhr.responseText.indexOf('<body') == -1) {
                 root.find('.umc-sub-page-container').html(xhr.responseText)
                 root.find('ul[type=tabs] li').on('mouseenter', function () {
                     var me = $(this);
@@ -419,14 +358,14 @@
                     me.cls('active', 1).siblings().cls('active', 0);
 
                 });
-                root.find('.clue-button_wechat-consultation').on('mouseenter',function(){
+                root.find('.clue-button_wechat-consultation').on('mouseenter', function () {
                     root.find('.clue-card_wechat-consultation').addClass('hover')
-                }).on('mouseleave',function(){
+                }).on('mouseleave', function () {
                     root.find('.clue-card_wechat-consultation').removeClass('hover')
                 })
-                root.find('.clue-button_app-download').on('mouseenter',function(){
+                root.find('.clue-button_app-download').on('mouseenter', function () {
                     root.find('.clue-card_app-download').addClass('hover')
-                }).on('mouseleave',function(){
+                }).on('mouseleave', function () {
                     root.find('.clue-card_app-download').removeClass('hover')
                 })
 
@@ -569,7 +508,7 @@
 
         root.find('#join').click(function () {
             var me = $(this);
-            $.UI.Command('Subject', 'Team', { Project: root.attr('project-id'), Id: 'Self' }, (xhr) => me.text(xhr.text));
+            $.UI.Command('Subject', 'Team', { Project: root.attr('project-id'), Id: 'Self' }, function (xhr) { me.text(xhr.text) });
         });
 
         $('.weui_navbar', root)

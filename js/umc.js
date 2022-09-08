@@ -840,7 +840,7 @@
         }
     };
     UMC.Click = function (data) {
-        if (data) {
+        if (typeof data == 'object') {
             if (data.key == 'Click') {
                 data = data.send;
             }
@@ -884,7 +884,7 @@
         return format;
     };
 
-    function dialog(title, content, fn) {
+    function dialog(title, content, fn, btn) {
         var pxf = "weui_dialog";
         var me = UMC(document.createElement("div"));
         var html = [
@@ -893,9 +893,13 @@
             '<div class="', pxf, '_bd">', content, '</div>',
             '<div class="', pxf, '_ft">',
             fn ? '<a class="weui_btn_dialog default">取消</a>' : '',
-            '<a class="weui_btn_dialog primary">确认</a></div>'
+            '<a class="weui_btn_dialog primary">', btn || '确认', '</a></div>'
         ];
-        me.html(html.join(''));
+        me.html(html.join('')).on('close', function () {
+
+            me.remove();
+            mask.remove();
+        });
         me.appendTo(document.body);
         var mask = UMC(document.createElement("div")).addClass('weui_mask').appendTo(document.body);
         me.show().addClass(pxf).addClass((content || '').length < 20 ? (pxf + '_confirm') : (pxf + '_alert'));
@@ -906,7 +910,7 @@
             me.remove();
             mask.remove();
 
-        });
+        })
         return me;
     }
 
@@ -1038,15 +1042,22 @@
                     case 'RadioGroup':
                         actionSheet(p.Title || '请选择', p.DataSource || [], function (v) {
                             v.Value ? (p.Submit ? __cmd(p.Submit, p.Name, v.Value || 'OK') : __p.Command(v.Value)) : UMC.Click(v)
+
                         }, 'Text', p.Cells || 1);
                         break;
                     case "Prompt":
                         dialog(p.Title || '提示', p.Text);
                         break;
                     case "Confirm":
-                        dialog(p.Title || '提示', p.Text, function (v) {
+                        var cfm = dialog(p.Title || '提示', p.Text, function (v) {
                             p.Submit ? __cmd(p.Submit, p.Name, p.DefaultValue || 'OK') : __p.Command(p.DefaultValue || 'OK')
-                        });
+                            return p.CloseEvent ? false : 0;
+                        }, p.Submit ? p.Submit.text : '').attr('ui', 'Confirm');
+                        if (p.CloseEvent) {
+                            cfm.ui(p.ClientEvent, function () {
+                                cfm.on('close');
+                            });
+                        }
                         break;
                     case "Image":
                         imageShow(p.Title || '图片', p.Url, p.Text, p.Href);

@@ -20,7 +20,7 @@
             setTimeout(function () {
                 msg.addClass('el-message-fade-leave-active');
             }, 3000);
-            }).On("UI.Publish", function (e, title, keyword, desc, t) {
+            // }).On("UI.Publish", function (e, title, keyword, desc, t) {
 
             // var ag = t || {};
             // var body = $(document.body.cloneNode(true));
@@ -509,7 +509,7 @@
         });
         navSort.option('disabled', true);
         $(window).off('popstate').on('popstate', function (e, v) {
-            var pathKey = location.pathname;
+            var pathKey = location.pathname.replace(/\/$/, '');
             var pKey = pathKey.substring($.SPA.length) || 'index';
             switch (pKey) {
                 case 'index.html':
@@ -517,17 +517,24 @@
                     $(window).on('page', 'subject/page/index', '');
                     return
                 case 'login':
-                    $(window).on('page', 'subject/' + pKey, '');
+                    $(window).on('page', 'subject/login', '');
                     return;
                 case 'dashboard':
                     v ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
                     return;
                 default:
-                    if (pKey.indexOf('/') == -1 && /[A-Z]+/.test(pKey)) {
-                        $(window).on('page', 'subject/page/' + pKey, '');
-                        return;
+                    var root = pKey.split('/')[0];
+                    switch (root) {
+                        case 'UMC':
+                            $.UI.On('Subject.Menu', { code: pKey + location.search })
+                            return;
+                        default:
+                            if (/[A-Z]+/.test(root)) {
+                                $(window).on('page', 'subject/page/' + pKey, '');
+                                return;
+                            }
+                            break;
                     }
-                    break;
             }
 
             if ($.UI.SPAPfx) {
@@ -743,20 +750,20 @@
             })
         }).On('Subject.Menu', function (e, v) {
             $.UI.Command("Subject", 'Menu', v || '', function (xhr) {
-                if (xhr.type) {
-                    switch (xhr.type) {
-                        case 'index':
-                            $(window).on('page', 'subject/page' + (location.pathname.substring($.SPA.length) || 'index'), '');
-                            return;
-                        case 'dashboard':
-                            if (!xhr.id){
-                                $(window).on('page', 'subject/' + xhr.type, '');
-                            };
-                            break;
-                        default:
-                            $(window).on('page', 'subject/' + xhr.type, '');
-                            return;
-                    }
+                switch (xhr.type) {
+                    case 'login':
+                    case 'dashboard':
+                        $(window).on('page', 'subject/' + xhr.type, '');
+                        return;
+                    case 'home':
+                    case 'nav':
+                        $.nav(xhr.nav || $.SPA);
+                        xhr.click ? $.Click(xhr.click) : 0;
+                        return;
+                    case 'page':
+                        $(window).on('page', 'subject/page/' + (location.pathname.substring($.SPA.length) || 'index'), '');
+                        return;
+
                 }
                 team.text(xhr.text);
                 $(document.body).removeClass('EditerItem,EditerDoc,EditerAll').addClass(xhr.Auth);
@@ -795,9 +802,6 @@
                         menuSort.option('disabled', true);
                         navSort.option('disabled', true);
                         break;
-                }
-                if (xhr.follow) {
-                    $.UI.Command('Subject', 'Team', { Id: 'follow', Project: $.UI.ProjectId })
                 }
                 if ($(window).on('popstate', 'Menu') === false) {
                     if (xhr.spa) {
@@ -1000,7 +1004,7 @@
             $.UI.API("Account", "Check", "Info", function (xhr) {
                 $.UI.Device = xhr.Device;
                 if (xhr.Src) {
-                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
+                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"><img src="', xhr.Src, '"/></a>'].join(''));
                 } else {
                     uBox.html('<a ui-page="subject/login" class="el-button--small el-button">登录</a> <a model="Account" cmd="Register" class="el-button--small el-button el-button--primary">注册</a> ')
                 }

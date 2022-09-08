@@ -9,7 +9,6 @@
     function htmlEncode(sHtml) {
 
         return sHtml.replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; });
-        // return $(document.createElement("div")).attr(""text).html();
     }
 
     function createSubmit(v, htmls) {
@@ -113,7 +112,6 @@
                 break;
 
             case "Option":
-            // case "BarCode":
             case "Area":
                 htmls.push('<a class="weui_cell wdk-option" data-key="', key, '">');
                 createlabel(title, htmls, key);
@@ -159,7 +157,7 @@
                     '<a class=" ', v.Type == 'Address' ? 'wdk_cell_address' : 'wdk_cell_verify', '" data-key="', key, '"></a></div>');
                 break;
             default:
-                var fn = WDK.UI.Cells[v.Type];
+                var fn = $.UI.Cells[v.Type];
                 if (fn) {
                     htmls.push(fn(v.value, v.format || {}, v.style || {}));
                 } else {
@@ -196,7 +194,7 @@
         this.dom = dom;
         this.item = {};
         var header = this.Header = v.Header || {};
-        var fhn = WDK.UI.Headers || {};
+        var fhn = $.UI.Headers || {};
         var fnh = fhn[header.type] || function () { return '' };
         var htmls = [fnh(header.type == 'Slider' ? header : header.data || {}, header.format || {}, header.style || {})];
         var isSubmit = false;
@@ -293,8 +291,8 @@
                 htmls.push('</div>');
                 break;
         }
+        var smt = v.Submit || v.submit;
         if (!isSubmit) {
-            var smt = v.Submit || v.submit;
             createSubmit(smt === false ? smt : (smt || { text: isInput ? '确认提交' : '关闭' }), htmls);
         }
         var headers = ['<div class="header"><a class="back"></a><h1>', v.Title || "请输入", '</h1> '];
@@ -305,14 +303,31 @@
                 headers.push('<a class="right"><span class="icon-menu"></span></a>');
             }
         }
-        headers.push('</div><form data-ui="form" class="weui_cell_primary" style="overflow: auto"></form>')
+        if (isInput) {
+            var send = $.extend({}, smt.send);
+            send._model = smt.model;
+            send._cmd = smt.cmd;
+            for (var k in send) {
+
+                htmls.push('<input type="hidden" value="', send[k], '"  name="', k, '" />');
+            }
+        }
+        headers.push('</div><form data-ui="form" action="', $.UI.Config().posurl, '" target="_blank" class="weui_cell_primary" style="overflow: auto">', htmls.join(''), '</form>')
         var me = this;
         var form = dom.html(headers.join(''))
-            .find('form').html(htmls.join('')).submit(function () {
+            .find('form').submit(function () {
                 var f = $(this);
                 var vs = f.val();
                 if (vs !== false) {
-                    me.Submit(vs) !== false ? (me.param.CloseEvent ? 0 : dom.addClass('right').removeClass('ui')) : 0;
+                    if (me.Submit(vs) !== false) {
+                        me.param.CloseEvent ? 0 : dom.addClass('right').removeClass('ui');
+                        if (me.param.Action) {
+                            $.Click(me.param.Action);
+                            return true;
+                        } else {
+                            $.UI.Command(vs);
+                        }
+                    }
 
                 }
                 return false;
@@ -340,49 +355,36 @@
 
                     switch (typeof sendValue) {
                         case 'object':
-                            WDK.extend(map, sendValue);
+                            $.extend(map, sendValue);
                             break;
                         case 'string':
                             map = sendValue + '&media_id=' + encodeURIComponent(value);
                             break;
                     }
-                    UMC.UI.Command(model, command, map);
+                    $.UI.Command(model, command, map);
                 }
             });
-        if (window.wx) {
-            form.find('input[type=file]').click(function () {
-                var f = $(this);
-                wx.chooseImage({
-                    count: 1,
-                    success: function (res) {
-                        var localId = res.localIds[0];
-                        wx.uploadImage({
-                            localId: localId,
-                            isShowProgressTips: 1,
-                            success: function (res) {
-                                WDK.UI.Command('Platform', 'Release', res.serverId, function (t) {
-                                    form.on('file', f, t);
-                                });
-                            }
-                        });
-                    }
-                });
+        form.find('input[type=file]').click(function () {
+            if ($.UI.On('Form.File', this) === false) {
                 return false;
-            })
-        } else {
-            form.find('input[type=file]').on('change', function () {
-                var f = $(this);
-                if (this.files.length > 0) {
-                    if (this.name == '_f')
-                        f.parent('.weui_cell').find('.weui_cell_ft').text(this.files[0].name);
-                    f.parent('form').addClass('wdk-loading');
-                    WDK.uploader(this.files[0], function (t) {
-                        form.removeClass('wdk-loading');
-                        form.on('file', f, t)
-                    });
-                }
-            });
-        }
+            }
+        }).on('change', function () {
+            var f = $(this);
+            if (this.files.length > 0) {
+                if (this.name == '_f')
+                    f.parent('.weui_cell').find('.weui_cell_ft').text(this.files[0].name);
+                f.parent('form').addClass('wdk-loading');
+                $.uploader(this.files[0], function (t) {
+                    form.removeClass('wdk-loading');
+                    form.on('file', f, t)
+                });
+            }
+        });
+        form.find('input[type=barcode]').click(function () {
+            if ($.UI.On('Form.BarCode', this) === false) {
+                return false;
+            }
+        });
         dom.find('.header a').click(function () {
             var menu = me.param.menu;
             var b = $(this)
@@ -391,12 +393,12 @@
             } else if (menu.length > 1) {
                 $.UI.Sheet('菜单', menu, function (v) {
                     dom.addClass('right').removeClass('ui');
-                    WDK.UI.Command(v.model, v.cmd, v.send);
+                    $.UI.Command(v.model, v.cmd, v.send);
                 }, 'text');
             } else {
                 dom.addClass('right').removeClass('ui');
                 var v = menu[0];
-                WDK.UI.Command(v.model, v.cmd, v.send);
+                $.UI.Command(v.model, v.cmd, v.send);
             }
         });
         dom.on('click', 'a[data-key]', function () {
@@ -415,14 +417,14 @@
                             if (toKey) {
                                 var vs = data.SendValue || {};
                                 vs[toKey] = vlaue
-                                WDK.UI.Command(data.Model, data.Command, vs)
+                                $.UI.Command(data.Model, data.Command, vs)
                             } else {
 
-                                WDK.UI.Command(data.Model, data.Command, vlaue)
+                                $.UI.Command(data.Model, data.Command, vlaue)
                             }
                         } else { return; }
                     } else {
-                        WDK.UI.Command(data.Model, data.Command, data.SendValue);
+                        $.UI.Command(data.Model, data.Command, data.SendValue);
 
                     }
                     if (!data.bindEvent) {
@@ -467,7 +469,7 @@
                     var model = data.Model;
                     var cmd = data.Command;
                     if (model && cmd) {
-                        WDK.UI.Command(model, cmd, data.SendValue)
+                        $.UI.Command(model, cmd, data.SendValue)
                     }
                     break;
                 case "BarCode":
@@ -555,76 +557,9 @@
                     }
                 }
             }
-            var submit = this.param.Submit || this.param.submit;
-            switch (typeof submit) {
-                case 'object':
-                    var vs = v || {};
-                    $.extend(vs, submit.send || {})
-                    WDK.UI.Command(submit['model'], submit['cmd'], vs);
-                    break;
-                default:
-                    if (v && isv)
-                        WDK.UI.Command(v._ ? v._ : v);
-                    break;
-            }
 
         }
     }
     $.UI.Form = Dialog;
 
-
-    if (navigator.userAgent.toLowerCase().indexOf('micromessenger') != -1) {
-        var isWXInit = false;
-        var h = $('head').append($({
-            tag: "script",
-            load: function () {
-                wx.ready(function () {
-                    isWXInit = true;
-                    WDK.UI.On('WX.Loaded')
-                });
-                $({
-                    tag: "script",
-                    error: function () {
-                        $.UI.Command('Platform', 'WeiXin', { Key: $(this).attr('src') }, function (xhr) {
-                            wx.config(xhr);
-                        });
-                    },
-                    'src': ['/jweixin/', Math.abs($.hash(location.href.split('#')[0]) + ''), '/', Math.floor(new Date().getTime() / 6000000), '/', WDK.UI.On("UI.Corp") || 'wx', '.js'].join('')
-                }).appendTo(h);
-            },
-            src: '//res.wx.qq.com/open/js/jweixin-1.2.0.js'
-        }));
-
-        function addCard(v) {
-            wx.addCard({
-                cardList: [{
-                    cardId: v.cardId,
-                    cardExt: JSON.stringify(v.card)
-                }],
-                success: function (res) {
-                    if (WDK.UI.On('WX.addCard') !== false) {
-                        wx.closeWindow();
-                    }
-                }
-            });
-        }
-        WDK.UI.On('OpenWeiXinCard', function (e, v) {
-            wx.openCard({
-                cardList: v.card
-            });
-
-
-        }).On('AddWeiXinCard', function (e, v) {
-            isWXInit ? addCard(v) : wx.ready(function () { addCard(v); })
-
-        }).On('Form.BarCode', function () {
-            wx.scanQRCode({
-                needResult: 1,
-                success: function (res) {
-                    WDK.UI.Command(encodeURIComponent(res.resultStr));
-                }
-            });
-            return false;
-        });
-    }
-})(WDK);
+})(UMC);

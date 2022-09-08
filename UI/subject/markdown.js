@@ -36,9 +36,12 @@
                 WDK.UI.API('Subject', 'Submit', pro);
             }
         });
-        root.ui('Subject.Submit', function (e, v) { 
-                root.on('title', "保存于" + v.time);
-                delete $.page()['subject/' + v.id]; 
+        root.ui('Subject.Submit', function (e, v) {
+            root.on('title', "保存于" + v.time);
+            delete $.page()['subject/' + v.id];
+
+        }).ui('WebResource', function (e, v) {
+            root.find('#des').on('WebResource', v);
 
         }).find('#des,textarea').on('input', function () {
             isChange = true;

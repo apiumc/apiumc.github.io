@@ -379,10 +379,14 @@
                         }
 
                         .box-card-user img,
-                        .box-card-user img.pan-thumb {
+                        .box-card-user img.pan-thumb {    
                             box-sizing: border-box;
                             border: 2px solid #e8e8e8;
                             background-image: url(member.png);
+                            position: absolute;
+                            width: 36px;
+                            border-radius: 50%;
+                            left: 0;
                         }
 
                         .ui-markdown-editer {
@@ -743,7 +747,7 @@
                             color: #8c8c8c;
                         }
 
-                        .umc-toc-users-sum span {
+                        .umc-subitem-users-sum span {
                             margin: 0 5px;
                         }
 
@@ -814,8 +818,13 @@
                             text-rendering: auto;
                             /* color: #8c8c8c; */
                         }
+                        .umc-subitem-nav-items{
+                            max-height: 500px;
+                            margin-left: 10px;
+                            transition: max-height .3s;
+                        }
 
-                        .umc-subitemtoc .is-closed .umc-subitem-nav-arrow {
+                        .umc-subitem-nav .is-closed .umc-subitem-nav-arrow {
                             /* top: 40%; */
                             transform: rotate(45deg);
                         }
@@ -843,6 +852,12 @@
                             background: #fff;
                             padding: 14px;
                             border-radius: 2px;
+                        }
+                        .umc-sub-dynamic-item .umc-swipe{
+                            display: none;
+                        }
+                      .EditerItem  .umc-sub-dynamic-item .umc-swipe{
+                            display: flex;
                         }
 
                         .umc-sub-dynamic-item,
@@ -1258,7 +1273,7 @@
                         .umc-sub-app {
                             background-color: #fff;
                         }
-
+                        .umc-subject-view .weui_cells:after,
                         .umc-subject-view .weui_cell::before {
                             display: none;
                         }
@@ -2104,7 +2119,7 @@
                                 margin: 14px 0;
                             }
 
-                            .umc-toc {
+                            .umc-subitem-nav {
                                 margin: 0;
                                 padding: 10px;
                                 min-height: calc(100vh - 72px);

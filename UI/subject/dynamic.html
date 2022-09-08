@@ -60,13 +60,14 @@
                                 <script type="text/html">
                                     <div  class="umc-sub-dynamic-item">
                                         <div class="umc-sub-dynamic-img">
-                                            <img src="{src}">
+                                            <a model="Subject" cmd="Account" send="{user_id}"><img src="{src}"></a>
                                         </div>
                                         <div style="flex:1; padding-left:12px">
-                                            <div>{alias}</div>
+                                            <div><a model="Subject" cmd="Account" send="{user_id}">{alias}</a></div>
                                             <div class="umc-sub-dynamic-desc">在{time}加入</div>
                                         </div>
-                                        <div class="umc-sub-dynamic-type" ><a class="el-tag el-tag--small" model="Subject" cmd="Team" send="Id={user_id}&Project={project_id}">{auth}</a></div>
+                                        <div class="umc-sub-dynamic-type" ><a class=" el-tag--small">{auth}</a></div>
+                                        <a class="umc-swipe el-button--primary" model="Subject" cmd="Team" send="Id={user_id}&Project={project_id}">设置</a> 
                                     </div>
                                 </script>
                             </div>

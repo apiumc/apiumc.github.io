@@ -545,7 +545,8 @@ a.wdk-nine-empty {
     border: 1px solid #ccc;
     width: 100%;
     outline: 0;
-    ime-mode: disabled
+    ime-mode: disabled;
+    width: 68px;
 }
 
 .wdk-sku-content {
@@ -569,6 +570,19 @@ a.wdk-nine-empty {
     border-radius: 0;
     margin-top: 0;
     cursor: pointer;
+    position: relative;
+    display: block;
+    padding-left: 14px;
+    padding-right: 14px;
+    box-sizing: border-box;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    line-height: 2.33333333;
+    border-radius: 5px;
+    -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
 }
 
 .wdk-sku-footer:before {
