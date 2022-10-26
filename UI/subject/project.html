@@ -1,26 +1,21 @@
-<div class="umc-dynamic" app-cls="umc-sub-dashboard">
-
-    <div class=" umc-sub-content-header el-panel-group el-row">
+<div class="umc-dynamic">
+    <div class="umc-sub-content-header el-panel-group el-row">
         <div class="el-card-panel">
-            <div class="el-card-panel-icon" data-icon="&#xF19d;"></div>
+            <div class="el-card-panel-icon" data-icon="&#xF02d;"></div>
             <div class="el-card-panel-description">
 
                 <div class="card-panel-text">
-                    参与项目
-                </div> <span data-field="ProjectCount" class="card-panel-num"></span>个
+                    文章总数
+                </div> <span data-field="Count" class="card-panel-num"></span>篇
             </div>
         </div>
         <div class="el-card-panel">
-            <div class="el-card-panel-icon" data-icon="&#xF02d;">
-            </div>
+            <div class="el-card-panel-icon" data-icon="&#xF0c0;"></div>
             <div class="el-card-panel-description">
 
                 <div class="card-panel-text">
-                    知识创作
-                </div>
-                <div style="position: relative;">
-                    <span data-field="Count" class="card-panel-num"></span>篇
-                </div>
+                    项目成员
+                </div> <span data-field="MemberCount" class="card-panel-num"></span>人
             </div>
         </div>
         <div class="el-card-panel">
@@ -28,7 +23,7 @@
             <div class="el-card-panel-description">
 
                 <div data-v-6723c96e="" class="card-panel-text">
-                    被浏览数
+                    浏览总数
                 </div> <span data-field="Look" class="card-panel-num"></span>次
             </div>
         </div>
@@ -37,7 +32,7 @@
             <div class="el-card-panel-description">
 
                 <div class="card-panel-text">
-                    被评论数
+                    评论总数
                 </div> <span data-field="Reply" class="card-panel-num"></span>次
             </div>
         </div>
@@ -47,23 +42,20 @@
         <div class="el-card umc-sub-content" style="min-height: calc(100vh - 205px);">
             <div class="wdk-tabs" style="position: relative; flex:1;overflow: auto">
                 <div class="weui_navbar">
-                    <div class="weui_navbar_item" data-index="0">我的关注 </div>
-                    <div class="weui_navbar_item" data-index="1"> 我的知识 </div>
-                    <div class="weui_navbar_item" data-index="2"> 我的动态</div>
+                    <div class="weui_navbar_item weui_bar_item_on" data-index="0"> 项目专栏</div>
+                    <div class="weui_navbar_item " data-index="1"> 项目成员</div>
+                    <div class="weui_navbar_item " data-index="2"> 项目动态</div>
 
                 </div>
                 <div class="wdk_tab_bd">
                     <div class="weui_tab_bd_item" style="display: block;">
                         <section>
-
                         </section>
                     </div>
                     <div class="weui_tab_bd_item">
                         <section>
-
                         </section>
                     </div>
-
                     <div class="weui_tab_bd_item ">
                         <section>
 
@@ -74,13 +66,32 @@
 
         </div>
         <div class="umc-sub-content-right">
-            <div class="el-card " style="min-height: calc(100vh - 205px);">
+            <div class="el-card">
+                <div class="umc-project-head">
+                    <div> <img data-key="Icon" data-field="Src"/></div>
+                    <div class="umc-project-code" data-key="Code">简码 :<b data-field="Code"></b></div>
+                    <div class="umc-project-name" data-key="Caption" data-field="Name">　</div>
+                    <div class="umc-project-desc" data-key="Description" data-field="Desc">　</div>
+                    <div style="margin: 1em 0;">
+                        <a id="join" data-field="FollowText"
+                            class="el-button filter-item el-button--primary el-button--small">　
+                        </a>
+                    </div>
+                    <div class="umc-project-upgrade">
 
-                <div class="umc-sub-title" style="position: relative; ">
-                    <b>我的项目 </b><a model="Platform" cmd="Project" send="New" title="创造项目"><b class="wdk_cell_icon"
-                            data-icon="&#xF055;"></b></a>
+                        <a ui-event="upgrade">推广公众号</a>
+                    </div>
                 </div>
-                <div id="myProject">
+
+            </div>
+
+            <div class="el-card" style=" margin-top:10px;min-height:296px;position: relative;">
+                <div class="umc-sub-title" style="position: relative; ">
+                    <b>编辑成员 </b>
+                </div>
+
+
+                <div class="umc-project-team">
                     <section>
 
                     </section>

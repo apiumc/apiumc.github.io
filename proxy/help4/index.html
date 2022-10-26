@@ -1,0 +1,358 @@
+<html>
+
+<head>
+    <title>APIUMC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <link href="/css/weui.css" rel="stylesheet" type="text/css">
+    <link href="/css/base.css" rel="stylesheet" type="text/css">
+    <link href="/css/icon.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.sub.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.sub.page.css" rel="stylesheet" type="text/css">
+    <script src="/js/umc.js" type="text/javascript"></script>
+    <script src="/js/Sortable.js"></script>
+    <script src="/js/umc.date.js"></script>
+    <script src="/js/umc.database.js"></script>
+    <script src="/js/umc.grid.js"></script>
+    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.ui.js"></script>
+    <script src="/js/umc.page.js"></script>
+    <script src="/js/umc.paging.js"></script>
+    <script src="/js/umc.sub.js"></script>
+    <script src="/js/Sub.js"></script>
+</head>
+
+<body>
+
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active"
+        style="z-index: 2100;">
+        <i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content"></p>
+    </div>
+    <script type="text/html" id="menu-wrapper">
+        <div class="menu-wrapper">
+            <li class="el-submenu">
+                <div class="el-submenu__title"><input><i class="el-submenu__icon-arrow"></i><em></em></div>
+                <ul class="el-menu"></ul>
+            </li>
+        </div>
+    </script>
+    <div class="navbar ">
+
+        <div class="sidebar-logo-container">
+            <div class="umc-sidebar-back"></div>
+            <div class="umc-sidebar-menu"></div>
+            <div class="login-box"><em>API</em> <sub>UMC</sub>
+                <a ui-spa="" href="/"></a>
+            </div>
+            <!--%publish%-->
+            <a ui-spa="" id="team" href="/proxy">门神网关</a>
+            <!--%end%-->
+            <a class="umc-project-item el-dropdown"></a>
+            <ul role="menu" class="umc-project-item-menu">
+                <li>
+                    <a data-key="EditItem">
+                        <b class="wdk_cell_icon" data-icon=""></b> 编辑栏位
+                    </a>
+                </li>
+                <li><a data-key="AddItem"><b class="wdk_cell_icon" data-icon=""></b> 增加栏位</a></li>
+                <li><a id="Import">
+                        <b class="wdk_cell_icon" data-icon=""></b> 图文导入
+                        <input accept="text/*" type="file">
+                    </a></li>
+
+            </ul>
+        </div>
+
+        <div class="umc-sub-nav">
+
+            <!--%publish%-->
+            <div class="header-sub-nav">
+                <ul class="menu-site">
+                    <li class=" "><a ui-spa="" href="/">主页</a></li>
+                    <li class=" "><a ui-spa="" href="/Gateway">门神网关</a></li>
+                    <li class=" "><a ui-spa="" href="/Wiki">知识库</a></li>
+                    <li class=" "><a ui-spa="" href="/Bridge">内网穿透</a></li>
+                    <li class=" "><a ui-spa="" href="/About">关于我们</a></li>
+                    <!-- <li><a class="AppDown" ui-spa href="/download">移动端下载</a></li> -->
+                </ul>
+            </div>
+            <!--%end%-->
+            <div class="header-search right-menu-item show" id="header-search">
+                <form class="el-select header-search-select el-select--small">
+                    <div class="el-input el-input--small el-input--suffix">
+                        <input type="search" autocomplete="off" placeholder="搜索" class="el-input__inner">
+                    </div>
+                </form>
+            </div>
+            <ul role="menu" class="umc-search-menu"></ul>
+        </div>
+
+        <div class="umc-sub-nav">
+
+        </div>
+        <div class="umc-sub-nav">
+
+            <!--%publish%-->
+            <ul class="menu-site" id="nav">
+                <li class=" is-active"><a ui-spa="" href="/proxy/help" data-id="7124915178545872897">帮助文档</a></li>
+            </ul>
+            <!--%end%-->
+        </div>
+        <div class="right-menu"><a onclick="UMC.UI.On('Login')" class="el-button--small el-button">登录</a></div>
+        <div class="right-menu" id="menu">
+
+        </div>
+
+    </div>
+    <div id="app" class=" ">
+        <div class="sidebar-container">
+
+            <div class="el-scrollbar">
+                <div class="scrollbar-wrapper el-scrollbar__wrap">
+                    <div class="el-breadcrumb app-breadcrumb breadcrumb-container" id="breadcrumb-container">
+
+                        <span>栏位目录</span>
+                    </div>
+                    <div class="el-scrollbar__view">
+                        <!--%publish%-->
+                        <div id="menubar" class="el-menu">
+                            <li class="el-submenu is-opened">
+                                <div class="el-submenu__title is-active" data-id="7124915178545938433">开始安装<i
+                                        class="el-submenu__icon-arrow"></i><em></em></div>
+                                <ul class="el-menu">
+                                    <li class="el-menu-item is-active"><a class="" data-id="7124915178546003969"
+                                            ui-spa="" href="/proxy/help/8wewwh">关于门神</a></li>
+                                    <li class="el-menu-item "><a class="" data-id="7124915178546069505" ui-spa=""
+                                            href="/proxy/help/y1b57q">开始安装</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7134485632696516609" ui-spa=""
+                                            href="/proxy/help/bridge">内网穿透</a></li>
+                                </ul>
+                            </li>
+                            <li class="el-submenu">
+                                <div class="el-submenu__title " data-id="7124915178546135041">应用配置<i
+                                        class="el-submenu__icon-arrow"></i><em></em></div>
+                                <ul class="el-menu">
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546200577" ui-spa=""
+                                            href="/proxy/help/bi3fmp">新建应用 </a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546266113" ui-spa=""
+                                            href="/proxy/help/10wr9fg">应用标识</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546331649" ui-spa=""
+                                            href="/proxy/help/j41m8p">应用名称</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546397185" ui-spa=""
+                                            href="/proxy/help/vr2fkv">负载网址</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546462721" ui-spa=""
+                                            href="/proxy/help/1aaasnp">请求配置</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546528257" ui-spa=""
+                                            href="/proxy/help/1tlf3h8">绑定域名</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546593793" ui-spa=""
+                                            href="/proxy/help/1esh2zf">应用目录</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546659329" ui-spa=""
+                                            href="/proxy/help/17gmnrg">动静分离</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546724865" ui-spa=""
+                                            href="/proxy/help/xknulu">许可路径</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546790401" ui-spa=""
+                                            href="/proxy/help/hxkjgp">追加脚本 </a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546855937" ui-spa=""
+                                            href="/proxy/help/1b0c66b">透传会话</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178546921473" ui-spa=""
+                                            href="/proxy/help/2sb6d5">内容转化</a></li>
+                                </ul>
+                            </li>
+                            <li class="el-submenu">
+                                <div class="el-submenu__title " data-id="7124915178546987009">身份互联<i
+                                        class="el-submenu__icon-arrow"></i><em></em></div>
+                                <ul class="el-menu">
+                                    <li class="el-menu-item"><a class="" data-id="7124915178547052545" ui-spa=""
+                                            href="/proxy/help/h3uyue">触发登录页面</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178547118081" ui-spa=""
+                                            href="/proxy/help/1q7rs9e">账户对接模式</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178547183617" ui-spa=""
+                                            href="/proxy/help/gcl05n">用户登录接口</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178547249153" ui-spa=""
+                                            href="/proxy/help/x8zexq">密码托管接口</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7124915178547314689" ui-spa=""
+                                            href="/proxy/help/uetiqo">账户检测接口</a></li>
+                                </ul>
+                            </li>
+                        </div>
+                        <!--%end%-->
+
+                        <div class="el-menu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="el-link-menu" style="height: 50px;">
+
+                <a class="wdk-footer-icon" id="Portfolio">
+                    <i></i><em>新建文集</em>
+                </a>
+                <a class="wdk-footer-icon" title="新建富文本格式" id="Rich">
+                    <i></i><em>新建文档</em>
+                </a>
+                <a class="wdk-footer-icon" id="Markdown" title="新建Markdown格式">
+                    <i></i><em>新建文档</em>
+                </a>
+                <a class="wdk-footer-icon" ui-spa="" href="/365lu/help">
+                    <i></i><em>帮助手册</em>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-container">
+
+            <!--%publish%-->
+            <section class="app-main">
+
+                <div style="margin: 0 auto;" ui="subject/item/7124915178545872897" ui-key="7124915178545872897"
+                    >
+                    <div class="umc-subitem">
+                        <div style="max-width: 700px;margin: 0 auto;">
+
+                            <h1 class="umc-subitem-caption">帮助文档</h1>
+
+                            <header>
+                                <ul class="umc-subitem-users">
+                                    <li><a model="Subject" cmd="Account"
+                                            send="e1f9df62-0001-0001-a320-58f8330817d2"><img
+                                                src="https://image.365lu.cn/images/e1f9df62-0001-0001-a320-58f8330817d2/1/0.jpg!100"></a>
+                                    </li>
+                                </ul>
+                                <p class="umc-subitem-users-sum">共<span>1</span>作者</p>
+                            </header>
+                            <div class="umc-subitem-nav">
+                                <ul>
+                                    <li>
+                                        <div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>开始安装
+                                        </div>
+                                        <ul class="umc-subitem-nav-items">
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/8wewwh">关于门神<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546003969">8wewwh</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/y1b57q">开始安装<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546069505">y1b57q</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/bridge">内网穿透<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7134485632696516609">bridge</a><em></em></span></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>应用配置
+                                        </div>
+                                        <ul class="umc-subitem-nav-items">
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa="" href="/proxy/help/bi3fmp">新建应用
+                                                        <small></small></a></span><span class="umc-subitem-nav-right">
+                                                    <a data-id="7124915178546200577">bi3fmp</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/10wr9fg">应用标识<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546266113">10wr9fg</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/j41m8p">应用名称<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546331649">j41m8p</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/vr2fkv">负载网址<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546397185">vr2fkv</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/1aaasnp">请求配置<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546462721">1aaasnp</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/1tlf3h8">绑定域名<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546528257">1tlf3h8</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/1esh2zf">应用目录<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546593793">1esh2zf</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/17gmnrg">动静分离<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546659329">17gmnrg</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/xknulu">许可路径<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546724865">xknulu</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa="" href="/proxy/help/hxkjgp">追加脚本
+                                                        <small></small></a></span><span class="umc-subitem-nav-right">
+                                                    <a data-id="7124915178546790401">hxkjgp</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/1b0c66b">透传会话<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546855937">1b0c66b</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/2sb6d5">内容转化<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178546921473">2sb6d5</a><em></em></span></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>身份互联
+                                        </div>
+                                        <ul class="umc-subitem-nav-items">
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/h3uyue">触发登录页面<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178547052545">h3uyue</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/1q7rs9e">账户对接模式<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178547118081">1q7rs9e</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/gcl05n">用户登录接口<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178547183617">gcl05n</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/x8zexq">密码托管接口<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178547249153">x8zexq</a><em></em></span></li>
+                                            <li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a
+                                                        ui-spa=""
+                                                        href="/proxy/help/uetiqo">账户检测接口<small></small></a></span><span
+                                                    class="umc-subitem-nav-right"> <a
+                                                        data-id="7124915178547314689">uetiqo</a><em></em></span></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--%end%-->
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

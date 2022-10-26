@@ -1,11 +1,3 @@
-body>div[ui] {
-    top: 0;
-    right: 0;
-    transition: transform .3s ease;
-    transform: translateX(100%);
-    animation: left .3s infinite ease;
-    animation-iteration-count: 1;
-}
 
 * {
     -webkit-tap-highlight-color: transparent;
@@ -15,10 +7,6 @@ a {
     cursor: pointer;
 }
 
-body>div.ui {
-    transform: none;
-    z-index: 1;
-}
 
 .wdk-nine-row {
     display: flex;
@@ -1509,7 +1497,12 @@ div[wdk-swipe=left] {
 .wdk_cell_icon:before {
     content: attr(data-icon);
     font-family: wdk;
-    padding: 0 .5em
+    padding: 0 .5em; 
+    display: inline-block;
+}
+.weui_cells 
+.wdk_cell_icon:before{
+    width: 1em;
 }
 
 .wdk_cell_value .wdk_cell_icon:before {
@@ -1746,8 +1739,7 @@ a.wdk-image-pro:before {
 .wdk-dialog {
     display: flex;
     flex-direction: column;
-    z-index: 99;
-    background: #f8f8f8;
+    background: #f0f2f5;
 }
 
 
@@ -1961,8 +1953,9 @@ a.wdk-cms-image img {
 }
 
 .wdk-cms-text {
-    line-height: 1.7;
+    line-height: 2;
     color: #333;
+    font-size: 16px;
 }
 
 .wdk-cms-text a {
@@ -2654,12 +2647,6 @@ section .weui_cells>div.wdk-buy:before {
     display: inline-block;
 }
 
-.wdk_cell_icon::before {
-    content: attr(data-icon);
-    font-family: wdk;
-    padding: 0 0.5em;
-}
-
 .wdk_cell_value .wdk_cell_icon::before {
     line-height: 44px;
     padding: 0 1em;
@@ -2754,9 +2741,6 @@ section .weui_cells>div.wdk-buy:before {
     color: #1a1a1a;
 }
 
-.wdk-dialog {
-    background: #f0f2f5;
-}
 
 .wdk-dialog form>.weui_cells:first-child {
     margin-top: 10px;
@@ -3013,7 +2997,7 @@ div[ui=Map].ui {
 .weui_actionsheet.weui_actionsheet_toggle~.weui_mask {
     animation: in .4s infinite ease;
     animation-iteration-count: 1;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0);
 }
 
 .wdk-cms-attention .weui_media_hd::before {

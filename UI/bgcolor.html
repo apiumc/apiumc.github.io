@@ -10,16 +10,16 @@
             padding: 0;
             margin: 0;
         }
-        
+
         .theme_area {
             padding: 6px;
         }
-        
+
         .theme_area a {
             color: #333;
             text-decoration: none;
         }
-        
+
         div.wallpaper_settingButton,
         a.theme_setting,
         div.theme_upload {
@@ -31,25 +31,25 @@
             cursor: pointer;
             border-radius: 5px
         }
-        
+
         a.theme_setting {
             background: #cbe7fc;
             transition: all 0.5s;
         }
-        
+
         a.theme_setting:hover {
             background: #75c1f9
         }
-        
+
         div.themeSetting_hover {
             background: #75c1f9
         }
-        
+
         div.theme_select,
         a.theme_select {
             background: #75c1f9
         }
-        
+
         .theme_icon {
             margin: 5px auto;
             padding-top: 3px;
@@ -58,45 +58,45 @@
             border-radius: 5px;
             text-align: center;
         }
-        
+
         .theme_icon img {
             width: 140px;
             height: 100px;
         }
-        
+
         .theme_text {
             margin: 5px 0 0 0;
             text-align: center;
             font-size: 12px;
             text-decoration: none;
         }
-        
+
         .theme_text a {
             text-decoration: none;
         }
-        
+
         .theme_text a:link {
             text-decoration: none;
         }
-        
+
         div.theme_upload {
             background: #e9e9e9;
             transition: all 0.5s;
         }
-        
+
         div.theme_upload:hover {
             background: #75c1f9
         }
-        
+
         .clear {
             clear: both;
         }
-        
+
         .h10 {
             clear: both;
             height: 10px;
         }
-        
+
         html::-webkit-scrollbar,
         body::-webkit-scrollbar {
             width: 0px;
@@ -104,9 +104,9 @@
         }
     </style>
     <script>
-        UMC(function($) {
-            var callFn = function() {}
-            UMC.UI.Bridge = function(v, fn) {
+        UMC(function ($) {
+            var callFn = function () { }
+            UMC.UI.Bridge = function (v, fn) {
                 callFn = fn;
                 window.top.postMessage(JSON.stringify({
                     type: 'umc',
@@ -114,7 +114,7 @@
                 }), "*");
 
             }
-            $(window).on('message', function(e) {
+            $(window).on('message', function (e) {
                 var data = {};
                 try {
                     data = JSON.parse(e.data);
@@ -130,69 +130,54 @@
                 }
             });
             var themes = [{
-                "pic": "/css/images/theme_switcher/bg/bg1.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg1_small.jpg",
+                "pic": "/css/images/BgSrc/bg1.jpg",
                 "title": "win10"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg2.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg2_small.jpg",
+                "pic": "/css/images/BgSrc/bg2.jpg",
                 "title": "梦幻光影"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg3.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg3_small.jpg",
+                "pic": "/css/images/BgSrc/bg3.jpg",
                 "title": "扬帆起航"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg4.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg4_small.jpg",
+                "pic": "/css/images/BgSrc/bg4.jpg",
                 "title": "乡土气息"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg5.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg5_small.jpg",
+                "pic": "/css/images/BgSrc/bg5.jpg",
                 "title": "绿色清新"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg6.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg6_small.jpg",
+                "pic": "/css/images/BgSrc/bg6.jpg",
                 "title": "Win8"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg7.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg7_small.jpg",
+                "pic": "/css/images/BgSrc/bg7.jpg",
                 "title": "蓝色海岸"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg8.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg8_small.jpg",
+                "pic": "/css/images/BgSrc/bg8.jpg",
                 "title": "冰天雪地"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg9.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg9_small.jpg",
+                "pic": "/css/images/BgSrc/bg9.jpg",
                 "title": "繁花满树"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg10.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg10_small.jpg",
+                "pic": "/css/images/BgSrc/bg10.jpg",
                 "title": "精灵小鸟"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg11.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg11_small.jpg",
+                "pic": "/css/images/BgSrc/bg11.jpg",
                 "title": "炫酷跑车"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg12.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg12_small.jpg",
+                "pic": "/css/images/BgSrc/bg12.jpg",
                 "title": "中国风"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg13.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg13_small.jpg",
+                "pic": "/css/images/BgSrc/bg13.jpg",
                 "title": "Winxp"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg14.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg14_small.jpg",
+                "pic": "/css/images/BgSrc/bg14.jpg",
                 "title": "淡雅唯美"
             }, {
-                "pic": "/css/images/theme_switcher/bg/bg15.jpg",
-                "thumb": "/css/images/theme_switcher/bg/bg15_small.jpg",
+                "pic": "/css/images/BgSrc/bg15.jpg",
                 "title": "Win7"
-            }, ];
+            },];
 
             var theme_area = $("#theme_area");
-            theme_area.on('click', '.theme_setting', function() {
+            theme_area.on('click', '.theme_setting', function () {
                 var pic = $(this).attr('data-pic');
                 window.top.postMessage(JSON.stringify({
                     type: 'bgsrc',
@@ -200,13 +185,18 @@
                 }), "*");
 
             });
+            $.UI.On('BgSrc', function (e, v) {
 
-            $('#btn-upload').find('input').change(function() {
+                window.top.postMessage(JSON.stringify({
+                    type: 'bgsrc',
+                    value: v.src
+                }), "*");
+            });
+            $('#btn-upload').find('input').change(function () {
                 var v = this.files;
                 if (v.length > 0) {
                     var me = this;
                     var file = v[0];
-                    var media_id = Math.random();
                     var formdata = new FormData();
                     var fname = file.name.substr(file.name.lastIndexOf('.')).toLocaleLowerCase();
                     switch (fname) {
@@ -223,23 +213,16 @@
                             }), "*");
                             return;
                     }
-                    var path = '/images/user/' + media_id + fname;
-
+                    var media_id = '/TEMP/' + Math.random() + fname;
                     var xhr = new XMLHttpRequest();
-                    xhr.onload = function() {
+                    xhr.onload = function () {
                         me.value = '';
-                        UMC.UI.Command('System', 'Dir', {
-                            dir: path,
+                        UMC.UI.Command('Proxy', 'App', {
+                            Key: 'BgSrc',
                             media_id: media_id
-                        }, function(xhr) {
-                            window.top.postMessage(JSON.stringify({
-                                type: 'bgsrc',
-                                value: path
-                            }), "*");
-
                         });
                     };
-                    xhr.open('PUT', 'https://oss.365lu.cn/TEMP/Static/' + media_id, true);
+                    xhr.open('PUT', media_id, true);
                     xhr.send(file);
 
                 }
@@ -251,7 +234,7 @@
                     tag: 'a',
                     cls: 'theme_setting',
                     'data-pic': t.pic
-                }).html("<div class=\"theme_icon\"><img src=\"" + t.thumb + "\"></div>" +
+                }).html("<div class=\"theme_icon\"><img src=\"" + t.pic + "?umc-image=w150\"></div>" +
                     "<div class=\"theme_text\">" + t.title + "</div>")
                 theme_area.append(theme)
             }
@@ -267,8 +250,10 @@
         <div id="theme_area" class="theme_area">
             <!--主题图片-->
             <div id="btn-upload" class="theme_upload">
-                <div class="theme_icon" style="background-image: url(/css/images/theme_switcher/bg/uploadbg.png);background-size:100% 100%;">
-                    <input accept="image/jpg,image/jpeg,image/png,image/gif" style="opacity: 0;display: block;width:100%;height:100px;" type="file">
+                <div class="theme_icon"
+                    style="background-image: url(/css/images/uploadbg.png);background-size:100% 100%;">
+                    <input accept="image/jpg,image/jpeg,image/png,image/gif"
+                        style="opacity: 0;display: block;width:100%;height:100px;" type="file">
                     <div class="theme_text">自定义上传</div>
                 </div>
             </div>

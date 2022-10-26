@@ -1,51 +1,18 @@
-<div app-cls="umc-sub-index umc-sub-app" hidesidebar="true" class="umc-sub-logn">
+<div class="umc-sub-login">
+    <div class="weui_mask"></div>
+    <div class="close"></div>
+   <div class="qrcode_view">
+    <div class="close"></div>
+    <div class="title" data-key="title">登录</div>
+       <div style="width: 200px; height: 200px; margin: auto; position: relative;">
+           <div class="context"></div>
+           <div id="qrcode"></div>
+       </div>
 
-    <div class="login-container">
-        <form class="el-form el-card login-form" autocomplete="on">
-            <div class="loginFunc">
-                <div class="qrcode"></div>
-                <div class="account"></div>
-            </div>
-            <div class="qrcode_view">
-                <div style="width: 200px; height: 200px; margin: auto; position: relative;">
-                    <div class="context"></div>
-                    <div id="qrcode"></div>
-                </div>
-
-                <div style="color: #999;font-size: 14px; line-height: 50px;">
-                    打开 <a target="_blank" style="color: #337ab7;" href="/download">天天录</a> 扫一扫登录
-                </div>
-            </div>
-            <div class="title-container">
-                <h3 class="title">
-                    登录
-                </h3>
-            </div>
-            <div class="el-form-item user el-input">
-                <input type="text" required="" autocomplete="on" placeholder="手机号码" name="Username" class="el-input__inner">
-
-            </div>
-            <div class="password">
-                <div class="el-form-item password el-input" tabindex="0">
-                    <input type="password" autocomplete="off" placeholder="密码" name="Password" class="el-input__inner">
-                </div>
-                <a ui-event="mobile-code" class="link-type">免密登录</a>
-            </div>
-            <div class="mobile-code">
-                <div style="overflow: hidden;">
-                    <div class="el-form-item mobile-code el-input" style="width: 60%; float: left;">
-
-                        <input type="text" autocomplete="off" placeholder="验证码" name="VerifyCode" class="el-input__inner">
-
-                    </div>
-                    <a id="sendBtn" style="float: right; margin-top: 5px; width: 120px;" class="el-button--default el-button">获取验证码</a>
-                </div>
-                <a ui-event="password" class="link-type">密码登录</a>
-            </div>
-
-            <button type="submit" class="el-button el-button--primary el-button--default" style="width: 100%; margin-bottom: 30px;">登录</button>
-            <div style="text-align: center;" class="login-footer"><a model="Account" cmd="Forget">找回密码</a> <a model="Account" cmd="Register">快速注册</a>
-            </div>
-        </form>
-    </div>
+       <div style="color: #999;font-size: 14px; line-height: 50px;">
+        <div class="pc">
+           用 <a id="tip" style="color: #337ab7;">微信</a> 扫一扫</div>
+           <div class="mob">长按二维码，点击识别</div>
+       </div>
+   </div>
 </div>

@@ -1,44 +1,34 @@
         body {
-            /* -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none; */
             background-color: #f8f8f8;
             font-size: 14px;
         }
-        
+
         .weui_mask~.weui_mask {
-            /* background-color: rgba(0, 0, 0, 0.001) !important; */
             opacity: 0;
             animation: none !important;
         }
-        
-       
-        
-        body>div[ui] {
+
+
+
+        body>div[ui]:not(.not) {
             position: fixed;
             width: 100%;
             overflow: auto;
             height: 100%;
-            right: -100%;
-            -webkit-overflow-scrolling: touch;
-            -webkit-transition: right .3s ease;
-            transition: right .3s ease
-        }
-        
-        body>div.ui {
+            transition: transform .3s ease;
+            transform: translateX(100%);
             right: 0;
-            z-index: 1
+            /* animation: left .3s infinite ease;
+            animation-iteration-count: 1; */
+
         }
-        
-        body>div.left {
-            right: 100%
+
+        body>div[ui].ui:not(.not) {
+            transform: none;
+            right: 0;
         }
-        
-        body>div.right {
-            right: -100%
-        }
-        
+
+
         div[ui]>.header {
             position: relative;
             z-index: 20;
@@ -47,14 +37,14 @@
             color: #fff;
             line-height: 44px
         }
-        
+
         div[ui]>.header .back,
         div[ui]>.header .left {
             padding: 0 0 0 10px;
             color: #fff;
             display: block
         }
-        
+
         div[ui]>.header .right {
             padding: 0 10px 0 0;
             position: absolute;
@@ -65,7 +55,7 @@
             width: 100px;
             color: #fff
         }
-        
+
         div[ui]>.header h1 {
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -80,28 +70,28 @@
             font-size: 1.05rem;
             color: #fff
         }
-        
+
         div[ui]>.header h1 a {
             color: #fff
         }
-        
+
         div[ui]>.header h1 a::after {
             content: ' \f078';
             font-family: wdk;
             font-size: 12px;
         }
-        
+
         div[ui]>.header .back:after {
             content: "\f104";
             margin-left: 3px;
             font-family: wdk;
             font-size: 26px;
         }
-        
+
         .weui_navbar_item.weui_bar_item_on {
             background-color: transparent
         }
-        
+
         .weui_bar_item_on:before {
             content: " ";
             position: absolute;
@@ -114,59 +104,59 @@
             -webkit-transform-origin: 100% 0;
             transform-origin: 100% 0
         }
-        
+
         #More.empty,
         #More.next-yes {
             text-align: center
         }
-        
+
         #More.empty b:before {
             content: "数据已加载，但没有数据"
         }
-        
+
         #More.next-no b:before {
             content: "数据已经全部加载"
         }
-        
+
         #More.next-yes b:before {
             content: "查看更多"
         }
-        
+
         #sliders {
             position: relative;
             overflow: hidden
         }
-        
+
         #sliders input {
             position: absolute;
             left: -100px
         }
-        
+
         #sliders .sliders #overflow {
             margin: auto
         }
-        
+
         #sliders .sliders .inner {
             width: 500%;
             transition: all .5s linear;
             -webkit-transition: all .5s linear;
             overflow: hidden
         }
-        
+
         #sliders .sliders article {
             float: left;
             width: 20%
         }
-        
+
         #sliders .sliders article img {
             width: 100%;
             display: block
         }
-        
+
         #sliders .sliders article>a {
             display: block
         }
-        
+
         #sliders label.controls {
             background-color: rgba(187, 187, 187, .45);
             position: absolute;
@@ -178,11 +168,11 @@
             border-radius: 50px;
             cursor: pointer
         }
-        
+
         #sliders label.controls:hover {
             background-color: #fff
         }
-        
+
         #sliders .active {
             width: 100%;
             position: absolute;
@@ -190,7 +180,7 @@
             left: 0;
             text-align: center
         }
-        
+
         #sliders .active label {
             display: inline-block;
             width: 10px;
@@ -200,11 +190,11 @@
             background: #bbb;
             border-color: #777
         }
-        
+
         #sliders .active label:hover {
             background: #ccc
         }
-        
+
         #sliders .slider-1:checked~.active label:nth-child(1),
         #sliders .slider-2:checked~.active label:nth-child(2),
         #sliders .slider-3:checked~.active label:nth-child(3),
@@ -212,7 +202,7 @@
         #sliders .slider-5:checked~.active label:nth-child(5) {
             background: #333
         }
-        
+
         #sliders .slider-1:checked~label.controls.ctr5,
         #sliders .slider-2:checked~label.controls.ctr1,
         #sliders .slider-3:checked~label.controls.ctr2,
@@ -221,7 +211,7 @@
             display: block;
             right: 10px
         }
-        
+
         #sliders .slider-1:checked~label.controls.ctr5:after,
         #sliders .slider-2:checked~label.controls.ctr1:after,
         #sliders .slider-3:checked~label.controls.ctr2:after,
@@ -241,7 +231,7 @@
             left: 50%;
             margin: -8px 0 0 -12px
         }
-        
+
         #sliders .slider-1:checked~label.controls.ctr2:after,
         #sliders .slider-2:checked~label.controls.ctr3:after,
         #sliders .slider-3:checked~label.controls.ctr4:after,
@@ -261,7 +251,7 @@
             left: 50%;
             margin: -8px 0 0 -8px
         }
-        
+
         #sliders .slider-1:checked~label.controls.ctr2,
         #sliders .slider-2:checked~label.controls.ctr3,
         #sliders .slider-3:checked~label.controls.ctr4,
@@ -270,27 +260,27 @@
             display: block;
             left: 10px
         }
-        
+
         #sliders .slider-1:checked~.sliders .inner {
             margin-left: 0
         }
-        
+
         #sliders .slider-2:checked~.sliders .inner {
             margin-left: -100%
         }
-        
+
         #sliders .slider-3:checked~.sliders .inner {
             margin-left: -200%
         }
-        
+
         #sliders .slider-4:checked~.sliders .inner {
             margin-left: -300%
         }
-        
+
         #sliders .slider-5:checked~.sliders .inner {
             margin-left: -400%
         }
-        
+
         #wdk-msg {
             max-width: 250px;
             padding: 20px;
@@ -308,17 +298,17 @@
             background-color: #433736;
             background-color: rgba(47, 34, 33, .9)
         }
-        
+
         #wdk-talk.animate {
             animation: talk 1s ease 0s infinite both
         }
-        
+
         #wdk-msg.animate {
             display: block;
             z-index: 5000;
             animation: wdk-msg 1s ease 5s 1 both
         }
-        
+
         .wdk-refreshing .refreshing::before,
         form.wdk-loading .weui_uploader_input_wrp::before {
             border-radius: 100% 0 0 100% / 50% 0 0 50%;
@@ -331,7 +321,7 @@
             transform-origin: 100% 50%;
             z-index: 1;
         }
-        
+
         .wdk-refreshing .refreshing::after,
         form.wdk-loading .weui_uploader_input_wrp::after {
             position: absolute;
@@ -340,14 +330,14 @@
             height: 100%;
             width: 100%;
         }
-        
+
         .wdk-refreshing .refreshing {
             width: 100px;
             height: 100px;
             position: relative;
             margin: auto;
         }
-        
+
         .wdk-refreshing::after {
             display: block;
             text-align: center;
@@ -355,55 +345,62 @@
             font-size: 12px;
             padding: 0.5em;
         }
-        
+
         .wdk-refreshing .refreshing::after,
         .wdk-refreshing .refreshing::before {
             content: ' ';
         }
-        
+
         @keyframes bounce_dot_wave {
             0% {
                 background-color: #FFF
             }
+
             100% {
                 background-color: #959595
             }
         }
-        
+
         @keyframes wdk-talk {
             0% {
                 color: #666
             }
+
             50% {
                 color: #f5861b
             }
+
             100% {
                 color: #666
             }
         }
-        
+
         @keyframes wdk-msg {
             0% {
                 opacity: 1
             }
+
             100% {
                 opacity: 0
             }
         }
-        
+
         @keyframes wdk-loading {
             0% {
                 background: #fafafa;
                 transform: rotate(0deg);
             }
+
             50% {
                 background: #fafafa;
                 transform: rotate(-180deg);
             }
+
             50.01% {
                 background: skyBlue;
                 transform: rotate(0deg);
             }
+
             100% {
                 background: skyBlue;
                 transform: rotate(-180deg);

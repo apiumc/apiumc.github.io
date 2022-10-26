@@ -20,26 +20,33 @@
             setTimeout(function () {
                 msg.addClass('el-message-fade-leave-active');
             }, 3000);
-            // }).On("UI.Publish", function (e, title, keyword, desc, t) {
-
-            // var ag = t || {};
-            // var body = $(document.body.cloneNode(true));
-            // body.find('div[ui]').attr('ui', false).addClass('hide');
-            // body.find('#app').cls('hideSidebar', true)
-
-            // ag.key = location.pathname;
-            // var json = $.extend({ title: title, keyword: keyword, desc: desc, html: body.html() }, ag);
-
-            // $.UI.API('Subject', 'Publish', json);
+        }).On("UI.Publish", function (e, title, keyword, desc, a) {
+            var body = $(document.body.cloneNode(true));
+            body.find('div[ui]').each(function () {
+                var m = $(this);
+                m.is('.ui') ? m.removeClass('ui') : m.remove();
+            });
+            var key = location.pathname.substring(1) || 'index.html';
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                $.UI.API('Subject', "Publish", $.extend({ Key: key }, a))
+            }
+            xhr.open('PUT', 'https://wdk.oss-accelerate.aliyuncs.com/Sub/' + key, true);
+            xhr.send(JSON.stringify({ title: title, keyword: keyword, desc: desc, html: body.html() }));
 
         })
 
-    $(function ($) {
+    $(function () {
         $.page('subject');
-        $.page('download');
-        var comment, preview;
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
+        $.page('page');
+        var comment, preview, login;
+        function XHR(src, fn) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () { fn(xhr) };
+            xhr.open('GET', ($.Src || '') + src, true);
+            xhr.send('');
+        }
+        XHR('subject/comment.html', function (xhr) {
             comment = $(document.createElement("div")).html(xhr.responseText).children("div").remove().on('uploader', function (e, file) {
                 var media_id = Math.random();
                 var fname = file.name.substr(file.name.lastIndexOf('.')).toLocaleLowerCase();
@@ -55,7 +62,7 @@
                         return;
                 }
                 $.UI.Config().res
-                var path = ($.UI.Config().possrc || 'https://oss.365lu.cn/') + 'TEMP/Static/' + media_id + fname;
+                var path = ($.UI.Config().possrc || 'https://wdk.oss-accelerate.aliyuncs.com/') + 'TEMP/Static/' + media_id + fname;
 
                 var xhr = new XMLHttpRequest();
                 xhr.onload = function () {
@@ -155,13 +162,10 @@
                 textarea.focus();
             });
 
-        };
-        xhr.open('GET', ($.Src || '') + 'subject/comment.html', true);
-        xhr.send('');
+        });
 
-        xhr2 = new XMLHttpRequest();
-        xhr2.onload = function () {
-            preview = $(document.createElement("div")).html(xhr2.responseText).children("div").remove();
+        XHR('subject/preview.html', function (xhr) {
+            preview = $(document.createElement("div")).html(xhr.responseText).children("div").remove();
             preview.find('img').on('load', function () {
 
                 var rect = this.getBoundingClientRect();
@@ -170,7 +174,7 @@
                 $(this).css('transform', ['translate(', (winWidth / 2), 'px,', (winHeight / 2), 'px)'].join(''))
 
             });
-            preview.find('.weui_mask').click(function () {
+            preview.find('.weui_mask,img').click(function () {
                 preview.remove();
             });
             preview.find('.umc-preview-left').click(function () {
@@ -203,19 +207,91 @@
                 preview.find('.umc-preview-original').attr('href', v.attr('original-src'))
             });
 
-        };
-        xhr2.open('GET', ($.Src || '') + 'subject/preview.html', true);
-        xhr2.send('');
+        });
 
+        XHR('subject/login.html', function (xhr) {
+            login = $(document.createElement("div")).html(xhr.responseText).children("div").remove();
+
+            login.find('.close').click(function () {
+                login.remove().find('.qrcode_view').removeClass('show')
+                $.UI.On('Mqtt.Disconnect');
+            });
+            login.find(".qrcode_view .context").click('a', function () {
+                $.UI.On('Mqtt.Connect');
+            });
+            $.script('/js/qrcode.min.js').wait(function () {
+                var qrcode = new QRCode(login.find("#qrcode").html('')[0]);
+                qrcode.makeImage = function () {
+                    $('#qrcode img').attr({ 'src': 'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', style: false });//.attr('style':)
+                };
+                login.on('qrcode', function (e, qr) {
+                    qrcode.clear();
+                    qrcode.makeCode(qr.url, {
+                        width: 200,
+                        height: 200
+                    });
+                    document.body.style.setProperty('--qricon', 'url(' + qr.icon + ')')
+                    login.find('*[data-key]').text(qr.title || '登录');
+                });
+
+            });
+            $.UI.API('Account', 'Check', 'Mqtt', function (scan) {
+                $.script('/js/mqttws31.min.js').wait(function () {
+                    var client = new Paho.MQTT.Client(scan.broker, 443, scan.client);
+                    client.onMessageArrived = function (message) {
+                        var uss = JSON.parse(message.payloadString)[0];
+                        if (uss.msg == 'OK') {
+                            UMC.UI.API("Account", "Check", "Session");
+                            client.disconnect();
+
+                            login.remove().find('.qrcode_view').removeClass('show')
+                            clearTimeout(timeId);
+                        } else {
+                            login.find(".qrcode_view .context").html([uss.src ? ('<img src="' + uss.src + '"/>') : '', '<b>', uss.msg || uss, '</b>'].join(''));
+
+                        }
+                    };
+                    var timeId = 0;
+                    $.UI.On('Mqtt.Disconnect', function () {
+                        clearTimeout(timeId);
+                        login.find(".qrcode_view .context").html("<a>刷新二维码</a>");
+                        client.disconnect();
+                    }).On('Mqtt.Connect', function (e, qr) {
+                        login.find(".qrcode_view .context").children().remove();
+                        if (qr) {
+                            login.on('qrcode', qr)
+                        }
+                        UMC.UI.API("Account", "Check", "Session");
+                        clearTimeout(timeId);
+                        client.connect({
+                            useSSL: true,
+                            userName: scan.user,
+                            password: scan.pass,
+                            onSuccess: function () {
+                                timeId = setTimeout(function () {
+                                    $.UI.On('Mqtt.Disconnect');
+                                    $.UI.API("Account", "Check", "Session");
+                                }, 1000 * 120);
+                            },
+                            mqttVersion: 4,
+                            onFailure: function (e) {
+                                login.find(".qrcode_view .context").html("<b>MQTT Error</b>");
+                                console.log(e);
+                            }
+                        });
+                    });
+
+                });
+            });
+        });
         var navbar = $('.navbar');
         (function () {
             var app = $('section.app-main');
-
             navbar.find('.umc-sidebar-menu').click(function () {
                 navbar.cls('show-menu');
             });
             navbar.find('.umc-sidebar-back').click(function () {
-                history.back();
+                history.length == 1 ? $.nav($.UI.SPAPfx ? $.UI.SPAPfx : '/') : history.back();
             });
 
             $.UI.On("CMS.Link", function (e, v) {
@@ -226,8 +302,15 @@
                     return [' ui-spa', ' href="', $.SPA, 'Editer/', v['sub-id'], '"'].join('');
                 }
 
-            }).On('Login', function () {
-                $(window).on('page', 'subject/login', '');
+            }).On('Login', function (e, v) {
+                var cfg = v || { code: $.UI.ProjectId };
+                login.appendTo(document.body);
+                requestAnimationFrame(function () {
+                    login.find('.qrcode_view').addClass('show');
+                })
+                $.UI.API('Subject', 'Scan', cfg.code || '', function (scan) {
+                    $.UI.On('Mqtt.Connect', scan);
+                });
             }).On('Subject.Editer.Path', function (e, p) {
                 if (!p) {
                     var appendCls = app.children('div.ui').attr('append-cls')
@@ -237,22 +320,32 @@
                     }
 
                 }
+            }).On('UI.Error', function () {
+                var dm = app.children('div[ui]');
+                if (!dm.is('.ui') && dm.is('div[ui-key]')) {
+                    requestAnimationFrame(function () {
+                        $(window).on('page', dm.attr('ui'), '');
+                    });
+                    return true;
+                }
             }).On('UI.Push', function (e, xhr) {
-                navbar.cls('show-menu', 0);
+                var dom = app.children('div.ui');//.cls('ui', 0);
+                if (dom[0] != xhr.root[0]) {
+                    navbar.cls('show-menu', 0);
+                    dom.cls('ui', 0).remove().on('backstage');
+                    app.append(xhr.root.cls('ui', 1));
+                    xhr.root.on('active');
+                    var ocls = app.attr('app-cls') || app.attr('append-cls');
 
-                app.children('div.ui').cls('ui', 0).remove().on('backstage');
-                app.append(xhr.root.cls('ui', 1));
-                xhr.root.on('active');
-                var ocls = app.attr('app-cls') || app.attr('append-cls');
+                    var cls = xhr.root.attr('app-cls');
+                    app.attr('app-cls', cls);
+                    app.parent('#app').cls('hideSidebar', xhr.root.is('div[hidesidebar]'))
+                        .cls('hideScrollbar', xhr.root.is('div[hidescrollbar]'));
 
-                var cls = xhr.root.attr('app-cls');
-                app.attr('app-cls', cls);
-                app.parent('#app').cls('hideSidebar', xhr.root.is('div[hidesidebar]'))
-                    .cls('hideScrollbar', xhr.root.is('div[hidescrollbar]'));
+                    $(document.body).cls(ocls || '', 0).cls(cls || '', 1);
 
-                $(document.body).cls(ocls || '', 0).cls(cls || '', 1);
-
-                $(window).on('title', xhr.title).on("menu", xhr.menu || []);
+                    $(window).on('title', xhr.title).on("menu", xhr.menu || []);
+                }
             });
             function itemClick() {
                 var me = $(this);
@@ -359,7 +452,6 @@
             for (var i = 0; i < Menu.length; i++) {
                 var it = Menu[i];
                 var menu = it.menu || [];
-                htmls.push('<div class="menu-wrapper">');
                 if (menu.length) {
                     htmls.push('<li  class="el-submenu">', '<div class="el-submenu__title" data-icon="', it.icon || '\uf02d', '" >', it.title, '<i class="el-submenu__icon-arrow"></i></div>', '<ul class="el-menu">')
 
@@ -371,7 +463,6 @@
                 } else {
                     htmls.push('<li class="el-menu-item" data-icon="', it.icon || '\uf02d', '"><a ui-spa href="', $.UI.SPAPfx, it.url.substring(1), '">', it.title, '</a></li>');
                 }
-                htmls.push('</div>');
             }
 
             menubar.siblings('div').html(htmls.join(''));
@@ -412,10 +503,10 @@
             em.find('.umc-subject-footer').remove();
             em.find('#Subject').after(subNav);
 
+
         }).On('Portfolio.List', function (e, xhr) {
             var htmls = [];
-            xhr.subs.forEach(function (it) {
-                htmls.push('<div class="menu-wrapper">');
+            $.each(xhr.subs, function (i, it) {
                 htmls.push('<li  class="el-submenu">', '<div class="el-submenu__title"  data-id="', it.id, '">', it.text, '<i class="el-submenu__icon-arrow"></i><em></em></div>', '<ul class="el-menu">')
                 var subs = it.subs || [];
                 if (!subs.length) {
@@ -430,15 +521,13 @@
                         }
                     }
                 }), '</ul></li>');
-                htmls.push('</div>');
 
             });
-            menubar.attr('nav', $.SPA + xhr.nav).html(htmls.join('')).find('ul').each(function () {
+            menubar.html(htmls.join('')).find('ul').each(function () {
                 $.UI.On('Subject.Sequence', this);
             });
             menubar.find('li').eq(0).addClass('is-opened');
             if (xhr.spa) {
-
                 $(window).on('page', 'subject/' + xhr.spa.id, '');
             }
 
@@ -449,38 +538,25 @@
                     animation: 150,
                     group: 'shared',
                     onEnd: function (evt) {
-                        var ids = [];
-                        var fm = $(evt.to);
-                        fm.find('a').each(function () {
-                            var id = $(this).attr('data-id');
-                            id ? ids.push(id) : 0;
-                        })
-                        $.UI.API("Subject", "Sequence", { Id: ids.join(','), Portfolio: fm.siblings('.el-submenu__title').attr('data-id') });
+                        if (evt.oldIndex != evt.newIndex) {
+                            var ids = [];
+                            var fm = $(evt.to);
+                            fm.find('a').each(function () {
+                                var id = $(this).attr('data-id');
+                                id ? ids.push(id) : 0;
+                            })
+                            $.UI.API("Subject", "Sequence", { Id: ids.join(','), Portfolio: fm.siblings('.el-submenu__title').attr('data-id') });
+
+                        }
                     }
                 });
 
         });
 
-        var menuSort = Sortable.create(document.getElementById('menubar'), {
-            animation: 150, //动画参数
-            draggable: 'div.menu-wrapper', //group: 'shared',
-            onEnd: function (evt) {
-                if ($(document.body).is('.EditerItem,.EditerDoc,.EditerAll')) {
-                    var ids = [];
-                    $(evt.from).find('.el-submenu__title').each(function () {
-                        ids.push($(this).attr('data-id'));
-                    })
-                    $.UI.API("Subject", "PortfolioSeq", ids.join(','));
-                }
-            }
-        });
-
-        menuSort.option('disabled', true);
-        var team = $('#team');
         var nav = $('#nav').click('a', function () {
             var m = $(this);
             if (!m.parent().is('.is-active')) {
-                $.UI.Command("Subject", 'PortfolioSub', m.attr('data-id'), function (xhr) {
+                $.UI.API("Subject", 'PortfolioSub', m.attr('data-id'), function (xhr) {
                     $.UI.On('Portfolio.List', xhr)
                 });
                 m.parent().addClass('is-active').siblings().removeClass('is-active');
@@ -492,18 +568,49 @@
             }
             requestAnimationFrame(function () { $(window).on('page', 'subject/item/' + m.attr('data-id'), '') });
             return false;
+        })
+
+        var menuSort = Sortable.create(document.getElementById('menubar'), {
+            animation: 150,
+            draggable: '>li',
+            onStart: function (evt) {
+                if ($(document.body).is('.EditerItem,.EditerAll')) {
+                    nav.addClass('drag-submenu');
+                }
+            },
+            onEnd: function (evt) {
+                nav.removeClass('drag-submenu');
+                if ($(document.body).is('.EditerItem,.EditerDoc,.EditerAll')) {
+                    var em = $(evt.originalEvent.path[0]);
+                    if (em.is('.menu-site li a')) {
+                        $.UI.API("Subject", "ProjectItemSeq", { Id: em.attr('data-id'), Portfolio: $(evt.item).find('.el-submenu__title').attr('data-id') });
+                    } else if (evt.oldIndex != evt.newIndex) {
+                        var ids = [];
+                        $(evt.from).find('.el-submenu__title').each(function () {
+                            ids.push($(this).attr('data-id'));
+                        })
+                        $.UI.API("Subject", "PortfolioSeq", ids.join(','));
+
+                    }
+                }
+            }
         });
+
+        menuSort.option('disabled', true);
+        var team = $('#team');
 
         var navSort = Sortable.create(nav[0], {
             animation: 150, //动画参数
             draggable: '>li',
             onEnd: function (evt) {
-                if ($(document.body).is('.EditerItem,.EditerDoc,.EditerAll')) {
-                    var ids = [];
-                    $(evt.from).find('a').each(function () {
-                        ids.push($(this).attr('data-id'));
-                    });
-                    $.UI.API("Subject", "ProjectItemSeq", ids.join(','));
+                if (evt.oldIndex != evt.newIndex) {
+                    if ($(document.body).is('.EditerItem,.EditerDoc,.EditerAll')) {
+                        var ids = [];
+                        $(evt.from).find('a').each(function () {
+                            ids.push($(this).attr('data-id'));
+                        });
+                        $.UI.API("Subject", "ProjectItemSeq", ids.join(','));
+                    }
                 }
             }
         });
@@ -514,13 +621,10 @@
             switch (pKey) {
                 case 'index.html':
                 case 'index':
-                    $(window).on('page', 'subject/page/index', '');
+                    $(window).on('page', 'page/index', '');
                     return
-                case 'login':
-                    $(window).on('page', 'subject/login', '');
-                    return;
                 case 'dashboard':
-                    v ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
+                    (v || $.UI.IsAuthenticated) ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
                     return;
                 default:
                     var root = pKey.split('/')[0];
@@ -530,7 +634,7 @@
                             return;
                         default:
                             if (/[A-Z]+/.test(root)) {
-                                $(window).on('page', 'subject/page/' + pKey, '');
+                                $(window).on('page', 'page/' + pKey, '');
                                 return;
                             }
                             break;
@@ -539,61 +643,40 @@
 
             if ($.UI.SPAPfx) {
                 if ($.UI.SPAPfx.toUpperCase().indexOf(pathKey.toUpperCase()) == 0) {
-                    $(window).on('page', 'subject/dynamic/' + $.UI.ProjectId, '');
-                    return;
+                    $(window).on('page', 'subject/project/' + $.UI.ProjectId, '');
                 } else if (pathKey.indexOf($.UI.SPAPfx) == 0) {
                     var key = pathKey.substring($.UI.SPAPfx.length);
                     if ($.check(key)) {
                         $(window).on('page', key, location.search.substring(1));
-                        return;
+                    } else {
+                        var ps = pathKey.substring($.SPA.length).split('/');
+                        switch (ps.length) {
+                            case 3:
+                                if (!$('#menubar a[href="' + pathKey + '"]').click().length) {
+                                    var m = $(['#nav a[href="', $.SPA, ps[0], '/', ps[1], '"]'].join(''));
+                                    if (m.length && !v) {
+                                        if (!m.parent().is('.is-active')) {
+                                            $.UI.API("Subject", 'PortfolioSub', pathKey.substring($.SPA.length), function (xhr) {
+                                                $.UI.On('Portfolio.List', xhr)
+                                            });
+                                            m.parent().addClass('is-active').siblings().removeClass('is-active');
+                                            return true;
+                                        }
+                                    }
+                                    return false;
+                                } else {
+                                    return true;
+                                }
+                            case 2:
+                                return $('#nav a[href="' + pathKey + '"]').click().length > 0;
+                        }
                     }
                 } else {
                     v ? 0 : $.UI.On('Subject.Menu', { code: pathKey.indexOf($.SPA) == 0 ? pathKey.substring($.SPA.length) : '' });
-                    return;
                 }
             } else {
                 v ? 0 : $.UI.On('Subject.Menu', { code: pathKey.indexOf($.SPA) == 0 ? pathKey.substring($.SPA.length) : '' });
-
-                return;
             }
-            var IsOk = false;
-            var click = function () {
-                var m = $(this);
-                if (m.attr('href') == pathKey) {
-                    m.click();
-                    IsOk = true;
-                    return false;
-                }
-            };
-            menubar.parent().find('a[href]').each(click);
-            nav.find('a[href]').each(click);
-
-            if (IsOk == false) {
-                nav.find('a[href]').each(function () {
-                    var m = $(this);
-                    if (pathKey.indexOf(m.attr('href')) == 0) {
-                        if (!m.parent().is('.is-active')) {
-                            $.UI.Command("Subject", 'PortfolioSub', { Key: pathKey.substring($.SPA.length) }, function (xhr) {
-                                $.UI.On('Portfolio.List', xhr)
-                            });
-                            m.parent().addClass('is-active').siblings().removeClass('is-active');
-                            IsOk = true;
-                            return false;
-                        }
-
-                    }
-                });
-            }
-            if (!IsOk) {
-                var ps = pathKey.substring($.SPA.length).split('/');
-                ps.shift();
-                if ($(window).on('page', ps.join('/'), location.search.substring(1)) === false) {
-                    if ($.UI.SPAPfx && pathKey.indexOf($.UI.SPAPfx) == 0) {
-                        $(window).on('page', 'subject/dynamic/' + $.UI.ProjectId, '');
-                    }
-                }
-            }
-            return IsOk;
 
         });
         var active = false
@@ -680,37 +763,34 @@
 
             });
         }).On('Subject.Portfolio.Change', function (e, xhr) {
-            var pid = xhr.Id;
-            var subid = xhr.Sub;
-            $('.el-submenu__title', menubar).each(function () {
-                var me = $(this)
-                if (me.attr('data-id') == pid) {
-                    var IsOk = false;
-                    if (subid)
-                        $('.el-menu-item a', menubar).each(function () {
-                            var a = $(this);
-                            if (a.attr('data-id') == subid) {
-                                IsOk = true;
-                                var ap = a.parent().parent();
-                                me.siblings('ul').append(a.parent());
-                                a.click();
-                                if (!ap.find('a').length) {
-                                    ap.append('<li class="el-menu-item"><a sub-id="' + ap.siblings('.el-submenu__title').attr('data-id') + '"></a></li>');
-                                }
-                                return false;
-                            }
-                        });
-                    if (IsOk == false && xhr.Item) {
-                        me.siblings('ul').append($.format('<li class="el-menu-item"><a data-id="{id}" ui-spa href="{Path}" >{text}</a></li>', [xhr.Item], {
-                            Path: function (x) {
-                                return $.SPA + x.path;
-                            }
-                        }));
-
+            var submenu = $('div[data-id="' + xhr.Id + '"].el-submenu__title', menubar);
+            if (xhr.Item && submenu.length) {
+                submenu.siblings('ul').append($.format('<li class="el-menu-item"><a data-id="{id}" ui-spa href="{Path}" >{text}</a></li>', [xhr.Item], {
+                    Path: function (x) {
+                        return $.SPA + x.path;
                     }
-                    return false;
+                }));
+            }
+            if (xhr.Sub) {
+                var sub = $('.el-menu-item a[data-id="' + xhr.Sub + '"]', menubar);
+                if (sub.length) {
+                    if (submenu.length) {
+                        var ap = sub.parent().parent();
+                        submenu.siblings('ul').append(a.parent());
+                        sub.click();
+                        if (!ap.find('a').length) {
+                            ap.append('<li class="el-menu-item"><a sub-id="' + ap.siblings('.el-submenu__title').attr('data-id') + '"></a></li>');
+                        }
+
+                    } else {
+                        var ap = sub.parent().parent();
+                        sub.parent().remove();
+                        if (!ap.find('a').length) {
+                            ap.append('<li class="el-menu-item"><a sub-id="' + ap.siblings('.el-submenu__title').attr('data-id') + '"></a></li>');
+                        }
+                    }
                 }
-            })
+            }
         }).On('Subject.ProjectItem', function (e, xhr) {
             var b = false;
             nav.find('a').each(function () {
@@ -743,41 +823,78 @@
             $('.el-submenu__title', menubar).each(function () {
                 var a = $(this);
                 if (a.attr('data-id') == xhr.Id) {
-                    var wrapper = a.parent('.menu-wrapper');
+                    var wrapper = a.parent('.el-submenu');
                     wrapper.remove();
                     return false;
                 }
             })
+        }).On('Clipboard', function (e, v) {
+
+            var clipboardData = window.clipboardData || navigator.clipboardData;
+            if (clipboardData) {
+                clipboardData.setData('Text', v.text);
+                $.UI.Msg("内容已经成功复制");
+            } else {
+                var input = document.createElement('input');
+                document.body.appendChild(input);
+                input.value = v.text;
+                input.select();
+
+                if (document.execCommand('copy')) {
+                    $.UI.Msg("内容已经成功复制");
+                } else {
+                    $.UI.Confirm("内容复制失败", '需要您手动复制: <b id="Clipboard"></b>');
+                    var selection = window.getSelection();
+                    selection.removeAllRanges();
+                    var range = new Range();
+                    range.selectNodeContents($('.weui_dialog_bd #Clipboard').text(v.text)[0]);
+                    selection.addRange(range);
+                }
+                document.body.removeChild(input);
+
+            }
+
         }).On('Subject.Menu', function (e, v) {
-            $.UI.Command("Subject", 'Menu', v || '', function (xhr) {
+            $.UI.API("Subject", 'Nav', v || '', function (xhr) {
                 switch (xhr.type) {
                     case 'login':
+                        UMC.UI.On('Login');
+                        return;
                     case 'dashboard':
-                        $(window).on('page', 'subject/' + xhr.type, '');
+                        $(window).on('page', 'subject/dashboard', '');
                         return;
                     case 'home':
+                        if ($.UI.On('UI.Error') !== true) {
+                            $.nav($.SPA);
+                        }
+                        return;
                     case 'nav':
-                        $.nav(xhr.nav || $.SPA);
                         xhr.click ? $.Click(xhr.click) : 0;
+                        $.nav(xhr.nav || $.SPA);
                         return;
                     case 'page':
-                        $(window).on('page', 'subject/page/' + (location.pathname.substring($.SPA.length) || 'index'), '');
+                        $(window).on('page', 'page/' + (location.pathname.substring($.SPA.length) || 'index'), '');
                         return;
 
                 }
                 team.text(xhr.text);
-                $(document.body).removeClass('EditerItem,EditerDoc,EditerAll').addClass(xhr.Auth);
+                document.body.className = xhr.Auth || '';
 
                 $.UI.ProjectId = xhr.id;
+                $.UI.IsAuthenticated = xhr.IsAuthenticated || false;
+                delete $.UI.IsFollow;
                 $.UI.SPAPfx = $.SPA + xhr.code + '/';
-
+                if (xhr.IsFollow) {
+                    $.UI.IsFollow = xhr.IsFollow;
+                    $('.umc-subject-view .umc-sub-follower').remove();
+                }
                 team.attr('href', $.SPA + xhr.code);
                 nav.html($.format('<li class="{cls}"><a ui-spa href="{Path}" data-id="{id}">{text}</a></li>', xhr.menu, {
                     Path: function (x) {
                         return $.SPA + x.path;
                     }
                 })).find('li').eq(xhr.selectIndex || 0).addClass('is-active');
-                $.UI.On('Portfolio.List', xhr);
+                $.UI.On('Portfolio.List', { subs: xhr.subs });
 
                 var disabled = navbar.css('transition').indexOf('max-height') > -1;
                 switch (xhr.Auth) {
@@ -805,28 +922,40 @@
                 }
                 if ($(window).on('popstate', 'Menu') === false) {
                     if (xhr.spa) {
-                        $(window).on('page', 'subject/' + xhr.spa.id, '');
-                    } else {
-                        history.replaceState(null, null, $.SPA + xhr.code);
-                        $(window).on('page', 'subject/dynamic/' + xhr.id, '');
+                        xhr.spa.path ? history.replaceState(null, null, $.SPA + xhr.spa.path) : 0;
+                        switch (xhr.spa.type || 'subject') {
+                            case 'subject':
+                                $(window).on('page', 'subject/' + xhr.spa.id, '');
+                                break;
+                            case 'item':
+                                $(window).on('page', 'subject/item/' + xhr.spa.id, '');
+                                break;
+                            case 'project':
+                                $(window).on('page', 'subject/project/' + xhr.spa.id, '');
+                                break;
+                        }
+                    } else if ($.UI.On('UI.Error') !== true) {
+                        $.nav($.SPA + xhr.nav);
                     }
                 }
 
             });
+
         }).On('Subject.Portfolio.Add', function (e, xhr) {
             var input = $('.el-submenu__title input', menubar);
             var ntext = document.createTextNode(xhr.Text)
             var title = input.parent();
             title[0].replaceChild(ntext, input[0]);
             var pid = xhr.Id;
-            title.attr('data-id', xhr.Id)
-                .siblings('ul').append('<li class="el-menu-item"><a sub-id="' + pid + '"  ></a></li>');
+
+            $.UI.On('Subject.Sequence', title.attr('data-id', xhr.Id)
+                .siblings('ul').append('<li class="el-menu-item"><a sub-id="' + pid + '"  ></a></li>')[0]);
 
         }).On('Subject.Portfolio.Del', function (e, xhr) {
             $('.el-submenu__title', menubar).each(function () {
                 var a = $(this);
                 if (a.attr('data-id') == xhr.Id) {
-                    var wrapper = a.parent('.menu-wrapper');
+                    var wrapper = a.parent('.el-submenu');
                     wrapper.remove();
                     return false;
                 }
@@ -875,18 +1004,18 @@
                     break;
                 case 'Portfolio':
                     var pId = nav.find('li.is-active a').attr('data-id');
-
-                    pId ? menubar.append($('#menu-wrapper').text()).find('input')
+                    pId ? menubar.append($({ tag: 'li', cls: 'el-submenu', html: '<div class="el-submenu__title"><input><i class="el-submenu__icon-arrow"></i><em></em></div><ul class="el-menu"></ul>' })).find('input')
                         .focus().blur(function () {
                             var m = $(this);
                             if (this.value) {
                                 $.UI.API('Subject', 'Portfolio', {
-                                    KEY_DIALOG_ID: 'Caption', Key: 'EDITER', 'Caption': this.value,
+                                    KEY_DIALOG_ID: 'Caption',
+                                    Key: 'EDITER', 'Caption': this.value,
                                     ItemId: pId,
                                     Id: 'News'
                                 });
                             } else {
-                                m.parent('.menu-wrapper').remove();
+                                m.parent('.el-submenu').remove();
                             }
                         }).on('keydown', function (e) {
                             switch (e.key) {
@@ -1004,9 +1133,9 @@
             $.UI.API("Account", "Check", "Info", function (xhr) {
                 $.UI.Device = xhr.Device;
                 if (xhr.Src) {
-                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"><img src="', xhr.Src, '"/></a>'].join(''));
+                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
                 } else {
-                    uBox.html('<a ui-page="subject/login" class="el-button--small el-button">登录</a> <a model="Account" cmd="Register" class="el-button--small el-button el-button--primary">注册</a> ')
+                    uBox.html('<a onclick="UMC.UI.On(\'Login\')" class="el-button--small el-button">登录</a>')
                 }
             });
         } checkInfo();
@@ -1019,28 +1148,7 @@
         });
 
         $(document.body).ui('Key.Pager', function (e, v) {
-            var key = 'Pager';
-            var dom = WDK(document.createElement('div')).attr({ 'ui': key, 'class': 'wdk-dialog' }) //.css({ 'background-color': '#FAFCFF'})
-                .on('transitionend,webkitTransitionEnd', function () {
-                    dom.is('.ui') ? 0 : dom.on('pop');
-                }).appendTo(document.body)
-                .on('pop', function () {
-                    dom.on('close').remove();
-                });
-            var r = v.RefreshEvent;
-            var c = v.CloseEvent;
-            r ? dom.ui(r, function () {
-                dom.on('refresh');
-            }) : 0;
-            c ? dom.ui(c, function () {
-                dom.addClass('right').removeClass('ui');
-            }) : 0;
-            if (UMC.UI.On("UI.Show", dom, key, v) !== false) {
-                new UMC.UI.Pager(v, dom);
-                dom.addClass('ui');
-            }
-        }).ui('Key.Subject', function (e, v) {
-            $.UI.Command("Subject", "Search", { Id: v, Type: 'Path' });
+            $.UI.On('Pager', v);
         });
     });
 

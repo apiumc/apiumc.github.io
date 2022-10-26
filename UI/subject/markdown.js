@@ -1,7 +1,7 @@
 (function ($) {
 
     WDK.page('subject/markdown', "图文编辑", false, function (root) {
-        $.script('js/editable.min.js')
+        $.script('/js/editable.min.js')
             .wait();
         let isChange = false;
         var form = root.find('form').submit(function () {
@@ -54,7 +54,7 @@
             if (pro) {
                 pro.Markdown = 'none';
 
-                WDK.UI.API('Subject', 'Submit', pro)
+                $.UI.API('Subject', 'Submit', pro)
 
             }
 

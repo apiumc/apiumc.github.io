@@ -1,10 +1,10 @@
 
 (function ($) {
-    $.page('proxy', '应用网关', function (root) {
+    $.page('proxy', '托管应用', function (root) {
         var search = { limit: 'PC' };
         root.on('menu', [{
-            text: '加载日志', click: { model: 'Proxy', cmd: 'Site', send: 'LogSetting' }
-        }, {
+        //     text: '加载日志', click: { model: 'Proxy', cmd: 'Site', send: 'LogSetting' }
+        // }, {
             text: '新增应用', click: { model: 'Proxy', cmd: 'Site', send: 'Create' }
         }]);
         // root.on('menu', { text: '新增', click: { model: 'Proxy', cmd: 'Site', send: 'Create' } });

@@ -1,9 +1,5 @@
 
 (function ($) {
-    window.desktopImgError = function (o) {
-        o.onerror = null;
-        o.src = '/css/images/icon/website.png'
-    }
     $.prototype.menu = function () {
         return this.on('click', function () {
             var m = $(this);
@@ -122,9 +118,11 @@
             })
         })
     }
-    UMC.UI.On('XHR.Bridged', function (e, s, v, fn) {
-        var form = parseInt($('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('form'));;
-         new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn).bridge(v)
+    UMC.UI.On('XHR.Bridge', function (e, xhr, fn) {
+        var form = parseInt($('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('form'));
+        xhr.onload = function () {
+            new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn).bridge(JSON.parse(xhr.responseText))
+        }
         return false;
     })
     // UMC.UI.Bridge = function (v, fn) {
@@ -1019,9 +1017,9 @@ UMC(function ($) {
             for (var i = 0; i < xhr.length; i++) {
                 xhr[i].desktop ? desktops.push(xhr[i]) : 0;
             }
-            appList.html($.format('<div><a draggable="true" data-badge="{badge}" help="{docs}" title="{title}"  data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="desktopImgError(this)" data-icon="{icon}" src="{src}"  class="icon"/><em class="title">{title}</em></a></div>', xhr, true));
+            appList.html($.format('<div><a draggable="true" data-badge="{badge}" help="{docs}" title="{title}"  data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="UMC.error(this)" data-icon="{icon}" src="{src}"  class="icon"/><em class="title">{title}</em></a></div>', xhr, true));
 
-            shortcuts.html($.format('<a draggable="true" help="{docs}" title="{title}" data-badge="{badge}" data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="desktopImgError(this)" data-icon="{icon}" src="{src}" class="icon"/><em class="title">{title}</em></a>', desktops, true));
+            shortcuts.html($.format('<a draggable="true" help="{docs}" title="{title}" data-badge="{badge}" data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="UMC.error(this)" data-icon="{icon}" src="{src}" class="icon"/><em class="title">{title}</em></a>', desktops, true));
             $(window).on('refresh');
 
             $.UI.Command('System', 'License', 'Check');

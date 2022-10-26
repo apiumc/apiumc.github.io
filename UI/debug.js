@@ -21,6 +21,33 @@
             if (v.data) {
                 root.find('#webs table tbody').format(v.data || [], true);
             }
+        }).ui('System.Setup', function () {
+            $.UI.Command("System", 'Setup', "Mapping", function (xhr) {
+    
+                root.find('#component').format(xhr.component || [], {
+                    OK: function (x) {
+                        return x.setup ? 'el-tag--success' : ''
+                    },
+                    Status: function (x) {
+                        return x.setup ? '已安装' : '去安装'
+                    }
+                }, true);
+                root.find('#mapping table tbody').format(xhr.data || [], true);
+    
+                var isnat = false;
+                for (var i = 0; i < xhr.data.length; i++) {
+                    if (xhr.data[i].name == 'Http.Bridge') {
+                        isnat = true;
+                        break;
+                    }
+                }
+                if (isnat) {
+                    root.find('#nat').removeClass('hide');
+                    $.UI.Command("Http", "Bridge", function (x) {
+                        root.ui('Http.Bridge', x)
+                    });
+                }
+            });
         }).ui('License', function (e, x) {
             $.UI.Command("Http", "Bridge", function (x) {
                 root.ui('Http.Bridge', x)
@@ -33,43 +60,17 @@
                 ths.eq(0).removeClass('el-tag--danger el-tag--success').addClass(x.bridge ? 'el-tag--success' : 'el-tag--danger').find('a').text(x.status);
                 ths.eq(1).html(['<a class="link-type" target="_blank" href="', x.scheme || 'http', '://', x.domain, '">', x.domain, '</a>'].join(''));
             }
-        }).find('#mapping.el-table').click('a.link-type', function () {
-            var ns = $(this).text().split('.');
-            if (ns[0] && ns[1]) {
-                root.on('debug', ns[0], ns[1]);
-            } else if (ns[0]) {
-                root.on('debug', ns[0]);
-            } else {
-                root.on('debug');
-            }
-        });
-        $.UI.Command("System", 'Setup', "Mapping", function (xhr) {
-
-            root.find('#component').format(xhr.component || [], {
-                OK: function (x) {
-                    return x.setup ? 'el-tag--success' : ''
-                },
-                Status: function (x) {
-                    return x.setup ? '已安装' : '去安装'
-                }
-            }, true);
-            root.find('#mapping table tbody').format(xhr.data || [], true);
-
-            var isnat = false;
-            for (var i = 0; i < xhr.data.length; i++) {
-                if (xhr.data[i].name == 'Http.Bridge') {
-                    isnat = true;
-                    break;
-                }
-            }
-            // root.find('#webs table tbody').format(xhr.webs || [], true);
-            if (isnat) {
-                root.find('#nat').removeClass('hide');
-                $.UI.Command("Http", "Bridge", function (x) {
-                    root.ui('Http.Bridge', x)
-                });
-            }
-        });
+        }).ui('System.Setup');
+        // .find('#mapping.el-table').click('a.link-type', function () {
+        //     var ns = $(this).text().split('.');
+        //     if (ns[0] && ns[1]) {
+        //         root.on('debug', ns[0], ns[1]);
+        //     } else if (ns[0]) {
+        //         root.on('debug', ns[0]);
+        //     } else {
+        //         root.on('debug');
+        //     }
+        // });
 
         $.UI.Command("System", 'Web', "MAPPING");
 

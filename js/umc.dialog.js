@@ -7,14 +7,13 @@
     }
 
     function htmlEncode(sHtml) {
-
         return sHtml.replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; });
     }
 
     function createSubmit(v, htmls) {
         if (v !== false) {
             htmls.push('<div class="weui_btn_area">');
-            htmls.push('<input type="submit" class="weui_btn weui_btn_primary" value="', (typeof v) == 'string' ? v : ((v || {}).text || '确认提交'), '" /></div>');
+            htmls.push('<button type="submit" class="weui_btn weui_btn_primary">', (typeof v) == 'string' ? v : ((v || {}).text || '确认提交'), '</button></div>');
         }
     }
 
@@ -198,7 +197,6 @@
         var fnh = fhn[header.type] || function () { return '' };
         var htmls = [fnh(header.type == 'Slider' ? header : header.data || {}, header.format || {}, header.style || {})];
         var isSubmit = false;
-        var isInput = false;
         switch (v.Type) {
             case "Form":
                 var iswriter = false;
@@ -210,7 +208,6 @@
                     switch (cfg.Type) {
 
                         case 'Confirm':
-                            isInput = true;
                             htmls.push('<input type="hidden" value="', cfg.DefaultValue || 'YES', '"  name="', key, '" />');
                         case "Prompt":
                             if (iswriter) {
@@ -218,13 +215,12 @@
                                 htmls.push('</div>');
                             }
                             htmls.push('<div class="weui_cells_tips">');
-                            htmls.push(cfg.Text);
+                            htmls.push($.format(cfg.Format || '{Text}', cfg, cfg.Style || {}));
                             htmls.push('</div>');
                             break;
                         case "Receiver":
                         case "RadioGroup":
                         case "CheckboxGroup":
-                            isInput = true;
                         case "TextValue":
                         case "TextNameValue":
                             if (iswriter) {
@@ -243,7 +239,7 @@
                             }
                             htmls.push('">');
                             htmls.push(createField(cfg, cfg.Name));
-                            htmls.push('</div></div>');
+                            htmls.push('</div>');
                             break;
                         default:
                             if (iswriter) {
@@ -259,9 +255,7 @@
                                 }
                                 htmls.push('<div class="weui_cells weui_cells_access">');
                             }
-                            isInput = true;
                             htmls.push(createField(cfg, cfg.Name, cfg.Title));
-
                             break;
                     }
                     if (cfg.Submit) {
@@ -270,7 +264,7 @@
                             htmls.push('</div>');
                         }
                         isSubmit = true;
-                        createSubmit(v.Submit || v.submit, htmls);
+                        createSubmit(v.Submit, htmls);
                     }
 
 
@@ -284,17 +278,17 @@
             case "BarCode":
                 v.Type = 'Number';
             default:
-                isInput = true;
-                this.item['_'] = v;
+                this.item[v.Name || '_'] = v;
                 htmls.push('<div class="weui_cells">');
-                htmls.push(createField(v, "_"));
+                htmls.push(createField(v, v.Name || '_'));
                 htmls.push('</div>');
                 break;
         }
-        var smt = v.Submit || v.submit;
+        var smt = v.Submit;
         if (!isSubmit) {
-            createSubmit(smt === false ? smt : (smt || { text: isInput ? '确认提交' : '关闭' }), htmls);
+            createSubmit(smt, htmls);
         }
+        var formHTML = htmls.join('');
         var headers = ['<div class="header"><a class="back"></a><h1>', v.Title || "请输入", '</h1> '];
         if (v.menu) {
             if (v.menu.length == 1) {
@@ -303,17 +297,10 @@
                 headers.push('<a class="right"><span class="icon-menu"></span></a>');
             }
         }
-        if (isInput) {
-            var send = $.extend({}, smt.send);
-            send._model = smt.model;
-            send._cmd = smt.cmd;
-            for (var k in send) {
-
-                htmls.push('<input type="hidden" value="', send[k], '"  name="', k, '" />');
-            }
-        }
-        headers.push('</div><form data-ui="form" action="', $.UI.Config().posurl, '" target="_blank" class="weui_cell_primary" style="overflow: auto">', htmls.join(''), '</form>')
+        headers.push('</div><form method="post" action="', $.UI.Config().posurl, '?_v=Form" target="_blank" class="weui_cell_primary" style="overflow: auto">', formHTML, '</form>')
         var me = this;
+
+        var isInput = formHTML.indexOf('<input ') > 0 || formHTML.indexOf('<select ') > 0 || formHTML.indexOf('<textarea ') > 0;
         var form = dom.html(headers.join(''))
             .find('form').submit(function () {
                 var f = $(this);
@@ -323,12 +310,11 @@
                         me.param.CloseEvent ? 0 : dom.addClass('right').removeClass('ui');
                         if (me.param.Action) {
                             $.Click(me.param.Action);
-                            return true;
-                        } else {
+                            return isInput;
+                        } else if (isInput) {
                             $.UI.Command(vs);
                         }
                     }
-
                 }
                 return false;
             }).on('file', function (e, f, t) {
@@ -349,7 +335,6 @@
                     fm.siblings('input').val(size + '');
                     map.seq = size;
                 }
-
                 var sendValue = data.SendValue;
                 if (model && command) {
 
@@ -364,6 +349,13 @@
                     $.UI.Command(model, command, map);
                 }
             });
+
+        var send = $.extend({}, smt.send);
+        send._model = smt.model;
+        send._cmd = smt.cmd;
+        for (var k in send) {
+            $({ tag: 'input', 'value': send[k], name: k, type: 'hidden' }).appendTo(form);
+        }
         form.find('input[type=file]').click(function () {
             if ($.UI.On('Form.File', this) === false) {
                 return false;
@@ -444,38 +436,45 @@
                     }
                     break;
                 case 'Option':
-                    if (!m.attr('notify')) {
-                        m.attr('notify', 'y');
-                        dom.ui(key, function (e, v) {
-                            var field = data.ValueField || 'Value';
-                            if (v) {
-                                m.find('.weui_cell_ft').text(v.Text || v[field]);
-                                var pts = m.find('input');
-                                pts.eq(0).val(v[field]);
-                                if (pts.length == 1) {
-                                    var input = document.createElement('input');
-                                    input.type = 'hidden';
-                                    input.name = pts.attr('name') + '_Text';
-                                    input.value = v.Text || v[field];
-                                    m.append(input);
-                                } else {
-                                    pts.eq(1).val(v.Text || v[field]);
-                                }
+                    dom.ui(key, function (e, v) {
+                        var field = data.ValueField || 'Value';
+                        if (v) {
+                            m.find('.weui_cell_ft').text(v.Text || v[field]);
+                            var pts = m.find('input');
+                            pts.eq(0).val(v[field]);
+                            if (pts.length == 1) {
+                                var input = document.createElement('input');
+                                input.type = 'hidden';
+                                input.name = pts.attr('name') + '_Text';
+                                input.value = v.Text || v[field];
+                                m.append(input);
+                            } else {
+                                pts.eq(1).val(v.Text || v[field]);
                             }
-                        });
-                        data.SendValue = data.SendValue || key;
+                        }
+                    }, 1);
+                    data.SendValue = data.SendValue || key;
+                    if (data.SendValue != key) {
+                        data.SendValue.Key = key;
                     }
-                case "UI":
                     var model = data.Model;
                     var cmd = data.Command;
                     if (model && cmd) {
                         $.UI.Command(model, cmd, data.SendValue)
                     }
-                    break;
                 case "BarCode":
                     break;
             }
-        }).addClass('ui');
+        }).click("*[click-data]", function (e) {
+            var m = $(this);
+            if ($(e.target).is('a[href]')) {
+                return true;
+            } else {
+                var click = JSON.parse(m.attr('click-data')) || {};
+                click.key ? m.parent('div[ui]').ui('Key.' + click.key, click.send) : $.Click(click);
+            }
+        });
+
     }
     Dialog.prototype = {
         Msg: function (titls, t) {

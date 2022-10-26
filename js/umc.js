@@ -532,30 +532,27 @@
         },
         defer: function () {
             var k = 'data-src';
+            var timeId = 0;
             return this.on("scroll", function () {
-                var con = offset(this);
                 var cache = this.cache || [];
-                for (var i = 0; i < cache.length; i++) {
-                    var o = cache[i];
-                    if (o && o.is('[' + k + ']')) {
-                        var cw = o.offset();
-                        post = cw.top - (con.top + con.height);
-                        posb = cw.top + cw.height - con.top;
-                        posl = cw.left - (con.left + con.width);
-                        posr = cw.left + cw.width - con.left;
+                clearTimeout(timeId);
+                timeId = setTimeout(function () {
+                    for (var i = 0; i < cache.length; i++) {
+                        var o = cache[i];
+                        if (o && o.is('[' + k + ']')) {
+                            if (o[0].getBoundingClientRect().top < window.outerHeight) {
+                                var src = o.attr(k)
+                                o.attr(k, null);
+                                src.match(/[a-z]+/) == src ? o.on(src) : o.is('img') ? o.attr('src', src) : o.css("background-image", "url(" + src + ")");
+                                if (!o.attr(k)) {
+                                    cache.splice(i, 1);
+                                    i--;
+                                }
 
-                        if ((post < 0 && posb > 0) && (posl < 0 && posr > 0)) {
-                            var src = o.attr(k)
-                            o.attr(k, null);
-                            src.match(/[a-z]+/) == src ? o.on(src) : o.is('img') ? o.attr('src', src) : o.css("background-image", "url(" + src + ")");
-                            if (!o.attr(k)) {
-                                cache.splice(i, 1);
-                                i--;
                             }
-
                         }
-                    }
-                };
+                    };
+                }, 300)
             }).on('defer', function (e, v) {
                 var ch = [];
                 each(this.querySelectorAll('[' + k + ']'), function () { ch.push(UMC(this)) });;
@@ -771,11 +768,9 @@
     }
 
     UMC.uploader = function (file, callback, name) {
-        var rotts = posurl.posurl.split('/');;
-        var root = rotts[3] ? rotts[3] : rotts[1];
         var key = name || [new Date().getTime(), file.name].join('/');
-        var urlKey = 'TEMP/' + root + '/' + key;
-        var url = (posurl.possrc || 'https://oss.365lu.cn/') + urlKey;
+        var urlKey = 'TEMP/' + key;
+        var url = (posurl.possrc || 'https://wdk.oss-accelerate.aliyuncs.com/') + urlKey;
 
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -883,75 +878,72 @@
         }
         return format;
     };
+    var posurl = { "posurl": "/UMC/" };
 
     function dialog(title, content, fn, btn) {
         var pxf = "weui_dialog";
         var me = UMC(document.createElement("div"));
-        var html = [
+        var html = ['<form action="', posurl.posurl, '?_v=Form" method="post" target="_blank">',
             '<div class="', pxf, '_hd">',
             '<strong class="', pxf, '_title">', title, '</strong></div>',
             '<div class="', pxf, '_bd">', content, '</div>',
             '<div class="', pxf, '_ft">',
             fn ? '<a class="weui_btn_dialog default">取消</a>' : '',
-            '<a class="weui_btn_dialog primary">', btn || '确认', '</a></div>'
+            '<a class="weui_btn_dialog primary">', btn || (fn ? '确认' : '关闭'), fn ? ' <input type="submit" />' : '', '</a></div></form>'
         ];
         me.html(html.join('')).on('close', function () {
-
             me.remove();
             mask.remove();
         });
         me.appendTo(document.body);
-        var mask = UMC(document.createElement("div")).addClass('weui_mask').appendTo(document.body);
-        me.show().addClass(pxf).addClass((content || '').length < 20 ? (pxf + '_confirm') : (pxf + '_alert'));
-        me.find('.weui_dialog_ft a').on('click', function () {
-            if (fn && matches(this, '.primary') && (fn(me) === false))
-                return;
+        var mask = UMC({ tag: 'div', cls: 'weui_mask' }).appendTo(document.body);
+        me.show().addClass(pxf).addClass(pxf + (fn ? '_confirm' : '_alert'));
 
-            me.remove();
-            mask.remove();
-
+        me.find('.weui_dialog_ft a').click(function () {
+            fn ? (matches(this, '.primary') ? 0 : me.on('close')) : me.on('close');
         })
+        me.find('form').submit(function () {
+            requestAnimationFrame(function () {
+                me.on('close');
+            })
+            return fn(UMC(this).val()) || false;
+        }).find('input').focus();
         return me;
     }
 
 
     function actionSheet(title, data, fn, fd, cells) {
         var pxf = "weui_actionsheet";
-        var sheet = UMC(document.createElement("div")).addClass(pxf);
-        var mask = UMC(document.createElement("div")).addClass('weui_mask').on('click', function () {
-            sheet.removeClass(pxf + '_toggle');
-            setTimeout(function () {
-                sheet.remove();
-                mask.remove();
-            }, 300);
+        var sheet = UMC({ tag: 'form', cls: pxf, action: posurl.posurl + '?_v=Form', method: 'post', target: '_blank' });
+        var mask = UMC({
+            tag: 'div',
+            cls: 'weui_mask',
+            click: function () {
+                sheet.removeClass(pxf + '_toggle');
+                setTimeout(function () {
+                    sheet.remove();
+                    mask.remove();
+                }, 300);
+            }
         });
-
-        var html = [
-            '<div class="', pxf, '_menu">',
-            '<div class="', pxf, '_title">', title, '</div><div class="', pxf, '_cells ', pxf, '_cells', (cells || 1) % 4, '"><div></div>'
-        ];
+        UMC({ tag: 'div', cls: pxf + '_title', text: title }).appendTo(sheet);
+        var cells = UMC({ tag: 'div', cls: pxf + '_cells ' + pxf + '_cells' + ((cells || 1) % 4) }).appendTo(UMC({ tag: 'div', cls: pxf + '_menu' }).appendTo(sheet));
+        UMC({ tag: 'div' }).appendTo(cells);
         for (var i = 0; i < data.length; i++) {
             var t = data[i];
-            html.push('<div class="', pxf, '_cell" data-index="', i, '">', t[fd || 'Text'] || t['text'], '</div>');
+            UMC({ tag: 'input', type: 'submit', value: i + '' }).appendTo(UMC({ tag: 'div', cls: pxf + '_cell', text: t[fd || 'Text'] || t['text'] }).appendTo(cells));
         }
+        UMC({ tag: 'input', type: 'submit', value: -1 }).appendTo(UMC({ tag: 'div', cls: pxf + '_cell', text: '取消' }).appendTo(UMC({ tag: 'div', cls: pxf + '_action' }).appendTo(sheet)));
 
-        html.push('</div></div><div class="', pxf, '_action">',
-            '<div class="', pxf, '_cell">取消</div>');
-        sheet.html(html.join(''));
-        sheet.appendTo(document.body);
-        mask.appendTo(document.body);
-        sheet.find('.' + pxf + '_cell').on('click', function () {
+        sheet.appendTo(document.body).submit(function (e) {
             mask.click();
-            var index = parseInt(this.getAttribute('data-index') || '-1');
-            if (index > -1)
-                fn(data[index], index);
+            var index = parseInt(e.submitter.value)
+            return index > -1 ? (fn(data[index], index, sheet) || false) : false;
         });
+        mask.appendTo(document.body);
         sheet.addClass(pxf + '_toggle');
-
+        return sheet;
     };
-    var ___c, ___cb;
-    var ___b = 0;
-    var posurl = { "posurl": "/UMC/" };
 
 
     var __p = {
@@ -995,16 +987,13 @@
             __p.On('Prompt', { Text: text });
         },
         Bridge: function (v, fn) {
-            if (__p.On('XHR.Bridge', v, fn) !== false) {
-                var xhr = new XMLHttpRequest();
-                xhr.onload = function () {
-                    var res = JSON.parse(xhr.responseText);
-                    __p.On('XHR.Bridged', v, res, fn) === false ? 0 : fn(res);
-                };
-                xhr.open('POST', [posurl.posurl, __p.Ver ? "?_v=" + __p.Ver : ''].join(''), true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.send(v);
+            var xhr = new XMLHttpRequest();
+            if (__p.On('XHR.Bridge', xhr, fn, v) !== false) {
+                xhr.onload = function () { fn(JSON.parse(xhr.responseText)); };
             }
+            xhr.open('POST', [posurl.posurl, __p.Ver ? "?_v=" + __p.Ver : ''].join(''), true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send(v);
         },
         Sheet: actionSheet,
         Confirm: dialog
@@ -1019,7 +1008,7 @@
         if (ue) {
             var val = v.value;
             __cmd(ue.Submit, ue.Name, val.Value, val.Text);
-            delete uiEvent[k.key];
+            delete uiEvent[v.key];
         }
     });
     function __cmd(c, n, v, t) {
@@ -1034,29 +1023,56 @@
         var event = parseInt(v.ClientEvent);
         if (!isNaN(event)) {
             __p.On("Event", event, v);
-
             if ((event & 4) > 0) {
                 var p = (v.Headers || {})["AsyncDialog"];
                 switch (p.Type) {
                     case 'Select':
                     case 'RadioGroup':
-                        actionSheet(p.Title || '请选择', p.DataSource || [], function (v) {
-                            v.Value ? (p.Submit ? __cmd(p.Submit, p.Name, v.Value || 'OK') : __p.Command(v.Value)) : UMC.Click(v)
 
+                        var smt = p.Submit;
+                        var sht = actionSheet(p.Title || '请选择', p.DataSource || [], function (v, i, f) {
+                            if (v.Value) {
+                                if (p.Action) {
+                                    UMC({ tag: 'input', 'value': v.Value, name: p.Name, type: 'hidden' }).appendTo(f);
+                                    UMC.Click(p.Action);
+                                    return true;
+                                } else {
+                                    var val = f.val();
+                                    val[p.Name] = v.Value;
+                                    __p.Command(val);
+                                }
+
+                            } else {
+                                UMC.Click(v)
+                            }
                         }, 'Text', p.Cells || 1);
+                        var send = UMC.extend({}, smt.send);
+                        send._model = smt.model;
+                        send._cmd = smt.cmd;
+                        for (var k in send) {
+                            UMC({ tag: 'input', 'value': send[k], name: k, type: 'hidden' }).appendTo(sht);
+                        }
+
                         break;
                     case "Prompt":
                         dialog(p.Title || '提示', p.Text);
                         break;
                     case "Confirm":
+                        var smt = p.Submit;
                         var cfm = dialog(p.Title || '提示', p.Text, function (v) {
-                            p.Submit ? __cmd(p.Submit, p.Name, p.DefaultValue || 'OK') : __p.Command(p.DefaultValue || 'OK')
-                            return p.CloseEvent ? false : 0;
-                        }, p.Submit ? p.Submit.text : '').attr('ui', 'Confirm');
-                        if (p.CloseEvent) {
-                            cfm.ui(p.ClientEvent, function () {
-                                cfm.on('close');
-                            });
+                            if (p.Action) {
+                                UMC.Click(p.Action);
+                                return true;
+                            } else {
+                                __p.Command(v);
+                            }
+                        }, smt.text || '').attr('ui', 'Confirm').addClass('not').find('form');
+                        var send = UMC.extend({}, smt.send);
+                        send._model = smt.model;
+                        send._cmd = smt.cmd;
+                        send[p.Name] = p.DefaultValue || 'OK';
+                        for (var k in send) {
+                            UMC({ tag: 'input', 'value': send[k], name: k, type: 'hidden' }).appendTo(cfm);
                         }
                         break;
                     case "Image":
@@ -1108,19 +1124,7 @@
                 __p.On("Change", v.Ticket, v);
                 UMC('div[ui].ui').ui('Change', v.Ticket, v)
             }
-
-            if (ISFN(cfn))
-                ___cb = cfn;
-            return;
         } else if (ISFN(cfn)) cfn(v)
-        else {
-            var fn = ISFN(___c) ? ___c : ___cb;
-            if (ISFN(fn)) {
-                fn(v);
-            }
-            ___c = false;
-            ___cb = false;
-        }
     }
     var encodeUArgs = function (model, cmd, t) {
         var enc = encodeURIComponent;
@@ -1133,10 +1137,8 @@
             case 'object':
                 srcs.push('&', UMC.query(t));
                 break;
-            case 'undefined':
-                break;
             default:
-                srcs.push('&', t);
+                t ? srcs.push('&', t) : 0;
                 break;
         }
         switch (typeof cmd) {
@@ -1173,17 +1175,11 @@
         __p.Bridge(args[0], function (xhr) { check(xhr, call) });
         return __p;
     };
-    // UMC.api = function (m, c, t, b) {
-    //     var args = encodeUArgs(m, c, t);
-    //     var call = b || args[1];
-
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.onload = function () {
-    //         check(JSON.parse(xhr.responseText), call);
-    //     };
-    //     xhr.open('GET', ['https://api.365lu.cn/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''), true);
-    //     xhr.send();
-    // };
+    UMC.error = function (o) {
+        var i = document.createElement('em');
+        i.className = o.className;
+        o.parentElement.replaceChild(i, o);
+    }
 
     __p.Ready = check;
     var dlgIndex = 0;
@@ -1191,14 +1187,12 @@
     __p.On('XHR', function (e, s) {
         var b = __p.Body || false;
         b ? b.cls('loading', !s) : false
-    }).On("Grid,Form,DataSource,Pager,Map,Flow", function (e, v, p, f) {
+    }).On("Grid,Form,DataSource,Pager,Map,Flow", function (e, v) {
 
         var evs = e.type.split('.');
         var key = evs[evs.length - 1];
         var Dialog = UMC.UI[key];
-        if (v.StaticUI && ISFN(f) && f == ___c)
-            f(v, p);
-        else if (Dialog) {
+        if (Dialog) {
             var dom = UMC(document.createElement('div')).attr({ 'ui': key, 'class': 'wdk-dialog' }) //.css({ 'background-color': '#FAFCFF'})
                 .on('transitionend,webkitTransitionEnd', function () {
                     dom.is('.ui') ? 0 : dom.on('pop');
@@ -1216,10 +1210,10 @@
                 ce ? dom.ui(ce, function () {
                     dom.addClass('right').removeClass('ui');
                 }) : 0;
+                dom.addClass('ui');
             });
             if (__p.On("UI.Show", dom, key, v) !== false) {
                 new Dialog(v, dom);
-                dom.addClass('ui');
             }
 
         }
@@ -1252,7 +1246,6 @@
             }
         }
         __p.Send = (function () {
-
             var pos = {
                 Send: function (m, c, v, f) {
                     switch (typeof v) {

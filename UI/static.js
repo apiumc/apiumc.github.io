@@ -5,7 +5,7 @@
             if (i >= files.length) {
                 dem.removeClass('loading');
                 dem.attr('data-index', false);
-                root.ui('System.Dir');
+                root.ui('System.Root');
                 return;
             } else {
                 dem.addClass('loading');
@@ -24,7 +24,7 @@
 
             var xhr = new XMLHttpRequest();
             xhr.onload = function () {
-                UMC.UI.Command('System', 'Dir', { dir: path, media_id: url }, function () {
+                UMC.UI.Command('System', 'Root', { dir: path, media_id: url }, function () {
                     upload(files, i + 1, dem);
                 });
             };
@@ -40,18 +40,18 @@
         var prefix = '';
         var list_li = $('table tbody', root).on('click', 'a[path]', function () {
             prefix = $(this).attr('path');
-            root.ui('System.Dir');
+            root.ui('System.Root');
         });
         var path = $('#root', root).click(function () {
             prefix = $(this).attr('path') || '';
-            root.ui('System.Dir');
+            root.ui('System.Root');
         });
         root.on('hash', function (e, v) {
             prefix = v.p ? (v.p + "/") : ''
-            root.ui('System.Dir');
+            root.ui('System.Root');
         });
-        root.ui('System.Dir', function () {
-            WDK.UI.Command('System', 'Dir', prefix || '/', function (xhr) {
+        root.ui('System.Root', function () {
+            WDK.UI.Command('System', 'Root', prefix || '/', function (xhr) {
                 if (xhr.name) {
                     path.html('<b class="wdk_cell_icon" data-icon="&#xF07c;"></b>' + xhr.name).attr('path', xhr.pre)
                         .attr('disabled', false);

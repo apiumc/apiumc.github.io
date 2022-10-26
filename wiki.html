@@ -1,246 +1,152 @@
 
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>企业住所(经营场所)登记表_文档之家</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <meta name="keywords" content="企业住所(经营场所)登记表,企业住所(经营场所)登记表下载" />
-    <meta name="description" content="企业住所(经营场所)登记表的内容摘要：企业住所（经营场所）登记表企业（公司）名称住所（经营场所）《中华人民共和国物权法》第七十七条规定：“业主不得违反法律、法规以及管理规约，将住宅改变为经营性用房。业主将住宅改变为经营性用房的，除遵守法" />
-    <meta name="applicable-device" content="pc" />
-    <link rel="alternate" media="only screen and (max-width: 640px)" href="http://m.doczj.com/doc/2c4246590.html" />
-    <link rel="stylesheet" href="http://assets.doczj.com/css/style.css?v=0427" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>穿透缓存机制 · APIUMC</title><meta name="keywords" content="缓存机制缓存机制配置刷新缓存删除所有缓存手动刷新缓存"><meta name="description" content="零信任应用网关">
+    <link href="/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.sub.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.sub.page.css" rel="stylesheet" type="text/css" />
+    <script src="/js/umc.js" type="text/javascript"></script>
+    <script src="/js/Sortable.js"></script>
+    <script src="/js/umc.database.js"></script>
+    <script src="/js/umc.grid.js"></script>
+    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.ui.js"></script>
+    <script src="/js/umc.page.js"></script>
+    <script src="/js/umc.paging.js"></script>
+    <script src="/js/umc.sub.js"></script>
+    <script src="/js/Sub.js"></script>
 </head>
-<body >
-    <div id="header" class="clearfix">
-        <div class="logo">
-            <a href="https://www.doczj.com/">
-                <img alt="文档之家" src="/images/Logo.jpg">
+
+<body>
+
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active"
+        style="z-index: 2100;">
+        <i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content"></p>
+    </div>
+    <div class="navbar">
+
+        <div class="sidebar-logo-container">
+            <div class="umc-sidebar-back"></div>
+            <div class="umc-sidebar-menu"></div>
+            <div class="login-box"><em>API</em> <sub>UMC</sub>
+                <a ui-spa href="/"></a>
+            </div>
+            <!--%publish team%-->
+
+            <a ui-spa="" id="team" href="/proxy">门神网关</a>
+            <!--%end%-->
+
+            <a class="umc-project-item el-dropdown"></a>
+            <ul role="menu" class="umc-project-item-menu">
+                <li>
+                    <a data-key="EditItem">
+                        <b class="wdk_cell_icon" data-icon="&#xf040;"></b> 编辑栏位
+                    </a>
+                </li>
+                <li><a data-key="AddItem"><b class="wdk_cell_icon" data-icon="&#xf067;"></b> 增加栏位</a></li>
+                <li><a id="Import">
+                        <b class="wdk_cell_icon" data-icon="&#xf0ee;"></b> 图文导入
+                        <input accept="text/*" type="file" />
+                    </a></li>
+
+            </ul>
+        </div>
+
+        <div class="umc-sub-nav">
+
+            <div class="header-sub-nav">
+                <ul class="menu-site">
+                    <li><a ui-spa href="/">主页</a></li>
+                    <li><a ui-spa href="/Wiki">知识库</a></li>
+                    <li><a ui-spa href="/Gateway">门神网关</a></li>
+                    <li><a ui-spa href="/Bridge">内网穿透</a></li>
+                    <li><a ui-spa href="/About">关于我们</a></li>
+                </ul>
+            </div>
+            <div class="header-search right-menu-item show" id="header-search">
+                <form class="el-select header-search-select el-select--small">
+                    <div class="el-input el-input--small el-input--suffix">
+                        <input type="search" autocomplete="off" placeholder="搜索" class="el-input__inner">
+                    </div>
+                </form>
+            </div>
+            <ul role="menu" class="umc-search-menu"></ul>
+        </div>
+        <div class="umc-sub-nav">
+            <!--%publish nav%-->
+
+            <ul class="menu-site" id="nav"><li class=" " draggable="false"><a ui-spa="" href="/proxy/help" data-id="7124915178545872897" draggable="false">使用说明</a></li><li class=" is-active" draggable="false"><a ui-spa="" href="/proxy/rjuj4q" data-id="7155088796973989889" draggable="false">内网穿透</a></li><li class=" " draggable="false"><a ui-spa="" href="/proxy/rkarhv" data-id="7158341534620975105" draggable="false">图片处理</a></li><li class=" " draggable="false"><a ui-spa="" href="/proxy/rju40e" data-id="7155004632794726401" draggable="false">身份互联</a></li></ul>
+            <!--%end%-->
+
+        </div>
+        <div class="right-menu">
+            <a model="Account" cmd="Self" send="User" class="box-card-user">
             </a>
         </div>
-        <div class="doc"><h1>文档之家</h1></div>
-        <div class="search">
-            <form action="/wendang/" method="get">
-                <input type="text" name="q" id="q" size="60" />
-                <input type="button" value="文档搜索" class="btn" />
-                <input type="hidden" name="s" value="search" />
-            </form>
+        <div class="right-menu" id="menu">
+
         </div>
+
     </div>
-    <div id="menu" class="clearfix">
-        <ul>
-            <li><a href="/topics/203/" class="current">表格模板</a></li>
-            <li><a href="/topics/47/">教学研究</a></li>
-            <li><a href="/topics/75/">合同协议</a></li>
-            <li><a href="/topics/11/">外语学习</a></li>
-            <li><a href="/topics/10/">高等教育</a></li>
-            <li><a href="/topics/89/">建筑/土木</a></li>
-            <li><a href="/topics/106/">高考</a></li>
-            <li><a href="/topics/126/">PPT模板</a></li>
-            <li><a href="/topics/17/">幼儿教育</a></li>
-            <li><a href="/topics/71/">求职/职场</a></li>
-            <li><a href="/topics/77/">总结/汇报</a></li>
-            <li><a href="/topics/229/">工作范文</a></li>
-            <li><a href="/topics/64/">经管营销</a></li>
-            <li><a href="/topics/68/">自然科学</a></li>
-        </ul>
-    </div>
-    
-<div class="view content clearfix">
-    <div class="article">
-        <div class="position"> 当前位置：<a href="/">文档之家</a>› 企业住所(经营场所)登记表</div>
-        <h1 class="title">企业住所(经营场所)登记表</h1>
-        <div class="tbody clearfix">
-            <div id="contents">
-                <p>企业住所（经营场所）登记表</p><p>企业（公司）名称</p><p>住所（经营场所）</p><p>《中华人民共和国物权法》第七十七条规定：“业主不得违反法律、法规以及管理规约，将住宅改变为经营性用房。业主将住宅改变为经营性用房的，除遵守法律、法规以及管理规约外，应当经有利害关系的业主同意。”</p><p>本企业（公司）、个体工商户将住宅改变为经营性用房，作出如下承诺：</p><p>一、知悉《中华人们共和国物权法》的相关规定；</p><p>二、遵守有关房屋管理的法律、法规以及管理规约的</p><p>规定；</p><p>三、已经有利害关系的业主同意。</p><p>申请人：</p><p>注：1、企业（公司）设立登记时，申请人为股东（出资人）。股东是法人的，由股东盖章，股东是自然人的，由自然人签字。企业（公司）变更登记</p><p>时，由企业（公司）盖章。</p><p>2、住所（经营场所）所在地居民委员会或业主委员会出具的有利害关系的</p><p>业主同意将住宅改变为经营性用房的证明文件。</p>
-                
-                    <div id="downcontainer">
-<form action="/go/down" method="post">                            <div class="downc">
-                                <div class="caption">下载文档原格式(<b>Word原格式</b>，共1页)</div>
-                                <div>
-                                    <input id="id" name="id" type="hidden" value="2c4246590" />
-                                    <input type="submit" value="付费下载" class="btndown" />
-                                </div>
-                            </div>
-</form>                    </div>
-            </div>
-        </div>
-        <div>
-            <div>相关文档</div>
-            <div class="relatedtopic">
-                <div id="tabs-section" class="tabs">
-                    <ul class="tab-head">
-                            <li id="17616232"><h3>住所经营场所登记表</h3></li>
-                            <li id="22975282"><h3>企业住所经营场所证明</h3></li>
-                            <li id="19277120"><h3>企业经营场所登记表</h3></li>
-                            <li id="13206949"><h3>企业住所登记表</h3></li>
-                            <li id="18828326"><h3>住所经营场所登记</h3></li>
-                    </ul>
-                        <section id="tab-17616232" class="tab-body">
-                            <ul>
-                                        <li><a href="/doc/09186054.html" target="_blank">企业住所(经营场所)证明</a></li>
-                                        <li><a href="/doc/0811825693.html" target="_blank">《住所(经营场所)登记表》</a></li>
-                                        <li><a href="/doc/1311738804.html" target="_blank">住所(经营场所)登记表(工商局最新版本)</a></li>
-                                        <li><a href="/doc/1812538223.html" target="_blank">经营场所信息申报表</a></li>
-                                        <li><a href="/doc/287343058.html" target="_blank">登记附表住所经营场所登记表</a></li>
-                                        <li><a href="/doc/2416240635.html" target="_blank">工商登记--住所(经营场所)登记表(江西)</a></li>
-                                        <li><a href="/doc/364386572.html" target="_blank">住所(经营场所)登记表范本</a></li>
-                                        <li><a href="/doc/5e1629996.html" target="_blank">《住所经营场所登记表》</a></li>
-                                        <li><a href="/doc/517914622.html" target="_blank">住所经营场所登记信息表</a></li>
-                                        <li><a href="/doc/509356478.html" target="_blank">住所(经营场所)登记表范本</a></li>
-                                        <li><a href="/doc/5612158506.html" target="_blank">住所(经营场所)登记信息表</a></li>
-                                        <li><a href="/doc/5b12728676.html" target="_blank">住所经营场所登记表</a></li>
-                                        <li><a href="/doc/6c14437363.html" target="_blank">企业住所(经营场所)证明 - 企业住所(经营场所)证明</a></li>
-                                        <li><a href="/doc/6917481385.html" target="_blank">住所(经营场所)使用证明</a></li>
-                                        <li><a href="/doc/6718676588.html" target="_blank">(住改商)住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/7a5329095.html" target="_blank">住所经营场所证明(新版,共四种)</a></li>
-                                        <li><a href="/doc/707414191.html" target="_blank">市场主体住所登记表</a></li>
-                                        <li><a href="/doc/896023834.html" target="_blank">住所(经营场所)登记表范本</a></li>
-                                        <li><a href="/doc/8f16873941.html" target="_blank">【住所申报】绍兴市市场主体住所(经营场所)信息表</a></li>
-                                        <li><a href="/doc/b69107650.html" target="_blank">企业经营场所登记申请书</a></li>
-                                <li class="more">更多"<a href="/topic/17616232/">住所经营场所登记表</a>"</li>
-                            </ul>
-                        </section>
-                        <section id="tab-22975282" class="tab-body">
-                            <ul>
-                                        <li><a href="/doc/0d13819061.html" target="_blank">公司(企业)住所(经营场所)证明</a></li>
-                                        <li><a href="/doc/1411412066.html" target="_blank">场主体住所经营场所使用证明</a></li>
-                                        <li><a href="/doc/1215560358.html" target="_blank">住所(办公场所)使用证明</a></li>
-                                        <li><a href="/doc/249816958.html" target="_blank">公司(企业)住所(经营场所)证明</a></li>
-                                        <li><a href="/doc/3d2059628.html" target="_blank">市场主体住所 经营场所 使用证明</a></li>
-                                        <li><a href="/doc/3b10481737.html" target="_blank">住所(经营场所)合法使用证明</a></li>
-                                        <li><a href="/doc/3216607825.html" target="_blank">企业住所(经营场所)证明--正式版</a></li>
-                                        <li><a href="/doc/3a18104006.html" target="_blank">(完整word版)经营场所(公司住所)使用证明</a></li>
-                                        <li><a href="/doc/4913944040.html" target="_blank">公司(企业)住所(经营场所)证明</a></li>
-                                        <li><a href="/doc/4d17991478.html" target="_blank">住所经营场所产权证明模版</a></li>
-                                        <li><a href="/doc/5c1234814.html" target="_blank">经营场所使用证明是什么</a></li>
-                                        <li><a href="/doc/688705446.html" target="_blank">企业住所(经营场所)证明</a></li>
-                                        <li><a href="/doc/6e10944911.html" target="_blank">住所经营场所证明样本</a></li>
-                                        <li><a href="/doc/771019776.html" target="_blank">企业住所(经营场所)证明--正式版</a></li>
-                                        <li><a href="/doc/7610028383.html" target="_blank">企业住所(经营场所)使用证明书(2016)</a></li>
-                                        <li><a href="/doc/8b806231.html" target="_blank">住所经营场所产权证明模版</a></li>
-                                        <li><a href="/doc/884719847.html" target="_blank">企业住所经营场所证明.doc</a></li>
-                                        <li><a href="/doc/9510629759.html" target="_blank">公司、企业住所(经营场所)使用证明模板</a></li>
-                                        <li><a href="/doc/9412580252.html" target="_blank">企业经营场所证明</a></li>
-                                        <li><a href="/doc/9617856431.html" target="_blank">最新住宅作为企业住所(经营场所)登记承诺书</a></li>
-                                <li class="more">更多"<a href="/topic/22975282/">企业住所经营场所证明</a>"</li>
-                            </ul>
-                        </section>
-                        <section id="tab-19277120" class="tab-body">
-                            <ul>
-                                        <li><a href="/doc/1f14559063.html" target="_blank">住所经营场所登记表</a></li>
-                                        <li><a href="/doc/294802226.html" target="_blank">《登记附表住所经营场所登记表》</a></li>
-                                        <li><a href="/doc/209095616.html" target="_blank">企业个体工商户住所经营场所登记表</a></li>
-                                        <li><a href="/doc/2716697214.html" target="_blank">企业、个体工商户住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/3912869811.html" target="_blank">住所(经营场所登记表)</a></li>
-                                        <li><a href="/doc/4d2875701.html" target="_blank">(住改商)住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/4211406578.html" target="_blank">住所经营场所登记表</a></li>
-                                        <li><a href="/doc/5f15760802.html" target="_blank">吉林省市场主体住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/af4112224.html" target="_blank">住所经营场所登记表住改商使用</a></li>
-                                        <li><a href="/doc/b216331030.html" target="_blank">住所经营场所登记表范本</a></li>
-                                        <li><a href="/doc/cb7351954.html" target="_blank">经营场所登记表</a></li>
-                                        <li><a href="/doc/c79581152.html" target="_blank">经营场所登记表【模板】</a></li>
-                                        <li><a href="/doc/e612930561.html" target="_blank">西安--住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/f07271306.html" target="_blank">住所登记表 - 办理营业执照</a></li>
-                                <li class="more">更多"<a href="/topic/19277120/">企业经营场所登记表</a>"</li>
-                            </ul>
-                        </section>
-                        <section id="tab-13206949" class="tab-body">
-                            <ul>
-                                        <li><a href="/doc/139629727.html" target="_blank">住所登记表  范本</a></li>
-                                        <li><a href="/doc/2a13796759.html" target="_blank">工商企业住所证明</a></li>
-                                        <li><a href="/doc/5311138226.html" target="_blank">住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/8517061269.html" target="_blank">住所(经营场所)登记表格模板模板.doc</a></li>
-                                        <li><a href="/doc/ec11202895.html" target="_blank">企业登记表.doc</a></li>
-                                        <li><a href="/doc/e617248434.html" target="_blank">住所(经营场所)登记表</a></li>
-                                        <li><a href="/doc/f811924493.html" target="_blank">(三十一)住所(经营场所)登记表填写范文</a></li>
-                                <li class="more">更多"<a href="/topic/13206949/">企业住所登记表</a>"</li>
-                            </ul>
-                        </section>
-                        <section id="tab-18828326" class="tab-body">
-                            <ul>
-                                        <li><a href="/doc/0f6169394.html" target="_blank">住所(经营场所)登记承诺书</a></li>
-                                        <li><a href="/doc/0b19091973.html" target="_blank">商事主体住所(经营场所)登记信息申报表</a></li>
-                                        <li><a href="/doc/1011493713.html" target="_blank">济南企业住所经营场所登记管理办法</a></li>
-                                        <li><a href="/doc/4215205877.html" target="_blank">住所(经营场所)信息申报表</a></li>
-                                        <li><a href="/doc/5b2510201.html" target="_blank">市场主体住所经营场所登记承诺书</a></li>
-                                        <li><a href="/doc/5c6860359.html" target="_blank">市场主体住所(经营场所)申报登记承诺书</a></li>
-                                        <li><a href="/doc/6b11432431.html" target="_blank">经营性市场主体住所经营场所登记承诺书</a></li>
-                                        <li><a href="/doc/6b11592974.html" target="_blank">住所(经营场所)证明文件</a></li>
-                                        <li><a href="/doc/6e17137207.html" target="_blank">企业住所经营场所登记备案承诺书</a></li>
-                                        <li><a href="/doc/7217069453.html" target="_blank">住所(经营场所)登记(备案)告知书</a></li>
-                                        <li><a href="/doc/917938071.html" target="_blank">住所(经营场所)登记承诺书</a></li>
-                                        <li><a href="/doc/9318545034.html" target="_blank">住所经营场所信息申报表</a></li>
-                                        <li><a href="/doc/a82093593.html" target="_blank">住所(经营场所)登记信息表【模板】</a></li>
-                                        <li><a href="/doc/b26582093.html" target="_blank">企业住所和经营场所登记操作规范</a></li>
-                                        <li><a href="/doc/b417261959.html" target="_blank">申请住所(经营场所)登记信用承诺书</a></li>
-                                        <li><a href="/doc/b118156720.html" target="_blank">住所(经营场所)登记信息表</a></li>
-                                        <li><a href="/doc/c815611305.html" target="_blank">主体住所(经营场所)登记承诺书</a></li>
-                                        <li><a href="/doc/e578894.html" target="_blank">企业住所和经营场所登记操作规范</a></li>
-                                        <li><a href="/doc/ec3725169.html" target="_blank">住所经营场所证明</a></li>
-                                <li class="more">更多"<a href="/topic/18828326/">住所经营场所登记</a>"</li>
-                            </ul>
-                        </section>
+    <div id="app" class="hideSidebar">
+        <div class="sidebar-container">
+
+            <div class="el-scrollbar">
+                <div class="scrollbar-wrapper el-scrollbar__wrap">
+                    <div class="el-breadcrumb app-breadcrumb breadcrumb-container" id="breadcrumb-container">
+                        <span class="no-redirect"></span>
+                    </div>
+                    <div class="el-scrollbar__view">
+                        <!--%publish menu%-->
+
+                        <ul id="menubar" class="el-menu"><li class="el-submenu is-opened"><div class="el-submenu__title is-active" data-id="7155088796974055425">随笔<i class="el-submenu__icon-arrow"></i><em></em></div><ul class="el-menu"><li class="el-menu-item"><a class="" data-id="7134485632696516609" ui-spa="" href="/proxy/rjuj4q/bridge">内网穿透</a></li><li class="el-menu-item is-active" draggable="false"><a class="warn" data-id="7158341160958754817" ui-spa="" href="/proxy/rjuj4q/rkarfg" draggable="false">穿透缓存机制</a></li></ul></li></ul>
+                        <!--%end%-->
+
+
+                        <div class="el-menu"></div>
+                    </div>
                 </div>
             </div>
+            <div class="el-link-menu" style="height: 50px;">
+                <a class="wdk-footer-icon" id="Portfolio">
+                    <i>&#xf07c;</i><em>新建文集</em>
+                </a>
+                <a class="wdk-footer-icon" title="新建富文本格式" id="Rich">
+                    <i>&#xf13b;</i><em>新建文档</em>
+                </a>
+                <a class="wdk-footer-icon" ui-spa href="/wiki/help">
+                    <i>&#xf059;</i><em>帮助手册</em>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <!--%publish container%-->
+
+            <section class="app-main">
+            <div style=" display: flex;background-color: #fff;" ui="subject/7158341160958754817" ui-key="7158341160958754817" class=" ">
+<div id="view" class="umc-subject-view" page-name="p4">
+<section><div class="weui_cells weui_cells_access umc-not-separatorline" id="Subject" section-index="0"><div class="wdk-desc umc-cell-not-separatorline" style="white-space: pre-line; line-height:1.5; padding:55px 10px 10px 10px;font-weight:bold;border:none;font-size:18px;" row-index="0" data-json="c0"><span style="font-weight:bold;border:none;font-size:18px;">穿透缓存机制</span></div><div class="wdk-cms-attention weui_media_box weui_media_appmsg umc-cell-not-separatorline" row-index="1" data-json="c1"><div style="flex: 1;display: flex;" click-data="{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;ProjectUI&quot;,&quot;send&quot;:{&quot;Id&quot;:&quot;7124914603020058625&quot;}}"><div class="weui_media_hd" style="color:" data-icon=""><img class="weui_media_appmsg_thumb" src="http://www.apiumc.com/images/00000000-0000-0000-0100-010015c8e062/1/0.jpg!100"></div><div class="weui_media_bd"><h4 class="weui_media_title"><span style="border:none;"><span style="font-weight:bold;">门神网关</span></span></h4><p class="weui_media_desc"><span style="border:none;"><span style="color:#999;">零信任应用网关</span></span></p></div></div><div class="wdk-cms-look-button" style="font-size:12px"><a click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Attention&quot;,&quot;send&quot;:{&quot;Id&quot;:&quot;7124914603020058625&quot;}}}" class="weui_btn weui_btn_mini weui_btn_warn" style="background-color:#25b864;">已关注</a></div></div><div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="2" data-json="c2">缓存机制</div><div class="wdk-cms-text " style="" row-index="3" data-json="c3">为了提高Web页面穿透速度，在内网穿透上也采用了动静分离的缓存机制，全局默认对.gif,.bmp,.png,.jpg,.jpeg,.ico,.webp,.svg,.css,.less,.sass,.scss,.js,.jsx,.coffee,.ts,.ttf,.woff,.woff2,.wasm页面进行缓存。</div><div class="wdk-cms-text " style="" row-index="4" data-json="c4">当然也可以改变此配置</div><div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="5" data-json="c5">缓存机制配置</div><div class="wdk-cms-text " style="" row-index="6" data-json="c6">可以直接通过浏览器的地址栏输入路径再加上?umc=cache，则与此路径配对的资源进行缓存，如下图：</div><a style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="7" data-json="c7"><img style="" original-src="https://www.apiumc.com/UserResources/1mwlgcz/1666743498/image.png!m600" src="https://www.apiumc.com/UserResources/1mwlgcz/1666743498/image.png!m600" alt=""></a><div class="wdk-cms-text " style="" row-index="8" data-json="c8">在浏览器的地址栏输入路径再加上?umc=cache.none，则清除此路径配对缓存机制全局缓存机制</div><div class="wdk-cms-text " style="" row-index="9" data-json="c9">在浏览器的地址栏输入路径再加上?umc=cache.clear，则清除此路径配对的增强配置，只采用全局缓存机制</div><div data-key="3" class="wdk-cms-text " style="font-weight:bold;font-size:22px;" row-index="10" data-json="c10">刷新缓存</div><div class="wdk-cms-text " style="" row-index="11" data-json="c11">有时我们需要刷新缓存，例如，我们更新的资源，且在Url中并没有加入版本参数，这是就需要我们刷新缓存了，刷新缓存有两种方式</div><div data-key="4" class="wdk-cms-text " style="font-weight:bold;font-size:20px;" row-index="12" data-json="c12">删除所有缓存</div><div class="wdk-cms-text " style="" row-index="13" data-json="c13">在根路径上输入<span style="color:#cc6600;">/?umc</span>，则打开如下图：</div><a style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="14" data-json="c14"><img style="" original-src="https://www.apiumc.com/UserResources/1mwlgcz/1666740721/image.png!m400" src="https://www.apiumc.com/UserResources/1mwlgcz/1666740721/image.png!m400" alt=""></a><div class="wdk-cms-text " style="" row-index="15" data-json="c15">点击清空缓存，则清空域名下所有缓存，</div><div data-key="4" class="wdk-cms-text " style="font-weight:bold;font-size:20px;" row-index="16" data-json="c16">手动刷新缓存</div><div class="wdk-cms-text " style="" row-index="17" data-json="c17">在url最后加处<span style="color:#cc6600;">?umc=src</span>或者<span style="color:#cc6600;">&amp;umc=src</span>，则可刷新此url缓存</div><div style="padding:7px" class="weui_cell  no_access" row-index="18" data-json="c18"><div class="weui_cell_bd weui_cell_primary"><p><span style="color:#999;font-size:14px;"><span style="font-family:wdk;"></span>  吴顺明 | 阅读(12) | 评论(0)</span></p></div><div class="weui_cell_ft wdk-button"></div></div><div style="padding:10px 20px 10px 20px" class="weui_cell  no_access" row-index="19" data-json="c19"><div class="weui_cell_bd weui_cell_primary wdk-button" style="text-align:center"><a click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Best&quot;,&quot;send&quot;:{&quot;Key&quot;:&quot;7158341160958754817&quot;}}}" style="min-width:80px;color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span style="color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span style="font-family:wdk;"></span>赞</span></a> <a click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Comment&quot;,&quot;send&quot;:{&quot;Refer&quot;:&quot;7158341160958754817&quot;}}}" style="min-width:80px;color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span style="color:#999;border-radius:20px;border-color:#999;font-size:16px;">评论</span></a> </div></div></div><div class=" umc-subject-footer"><a class=" umc-subject-left" href="/proxy/rjuj4q/rkarfg" ui-spa="1">穿透缓存机制</a><a class=" umc-subject-right">无</a></div><div class="weui_cells weui_cells_access" id="Comments" section-index="1"><div class="wdk-tabs-fixed" row-index="0"><div class="weui_navbar"><div class="weui_navbar_item weui_bar_item_on" data-index="0">评论</div><div class="weui_navbar_item" data-index="1">点赞</div><div class="weui_navbar_item" data-index="2">已读</div> </div></div><div class="wdk-desc" style="white-space: pre-line; line-height:1.5; padding:20px 20px 20px 20px;text-align:center;color:#aaa;background-color:#fff;font-size:12px;" row-index="1" data-json="c20"><span style="text-align:center;color:#aaa;background-color:#fff;font-size:12px;"><span style="font-size:60px;font-family:wdk;"></span>
+暂无评论</span></div></div></section>
+<nav class="wdk-top-icon"></nav>
+</div>
+<div class="wdk-subject-nav el-scrollbar__wrap">
+<div id="nav"><div class="wdk-subject-nav-item" style="padding-left:30px;" data-index="0"><a>缓存机制</a></div><div class="wdk-subject-nav-item" style="padding-left:30px;" data-index="1"><a>缓存机制配置</a></div><div class="wdk-subject-nav-item" style="padding-left:30px;" data-index="2"><a>刷新缓存</a></div><div class="wdk-subject-nav-item" style="padding-left:40px;" data-index="3"><a>删除所有缓存</a></div><div class="wdk-subject-nav-item" style="padding-left:40px;" data-index="4"><a>手动刷新缓存</a></div></div>
+</div>
+</div></section>
+            <!--%end%-->
+
         </div>
     </div>
-    <div class="category">
-        <span class="navname">相关文档推荐：</span>
-        <ul class="lista">
-                    <li><a href="/doc/d314630433.html" target="_blank"><em>企业住所</em>(经营场所)<em>登记表</em></a></li>
-                    <li><a href="/doc/4213005186.html" target="_blank"><em>企业住所</em>(经营场所)<em>登记表</em></a></li>
-                    <li><a href="/doc/2a11570970.html" target="_blank"><em>企业住所</em>(经营场所)<em>登记表格</em>模板</a></li>
-                    <li><a href="/doc/2c4246590.html" target="_blank"><em>企业住所</em>(经营场所)<em>登记表</em></a></li>
-                    <li><a href="/doc/d46302406.html" target="_blank"><em>企业住所登记表</em></a></li>
-                    <li><a href="/doc/d29508022.html" target="_blank"><em>企业住所</em>(经营场所)<em>登记表</em>及相关证明范本</a></li>
-                    <li><a href="/doc/b85128998.html" target="_blank"><em>住所</em>(经营场所)<em>登记表</em>(示范文本)</a></li>
-                    <li><a href="/doc/cf11981539.html" target="_blank"><em>住所</em>(经营场所)<em>登记表</em>(工商局最新版本)</a></li>
-                    <li><a href="/doc/2216425078.html" target="_blank">(完整版)<em>住所</em>(经营场所)<em>登记表</em>(工商局最新版本)</a></li>
-                    <li><a href="/doc/f315022955.html" target="_blank"><em>住所</em>经营场所<em>登记表</em></a></li>
-                    <li><a href="/doc/ff13263299.html" target="_blank"><em>住所</em>(经营场所)<em>登记表</em></a></li>
-                    <li><a href="/doc/361891568.html" target="_blank"><em>住所</em>(经营场所)<em>登记表格</em>模板</a></li>
-                    <li><a href="/doc/a317748756.html" target="_blank"><em>企业</em>、个体工商户<em>住所</em>(经营场所)<em>登记表</em></a></li>
-                    <li><a href="/doc/4117064075.html" target="_blank">《<em>登记</em>附表<em>住所</em>经营场所<em>登记表</em>》</a></li>
-                    <li><a href="/doc/9b6596186.html" target="_blank"><em>住所</em>经营场所<em>登记表</em></a></li>
-                    <li><a href="/doc/e411222739.html" target="_blank"><em>住所</em>(经营场所)<em>登记表</em> 范本</a></li>
-                    <li><a href="/doc/ca21150.html" target="_blank"><em>住所登记表</em></a></li>
-                    <li><a href="/doc/3a14734082.html" target="_blank"><em>企业</em>经营场所<em>登记表</em> (自动保存的)</a></li>
-            
-        </ul>
-    </div>
-</div>
-<script>
-    $(".tabs section").first().attr("class", "tab-body active");
-    $(".tab-head li").click(function () {
-        $(".tabs section").each(function () {
-            if ($(this).attr("class") == "tab-body active") { $(this).attr("class", "tab-body"); }
-        });
-        $("#tab-" + event.target.id).attr("class", "tab-body active");
-    });
-</script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajax({
-                type: 'GET',
-                url: "/doc/d/23841c4104a1b0717ed5dd2d",
-                data: null,
-                async: true,
-                dataType: 'json',
-                success: (data) => {
-                    if (data.d) { $("#downcontainer").show(); }
-                },
-            });
-        });
-    </script>
-<script type="text/javascript">bdtj();</script>
 
-    <footer class="footer">
-        <p><a href="/tousu.html" target="_blank">侵权投诉</a>&nbsp;&copy; 2022 www.doczj.com  <a href="/site-map.html">网站地图</a></p>
-        <p>
-            <a href="https://beian.miit.gov.cn" target="_blank">闽ICP备18022250号-1</a>&nbsp;&nbsp;本站资源均为网友上传分享，本站仅负责分类整理，如有任何问题可通过上方投诉通道反馈
-            <script type="text/javascript">foot();</script>
-        </p>
-    </footer>
 </body>
+
 </html>

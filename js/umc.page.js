@@ -41,12 +41,6 @@
     });
 
     var links = {};
-    // function pager() {
-    //     this.page = function (u, t, s, f) {
-    //         UMC.page(u, t, s, f);
-    //         return this;
-    //     }
-    // }
     $.page = function (u, t, s, f) {
         if ($.isfn(t)) {
             f = t;
@@ -123,17 +117,12 @@
         if (l == 0)
             task();
         for (var i = 0; i < l; i++) {
-            var src = me.srcs[i];
-            var link = document.createElement('script')
-            link.src = src.indexOf('://') == -1 ? [UMC.Src || '', src].join('') : src;
-            $('head').append(link);
-            $(link).on('load,error', function () {
+            $({ tag: 'script', src: me.srcs[i] }).on('load,error', function () {
                 me.loaded++;
                 if (me.loaded == me.length) {
                     task();
                 }
-
-            });
+            }).appendTo($('head'));
         }
 
     }
@@ -180,8 +169,15 @@
     $.check = function (u) {
         var k = u.split('/')[0];
         return (tplt[u] || Page[u]) ? true : ((tplt[k] || Page[k]) ? true : false);
-
-
+    }
+    $.res = function () {
+        var g = [$.Src || ''];
+        var v;
+        while (v = arguments[g.length - 1]) {
+            g.push(v)
+        }
+       // $.UI.Ver ? g.push("?_v=", $.UI.Ver) : 0;// + __p.Ver : ''
+        return g.join('');
     }
     $.UI.On("DataEvent", function (e, p, v) {
         var eKey = p.type;
@@ -212,12 +208,13 @@
         if (!ps) {
             var tpl = false;
             var klength = 0;
+            var uiKey = '';
             for (var k in tplt) {
                 if (path.indexOf(k + '/') == 0) {
                     if (klength < k.length) {
                         tpl = tplt[k];
                         klength = k.length;
-                        hashValue = 'key=' + path.substring(k.length + 1);
+                        uiKey = path.substring(k.length + 1);
                     }
                 }
             }
@@ -236,7 +233,7 @@
                     win.on('page', path, hashValue);
                 }
                 else if (tpl.root) {
-                    $(tpl.root.cloneNode(true)).attr('ui', path).attr('ui-key', hashValue.substring(4)).appendTo(UMC.UI.EventUI || 'body')
+                    $(tpl.root.cloneNode(true)).attr('ui', path).attr('ui-key', uiKey).appendTo(UMC.UI.EventUI || 'body')
                     Page[path] = { init: tpl.init, search: tpl.search || false, tpl: true, title: tpl.title };
                     win.on('page', path, hashValue);
                 } else {
@@ -245,13 +242,13 @@
                     xhr.onload = function () {
                         tpl.root = $(document.createElement("div")).html(xhr.responseText).children("div").remove()[0];
                         if (tpl.root) {
-                            tpl.init ? win.on('page', path, hashValue) : $.script(tpl.src + '.js')
+                            tpl.init ? win.on('page', path, hashValue) : $.script($.res(tpl.src, '.js'))
                                 .wait(function () {
                                     win.on("page", path, hashValue);
                                 });
                         }
                     };
-                    xhr.open('GET', ($.Src || '') + tpl.src + '.html', true);
+                    xhr.open('GET', $.res(tpl.src, '.html'), true);
                     xhr.send('');
                 }
             } else {
@@ -259,7 +256,7 @@
 
                 if (key && (Page[key] == true)) {
                     delete Page[key];
-                    $.script([key, '/', key, '.js'].join(''))
+                    $.script($.res(key, '/', key, '.js'))
                         .wait(function () {
                             if (Page[path] || tplt[key] || tplt[path.substring(0, path.lastIndexOf('/'))]) {
                                 win.on("page", path, hashValue);
@@ -280,25 +277,22 @@
                         m.attr('ui', path);
                     }
                 }).appendTo(UMC.UI.EventUI || 'body');
-                $.script(path + '.js').wait(function () {
+                $.script($.res(path, '.js')).wait(function () {
                     if (Page[path] === true) {
                         delete Page[path];
                     }
                     win.on("page", path, hashValue);
                 });
             };
-            xhr.open('GET', ($.Src || '') + path + '.html', true);
+            xhr.open('GET', $.res(path, '.html'), true);
             xhr.send('');
 
         } else if (ps.root) {
-            $.UI.On('UI.Push', ps, path);
             var em = ps.root;
+            ps.tpl ? value.key = em.attr('ui-key') : 0;
+            $.UI.On('UI.Push', ps, path);
             if ((em.attr('hash') || '') != hashValue) {
-                if (ps.tpl) {
-                    em.on('hash', { key: path.substring(path.lastIndexOf('/') + 1) });
-                } else {
-                    em.on('hash', value);
-                }
+                em.on('hash', value);
                 hashValue !== true ? em.attr('hash', hashValue) : 0;
             }
 
@@ -318,7 +312,7 @@
                     }
                 });
             if (ps.root) {
-
+                ps.tpl ? value.key = ps.root.attr('ui-key') : 0
                 var th = function () {
                     ps.root.on('hash', value);
                     ps.root.attr('hash', hashValue)
@@ -368,7 +362,7 @@
                         .attr('ui', path).appendTo(UMC.UI.EventUI || 'body').length ?
                         win.on("page", path, hashValue) : 0;
                 };
-                xhr.open('GET', ($.Src || '') + path + '.html', true);
+                xhr.open('GET', $.res(path, '.html'), true);
                 xhr.send('');
             }
         }
@@ -405,6 +399,20 @@
                 return;
             }
             href = ($.SPA || '') + spa
+        }
+        if (href.startsWith('/UMC/')) {
+            var hrefs = href.substring(1).split('?');
+            var paths = hrefs[0].replace(/(^\/+)|(\/+$)/g, '').split('/');
+            paths.shift();
+            if (paths.length > 1) {
+                var search = {};
+                var model = paths.shift();
+                var cmd = paths.shift();
+                var search = $.query(hrefs[1] || '');
+                if (paths.length) search._ = paths.join('/');
+                $.UI.Command(model, cmd, search);
+                return false;
+            }
         }
         if ($.SPA && href.charAt(0) == '#') {
             href = (href.length == 1 ? $.SPA : ($.SPAPfx || $.SPA)) + href.substring(1);

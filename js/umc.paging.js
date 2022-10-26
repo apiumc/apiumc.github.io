@@ -136,7 +136,7 @@
             this.dom.find('.btn-next')[0].disabled = currentPage >= (totalPage - 1);
         }
     }
-    WDK.prototype.paging = function (m, c, fn, o, l) {
+    UMC.prototype.paging = function (m, c, fn, o, l) {
         if ($.isfn(m)) {
             fn = m;
             l = c || 0;
@@ -148,7 +148,7 @@
                 new Paging($(this), l);
             }).on('paging', function (e, s) {
                 var me = $(this);
-                WDK.UI.Command(m, c, s, function (x) {
+                UMC.UI.Command(m, c, s, function (x) {
                     me.on('total', x.total || 0);
                     fn(x);
                 });

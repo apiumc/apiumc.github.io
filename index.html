@@ -1,11 +1,9 @@
 <!doctype html>
 <html>
-
 <head>
-    <title>APIUMC</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta http-equiv="Cache-Control" content="no-transform">
+    <title>APIUMC</title>
     <link href="/css/weui.css" rel="stylesheet" type="text/css" />
     <link href="/css/base.css" rel="stylesheet" type="text/css" />
     <link href="/css/icon.css" rel="stylesheet" type="text/css" />
@@ -32,14 +30,6 @@
         <i class="el-message__icon el-icon-success"></i>
         <p class="el-message__content"></p>
     </div>
-    <script type="text/html" id="menu-wrapper">
-        <div class="menu-wrapper">
-            <li class="el-submenu">
-                <div class="el-submenu__title"><input><i class="el-submenu__icon-arrow"></i><em></em></div>
-                <ul class="el-menu"></ul>
-            </li>
-        </div>
-    </script>
     <div class="navbar">
 
         <div class="sidebar-logo-container">
@@ -72,11 +62,10 @@
             <div class="header-sub-nav">
                 <ul class="menu-site">
                     <li><a ui-spa href="/">主页</a></li>
-                    <li><a ui-spa href="/Gateway">门神网关</a></li>
                     <li><a ui-spa href="/Wiki">知识库</a></li>
+                    <li><a ui-spa href="/Gateway">门神网关</a></li>
                     <li><a ui-spa href="/Bridge">内网穿透</a></li>
                     <li><a ui-spa href="/About">关于我们</a></li>
-                    <!-- <li><a class="AppDown" ui-spa href="/download">移动端下载</a></li> -->
                 </ul>
             </div>
             <div class="header-search right-menu-item show" id="header-search">
@@ -96,7 +85,6 @@
         <div class="right-menu">
             <a model="Account" cmd="Self" send="User" class="box-card-user">
             </a>
-
         </div>
         <div class="right-menu" id="menu">
 
@@ -113,7 +101,7 @@
                     </div>
                     <div class="el-scrollbar__view">
                         <!--%publish menu%-->
-                        <div id="menubar" class="el-menu"></div>
+                        <ul id="menubar" class="el-menu"></ul>
                         <!--%end%-->
 
                         <div class="el-menu"></div>
@@ -121,27 +109,21 @@
                 </div>
             </div>
             <div class="el-link-menu" style="height: 50px;">
-
                 <a class="wdk-footer-icon" id="Portfolio">
                     <i>&#xf07c;</i><em>新建文集</em>
                 </a>
                 <a class="wdk-footer-icon" title="新建富文本格式" id="Rich">
                     <i>&#xf13b;</i><em>新建文档</em>
                 </a>
-                <a class="wdk-footer-icon" id="Markdown" title="新建Markdown格式">
-                    <i>&#xf198;</i><em>新建文档</em>
-                </a>
-                <a class="wdk-footer-icon" ui-spa href="/365lu/help">
+                <a class="wdk-footer-icon" ui-spa href="/wiki/help">
                     <i>&#xf059;</i><em>帮助手册</em>
                 </a>
             </div>
         </div>
 
         <div class="main-container">
-
             <!--%publish container%-->
             <section class="app-main">
-
             </section>
             <!--%end%-->
         </div>

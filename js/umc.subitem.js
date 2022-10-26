@@ -81,67 +81,54 @@
     var navBar = {}
     $.tpl('sub', 'subject/subject', function (root) {
         var view = root.find('#view');
-        var t = new WDK.UI.Pager(view);
+        var t = new $.UI.Pager(view);
         t.model = "Subject";
         t.cmd = 'UIMin'
-        root.on('hash', function (e, v) {
-            if (v.key) {
-                t.search = { Id: v.key };
-                WDK.UI.Command(t.model, t.cmd, WDK.extend({
-                    limit: 30
-                }, t.search), function (xhr) {
-                    root.attr('data-id', t.search.Id);
-                    t.b.html('');
-                    t.dataSource(xhr);
-                    $.UI.On('Subject.Show', t.search);
+        t.search = { Id: root.attr('ui-key') };
+        $.UI.Command(t.model, t.cmd, $.extend({
+            limit: 30
+        }, t.search), function (xhr) {
+            t.b.html('');
+            t.dataSource(xhr);
+            $.UI.On('Subject.Show', t.search);
 
-                    subNav(t, root);
-                    requestAnimationFrame(function () {
-                        $.UI.On('Subject.Comments.View', root);
-                    })
-                });
+            subNav(t, root);
+            requestAnimationFrame(function () {
+                $.UI.On('Subject.Comments.View', root);
+            })
+        });
 
-            }
-        }).on('active', function () {
-            if (root.attr('data-id'))
-                $.UI.On('Subject.Show', { Id: root.attr('data-id') });
+        root.on('active', function () {
+            $.UI.On('Subject.Show', { Id: root.attr('ui-key') });
         });
 
     }).tpl('item', 'subject/item', function (root) {
-        root.find('.umc-toc-nav').click('.umc-toc-nav-title', function () {
+        root.find('.umc-subitem-nav').click('.umc-subitem-nav-title', function () {
             var m = $(this).parent();
             m.cls('is-closed', !m.is('.is-closed'));
-
         })
-
-        root.on('hash', function (e, v) {
-            if (v.key) {
-                WDK.UI.Command('Subject', 'Item', v.key, function (xhr) {
-                    $('.umc-toc-caption', root).text(xhr.caption);
-                    root.find('.umc-toc-users').format(xhr.users, true);
-                    var htmls = [];
-                    var keys = [];
-
-                    var clength = navBar.code.length + 1;
-                    for (var i = 0; i < xhr.data.length; i++) {
-                        var it = xhr.data[i];
-                        keys.push(it.text);
-                        htmls.push('<li>', '<div class="umc-toc-nav-title"><i class="umc-toc-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-toc-nav-items">')
-                        htmls.push($.format('<li class="umc-toc-nav-item"><span class="umc-toc-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-toc-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
-                            Path: function (x) {
-                                keys.push(x.text);
-                                return $.SPA + x.path.substring(clength);
-                            }
-                        }), '</ul></li>');
-
-                    };
-                    root.find('.umc-toc-nav>ul').html(htmls.join(''));
-                    root.find('.umc-toc-users-sum span').text(xhr.users.length);
-
-                });
+        $.UI.Command('Subject', 'Item', root.attr('ui-key'), function (xhr) {
+            $('.umc-subitem-caption', root).text(xhr.caption);
+            root.find('.umc-subitem-users').html($.format('<li><a model="Subject" cmd="Account" send="{id}"><img src="{src}" /></a></li>', xhr.users));
+            var htmls = [];
+            var keys = [];
+            for (var i = 0; i < xhr.data.length; i++) {
+                var it = xhr.data[i];
+                keys.push(it.text);
+                htmls.push('<li>', '<div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-subitem-nav-items">')
+                htmls.push($.format('<li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-subitem-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
+                    Path: function (x) {
+                        keys.push(x.text);
+                        return $.SPA + x.path;
+                    }
+                }), '</ul></li>');
 
             }
-        })
+            root.find('.umc-subitem-nav>ul').html(htmls.join(''));
+            root.find('.umc-subitem-users-sum span').text(xhr.users.length);
+        });
+
+
     })
 
 
@@ -226,7 +213,6 @@
             var htmls = [];
             for (var i = 0; i < xhr.subs.length; i++) {
                 var it = xhr.subs[i];
-                htmls.push('<div class="menu-wrapper">');
                 htmls.push('<li class="el-submenu">', '<div class="el-submenu__title" data-id="', it.id, '">', it.text, '<i class="el-submenu__icon-arrow"></i><em></em></div>', '<ul class="el-menu">')
                 var subs = it.subs || [];
                 if (!subs.length) {
@@ -238,7 +224,6 @@
 
                     }
                 }), '</ul></li>');
-                htmls.push('</div>');
 
             };
             menubar.attr('nav', $.SPA + xhr.nav).html(htmls.join(''));
@@ -266,23 +251,28 @@
 
             history.replaceState(null, null, $.SPA + xhr.nav.substring(clength));
             if (xhr.spa) {
-                $(window).on('page', 'sub/' + xhr.spa.id, '');
-            } else {
-                var selectIndex = navBar.selectIndex || 0;
-                for (var i = 0; i < navBar.menu.length; i++) {
-
-                    if (navBar.menu[i].path == xhr.nav) {
-                        selectIndex = i;
-
-                        window.top.postMessage(JSON.stringify({
-                            type: 'page',
-                            value: { title: navBar.menu[i].text, search: true }
-                        }), "*");
-                        break;
-                    }
+                xhr.spa.path ? history.replaceState(null, null, $.SPA + xhr.spa.path.substring(clength)) : 0;
+                switch (xhr.spa.type || 'subject') {
+                    case 'subject':
+                        $(window).on('page', 'sub/' + xhr.spa.id, '');
+                        return;
                 }
-                $(window).on('page', 'item/' + navBar.menu[selectIndex].id, '');
             }
+            var selectIndex = navBar.selectIndex || 0;
+            for (var i = 0; i < navBar.menu.length; i++) {
+
+                if (navBar.menu[i].path == xhr.nav) {
+                    selectIndex = i;
+
+                    window.top.postMessage(JSON.stringify({
+                        type: 'page',
+                        value: { title: navBar.menu[i].text, search: true }
+                    }), "*");
+                    break;
+                }
+            }
+            $(window).on('page', 'item/' + navBar.menu[selectIndex].id, '');
+
 
 
         }).On('Subject.Show', function (e, xhr) {
@@ -294,14 +284,6 @@
                     return false;
                 }
             });
-            $('.el-submenu__title', menubar).each(function () {
-                var a = $(this);
-                if (a.attr('data-id') == xhr.Id) {
-                    var wrapper = a.parent('.menu-wrapper');
-                    wrapper.remove();
-                    return false;
-                }
-            })
         });
         $(document.body).on('UI.Key.Nav', function (e, v) {
             $.UI.Command("Subject", 'PortfolioSub', { Key: v }, function (xhr) {

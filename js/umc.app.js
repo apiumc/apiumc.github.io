@@ -70,10 +70,11 @@
             })
         })
     }
-    UMC.UI.On('XHR.Bridged', function (e, s, v, fn) {
+    UMC.UI.On('XHR.Bridge', function (e, xhr, fn) {
         var form = $('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('win-id') || 'self';
-
-        new Bridge(form, fn).bridge(v);
+        xhr.onload = function () {
+            new Bridge(form, fn).bridge(JSON.parse(xhr.responseText));
+        }
         return false;
     })
 

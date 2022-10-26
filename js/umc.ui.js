@@ -148,9 +148,7 @@
         return ['<a style="', padding(padd), '"', formatClick(value.click), '  class="wdk-cms-image"><img style="', maxWidth ? ('max-width:' + maxWidth + "px") : '', '" original-src="', value.original || value.src, '"  src="', value.src, '" alt=""/></a>'].join('');
     }
     $.UI.Cells.CMSText = function (value, fmt, style) {
-
-        var htmls = ['<div ', value.Key ? ('data-key=' + value.Key) : '', ' class="wdk-cms-text '];
-        htmls.push('" style="');
+        var htmls = ['<div ', value.Key ? ('data-key=' + value.Key) : '', ' class="wdk-cms-text " style="'];
         var click = $.style(style || {}, htmls, true);
         htmls.push('"', formatClick(click), '>')
         var sk = {}
@@ -340,12 +338,24 @@
                 '</div></div>');
 
         }
-        if (value.button || fmt.button)
-            htmls.push(
-                '<div class="wdk-cms-look-button">',
-                '<a ', formatClick(value['button-click']), ' class="weui_btn weui_btn_mini weui_btn_warn" style="background:', value['button-color'] || '#e67979', '">', $.format(fmt.button || '{button}', value, style), '</a>',
-
-                '</div>');
+        if (value.button || fmt.button) {
+            var bStyle = style.button;//|| {};
+            htmls.push('<div class="wdk-cms-look-button" style="font-size:12px">');
+            var bc = value['button-color'];
+            if (bc) {
+                var bg = bStyle || {};
+                bg['background-color'] = bc;
+                bStyle = bg;
+            }
+            if (value['button-click'] || bStyle) {
+                htmls.push('<a ', formatClick(value['button-click']), ' class="weui_btn weui_btn_mini weui_btn_warn" style="')
+                UMC.style(bStyle, htmls)
+                htmls.push('">', $.format(fmt.button || '{button}', value, {}), '</a>');
+            } else {
+                htmls.push($.format(fmt.button || '{button}', value, style))
+            }
+            htmls.push('</div>');
+        }
         htmls.push('</div>');
         return htmls.join('');
     }

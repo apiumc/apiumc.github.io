@@ -1,5 +1,7 @@
 
 (function ($) {
+    $.SPA = '/UMC/';
+    $.Src = '/UMC.UI/'
     $.page('main', 'API UMC', false, function (root) {
 
         root.on('event', function (e, v) {
@@ -76,6 +78,7 @@
             location.href = v;
         });
         $.UI.On('UI.Push', function (e, xhr) {
+            document.title = xhr.title || 'API UMC'
             var last = app.children('div.ui').cls('ui', 0);
             if (last.on('backstage') !== false)
                 last.remove();
@@ -106,7 +109,10 @@
                     msg.removeClass('animate');
                 }, 5000);
             });
-
+        var p = location.pathname.substring($.SPA.length).replace(/(^\/+)|(\/+$)/g, '');
+        if (p) {
+            $.page(p);
+        }
         requestAnimationFrame(() => $(window).on('popstate', 1));
     });
 })(UMC); 

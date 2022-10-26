@@ -226,7 +226,7 @@ input.weui_btn_mini {
 }
 
 .weui_btn_area {
-    margin: 1.17647059em 15px .3em
+    margin: 1em 15px 1em;
 }
 
 .weui_btn_area.weui_btn_area_inline {
@@ -398,7 +398,7 @@ input.weui_btn_plain_default {
 .weui_cells {
     background-color: #fff;
     line-height: 1.41176471;
-    font-size: 17px;
+    font-size: 14px;
     overflow: hidden;
     position: relative
 }
@@ -1545,7 +1545,8 @@ a.weui_media_box:active {
     background-color: #fafafc;
     text-align: center;
     border-radius: 3px;
-    overflow: hidden
+    overflow: hidden;
+    box-shadow: 0px 2px 6px 2px rgb(42 93 158 / 30%);
 }
 
 .weui_dialog_confirm .weui_dialog .weui_dialog_hd {
@@ -1592,7 +1593,8 @@ a.weui_media_box:active {
     flex: 1;
     color: #3cc51f;
     text-decoration: none;
-    -webkit-tap-highlight-color: transparent
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
 }
 
 .weui_dialog_ft a:active {
@@ -2065,6 +2067,15 @@ a.weui_media_box:active {
     top: 0;
     left: 0
 }
+.weui_btn_dialog input {
+    position: absolute;
+    left: 0px;
+    top:0px;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
 
 .weui_mask_transition {
     display: none;

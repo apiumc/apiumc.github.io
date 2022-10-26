@@ -21,11 +21,11 @@
             });
             emKeys = new $(ps);
         }
-        var navs = root.find('#nav').format(keys, {
+        var navs = root.find('#nav').html($.format('<div class="wdk-subject-nav-item" style="padding-left:{value};"><a>{text}</a></div>', keys, {
             value: function (x) {
                 return (parseInt(x.index) || 0) * 10 + 'px'
             }
-        }, true).find('.wdk-subject-nav-item')
+        })).find('.wdk-subject-nav-item')
             .click(function () {
                 var ofset = emKeys.eq(parseInt($(this).attr('data-index'))).offset();
                 var top = ofset.top - con.top;
@@ -83,7 +83,13 @@
             });
             return false;
         });
-        var t = new WDK.UI.Pager(view);
+
+        root.on('active', function () {
+            if ($.UI.IsFollow) {
+                $('.umc-subject-view .umc-sub-follower').remove();
+            }
+        });
+        var t = new $.UI.Pager(view);
         view.on('section', function (e, em) {
             if (em.is('#Subject')) {
                 $.UI.On('Subject.Comments.View', root);
@@ -91,35 +97,40 @@
         });
         t.model = "Subject";
         t.cmd = 'UIData'
-        root.on('hash', function (e, v) {
-            if (v.key) {
-                t.search = { Id: v.key };
-                WDK.UI.Command(t.model, t.cmd, WDK.extend({
-                    limit: 30
-                }, t.search), function (xhr) {
-                    root.attr('data-id', (xhr.Title || {}).Id);
-                    t.b.html('');
-                    t.dataSource(xhr);
-                    var tt = xhr.Title;
-                    if (tt && tt.Id) {
-                        $.UI.On('Subject.Show', { Id: tt.Id });
-                    }
-                    root.on('menu', tt.Editer ? { key: tt.Id, icon: '\uf044' } : []);
-                    subNav(t, root);
-                    if (tt.releaseId)
-                        $.UI.On('UI.Publish', tt.title, root.find('#nav').text().replace(/\s+/g, ' '), view.text().replace(/\s+/g, ' '), {
-                            type: 'Sub', Id: tt.releaseId
-                        });
-                });
+        t.search = { Id: root.attr('ui-key') };
+        root.ui('User', function () {
+            $.UI.API(t.model, t.cmd, WDK.extend({
+                limit: 30
+            }, t.search), function (xhr) {
+                t.b.html('');
+                t.dataSource(xhr);
+                var tt = xhr.Title;
+                if (tt && tt.Id) {
+                    $.UI.On('Subject.Show', { Id: tt.Id });
+                }
 
-            }
-        }).ui('Markdown', function (e, v) {
+                $.UI.On('Subject.Path', { Path: tt.Path });
+                root.on('menu', tt.Editer ? { key: tt.Id, icon: '\uf044' } : []);
+                subNav(t, root);
+                if (tt.Follow) {
+                    view.find('#Subject').append($(document.createElement('div')).addClass('umc-sub-follower').html("作者设置了<a data-key=\"" + tt.Follow + "\">关注</a> 项目公众号后<br/>才可解锁内容").click('a', function () {
+                        $.UI.On('Login', { code: $(this).attr('data-key') });
+                    }));
+                }
+                if (tt.releaseId)
+                    $.UI.On('UI.Publish', tt.title, tt.Keywords || root.find('#nav').text().replace(/\s+/g, ' '), tt.Description || view.text().replace(/\s+/g, ' '), {
+                        type: 'Sub', Id: tt.releaseId
+                    });
+
+            });
+        }, true).ui('User');
+
+        root.ui('Markdown', function (e, v) {
             $(window).on('page', 'subject/markdown', 'id=' + v.Id);
         }).on('event', function (e, key) {
             $(window).on('page', 'subject/markdown', 'id=' + key);
         }).on('active', function () {
-            if (root.attr('data-id'))
-                $.UI.On('Subject.Show', { Id: root.attr('data-id') });
+            $.UI.On('Subject.Show', { Id: root.attr('ui-key') });
         });
 
     }, '正文').tpl('subject/item', 'subject/item', function (root) {
@@ -156,35 +167,32 @@
 
         })
 
-        root.on('hash', function (e, v) {
-            if (v.key) {
-                WDK.UI.Command('Subject', 'Item', v.key, function (xhr) {
-                    $('.umc-subitem-caption', root).text(xhr.caption);
-                    root.find('.umc-subitem-users').format(xhr.users, true);
-                    var htmls = [];
-                    var keys = [];
-                    for (var i = 0; i < xhr.data.length; i++) {
-                        var it = xhr.data[i];
-                        keys.push(it.text);
-                        htmls.push('<li>', '<div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-subitem-nav-items">')
-                        htmls.push($.format('<li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-subitem-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
-                            Path: function (x) {
-                                keys.push(x.text);
-                                return $.SPA + x.path;
-                            }
-                        }), '</ul></li>');
-
+        $.UI.Command('Subject', 'Item', root.attr('ui-key'), function (xhr) {
+            $('.umc-subitem-caption', root).text(xhr.caption);
+            root.find('.umc-subitem-users').html($.format('<li><a model="Subject" cmd="Account" send="{id}"><img src="{src}" /></a></li>', xhr.users));
+            var htmls = [];
+            var keys = [];
+            for (var i = 0; i < xhr.data.length; i++) {
+                var it = xhr.data[i];
+                keys.push(it.text);
+                htmls.push('<li>', '<div class="umc-subitem-nav-title"><i class="umc-subitem-nav-arrow"></i>', it.text, '</div>', '<ul class="umc-subitem-nav-items">')
+                htmls.push($.format('<li class="umc-subitem-nav-item"><span class="umc-subitem-nav-left"><a ui-spa href="{Path}">{text}<small>{state}</small></a></span><span class="umc-subitem-nav-right"> <a data-id="{id}" >{code}</a><em></em></span></li>', it.subs || [], {
+                    Path: function (x) {
+                        keys.push(x.text);
+                        return $.SPA + x.path;
                     }
-                    root.find('.umc-subitem-nav>ul').html(htmls.join(''));
-                    root.find('.umc-subitem-users-sum span').text(xhr.users.length);
-                    if (xhr.releaseId)
-                        $.UI.On('UI.Publish', xhr.caption, keys.join(','), keys.join(','), {
-                            type: 'Item', Id: xhr.releaseId
-                        });
-                });
+                }), '</ul></li>');
 
             }
-        }).ui('Subject.Change', function (e, xhr) {
+            root.find('.umc-subitem-nav>ul').html(htmls.join(''));
+            root.find('.umc-subitem-users-sum span').text(xhr.users.length);
+            $.UI.On('Subject.Path', { Path: xhr.path });
+            if (xhr.releaseId)
+                $.UI.On('UI.Publish', xhr.caption, keys.join(','), keys.join(','), {
+                    type: 'Item', Id: xhr.releaseId
+                });
+        });
+        root.ui('Subject.Change', function (e, xhr) {
             nav.find('.umc-subitem-nav-right a').each(function () {
                 var m = $(this);
                 if (m.attr('data-id') == xhr.id) {
@@ -211,174 +219,17 @@
                 }
             });
             if (t.length == 1) {
-                paging.on('search', { Project: WDK.UI.ProjectId });
+                paging.on('search', { Project: $.UI.ProjectId });
             }
         });
         root.on('active', function () {
-            var pid = root.attr('project-id');
-            if (pid != WDK.UI.ProjectId) {
-                root.attr('project-id', WDK.UI.ProjectId);
-
-                paging.on('search', { Project: WDK.UI.ProjectId });
-            }
+            paging.on('search', { Project: $.UI.ProjectId });
 
         }).on('searchValue', function () {
         }).on('active');
 
-    }, false).page('subject/login', '登录', function (root) {
-        var frm = root.find('form').submit(function () {
-            var m = $(this);
-            var p = m.val();
-            if (p) {
-                if (m.is('.mobile-code')) {
-                    delete p.Password;
-                } else {
-                    delete p.VerifyCode;
-                }
-                WDK.UI.Command('Account', 'Login', p);
-            }
-            return false;
-
-        });
-        root.find('.loginFunc').click(function () {
-            var mp = $(this).parent().cls('scanning');
-            if (!mp.attr('mqtt')) {
-                mp.attr('mqtt', 'YES');
-                $.script('js/mqttws31.min.js').script('js/qrcode.min.js').wait(function () {
-                    $.UI.API("Account", "Check", 'Mqtt', function (cfg) {
-
-                        if (!cfg.client) {
-
-                            login.find(".qrcode_view .context").html("<a>扫码配置不正确</a>");
-                            return;
-                        }
-                        var client = new Paho.MQTT.Client(cfg.broker, 443, cfg.client);
-
-                        root.find(".qrcode_view .context").click('a', function () {
-                            root.on("connect");
-                        });
-                        client.onMessageArrived = function (message) {
-                            var uss = JSON.parse(message.payloadString)[0];
-                            if (uss.msg) {
-                                if (uss.msg == 'OK') {
-                                    location.reload(false);
-                                } else {
-                                    root.find(".qrcode_view .context").html(['<img src="', uss.src || uss.Src, '"/><b>', uss.msg, '</b>'].join(''));
-
-                                }
-                            }
-                        };
-                        var qrcode = new QRCode(root.find("#qrcode").html('')[0], {
-                            width: 200,
-                            height: 200
-                        });
-                        var timeId = 0;
-                        root.on('disconnect', function () {
-                            client.disconnect();
-                            clearTimeout(timeId);
-                            root.find(".qrcode_view .context").html("<a>刷新二维码</a>");
-                        }).on('connect', function () {
-                            root.find(".qrcode_view .context").html("<b>正在加载</b>");
-                            clearTimeout(timeId);
-                            client.connect({
-                                useSSL: true,
-                                userName: cfg.user,
-                                password: cfg.pass,
-                                onSuccess: function () {
-                                    root.find(".qrcode_view .context").children().remove();
-
-                                    qrcode.makeCode([UMC.UI.Config().domain || location.origin, , '/Auth?', $.UI.Device].join(''));
-
-                                    timeId = setTimeout(function () {
-                                        root.on('disconnect')
-                                    }, 1000 * 120);
-                                },
-                                mqttVersion: 4,
-                                onFailure: function (e) {
-                                    console.log(e);
-                                }
-                            });
-                        }).on('connect');
-                    });
-                });
-            } else {
-                root.on(mp.is('.scanning') ? "connect" : 'disconnect');
-
-            }
-        });
-
-        var m = $('#sendBtn', root).click(function () {
-            if (m.is('.send') == false) {
-                var val = frm.val();//$('#Username').val();
-                if (val.Username) {
-                    WDK.UI.Command('Account', "Login", {
-                        Mobile: val.Username
-                    });
-                }
-            }
-        });
-        root.on('event', function (e, v, me) {
-            // var me = $(this);
-            var frm = me.parent('form');
-
-            frm.find('.link-type').each(function () {
-                frm.removeClass($(this).attr('ui-event'));
-            });
-
-            frm.addClass(v);
-
-        }).ui('VerifyCode', function () {
-            m.addClass('send');
-            var t = 100;
-            var initer = setInterval(function () {
-                t--;
-                m.text('发送(' + t + ')');
-                if (t == 0) {
-                    clearInterval(initer);
-                    m.removeClass('send').text("再次发送");
-
-                }
-            }, 1000);
-        })
-    }, false).tpl('subject/page', 'subject/page', function (root) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            if (xhr.status < 400 && xhr.responseText.indexOf('<body') == -1) {
-                root.find('.umc-sub-page-container').html(xhr.responseText)
-                root.find('ul[type=tabs] li').on('mouseenter', function () {
-                    var me = $(this);
-                    var pem = me.parent();
-                    if (!me.is('li[data-index]')) {
-                        pem.children('li').each(function (i) {
-                            $(this).attr('data-index', i + '')
-                        });
-                    }
-                    root.find(pem.attr('for')).children('div').cls('active', 0)
-                        .eq(parseInt(me.attr('data-index')) || 0).cls('active', 1);
-                    me.cls('active', 1).siblings().cls('active', 0);
-
-                });
-                root.find('.clue-button_wechat-consultation').on('mouseenter', function () {
-                    root.find('.clue-card_wechat-consultation').addClass('hover')
-                }).on('mouseleave', function () {
-                    root.find('.clue-card_wechat-consultation').removeClass('hover')
-                })
-                root.find('.clue-button_app-download').on('mouseenter', function () {
-                    root.find('.clue-card_app-download').addClass('hover')
-                }).on('mouseleave', function () {
-                    root.find('.clue-card_app-download').removeClass('hover')
-                })
-
-            } else {
-                delete $.page()['subject/page/' + root.attr('ui-key')];
-                $.nav('/');
-            }
-
-        };
-        xhr.open('GET', [$.Src || '', 'subject/page/', root.attr('ui-key'), '.html'].join(''), true);
-        xhr.send('');
-    }, '我的主页').page('subject/dashboard', '我的工作台', false, function (root) {
-
+    }, false).page('subject/dashboard', '我的工作台', false, function (root) {
+        var tabs = {}
         $('.weui_navbar', root)
             .on('click', 'div.weui_navbar_item', function () {
                 var me = $(this);
@@ -386,31 +237,44 @@
                 var index = parseInt(me.attr('data-index')) || 0;
                 var body = me.parent().siblings('.wdk_tab_bd').children('div').eq(index);
                 body.show().siblings('div').hide();
-                if (!body.attr('inited')) {
-                    body.attr('inited', 'OK');
+                if (!tabs[index]) {
+                    tabs[index] = true;
                     switch (index) {
-                        case 0:
+                        case 0: {
                             var pager = new WDK.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'Follow'
 
-                            root.on('hash', function () {
+                            pager.query();
+                            root.ui('User', function () {
                                 pager.query();
-                            });
+                            }, true);
+                        }
                             break;
-                        case 1:
+                        case 1: {
                             var pager = new WDK.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'Self'
                             pager.search = { NextKey: 'Self', Type: 'PC' };
 
                             pager.query();
+                            root.ui('User,Subject.Portfolio.New', function () {
+                                pager.query();
+                            }, true)
+                        }
                             break;
-                        case 2:
-                            body.find('.pagination-container').paging("Subject", "Dynamic", body.find('.el-table>div').click('div[data-time]', function () {
-                                var m = $(this);
-                                $.UI.Command('Subject', 'Dynamic', { Id: m.attr('data-id'), Time: m.attr('data-time') });
-                            })).on('search');
+                        case 2: {
+
+                            var pager = new WDK.UI.Pager(body);
+                            pager.model = 'Subject'
+                            pager.cmd = 'Dynamic'
+
+                            pager.query();
+
+                            root.ui('User', function () {
+                                pager.query();
+                            }, true);
+                        }
                             break;
                     }
                 }
@@ -421,24 +285,30 @@
         pager2.model = 'Subject'
         pager2.cmd = 'Account'
         pager2.search = { NextKey: 'Self', selectIndex: 1 };
-
-        $.UI.Command('Subject', 'Project', 'self', function (xhr) {
-            root.find('*[data-field]').each(function () {
-                var m = $(this);
-                if (m.is('img')) {
-                    m.attr('src', xhr[m.attr('data-field')]);
-                } else {
-
-                    m.text(xhr[m.attr('data-field')]);
-                }
-            });
-        })
+        root.on("self.init", function () {
+            $.UI.Command('Subject', 'Project', 'self', function (xhr) {
+                root.find('*[data-field]').each(function () {
+                    var m = $(this);
+                    if (m.is('img')) {
+                        m.attr('src', xhr[m.attr('data-field')]);
+                    } else {
+                        m.text(xhr[m.attr('data-field')]);
+                    }
+                });
+            })
+        }).on('self.init');
 
         root.on('search', function () {
             return false;
         }).on('hash', function () {
             pager2.query();
-        }).ui('Subject.Member', function (e, v) {
+
+        }).ui('User', function () {
+            root.on('hash');
+            root.on('self.init');
+
+
+        }, true).ui('Subject.Member', function (e, v) {
             root.on('hash');
         }, true).ui('Subject.Project', function (e, v) {
             root.on('hash');
@@ -448,17 +318,24 @@
             root.ui('image');
             root.find('.weui_tab_bd_item').on('refresh');
             root.find('.pagination-container').on('search');
-        }, true).ui('UI.Setting')
+        }, true);//.ui('UI.Setting')
 
-    }, false).tpl('subject/dynamic', 'subject/dynamic', function (root) {
-        root.attr('project-id', WDK.UI.ProjectId);
-
+    }, false).tpl('subject/project', 'subject/project', function (root) {
         var editer = root.find('.umc-project-head').click('*[data-key]', function () {
             if (editer.is('.editer')) {
-                WDK.UI.Command("Subject", 'ProjectUI', { Id: root.attr('project-id'), Model: $(this).attr('data-key') });
+                WDK.UI.Command("Subject", 'ProjectUI', { Id: root.attr('ui-key'), Model: $(this).attr('data-key') });
             }
         })
-        var projectInfo = false;
+        var teamP = new WDK.UI.Pager(root.find(".umc-project-team"));
+        teamP.model = 'Subject'
+        teamP.cmd = 'Team'
+        teamP.search = { Project: root.attr('ui-key'), Type: 'M' };
+        teamP.query();
+        root.find('#join').click(function () {
+            $.UI.Command('Subject', 'Follow', root.attr('ui-key'));
+        });
+
+        var tabs = {};
         root.on('search', function (e, v) {
             var active = root.find('.weui_bar_item_on');
             var index = parseInt(active.attr('data-index')) || 0;
@@ -466,31 +343,34 @@
                 case 0:
                     return false;
                 default:
-
-                    active.parent().siblings('.wdk_tab_bd').children('div').eq(index).find('.pagination-container')
-                        .on('search', v);
+                    tabs[index].query(v);
                     break;
             }
 
-        }).ui('Subject.Project,System.Picture,Subject.Member', function () {
-            $.UI.Command('Subject', 'Project', root.attr('project-id'), function (xhr) {
+        }).on('event', function (e, key) {
+            switch (key) {
+                case 'upgrade':
+                    $.UI.Command('Platform', 'Project', root.attr('ui-key'));
+                    break;
+            }
+        }).ui('User', function () {
+            root.ui('Subject.Project');
+        }, true).ui('Subject.Project,System.Picture,Subject.Member', function () {
+            $.UI.API('Subject', 'Project', root.attr('ui-key'), function (xhr) {
                 root.find('*[data-field]').each(function () {
                     var m = $(this);
-                    if (m.is('img')) {
-                        m.attr('src', xhr[m.attr('data-field')]);
-                    } else {
+                    m.is('img') ? m.css({ 'background-image': ['url(', xhr[m.attr('data-field')], ')'].join('') }) : m.text(xhr[m.attr('data-field')]);
 
-                        m.text(xhr[m.attr('data-field')]);
-                    }
                 });
                 editer.cls('editer', xhr.IsAuth);
-                if (projectInfo === true && xhr.releaseId) {
-                    $.UI.On('UI.Publish', xhr.Name, xhr.Desc, xhr.Desc, {
+                $.UI.On('Subject.Path', { Path: xhr.Code });
+                if (xhr.releaseId) {
+                    $.UI.On('UI.Publish', xhr.Name, xhr.Keywords || xhr.Name, xhr.Desc, {
                         type: 'Project', Id: xhr.releaseId
                     });
+
                 }
 
-                projectInfo = xhr;
             });
 
         }).on('searchValue', function () {
@@ -503,56 +383,53 @@
                 case 0:
                     return false;
             }
-        }).ui('Subject.Project');
+        }).ui('Subject.Team', function () {
+            teamP.query();
+        })
 
-
-        root.find('#join').click(function () {
-            var me = $(this);
-            $.UI.Command('Subject', 'Team', { Project: root.attr('project-id'), Id: 'Self' }, function (xhr) { me.text(xhr.text) });
-        });
 
         $('.weui_navbar', root)
             .on('click', 'div.weui_navbar_item', function () {
                 var me = $(this);
                 me.addClass('weui_bar_item_on').siblings('div').removeClass('weui_bar_item_on');
-
                 var index = parseInt(me.attr('data-index')) || 0;
-
                 var body = me.parent().siblings('.wdk_tab_bd').children('div').eq(index);
                 body.show().siblings('div').hide();
-                if (!body.attr('inited')) {
-                    body.attr('inited', 'OK');
+                if (!tabs[index]) {
+                    var pager = new WDK.UI.Pager(body);
+                    tabs[index] = pager;
                     switch (index) {
-                        case 0:
-                            var pager = new WDK.UI.Pager(body);
+                        case 0: {
                             pager.model = 'Subject'
                             pager.cmd = 'UI'
-                            pager.search = { Project: root.attr('project-id') }
+                            pager.search = { Project: root.attr('ui-key') }
                             pager.query();
+                            body.on('section', function () {
+                                root.ui('Subject.Project');
+                            }, 1);
+                        }
                             break;
-                        case 1:
-                            var paging = body.find('.pagination-container').paging("Subject", "Team", body.find('.el-table>div'))
-                                .on('param', { Project: root.attr('project-id') })
-                                .on('search');
-
-
-                            root.ui('Subject.Team', function () {
-                                paging.on('search');
+                        case 1: {
+                            pager.model = 'Subject'
+                            pager.cmd = 'Team'
+                            pager.search = { Project: root.attr('ui-key') }
+                            pager.query();
+                            root.ui('Subject.Team,Subject.Member', function () {
+                                pager.query();
                             })
+                        }
                             break;
-                        case 2:
-                            var paging = body.find('.pagination-container').paging("Subject", "Dynamic", body.find('.el-table>div')
-                                .click('div[data-time]', function () {
-                                    var m = $(this);
-                                    $.UI.Command('Subject', 'Dynamic', { Id: m.attr('data-id'), Time: m.attr('data-time') });
-                                }));
-
-                            paging.on('search', { Id: root.attr('project-id') });
+                        case 2: {
+                            pager.model = 'Subject'
+                            pager.cmd = 'Dynamic'
+                            pager.search = { Id: root.attr('ui-key') }
+                            pager.query();
+                        }
                             break;
                     }
                 }
 
-            }).find('div.weui_navbar_item').eq(0).click();
+            }).find('div.weui_navbar_item').eq(0).click();;
 
     }, '项目专栏');
 })(WDK)
