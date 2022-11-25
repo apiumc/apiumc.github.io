@@ -96,3 +96,21 @@ signValue=MD5(ASC(M)+"&key="+AppSecret)
 
 
 宝哥，大公司用软件是要有保障能力的，我这里不知您这里是怎么想的，把保障能力建立起来，您想交出去，也就能交出来，如果想发展，也需要保障能力。
+
+歆哥，你在顾家那段时间，那段时间对我来说是要命，我还没进一个月，你是一星期收到一投诉，一个月之后，技术环评还不及格，现在想想这叫什么事，后面，你叫我打个反身仗，我听您的应该是在两个月之内，独立搞定一个项目，还参与另外一个项目，两项目是有发文上线了，还负责那个叫工作流的技术运维，那是相当辛苦，再想想开始来一个月投诉，就写了个夸大词的试用期报告，（这本想着过了试用期就再向你认错），那里面的内容本身是为激化矛矛盾，是对技术环评不及格、入职一星期一投诉的回礼，来提升我们的立场，歆哥，当时也不是我不知妥协，一个工作强度太大，那种强度是坚持不下去的。
+
+
+泰哥，感谢你告知我，如果能报警，你那里还是选择报警吧，
+我这里也没有什么好说明的
+从解决问题的角度来说，如果你能还原我最后离开的版本，这应该也是一个方式，解决了就算球了，如果不能还原，那我对他们的了解应该是动机问题了，改了又还原不回去，又没有按自己定的上线流程走，又不找问题为什么发生，多找几个人下水，为什么还拉我呢，顾家这么多安全机制，有安全团队的，还防止不了一个离职的环人嘛，
+
+泰哥，说真话，
+软件有软件的生命周期，解散一个软件核心人员带头人，这就软件是走向关停路线标志，
+相当来说，自己研发系统，都是处于一个开发版本的系统，是个还没有成熟的系统，要想用，就要有人去克服他的不成熟，了解他的机理，找出不成熟点，完善它，这是正确对待他的态度。
+
+软件版本是投入和成果的划分，开发版（投入阶段），测试版（试运行阶段），发行版（稳定阶段），开发版是没有成熟的系统，。
+
+
+-----BEGINCERTIFICATEREQUEST-----MIICqDCCAZACAQAwYzEJMAcGA1UEBhMAMQkwBwYDVQQIEwAxCTAHBgNVBAcTADEqMCgGA1UECgwh5rmW5YyX5bCP6Zuo5Lye56eR5oqA5pyJ6ZmQ5YWs5Y+4MQkwBwYDVQQLEwAxCTAHBgNVBAMTADCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAJxSj+e1ytCbW89TLUpo8IALev8jMhQMekj/Uh/t0YPzyZbn2QKqNY9I8tzwC6ItDv+rNtVlB9xDM46pzMlxDR9aARrrdGWfkY2VPShoTXFvHkwCSbqEitgPL5/gdZ2i1xEERw+nlhMLeWsLDkrGle9qVN0EHYUOcFyf42THuKIik48nswaxQEOHDFljBdNLlS2IH3keKiTf9L42y04W4VENJy6LH2pCR4qCyjByUA3Iqa5QRb4o6gN7xnfY5pp85VP4nREnTvJl1ZdhGGmG8B4Q4OUpHD8cWTkFIjiPtBuPlBaWY+c9HYb29Nq4SUlyDYUxAkszBTJn9JGGBoCvJesCAwEAAaAAMA0GCSqGSIb3DQEBBAUAA4IBAQAZrukR+h5LnRyGfnJNjUFNzVvP6BvD7xXMgcpzfZHXmNmuQANWFxdIfeIWmRGfDEyxNWXXCGOJkoYfxhMpamtca9lVVPvfnIUvSNvXHemDKuUnerRSS/M4wAZMRZMeorXbsMHuF7pZYry7haaUeCQ17RORoLjQiz5t/R25fHu8Poz/SIhfm417lhoOIkCAG9noG8Cl8WnNoxfmj+nRfUSphGWSN4gS7ntKgFxaEctJ4R+FGMoZvtH2y6p8neoRLzgqWZJm9X5/Gq40wRmEvGLtjPpWW6GyGj7sgSVFu0AVeYgZP2Zj8Wb/xbEmZS5bgFgHeS8ZgG6R2CNh3E4wO+ir-----ENDCERTIFICATEREQUEST-----
+
+

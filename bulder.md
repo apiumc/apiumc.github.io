@@ -25,4 +25,5 @@ cp bin/Release/net6.0/win-x64/publish/UMC.Host.exe /Users/wushunming/Documents/A
 
 
 dotnet publish -r win-x86 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/win-x86/publish/UMC.Host.exe /Users/wushunming/Documents/APIUMC/MPorxy/win-x86/MProxy.exe 
+cp bin/Release/net6.0/win-x86/publish/UMC.Host.exe /Users/wushunming/Documents/APIUMC/MPorxy/win-x86/MProxy.exe
+PATH=/opt:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
