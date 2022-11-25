@@ -53,9 +53,14 @@
 
     function tagUrl(click, html) {
         var href = UMC.UI.Format(click, true);
-        var tag = href.indexOf('href') == 0 ? 'a' : 'div';
-        html.push(tag, ' ', href);
-        return tag;
+        if (href.indexOf('href')) {
+            html.push('div', ' ', href);
+            return 'div'
+        } else {
+            html.push('a', ' target="_blank" ', href);
+            return 'a'
+
+        }
     }
     __p.Headers.Profile = function (data, fmt, style) {
         var account = data.account;
@@ -129,6 +134,19 @@
             htmls.push('</div></', tag, '>');
             return htmls.join('');
         }
+    __p.Cells.TextNameValue = function (data, fmt, style) {
+        var click = data.click;
+        var htmls = ['<'];
+        var tag = tagUrl(click, htmls);
+        htmls.push(' class="weui_cell">');
+        htmls.push('<div class="weui_cell_bd weui_cell_primary" style="flex:1.5"><p>', $.format(fmt.name || '{name}', data, style), '</p></div>');
+        htmls.push('<div class="weui_cell_bd weui_cell_primary"><p>',
+            $.format(fmt.text || '{text}', data, style), '</p></div>',
+            '<div class="wdk_cell_value">',
+            $.format(fmt.value || '{value}', data, style));
+        htmls.push('</div></', tag, '>');
+        return htmls.join('');
+    }
 
 
     __p.Cells.ImageTextDesc = function (data, fmt, style) {

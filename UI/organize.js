@@ -135,7 +135,7 @@
             }
         });
 
-        UMC.script('js/Sortable.js').wait(function () {
+        UMC.script('/js/Sortable.js').wait(function () {
             userSort = Sortable.create(root.find('table tbody')[0], {
                 animation: 150,
                 onEnd: function (evt) {

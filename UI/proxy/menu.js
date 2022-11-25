@@ -5,7 +5,7 @@
         var thmls = ' <td rowspan="{length}" class="is-center"> <a class="el-tag el-tag--small" model="Settings" cmd="Menu" send="Site={site}&Id=0&ParentId={id}"><b class="wdk_cell_icon" data-icon="{icon}"></b> </a> </td><td rowspan="{length}" > <a class="link-type" model="Settings" cmd="Menu" send="Site={site}&Id={id}">{text}</a> </td>'
 
         root.ui('Settings.Menu', function () {
-            $.UI.Command("Settings", "Menu", { Site: site }, function (xhr) {
+            $.UI.Command("Settings", "Menu", { Site: site,limit: 'PC' }, function (xhr) {
 
                 var data = [];
                 xhr.forEach(v => {

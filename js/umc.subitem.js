@@ -24,11 +24,12 @@
             });
             emKeys = new $(ps);
         }
-        var navs = root.find('#nav').format(keys, {
-            value: x => {
+
+        var navs = root.find('#nav').html($.format('<div class="wdk-subject-nav-item" style="padding-left:{value};"><a>{text}</a></div>', keys, {
+            value: function (x) {
                 return (parseInt(x.index) || 0) * 10 + 'px'
             }
-        }, true).find('.wdk-subject-nav-item')
+        })).find('.wdk-subject-nav-item')
             .click(function () {
                 var ofset = emKeys.eq(parseInt($(this).attr('data-index'))).offset();
                 var top = ofset.top - con.top;
@@ -85,11 +86,18 @@
         t.model = "Subject";
         t.cmd = 'UIMin'
         t.search = { Id: root.attr('ui-key') };
+        var title = "";
         $.UI.Command(t.model, t.cmd, $.extend({
             limit: 30
         }, t.search), function (xhr) {
             t.b.html('');
             t.dataSource(xhr);
+            title = xhr.Title.title;
+            title ? window.top.postMessage(JSON.stringify({
+                type: 'page',
+                value: { title: title, search: true }
+            }), "*") : 0;
+
             $.UI.On('Subject.Show', t.search);
 
             subNav(t, root);
@@ -99,6 +107,10 @@
         });
 
         root.on('active', function () {
+            title ? window.top.postMessage(JSON.stringify({
+                type: 'page',
+                value: { title: title, search: true }
+            }), "*") : 0;
             $.UI.On('Subject.Show', { Id: root.attr('ui-key') });
         });
 
@@ -175,7 +187,7 @@
             return false;
         });
         $.UI.On('Subject.Comments.View', function (e, em) {
-            var id = em.attr('data-id');
+            var id = em.attr('ui-key');
             var before = false;
             var next = false;
             var IsOk = false
@@ -191,7 +203,6 @@
                 } else {
                     before = me;
                 }
-
             });
             var subNav = $({ tag: 'div', cls: 'umc-subject-footer' });
             var left = $({ tag: 'a', cls: 'umc-subject-left' }).appendTo(subNav);
@@ -326,7 +337,7 @@
             }
             switch (data.type) {
                 case 'searchValue':
-                    $.UI.Command('Subject', 'Keyword', { Project: $.UI.ProjectId, Keyword: data.data }, function (xhr) {
+                    $.UI.API('Subject', 'Keyword', { Project: $.UI.ProjectId, Keyword: data.data }, function (xhr) {
                         var ts = [];
                         for (var i = 0; i < xhr.length; i++) {
                             var v = xhr[i];
@@ -339,7 +350,7 @@
                             })
                         }
                         window.top.postMessage(JSON.stringify({
-                            type: 'search',
+                            type: 'select',
                             value: ts
                         }), "*");
                     });

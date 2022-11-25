@@ -14,7 +14,9 @@
     <link href="/css/umc.css" rel="stylesheet" type="text/css" />
     <link href="/css/umc.desktop.css" rel="stylesheet" type="text/css" />
     <script src="/js/umc.js"></script>
-    <script  type="text/javascript">UMC.UI.Config({posurl: 'http://127.0.0.1:5188/UMC/5F5-hVX52k228tE4ZzPalg','domain':'http://8iel4b.apiumc.cn'});</script>
+    <script  type="text/javascript">
+        UMC.UI.Config({ 'posurl': 'http://127.0.0.1/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+    </script>
     <script src="/js/umc.database.js"></script>
     <script src="/js/umc.grid.js"></script>
     <script src="/js/umc.dialog.js"></script>

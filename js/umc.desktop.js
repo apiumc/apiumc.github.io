@@ -110,7 +110,7 @@
                     winDesks.push(win);
             }
 
-            $('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').each(function () {
+            $('div[ui].wdk-dialog,.weui_dialog_confirm,.weui_actionsheet').each(function () {
                 var m = $(this);
                 if (!m.attr('form')) {
                     m.attr('form', index + '')
@@ -119,24 +119,12 @@
         })
     }
     UMC.UI.On('XHR.Bridge', function (e, xhr, fn) {
-        var form = parseInt($('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('form'));
+        var form = parseInt($('div[ui].wdk-dialog,.weui_dialog_confirm,.weui_actionsheet').last().attr('form'));
         xhr.onload = function () {
             new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn).bridge(JSON.parse(xhr.responseText))
         }
         return false;
     })
-    // UMC.UI.Bridge = function (v, fn) {
-    //     var form = parseInt($('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('form'));;
-    //     var bridge = new Bridge((isNaN(form) || form < 0) ? window : winDesks[form], fn)
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.onload = function () {
-    //         bridge.bridge(JSON.parse(xhr.responseText));
-    //     };
-    //     xhr.open('POST', UMC.UI.Config().posurl, true);
-    //     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //     xhr.send(v.replace(/(^\&*)/g, ""));
-    // }
-
 
     var apps = {};
 
@@ -1012,56 +1000,48 @@ UMC(function ($) {
 
     bgsrc ? $('.umc-desktop-bg').css('background-image', ['url(', bgsrc, ')'].join('')) : 0;
     UMC.UI.On('Cashier', function () {
-        UMC.UI.Command('Proxy', 'App', function (xhr) {
-            var desktops = [];
-            for (var i = 0; i < xhr.length; i++) {
-                xhr[i].desktop ? desktops.push(xhr[i]) : 0;
+        UMC.UI.Command('Proxy', 'App');
+
+    }).On('Desktop', function (e,v) {
+        var desktops = [];
+        var xhr=v.apps;
+        for (var i = 0; i < xhr.length; i++) {
+            xhr[i].desktop ? desktops.push(xhr[i]) : 0;
+        }
+        appList.html($.format('<div><a draggable="true" data-badge="{badge}" help="{docs}" title="{title}"  data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="UMC.error(this)" data-icon="{icon}" src="{src}"  class="icon"/><em class="title">{title}</em></a></div>', xhr, true));
+        shortcuts.html($.format('<a draggable="true" help="{docs}" title="{title}" data-badge="{badge}" data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="UMC.error(this)" data-icon="{icon}" src="{src}" class="icon"/><em class="title">{title}</em></a>', desktops, true));
+        $(window).on('refresh');
+
+        guide('umc-apps-guide', function () {
+            var m = $($('.umc-logo-menu')[0].cloneNode(true));
+            m.find('li').eq(0).remove();
+            m.find('a').attr('model', false).attr('cmd', false).attr('data-key', false);
+            var s = $(shortcutMenu[0].cloneNode(true));
+            s.find('a').attr('model', false).attr('cmd', false).attr('data-key', false);
+            return {
+                prevLabel: '上一个',
+                doneLabel: '完成',
+                nextLabel: '下一个',
+                steps: [{
+                    title: '个人图标',
+                    element: $('.umc-task_bar a')[0],
+                    intro: ['点击“个人图标”，有下例功能选择<br/><ul style="list-style:none">', m.html(), '</ul>'].join('')
+                }, {
+                    title: '更多应用',
+                    element: document.querySelector('#umc-desktop-apps'),
+                    intro: '从这里可找查找所有应用，当然你也可以把应用放在云桌面上'
+                }, {
+                    title: '应用图标',
+                    element: shortcuts.find('a')[0],
+                    intro: ['点击则打开应用；右击“应用图标”时，有下例功能选择<br/><ul style="list-style:none">', s.html(), '</ul>同时应用的帮助文档，可在“更多应用”对应图标右击选择“查看帮助文档”'].join('')
+
+                }]
             }
-            appList.html($.format('<div><a draggable="true" data-badge="{badge}" help="{docs}" title="{title}"  data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="UMC.error(this)" data-icon="{icon}" src="{src}"  class="icon"/><em class="title">{title}</em></a></div>', xhr, true));
-
-            shortcuts.html($.format('<a draggable="true" help="{docs}" title="{title}" data-badge="{badge}" data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="UMC.error(this)" data-icon="{icon}" src="{src}" class="icon"/><em class="title">{title}</em></a>', desktops, true));
-            $(window).on('refresh');
-
-            $.UI.Command('System', 'License', 'Check');
-
-            guide('umc-apps-guide', function () {
-                var m = $($('.umc-logo-menu')[0].cloneNode(true));
-                m.find('li').eq(0).remove();
-                m.find('a').attr('model', false).attr('cmd', false).attr('data-key', false);
-                var s = $(shortcutMenu[0].cloneNode(true));
-                s.find('a').attr('model', false).attr('cmd', false).attr('data-key', false);
-                return {
-                    prevLabel: '上一个',
-                    doneLabel: '完成',
-                    nextLabel: '下一个',
-                    steps: [{
-                        title: '个人图标',
-                        element: $('.umc-task_bar a')[0],
-                        intro: ['点击“个人图标”，有下例功能选择<br/><ul style="list-style:none">', m.html(), '</ul>'].join('')
-                    }, {
-                        title: '更多应用',
-                        element: document.querySelector('#umc-desktop-apps'),
-                        intro: '从这里可找查找所有应用，当然你也可以把应用放在云桌面上'
-                    }, {
-                        title: '应用图标',
-                        element: shortcuts.find('a')[0],
-                        intro: ['点击则打开应用；右击“应用图标”时，有下例功能选择<br/><ul style="list-style:none">', s.html(), '</ul>同时应用的帮助文档，可在“更多应用”对应图标右击选择“查看帮助文档”'].join('')
-
-                    }]
-                }
-            });
-
         });
+
+
     }).On('Site.Config', function () {
-        UMC.UI.Command('Proxy', 'App', function (xhr) {
-            var desktops = [];
-            for (var i = 0; i < xhr.length; i++) {
-                xhr[i].desktop ? desktops.push(xhr[i]) : 0;
-            }
-            appList.html($.format('<div><a draggable="true" data-badge="{badge}" help="{docs}" title="{title}"  data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="desktopImgError(this)" data-icon="{icon}" src="{src}"  class="icon"/><em class="title">{title}</em></a></div>', xhr, true));
-            shortcuts.html($.format('<a draggable="true" help="{docs}" title="{title}" data-badge="{badge}" data-app="{root}" href="{url}" target="{target}" class="shortcut"><img draggable="false" onerror="desktopImgError(this)" data-icon="{icon}" src="{src}" class="icon"/><em class="title">{title}</em></a>', desktops, true));
-            $(window).on('refresh');
-        });
+        UMC.UI.Command('Proxy', 'App');
     });
     $(window).on('refresh', function () {
         var h = parseInt((shortcuts[0].offsetHeight - 60) / 100);

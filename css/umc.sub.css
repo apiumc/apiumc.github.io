@@ -1032,7 +1032,12 @@ margin: 0 -0.6em;
     z-index: 1;
     box-shadow: 0 4px 8px 0 rgb(42 93 158 / 16%), 0 0 4px 0 rgb(42 93 158 / 8%);
     display: none;
+    content: '\9879\76EE\64AE\5408';
+} 
+.umc-project-upgrade:empty:before{
+    content: '\9879\76EE\64AE\5408';
 }
+.umc-project-head.adver .umc-project-upgrade,
 .umc-project-head.editer .umc-project-upgrade {
     display:block;
 }
@@ -1204,6 +1209,12 @@ ul.umc-search-menu[role=menu] {
     color: #c00;
     text-decoration: underline;
 
+}
+.umc-sub-follower a.ad{
+    display: block;
+    font-size: 12px;
+    color: #c8c8cd;
+    margin-top: 10px;
 }
 
 .hideScrollbar .app-main {
@@ -2244,6 +2255,9 @@ border-top: 1px solid #dfe6ec;
         position: fixed;
         top: 50px;
         width: 100%;
+    }
+    .ui-pager #app{
+        top: 65px;
     }
 
     .umc-sub-login .qrcode_view {

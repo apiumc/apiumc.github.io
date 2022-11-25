@@ -20,7 +20,7 @@
 
             }
 
-            var url = ($.UI.Config().possrc || 'https://oss.365lu.cn/') + 'TEMP/Static/' + Math.random();
+            var url = ($.UI.Config().possrc || 'https://wdk.oss-accelerate.aliyuncs.com/') + 'TEMP/Static/' + Math.random();
 
             var xhr = new XMLHttpRequest();
             xhr.onload = function () {

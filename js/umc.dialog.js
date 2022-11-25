@@ -384,11 +384,9 @@
                 dom.addClass('right').removeClass('ui');
             } else if (menu.length > 1) {
                 $.UI.Sheet('菜单', menu, function (v) {
-                    dom.addClass('right').removeClass('ui');
                     $.UI.Command(v.model, v.cmd, v.send);
                 }, 'text');
             } else {
-                dom.addClass('right').removeClass('ui');
                 var v = menu[0];
                 $.UI.Command(v.model, v.cmd, v.send);
             }
@@ -484,9 +482,7 @@
 
         Submit: function (v) {
             if (v) {
-                var isv = false;
                 for (var k in v) {
-                    isv = true;
                     var value = v[k];
                     var item = this.item[k];
                     if (!item)
@@ -503,14 +499,17 @@
                         this.Msg([item.Title, '不能大于', maxSize, '个字']);
                         return false;
                     }
-                    if (item.ForName) {
-                        var compare = item.Compare;
-                        var forItem = this.item[item.ForName];
-
-                        var forValue = v[item.ForName];
+                    if (item.For) {
+                        var titls = [item.Title, '', item.For]
+                        var forValue = item.For;
+                        if (this.item.hasOwnProperty(item.For)) {
+                            titls[2] = this.item[item.For].Title;
+                            forValue = v[item.For];
+                        }
                         var fValue = parseFloat(value) || 0;
                         var iforValue = parseFloat(forValue) || 0;
-                        var titls = [item.Title, '', forItem.Title]
+
+                        var compare = item.Compare;
                         switch (compare) {
                             case 'Greater':
                                 if (fValue <= iforValue) {

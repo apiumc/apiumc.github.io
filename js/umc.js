@@ -1055,11 +1055,11 @@
 
                         break;
                     case "Prompt":
-                        dialog(p.Title || '提示', p.Text);
+                        dialog(p.Title || '提示', UMC.format(p.Text, p, p.Style));
                         break;
                     case "Confirm":
                         var smt = p.Submit;
-                        var cfm = dialog(p.Title || '提示', p.Text, function (v) {
+                        var cfm = dialog(p.Title || '提示', UMC.format(p.Text, p, p.Style), function (v) {
                             if (p.Action) {
                                 UMC.Click(p.Action);
                                 return true;

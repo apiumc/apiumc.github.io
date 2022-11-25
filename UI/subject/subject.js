@@ -113,7 +113,7 @@
                 root.on('menu', tt.Editer ? { key: tt.Id, icon: '\uf044' } : []);
                 subNav(t, root);
                 if (tt.Follow) {
-                    view.find('#Subject').append($(document.createElement('div')).addClass('umc-sub-follower').html("作者设置了<a data-key=\"" + tt.Follow + "\">关注</a> 项目公众号后<br/>才可解锁内容").click('a', function () {
+                    view.find('#Subject').append($(document.createElement('div')).addClass('umc-sub-follower').html("有公众号赞助此内容<br>需要<a data-key=\"" + tt.Follow + "\">关注</a> 后,才可解锁内容<a class=\"ad\" target=\"_blank\" href=\"/wiki/media\">了解此推广方式</a>").click('a[data-key]', function () {
                         $.UI.On('Login', { code: $(this).attr('data-key') });
                     }));
                 }
@@ -323,10 +323,10 @@
     }, false).tpl('subject/project', 'subject/project', function (root) {
         var editer = root.find('.umc-project-head').click('*[data-key]', function () {
             if (editer.is('.editer')) {
-                WDK.UI.Command("Subject", 'ProjectUI', { Id: root.attr('ui-key'), Model: $(this).attr('data-key') });
+                $.UI.Command("Subject", 'ProjectUI', { Id: root.attr('ui-key'), Model: $(this).attr('data-key') });
             }
         })
-        var teamP = new WDK.UI.Pager(root.find(".umc-project-team"));
+        var teamP = new $.UI.Pager(root.find(".umc-project-team"));
         teamP.model = 'Subject'
         teamP.cmd = 'Team'
         teamP.search = { Project: root.attr('ui-key'), Type: 'M' };
@@ -363,6 +363,8 @@
 
                 });
                 editer.cls('editer', xhr.IsAuth);
+                editer.cls('adver', xhr.IsAdver);
+                
                 $.UI.On('Subject.Path', { Path: xhr.Code });
                 if (xhr.releaseId) {
                     $.UI.On('UI.Publish', xhr.Name, xhr.Keywords || xhr.Name, xhr.Desc, {

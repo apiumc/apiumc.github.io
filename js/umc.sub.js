@@ -240,15 +240,24 @@
                     var client = new Paho.MQTT.Client(scan.broker, 443, scan.client);
                     client.onMessageArrived = function (message) {
                         var uss = JSON.parse(message.payloadString)[0];
-                        if (uss.msg == 'OK') {
-                            UMC.UI.API("Account", "Check", "Session");
-                            client.disconnect();
+                        switch (uss.msg) {
+                            case 'OK':
+                                UMC.UI.API("Account", "Check", "Session");
+                                client.disconnect();
+                                login.remove().find('.qrcode_view').removeClass('show')
+                                clearTimeout(timeId);
+                                break;
+                            case 'Follow':
+                                $.UI.IsFollow = true;
+                                $('.umc-subject-view .umc-sub-follower').remove();
+                                client.disconnect();
+                                login.remove().find('.qrcode_view').removeClass('show')
+                                clearTimeout(timeId);
+                                break;
+                            default:
+                                login.find(".qrcode_view .context").html([uss.src ? ('<img src="' + uss.src + '"/>') : '', '<b>', uss.msg || uss, '</b>'].join(''));
 
-                            login.remove().find('.qrcode_view').removeClass('show')
-                            clearTimeout(timeId);
-                        } else {
-                            login.find(".qrcode_view .context").html([uss.src ? ('<img src="' + uss.src + '"/>') : '', '<b>', uss.msg || uss, '</b>'].join(''));
-
+                                break;
                         }
                     };
                     var timeId = 0;
@@ -303,7 +312,7 @@
                 }
 
             }).On('Login', function (e, v) {
-                var cfg = v || { code: $.UI.ProjectId };
+                var cfg = v || { code: 'UMC' };
                 login.appendTo(document.body);
                 requestAnimationFrame(function () {
                     login.find('.qrcode_view').addClass('show');
@@ -474,7 +483,7 @@
                 requestAnimationFrame(function () { $(window).on('popstate') });
             }
         }).On('Subject.Comments.View', function (e, em) {
-            var id = em.attr('data-id');
+            var id = em.attr('ui-key');
             var before = false;
             var next = false;
             var IsOk = false
@@ -553,7 +562,7 @@
 
         });
 
-        var nav = $('#nav').click('a', function () {
+        var nav = $('#nav', navbar).click('a', function () {
             var m = $(this);
             if (!m.parent().is('.is-active')) {
                 $.UI.API("Subject", 'PortfolioSub', m.attr('data-id'), function (xhr) {
@@ -597,7 +606,7 @@
         });
 
         menuSort.option('disabled', true);
-        var team = $('#team');
+        var team = $('#team', navbar);
 
         var navSort = Sortable.create(nav[0], {
             animation: 150, //动画参数
@@ -653,7 +662,7 @@
                         switch (ps.length) {
                             case 3:
                                 if (!$('#menubar a[href="' + pathKey + '"]').click().length) {
-                                    var m = $(['#nav a[href="', $.SPA, ps[0], '/', ps[1], '"]'].join(''));
+                                    var m = $(['#nav a[href="', $.SPA, ps[0], '/', ps[1], '"]'].join(''), navbar);
                                     if (m.length && !v) {
                                         if (!m.parent().is('.is-active')) {
                                             $.UI.API("Subject", 'PortfolioSub', pathKey.substring($.SPA.length), function (xhr) {
@@ -668,7 +677,7 @@
                                     return true;
                                 }
                             case 2:
-                                return $('#nav a[href="' + pathKey + '"]').click().length > 0;
+                                return $('#nav a[href="' + pathKey + '"]', navbar).click().length > 0;
                         }
                     }
                 } else {

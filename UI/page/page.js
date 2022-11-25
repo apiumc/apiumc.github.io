@@ -43,7 +43,6 @@
                     delete $.page()['page/' + root.attr('ui-key')];
                     $.nav('/');
                 }
-
             };
             xhr.open('GET', [$.Src || '', 'page/', root.attr('ui-key'), '.html'].join(''), true);
             xhr.send('');

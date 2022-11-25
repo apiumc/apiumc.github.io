@@ -62,7 +62,7 @@
 
         var index = this.win;
         requestAnimationFrame(function () {
-            $('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').each(function () {
+            $('div[ui].wdk-dialog,.weui_dialog_confirm,.weui_actionsheet').each(function () {
                 var m = $(this);
                 if (!m.attr('win-id')) {
                     m.attr('win-id', index)
@@ -71,7 +71,7 @@
         })
     }
     UMC.UI.On('XHR.Bridge', function (e, xhr, fn) {
-        var form = $('div[ui].wdk-dialog,div.weui_dialog_confirm,div.weui_actionsheet').last().attr('win-id') || 'self';
+        var form = $('div[ui].wdk-dialog,.weui_dialog_confirm,.weui_actionsheet').last().attr('win-id') || 'self';
         xhr.onload = function () {
             new Bridge(form, fn).bridge(JSON.parse(xhr.responseText));
         }

@@ -2379,6 +2379,18 @@ a.wdk-cms-image img {
     right: 0;
     color: #fab534;
     text-align: center
+}.profile .account:after {
+    font-size: 12px;
+    line-height: 1.5;
+        content: attr(data-tag);
+        position: absolute;
+        background-color: #1890ff;
+        color: #fff;
+        text-align: center;
+        width: 75pt;
+        transform: rotate(45deg);
+        right: -30px;
+        top: 10px
 }
 
 .profile .account em {

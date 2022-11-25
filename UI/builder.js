@@ -53,7 +53,7 @@
                     break;
             }
         })
-        $.link('css/umc.builder.css')
+        $.link('/css/umc.builder.css')
             .wait();
 
         function Tabs(dem, xhr) {

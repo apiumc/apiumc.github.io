@@ -1456,8 +1456,18 @@ form.filter-container .filter-container-button {
     position: relative;
 }
 
+.el-editer-html .cssUploader.loading{
+
+    -webkit-animation: circle 1s infinite linear;
+    animation: circle 1s infinite linear;
+}
+
 .el-editer-html .cssUploader:before {
     content: "\f03e";
+    font-family: wdk;
+}
+.el-editer-html .cssUploader.loading:before {
+    content: "\f110";
     font-family: wdk;
 }
 

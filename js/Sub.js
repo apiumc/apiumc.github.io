@@ -1,5 +1,5 @@
 UMC.UI.Config({ 'posurl': 'https://api.apiumc.com/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
-// UMC.UI.Config({ 'posurl': 'http://127.0.0.1:5190/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+UMC.UI.Config({ 'posurl': 'http://127.0.0.1:5188/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
 UMC.Src = '/UI/';
 UMC.SPA = '/';
 UMC(function ($) {
