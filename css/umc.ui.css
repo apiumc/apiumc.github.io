@@ -1950,8 +1950,11 @@ a.wdk-cms-image {
 
 a.wdk-cms-image img {
     text-align: center;
+    box-shadow: 0 0px 4px rgb(0 21 41 / 40%);
 }
-
+a.wdk-cms-image img[original-src] {
+    cursor: zoom-in;
+}
 .wdk-cms-text {
     line-height: 2;
     color: #333;
@@ -2476,11 +2479,12 @@ a.wdk-cms-image img {
 
 .wdk-gird-empty,
 .LoadMore.empty {
-    margin-top: 20%;
+    margin: 10% 0;
     text-align: center;
     display: block;
     color: #999;
     font-size: 90%;
+    width: 100%;
 }
 
 .weui_cell .weui_cell_hd img {

@@ -113,7 +113,7 @@
                 root.on('menu', tt.Editer ? { key: tt.Id, icon: '\uf044' } : []);
                 subNav(t, root);
                 if (tt.Follow) {
-                    view.find('#Subject').append($(document.createElement('div')).addClass('umc-sub-follower').html("有公众号赞助此内容<br>需要<a data-key=\"" + tt.Follow + "\">关注</a> 后,才可解锁内容<a class=\"ad\" target=\"_blank\" href=\"/wiki/media\">了解此推广方式</a>").click('a[data-key]', function () {
+                    view.find('#Subject').append($(document.createElement('div')).addClass('umc-sub-follower').html("有公众号赞助此内容<br>需要<a data-key=\"" + tt.Follow + "\">关注</a> 后,才可解锁内容<a class=\"ad\" target=\"_blank\" href=\"/wiki/media/income\">了解此推广方式</a>").click('a[data-key]', function () {
                         $.UI.On('Login', { code: $(this).attr('data-key') });
                     }));
                 }

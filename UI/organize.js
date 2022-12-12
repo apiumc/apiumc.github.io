@@ -1,6 +1,6 @@
 (function ($) {
 
-    WDK.page('organize', '账户组织', function (root) {
+    $.page('organize', '账户组织', function (root) {
         var userSort;
         var active = false;
         var Organize = root.find('#Organize').click('a', function () {
@@ -77,32 +77,36 @@
                     break;
             }
         }).on('Organize', function (e, v) {
-            WDK.UI.Command('Settings', 'Organize', { ParentId: v, Type: "User", limit: "PC" }, function (x) {
+            UMC.UI.Command('Settings', 'Organize', { ParentId: v, Type: "User", limit: "PC" }, function (x) {
                 root.find('table tbody').format(x || [], {}, true)
                     .parent('.el-table').attr('msg', x.length === 0 ? "此组织未有成员" : false).cls('msg', x.length === 0);
 
             });
         }).on('search', function (e, v) {
             if (v) {
+                active = v;
+                var text = v === true ? '' : v;
                 userSort.option('disabled', true);
-                $('.filter-container-item').text(['搜索“', v || '所有账户', '”'].join('')).attr('data-icon', '\uf1e5');
-                UMC.UI.Command('Settings', 'User', { Keyword: v, start: 0, limit: 40 }, function (x) {
+                $('.filter-container-item').text(['搜索“', text || '所有账户', '”'].join('')).attr('data-icon', '\uf1e5');
+                UMC.UI.Command('Settings', 'User', { Keyword: text, start: 0, limit: 40 }, function (x) {
                     root.find('table tbody').format(x.data || [], {}, true)
                         .parent('.el-table').attr('msg', x.msg || (x.length === 0 ? "此组织未有账户" : false)).cls('msg', x.data.length === 0);
                 })
             } else {
                 Organize.find('a.is-active').click();
             }
+        }).ui('User.Change', function () { 
+            active ? (active.getAttribute ? root.on('Organize', active.getAttribute('data-id')) : root.on('search', active)) : root.on('search', true);
         }).ui('Settings.Organize', function (e, v) {
             var v2 = v || { Top: true };
             if (v2.Caption) {
                 Organize.find('a.is-active').text(v2.Caption).append(document.createElement("b"));
             } else {
                 if (v2.Parent) {
-                    active = Organize.find('a.is-active');
-                    var a = active.parent('ul').siblings('a');
+                    var act = Organize.find('a.is-active');
+                    var a = act.parent('ul').siblings('a');
                     if (a.length) {
-                        active.removeClass('is-active');
+                        act.removeClass('is-active');
                         a.addClass('is-active');
                     } else {
                         v2.Top = true;
@@ -128,9 +132,9 @@
                     });
                 } else {
 
-                    var active = Organize.find('a.is-active');
-                    active.siblings('ul').remove();
-                    active.click();
+                    var act = Organize.find('a.is-active')
+                    act.siblings('ul').remove();
+                    act.click();
                 }
             }
         });
@@ -170,4 +174,4 @@
             root.ui('Settings.Organize');
         });
     })
-})(WDK)
+})(UMC)

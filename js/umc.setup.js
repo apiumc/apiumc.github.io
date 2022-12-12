@@ -111,8 +111,16 @@
             });
         var p = location.pathname.substring($.SPA.length).replace(/(^\/+)|(\/+$)/g, '');
         if (p) {
-            $.page(p);
+            if (p.endsWith('.html')) {
+                var p2 = p.substring(0, p.length  - 5);
+                $.page(p2);
+                $(window).on('page', p2 || 'main', location.search.substring(1));
+            } else {
+                $.page(p);
+                requestAnimationFrame(() => $(window).on('popstate', 1));
+            }
+        } else {
+            requestAnimationFrame(() => $(window).on('popstate', 1));
         }
-        requestAnimationFrame(() => $(window).on('popstate', 1));
     });
 })(UMC); 

@@ -60,10 +60,7 @@
                     UMC.UI.Command(v.model, v.cmd, v.send);
                 }
             });
-            var htmls = []
-            htmls.push('<div class="weui_cells" style=" margin-top: 0px;">');
-            this.columns.length > 1 ? htmls.push(this.cell(false, this.columns, true)) : 0;
-
+            var htmls = [];
             if (header.search) {
                 htmls.push('<div class="weui_search_bar">',
                     '<form class="weui_search_outer">',
@@ -81,7 +78,11 @@
                     '</div>');
                 gcount++;
             }
-            htmls.push('</div>');
+            if (this.columns.length > 1) {
+                htmls.push('<div class="weui_cells" style=" margin-top: 0px;">');
+                htmls.push(this.cell(false, this.columns, true));
+                htmls.push('</div>');
+            }
             htmls.push('<div class="weui_cells">');
             htmls.push('</div>');
             cont.html(htmls.join(''));
@@ -100,7 +101,7 @@
             });
 
             htmls = []
-            this.items = cont.find('.weui_cells').eq(1);
+            this.items = cont.find('.weui_cells').eq(this.columns.length > 1 ? 1 : 0);
 
             if (header.pageSize > 0) {
                 cont.append(this.paging = $(document.createElement('div')).click(function () {
@@ -208,7 +209,7 @@
             this.clear ? this.items.html(htmls.join('')) : this.items.append(htmls.join(''));
             var total = parseInt(this.destData.total) || 0;
             if (total == 0 && htmls.length == 0) {
-                this.items.append('<div class="weui_cell"><div class="wdk-gird-empty" style="margin: auto;">' + (this.destData.msg || '没有数据'), '</div></div>');
+                this.items.append('<div class="weui_cell"><div class="wdk-gird-empty">' + (this.destData.msg || '没有数据'), '</div></div>');
             }
             if (this.paging) {
                 this.paging.css('display', ((this.parms.start || 0) + this.Header.pageSize) < total ? 'block' : 'none');

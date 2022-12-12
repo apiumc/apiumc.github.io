@@ -742,39 +742,36 @@
             } else {
                 m.eq(selectIndex + (m.length - 1 == selectIndex ? -1 : 1)).click();
             }
+        }).On('Subject.Portfolio.Item', function (e, xhr) {
+            var sub = $('.el-menu-item a[data-id="' + xhr.id + '"]', menubar);
+            sub.length ? sub.cls('warn', xhr.hide) : 0;
         }).On('Subject.Portfolio.New', function (e, xhr) {
-            var pid = xhr.Id;
-            $('.el-submenu__title', menubar).each(function () {
-                var me = $(this);
-                if (me.attr('data-id') == pid) {
-                    var ul = me.siblings('ul');
-                    ul.find('a[sub-id]').parent().remove();
-                    ul.append(['<li class="el-menu-item"><a data-id="', xhr.Sub, '" href="', $.SPA, xhr.Path, '">', xhr.Title, '</a></li>'].join(''))
-                        .find('a').last().click();
-                    requestAnimationFrame(function () {
-                        $(window).on('page', 'subject/markdown', 'id=' + xhr.Sub);
-                    });
 
-                    return false;
-                }
+            var submenu = $('div[data-id="' + xhr.Id + '"].el-submenu__title', menubar);
+            if (submenu.length) {
+                var ul = submenu.siblings('ul');
+                ul.find('a[sub-id]').parent().remove();
+                ul.append(['<li class="el-menu-item"><a class="warn" data-id="', xhr.Sub, '" href="', $.SPA, xhr.Path, '">', xhr.Title, '</a></li>'].join(''))
+                    .find('a').last().click();
+                requestAnimationFrame(function () {
+                    $(window).on('page', 'subject/markdown', 'id=' + xhr.Sub);
+                });
 
-            });
+            }
         }).On('Subject.Portfolio.Import', function (e, xhr) {
-            var pid = xhr.Id;
-            $('.el-submenu__title', menubar).each(function () {
-                var me = $(this);
-                if (me.attr('data-id') == pid) {
-                    var ul = me.siblings('ul');
-                    ul.find('a[sub-id]').parent().remove();
-                    ul.append(['<li class="el-menu-item"><a data-id="', xhr.Sub, '" href="', $.SPA, xhr.Path, '">', xhr.Title, '</a></li>'].join(''))
-                    return false;
-                }
 
-            });
+            var submenu = $('div[data-id="' + xhr.Id + '"].el-submenu__title', menubar);
+            if (submenu.length) {
+                var ul = submenu.siblings('ul');
+                ul.find('a[sub-id]').parent().remove();
+                ul.append(['<li class="el-menu-item"><a  class="warn" data-id="', xhr.Sub, '" href="', $.SPA, xhr.Path, '">', xhr.Title, '</a></li>'].join(''))
+                return false;
+            }
+
         }).On('Subject.Portfolio.Change', function (e, xhr) {
             var submenu = $('div[data-id="' + xhr.Id + '"].el-submenu__title', menubar);
             if (xhr.Item && submenu.length) {
-                submenu.siblings('ul').append($.format('<li class="el-menu-item"><a data-id="{id}" ui-spa href="{Path}" >{text}</a></li>', [xhr.Item], {
+                submenu.siblings('ul').append($.format('<li class="el-menu-item"><a class="warn" data-id="{id}" ui-spa href="{Path}" >{text}</a></li>', [xhr.Item], {
                     Path: function (x) {
                         return $.SPA + x.path;
                     }
@@ -801,16 +798,10 @@
                 }
             }
         }).On('Subject.ProjectItem', function (e, xhr) {
-            var b = false;
-            nav.find('a').each(function () {
-                var m = $(this);
-                if ($(this).attr('data-id') == xhr.id) {
-                    m.text(xhr.text);
-                    b = true;
-                    return false;
-                }
-            });
-            if (b == false) {
+            var submenu = $('a[data-id="' + xhr.id + '"]', nav);
+            if (submenu.length) {
+                submenu.text(xhr.text).parent().cls('warn', xhr.hide);
+            } else {
                 $(document.createElement("li"))
                     .html($.format('<a ui-spa  href="{Path}" data-id="{id}">{text}</a>', [xhr], {
                         Path: function (x) {
@@ -842,7 +833,7 @@
             var clipboardData = window.clipboardData || navigator.clipboardData;
             if (clipboardData) {
                 clipboardData.setData('Text', v.text);
-                $.UI.Msg("内容已经成功复制");
+                $.UI.Msg("内容成功复制");
             } else {
                 var input = document.createElement('input');
                 document.body.appendChild(input);
@@ -850,7 +841,7 @@
                 input.select();
 
                 if (document.execCommand('copy')) {
-                    $.UI.Msg("内容已经成功复制");
+                    $.UI.Msg("内容成功复制");
                 } else {
                     $.UI.Confirm("内容复制失败", '需要您手动复制: <b id="Clipboard"></b>');
                     var selection = window.getSelection();
@@ -1139,10 +1130,10 @@
             return false;
         });
         function checkInfo() {
-            $.UI.API("Account", "Check", "Info", function (xhr) {
+            $.UI.API("Account", "Check", $.query(location.search.substring(1)).spm || "Info", function (xhr) {
                 $.UI.Device = xhr.Device;
                 if (xhr.Src) {
-                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
+                    uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a onclick="UMC.UI.On(\'Share\')" class="box-card-user share"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
                 } else {
                     uBox.html('<a onclick="UMC.UI.On(\'Login\')" class="el-button--small el-button">登录</a>')
                 }
@@ -1154,7 +1145,9 @@
             requestAnimationFrame(function () { $(window).on('popstate') });
         }).On('Close', function () {
             location.reload(false);
-        });
+        }).On('Share',function(){
+            $.UI.Command('Platform','Share',location.pathname);
+        })
 
         $(document.body).ui('Key.Pager', function (e, v) {
             $.UI.On('Pager', v);
@@ -1162,4 +1155,4 @@
     });
 
 
-})(WDK);
+})(UMC);

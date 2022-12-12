@@ -259,10 +259,23 @@
     vertical-align: top;
 }
 
+
 .box-card-user.dashboard::after {
     content: '\5DE5\4F5C\53F0';
     font-size: 12px;
 }
+
+.box-card-user.share::before {
+    content: '\f08e';
+    vertical-align: top;
+    font-size: 20px;
+}
+
+.box-card-user.share::after {
+    content: '\5206\4EAB';
+    font-size: 12px;
+}
+
 
 .box-card-user:hover {
     color: #1890ff;
@@ -349,12 +362,13 @@
     border: 2px solid #e8e8e8;
 }
 
+.box-card-user.share::after,
 .box-card-user.dashboard::after {
 
-    content: '\5DE5\4F5C\53F0';
     top: 11px;
     left: 0px;
     position: absolute;
+    width: 100%;
     transform: scale(.65);
 }
 
@@ -362,6 +376,10 @@
     color: #1890ff;
 }
 
+.umc-sub-index .box-card-user.share::before{
+font-size: 22px
+}
+.umc-sub-index .box-card-user.share::after  ,
 .umc-sub-index .box-card-user.dashboard::after {
 
     top: 14px;
@@ -2240,6 +2258,11 @@ border-top: 1px solid #dfe6ec;
     display: none;
 }
 
+.umc-subject-view  img[original-src]{
+
+    cursor: zoom-in;
+}
+
 @media screen and (max-width: 1024px) {
     .umc-sub-app .sidebar-logo-container {
         margin-left: 0px;
@@ -2400,6 +2423,9 @@ border-top: 1px solid #dfe6ec;
 
     .wdk-dialog {
         position: fixed;
+        width: 100% !important;
+    }
+    .wdk-dialog .wdk-footer{
         width: 100% !important;
     }
 

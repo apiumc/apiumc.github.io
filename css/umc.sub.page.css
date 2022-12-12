@@ -619,6 +619,11 @@
     color: #606266;
 }
 
+.top-content .top-content-try .top-content-try-button.income{
+    background-image: linear-gradient(to right, #047ae8, #1890ff 100%);
+
+    border: 1px solid #1890ff;
+}
 .index-solution-card {
     vertical-align: middle;
     box-shadow: 0 4px 8px 0 rgb(48 48 48 / 10%);
@@ -788,7 +793,6 @@
     max-width: 1056px;
     margin: auto;
     position: relative;
-    z-index: 1;
 }
 
 .umc-sub-page-container {

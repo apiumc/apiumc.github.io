@@ -364,11 +364,11 @@
             }
             this.show();
             winIndex++;
-            var win = $(document.createElement('div')).addClass('umc-window').attr('id', 'umc-win-' + winIndex).attr('app-id', this.cfg.id)
+            var win = $(document.createElement('div')).addClass('umc-window').attr('id', 'umc-win-' + winIndex).attr('app-id', this.cfg.id).prop('draggable', true)
 
 
             var me = this;
-            var top = $(document.createElement('div')).addClass('umc-window-top').appendTo(win).prop('draggable', true)
+            var top = $(document.createElement('div')).addClass('umc-window-top').appendTo(win)
                 .click(function () {
                     $(this).parent('.umc-window').css('z-Index', $('.umc-window').each(function (i) {
                         this.style.zIndex = i + '';
@@ -578,47 +578,47 @@
                 }
 
             }).on('select', function (e, vs) {
+                if (Array.isArray(vs)) {
+                    var menu = $(this).find('.umc-window-search ul[role=menu]');
+                    var m = menu.siblings('.el-dropdown');
+                    if (m.is('.is-active') == false) {
+                        var rect = search[0].getBoundingClientRect();
+                        m.cls('is-active', 1);
+                        var mask = $(document.createElement('div'))
+                            .click(function () {
+                                $(this).remove();
+                                m.cls('is-active', 0);
+                                menu.css('transform', 'translateX(-1000px)');
+                            }).css({
+                                position: 'absolute',
+                                opacity: '0',
+                                left: '0',
+                                top: '0',
+                                width: '100%',
+                                height: '100%'
+                            }).appendTo($('.umc-window-content', this));
+                        var t = (rect.top + rect.height + 5);
+                        menu.css({
+                            transform: ['translate(', rect.left, 'px,', t, 'px)'].join(''),
+                            'max-height': ['calc(100vh - ', t, 'px)'].join('')
+                        }).click(function () {
+                            mask.click();
+                        }, 1);
+                    }
 
-                var menu = $(this).find('.umc-window-search ul[role=menu]');
-                var m = menu.siblings('.el-dropdown');
-                if (m.is('.is-active') == false) {
+                    menu.children().remove();
 
-                    var rect = search[0].getBoundingClientRect();
-                    m.cls('is-active', 1);
-                    var mask = $(document.createElement('div'))
-                        .click(function () {
-                            $(this).remove();
-                            m.cls('is-active', 0);
-                            menu.css('transform', 'translateX(-1000px)');
-                        }).css({
-                            position: 'absolute',
-                            opacity: '0',
-                            left: '0',
-                            top: '0',
-                            width: '100%',
-                            height: '100%'
-                        }).appendTo($('.umc-window-content', this));
-                    var t = (rect.top + rect.height + 5);
-                    menu.css({
-                        transform: ['translate(', rect.left, 'px,', t, 'px)'].join(''),
-                        'max-height': ['calc(100vh - ', t, 'px)'].join('')
-                    }).click(function () {
-                        mask.click();
-                    }, 1);
-                }
-
-                menu.children().remove();
-
-                if (vs.length == 0) {
-                    $(document.createElement('li')).addClass('umc-search-empty').appendTo(menu)
-                } else {
-                    for (var i = 0; i < vs.length; i++) {
-                        var v = vs[i];
-                        if (typeof v == 'object') {
-                            var a = $(document.createElement('a')).text(v.text || '').attr('key', v.key || false);
-                            v.click ? a.attr('click-data', JSON.stringify(v.click)) : 0;
-                            v.icon ? a.attr('data-icon', v.icon) : 0
-                            $(document.createElement('li')).append(a).appendTo(menu);
+                    if (vs.length == 0) {
+                        $(document.createElement('li')).addClass('umc-search-empty').appendTo(menu)
+                    } else {
+                        for (var i = 0; i < vs.length; i++) {
+                            var v = vs[i];
+                            if (typeof v == 'object') {
+                                var a = $(document.createElement('a')).text(v.text || '').attr('key', v.key || false);
+                                v.click ? a.attr('click-data', JSON.stringify(v.click)) : 0;
+                                v.icon ? a.attr('data-icon', v.icon) : 0
+                                $(document.createElement('li')).append(a).appendTo(menu);
+                            }
                         }
                     }
                 }
@@ -1002,9 +1002,9 @@ UMC(function ($) {
     UMC.UI.On('Cashier', function () {
         UMC.UI.Command('Proxy', 'App');
 
-    }).On('Desktop', function (e,v) {
+    }).On('Desktop', function (e, v) {
         var desktops = [];
-        var xhr=v.apps;
+        var xhr = v.apps;
         for (var i = 0; i < xhr.length; i++) {
             xhr[i].desktop ? desktops.push(xhr[i]) : 0;
         }

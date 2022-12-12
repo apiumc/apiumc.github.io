@@ -2625,11 +2625,6 @@ form.filter-container .filter-container-button {
 .umc-subject-comment[data-type=Reply] .umc-subject-comment-toolbar-image {
     display: none;
 }
-.umc-subject-view  img[original-src]{
-
-    cursor: zoom-in;
-}
-
 .umc-preview {
     position: fixed;
     top: 0;

@@ -58,19 +58,9 @@
                 ths.eq(1).html(['<a model="System" cmd="License" class="link-type">', x.msg, '</a>'].join(''));
             } else if (x.domain) {
                 ths.eq(0).removeClass('el-tag--danger el-tag--success').addClass(x.bridge ? 'el-tag--success' : 'el-tag--danger').find('a').text(x.status);
-                ths.eq(1).html(['<a class="link-type" target="_blank" href="', x.scheme || 'http', '://', x.domain, '">', x.domain, '</a>'].join(''));
+                ths.eq(1).html(['<a class="link-type" target="_blank" href="', x.domain, '">', x.domain, '</a>'].join(''));
             }
         }).ui('System.Setup');
-        // .find('#mapping.el-table').click('a.link-type', function () {
-        //     var ns = $(this).text().split('.');
-        //     if (ns[0] && ns[1]) {
-        //         root.on('debug', ns[0], ns[1]);
-        //     } else if (ns[0]) {
-        //         root.on('debug', ns[0]);
-        //     } else {
-        //         root.on('debug');
-        //     }
-        // });
 
         $.UI.Command("System", 'Web', "MAPPING");
 

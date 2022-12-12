@@ -519,7 +519,7 @@
                                 break;
                             case 'GreaterEqual':
                                 if (fValue < iforValue) {
-                                    this.Msg(titls, '需要大于等于');
+                                    this.Msg(titls, '需要不小于');
                                     return false;
                                 }
                                 break;
@@ -532,7 +532,7 @@
                                 break;
                             case 'LessEqual':
                                 if (fValue > iforValue) {
-                                    this.Msg(titls, '需要小于等于');
+                                    this.Msg(titls, '需要不大于');
 
                                     return false;
                                 }

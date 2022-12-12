@@ -52,8 +52,6 @@
         }).change(function () {
             var pro = $(this).parent().val();
             if (pro) {
-                pro.Markdown = 'none';
-
                 $.UI.API('Subject', 'Submit', pro)
 
             }
@@ -87,7 +85,7 @@
         }).on('hash', function (e, v) {
             WDK.UI.Command("Subject", 'Search', v.id || 'News', function (xhr) {
                 root.on('active');
-                var editer = WDK.UI.Editable($('#des', root));
+                var editer = WDK.UI.Editable($('#des', root).attr('res-id', xhr.project_id || xhr.Id));
                 form.on('save').reset().val(xhr);
                 var ContentType = xhr.ContentType || '';
                 if (ContentType == 'markdown' || !(xhr.Content || ContentType)) {

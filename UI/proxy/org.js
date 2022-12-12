@@ -14,7 +14,7 @@
             var ul = m.siblings('ul');
             if (!ul.length) {
                 ul = $(document.createElement("ul")).appendTo(m.parent());
-                UMC.UI.Command('Settings', 'Organize', { ParentId: m.attr('data-id') , limit: 'PC' }, function (xhr) {
+                UMC.UI.Command('Settings', 'Organize', { ParentId: m.attr('data-id'), limit: 'PC' }, function (xhr) {
                     if (xhr.length > 0) {
                         for (var i = 0; i < xhr.length; i++) {
                             var x = xhr[i];
@@ -59,6 +59,7 @@
             });
         }).on('search', function (e, v) {
             if (v) {
+                active = v;
                 $('.filter-container-item').text(['搜索“', v || '所有账户', '”'].join('')).attr('data-icon', '\uf1e5');
                 UMC.UI.Command('Settings', 'User', { Keyword: v, start: 0, limit: 40 }, function (x) {
                     root.find('table tbody').format(x.data || [], {}, true)

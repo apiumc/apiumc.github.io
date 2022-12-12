@@ -52,8 +52,8 @@
     function hashUrl(x, p) { return $.UI.Format(x, p) };
 
     function tagUrl(click, html) {
-        var href = UMC.UI.Format(click, true);
-        if (href.indexOf('href')) {
+        var href = UMC.UI.Format(click, false);
+        if (href.indexOf('href') == -1) {
             html.push('div', ' ', href);
             return 'div'
         } else {
