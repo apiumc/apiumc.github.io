@@ -1,6 +1,6 @@
 
 (function ($) {
-    $.page('proxy', '托管应用', function (root) {
+    $.page('proxy', '应用管理', function (root) {
         var search = { limit: 'PC' };
         root.on('menu', [{
         //     text: '加载日志', click: { model: 'Proxy', cmd: 'Site', send: 'LogSetting' }
@@ -27,4 +27,3 @@
     });
 })(WDK);
 
-var s = [{ "data": [{ Text: "中文（简体）", Value: "zh_CN" }, { Text: "中文（繁體）", Value: "zh_TW" }, { Text: "English", Value: "en" }], "name": "_lang", "title": "设置语音" }]

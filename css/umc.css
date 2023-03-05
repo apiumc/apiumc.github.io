@@ -2647,7 +2647,7 @@ form.filter-container .filter-container-button {
 
     height: auto;
     max-height: 100vh;
-    max-width: 100%;
+    max-width: calc(100% - 168px);;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

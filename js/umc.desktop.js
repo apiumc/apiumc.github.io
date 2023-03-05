@@ -926,6 +926,11 @@ UMC(function ($) {
 
     }).eq(0).on('contextmenu', 'a', function (e) {
         var me = $(this);
+        switch (me.attr('data-app')) {
+            case 'Settings':
+            case 'Docs':
+                return;
+        }
         var mask = $(document.createElement('div')).addClass("weui_mask")
             .click(function () {
                 $(this).remove();

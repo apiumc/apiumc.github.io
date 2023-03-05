@@ -1,6 +1,7 @@
 
 (function ($) {
     $.UI.Ver = 'Sub'
+    $.SPA = '/';
 
     $.UI.EventUI = 'section.app-main';
 
@@ -220,7 +221,6 @@
                 navBar.code = xhr.code;
                 $.UI.ProjectId = xhr.id;
             }
-            var clength = navBar.code.length + 1;
             var htmls = [];
             for (var i = 0; i < xhr.subs.length; i++) {
                 var it = xhr.subs[i];
@@ -231,7 +231,7 @@
                 }
                 htmls.push($.format('<li class="el-menu-item"><a data-id="{id}" ui-spa {url} >{text}</a></li>', it.subs || [], {
                     url: function (x) {
-                        return 'href="' + $.SPA + x.path.substring(clength) + '"'
+                        return 'href="' + $.SPA + x.path + '"'
 
                     }
                 }), '</ul></li>');
@@ -260,12 +260,15 @@
                 }), "*");
             }
 
-            history.replaceState(null, null, $.SPA + xhr.nav.substring(clength));
+            history.replaceState(null, null, $.SPA + xhr.nav);
             if (xhr.spa) {
-                xhr.spa.path ? history.replaceState(null, null, $.SPA + xhr.spa.path.substring(clength)) : 0;
+                xhr.spa.path ? history.replaceState(null, null, $.SPA + xhr.spa.path) : 0;
                 switch (xhr.spa.type || 'subject') {
                     case 'subject':
                         $(window).on('page', 'sub/' + xhr.spa.id, '');
+                        return;
+                    case 'item':
+                        $(window).on('page', 'item/' + xhr.spa.id, '');
                         return;
                 }
             }
@@ -304,29 +307,41 @@
 
         $(window).off('popstate').on('popstate', function (e, v) {
             var pathKey = location.pathname;
-            var IsOk = false;
-            menubar.parent().find('a[href]').each(function () {
-                var m = $(this);
-                if (m.attr('href') == pathKey) {
-                    m.click();
-                    IsOk = true;
-                    return false;
-                }
-            });
-            if (IsOk == false) {
-                var key = pathKey.substring($.SPA.length);
-                var cl = navBar.code.length + 1;
-                for (var i = 0; i < navBar.menu.length; i++) {
-                    var m = navBar.menu[i];
-                    if (m.path.substring(cl) == key) {
-                        $.UI.Command("Subject", 'PortfolioSub', { Key: m.path }, function (xhr) {
-                            $.UI.On('Portfolio.List', xhr)
-                        });
-                        return true;
+            if (!$('#menubar a[href="' + pathKey + '"]').click().length) {
+                $.UI.API("Subject", 'Nav', pathKey || '', function (xhr) {
+                    switch (xhr.type) {
+                        case 'login':
+                        case 'dashboard':
+                        case 'home':
+                            return;
+                        case 'nav':
+                            xhr.click ? $.Click(xhr.click) : 0;
+                            $.nav(xhr.nav || $.SPA);
+                            return;
+                        case 'page':
+                            $(window).on('page', 'page/' + (location.pathname.substring($.SPA.length) || 'index'), '');
+                            return;
+
                     }
-                }
+                    $.UI.On('Portfolio.List', { subs: xhr.subs });
+
+                    if (xhr.spa) {
+                        xhr.spa.path ? history.replaceState(null, null, $.SPA + xhr.spa.path) : 0;
+                        switch (xhr.spa.type || 'subject') {
+                            case 'subject':
+                                $(window).on('page', 'subject/' + xhr.spa.id, '');
+                                break;
+                            case 'item':
+                                $(window).on('page', 'item/' + xhr.spa.id, '');
+                                break;
+                        }
+                    } else if ($.UI.On('UI.Error') !== true) {
+                        $.nav($.SPA + xhr.nav);
+                    }
+
+                });
+
             }
-            return IsOk;
 
         }).on('message', function (e) {
             var data = {};

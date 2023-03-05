@@ -176,7 +176,7 @@
         while (v = arguments[g.length - 1]) {
             g.push(v)
         }
-       // $.UI.Ver ? g.push("?_v=", $.UI.Ver) : 0;// + __p.Ver : ''
+        // $.UI.Ver ? g.push("?_v=", $.UI.Ver) : 0;// + __p.Ver : ''
         return g.join('');
     }
     $.UI.On("DataEvent", function (e, p, v) {
@@ -289,11 +289,10 @@
 
         } else if (ps.root) {
             var em = ps.root;
-            ps.tpl ? value.key = em.attr('ui-key') : 0;
             $.UI.On('UI.Push', ps, path);
             if ((em.attr('hash') || '') != hashValue) {
-                em.on('hash', value);
                 hashValue !== true ? em.attr('hash', hashValue) : 0;
+                em.on('hash', value, hashValue);
             }
 
             var evdata = em[0].eventData || {};
@@ -312,10 +311,9 @@
                     }
                 });
             if (ps.root) {
-                ps.tpl ? value.key = ps.root.attr('ui-key') : 0
                 var th = function () {
-                    ps.root.on('hash', value);
                     ps.root.attr('hash', hashValue)
+                    ps.root.on('hash', value, hashValue);
                 }
 
                 $.UI.On('UI.Push', ps);
@@ -418,7 +416,7 @@
             href = (href.length == 1 ? $.SPA : ($.SPAPfx || $.SPA)) + href.substring(1);
         }
         if ($.SPA) {
-            (location.pathname + location.search) == href ? 0 : history.pushState(null, null, href);
+            history.pushState(null, null, href);
             requestAnimationFrame(function () { win.on('popstate') });
         } else {
             location.hash = href;
@@ -433,6 +431,35 @@
         } else {
             location.hash = href;
         }
+    }
+    $.scroll = function (s, t) {
+        var con = $(s);
+        var src = con[0];
+        var ofset = t.offset();
+        var top = ofset.top - con.offset().top;
+        var stop = src.scrollTop + top + 20;
+        var sctop = src.scrollTop;
+        var num = (stop - sctop) / 30;
+        function run() {
+            sctop = sctop + num;
+            if (num > 0) {
+                if (sctop >= stop) {
+                    sctop = stop
+                } else {
+                    requestAnimationFrame(run);
+                }
+            } else {
+
+                if (sctop <= stop) {
+                    sctop = stop
+                } else {
+                    requestAnimationFrame(run);
+                }
+            }
+
+            src.scrollTop = sctop;
+        }
+        run();
     }
 
 })(UMC)

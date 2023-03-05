@@ -49,3 +49,5 @@ umc-request-user-name:admin
 umc-request-user-alias:admin
 umc-request-user-role:Administrators
 
+
+是这样的，本来去年是想找你，帮助测试一下，我这里优化后的统一登录，因为很多参数都是配置顾家的应用，能大量的减少配置工作，同时也能让你了解一下优化后的市场价值，后面有没有兴趣我们一起合作，向市面上推广这个产品。

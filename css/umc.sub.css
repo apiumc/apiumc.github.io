@@ -1176,18 +1176,15 @@ ul.umc-search-menu[role=menu] {
 }
 
 .umc-sub-follower {
-    top: 50%;
+    bottom: 0px;
     padding-top: 100px;
-    height: 50%;
     position: absolute;
-    margin-top: -100px;
     width: 100%;
     text-align: center;
     line-height: 2;
     z-index: 2;
-    /* border-top: 1px solid #ddd6; */
     color: #1890ff;
-    /* box-shadow: 0 -60px 80px #fff; */
+    padding-bottom: 20px;
 }
 
 .umc-sub-follower::before {
@@ -1235,6 +1232,10 @@ ul.umc-search-menu[role=menu] {
     margin-top: 10px;
 }
 
+
+.umc-sub-follower ~div{
+    display: none;
+}
 .hideScrollbar .app-main {
     overflow: hidden;
 }
@@ -1390,6 +1391,25 @@ ul.umc-search-menu[role=menu] {
     font-family: wdk;
     font-size: 20px;
 
+}
+.navbar::after{
+    display: none;
+}
+
+.navbar::before{
+    display: block;
+    content: ' ';
+    position: absolute;
+    top: calc(100% - 2px);
+    height: 2px;
+    width: var(--loading);
+    background-color: #00aaef;
+    z-index: 2;
+    background: #0076ff; 
+  transition:
+    width 300ms ease-out,
+    opacity 150ms 150ms ease-in;
+  transform: translate3d(0, 0, 0);
 }
 
 .umc-sub-app .sidebar-logo-container #team {
@@ -1835,11 +1855,6 @@ border-top: 1px solid #dfe6ec;
     height: 75px;
     line-height: 75px;
     font-size: 16px;
-}
-
-.navbar::after,
-.navbar::before {
-    display: none;
 }
 
 .umc-sub-index .sidebar-logo-container .login-box,

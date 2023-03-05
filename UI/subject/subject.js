@@ -27,31 +27,32 @@
             }
         })).find('.wdk-subject-nav-item')
             .click(function () {
-                var ofset = emKeys.eq(parseInt($(this).attr('data-index'))).offset();
-                var top = ofset.top - con.top;
-                var stop = t.r[0].scrollTop + top + 20;
-                var sctop = t.r[0].scrollTop;
-                var num = (stop - sctop) / 30;
-                function run() {
-                    sctop = sctop + num;
-                    if (num > 0) {
-                        if (sctop >= stop) {
-                            sctop = stop
-                        } else {
-                            requestAnimationFrame(run);
-                        }
-                    } else {
+                $.scroll(t.r,emKeys.eq(parseInt($(this).attr('data-index'))));
+                // var ofset = emKeys.eq(parseInt($(this).attr('data-index'))).offset();
+                // var top = ofset.top - con.top;
+                // var stop = t.r[0].scrollTop + top + 20;
+                // var sctop = t.r[0].scrollTop;
+                // var num = (stop - sctop) / 30;
+                // function run() {
+                //     sctop = sctop + num;
+                //     if (num > 0) {
+                //         if (sctop >= stop) {
+                //             sctop = stop
+                //         } else {
+                //             requestAnimationFrame(run);
+                //         }
+                //     } else {
 
-                        if (sctop <= stop) {
-                            sctop = stop
-                        } else {
-                            requestAnimationFrame(run);
-                        }
-                    }
+                //         if (sctop <= stop) {
+                //             sctop = stop
+                //         } else {
+                //             requestAnimationFrame(run);
+                //         }
+                //     }
 
-                    t.r[0].scrollTop = sctop;
-                }
-                run();
+                //     t.r[0].scrollTop = sctop;
+                // }
+                // run();
 
             }).each(function (i) {
                 $(this).attr('data-index', i + '');
@@ -99,9 +100,11 @@
         t.cmd = 'UIData'
         t.search = { Id: root.attr('ui-key') };
         root.ui('User', function () {
+            $.UI.On('Progress.Bar');
             $.UI.API(t.model, t.cmd, WDK.extend({
                 limit: 30
             }, t.search), function (xhr) {
+                $.UI.On('Progress.Bar', true);
                 t.b.html('');
                 t.dataSource(xhr);
                 var tt = xhr.Title;
@@ -113,7 +116,8 @@
                 root.on('menu', tt.Editer ? { key: tt.Id, icon: '\uf044' } : []);
                 subNav(t, root);
                 if (tt.Follow) {
-                    view.find('#Subject').append($(document.createElement('div')).addClass('umc-sub-follower').html("有公众号赞助此内容<br>需要<a data-key=\"" + tt.Follow + "\">关注</a> 后,才可解锁内容<a class=\"ad\" target=\"_blank\" href=\"/wiki/media/income\">了解此推广方式</a>").click('a[data-key]', function () {
+                    var ls = view.find('#Subject').children();
+                    ls.eq(ls.length > 5 ? Math.floor(ls.length / 2) : (ls.length - 1)).before($(document.createElement('div')).addClass('umc-sub-follower').html("有公众号赞助此内容<br>需要<a data-key=\"" + tt.Follow + "\">关注</a> 后,才可解锁剩余内容<a class=\"ad\" target=\"_blank\" href=\"/wiki/media/income\">了解此变现方式</a>").click('a[data-key]', function () {
                         $.UI.On('Login', { code: $(this).attr('data-key') });
                     }));
                 }
@@ -364,7 +368,7 @@
                 });
                 editer.cls('editer', xhr.IsAuth);
                 editer.cls('adver', xhr.IsAdver);
-                
+
                 $.UI.On('Subject.Path', { Path: xhr.Code });
                 if (xhr.releaseId) {
                     $.UI.On('UI.Publish', xhr.Name, xhr.Keywords || xhr.Name, xhr.Desc, {
@@ -434,4 +438,4 @@
             }).find('div.weui_navbar_item').eq(0).click();;
 
     }, '项目专栏');
-})(WDK)
+})(UMC)

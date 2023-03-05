@@ -22,13 +22,13 @@
                             标题
                         </th>
                         <th>
-                            类型
+                            许可
                         </th>
                         <th>
                             网址
                         </th>
                         <th>
-                            授权
+                            类型
                         </th>
                     </tr>
                 </thead>
@@ -40,13 +40,13 @@
                             </td>
                             <td class="is-center">{name}</td>
                             <td class="is-center">
-                                {module}
+                                {auth}
                             </td>
                             <td class="is-center">
                                 <a class="link-type" model="Proxy" cmd="Site" send="Key={root}&Model=Domain">  {domain}</a>
                             </td>
                             <td class="is-center rel">
-                                {auth}
+                                {module}
                                 <a class="swipe el-button--danger" model="Proxy" cmd="Site" send="Key={root}&Model=Delete"> 移除</a>
                             </td>
 

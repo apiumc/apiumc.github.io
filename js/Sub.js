@@ -6,7 +6,7 @@ UMC.SPA = '/';
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?9f08376e93197587c3cb30e45a9d0091";
+  hm.src = "https://hm.baidu.com/hm.js?bad6c3952154c8a63970c8c40e650f66";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
@@ -14,9 +14,12 @@ var _hmt = _hmt || [];
 UMC(function ($) {
 var site=$('.header-sub-nav .menu-site');///proxy/image/cast
 site.html([
-    '<li><a ui-spa href="/">知识录</a></li>',
-    '<li><a ui-spa href="/Gateway">应用网关</a></li>',
-    '<li><a ui-spa href="/Bridge">内网穿透</a></li>'].join(''));
+    '<li><a ui-spa href="/">应用网关</a></li>',
+    '<li><a ui-spa href="/#account">统一登录</a></li>',
+    '<li><a ui-spa href="/#function">强化应用</a></li>',
+    '<li><a ui-spa href="/#scenarios">应用场景</a></li>',
+    '<li><a ui-spa href="/#userValue">客户价值</a></li>'
+].join(''));
     requestAnimationFrame(function () {
         $(window).on("page", function () {
             var path = location.pathname;

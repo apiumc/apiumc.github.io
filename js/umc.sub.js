@@ -341,6 +341,7 @@
                 var dom = app.children('div.ui');//.cls('ui', 0);
                 if (dom[0] != xhr.root[0]) {
                     navbar.cls('show-menu', 0);
+                    dom.prop('top', app[0].scrollTop || '0');
                     dom.cls('ui', 0).remove().on('backstage');
                     app.append(xhr.root.cls('ui', 1));
                     xhr.root.on('active');
@@ -354,6 +355,7 @@
                     $(document.body).cls(ocls || '', 0).cls(cls || '', 1);
 
                     $(window).on('title', xhr.title).on("menu", xhr.menu || []);
+                    app[0].scrollTop = parseInt(xhr.root.prop('top')) || 0;
                 }
             });
             function itemClick() {
@@ -565,7 +567,11 @@
         var nav = $('#nav', navbar).click('a', function () {
             var m = $(this);
             if (!m.parent().is('.is-active')) {
+
+                $.UI.On('Progress.Bar');
                 $.UI.API("Subject", 'PortfolioSub', m.attr('data-id'), function (xhr) {
+
+                    $.UI.On('Progress.Bar', true);
                     $.UI.On('Portfolio.List', xhr)
                 });
                 m.parent().addClass('is-active').siblings().removeClass('is-active');
@@ -630,7 +636,7 @@
             switch (pKey) {
                 case 'index.html':
                 case 'index':
-                    $(window).on('page', 'page/index', '');
+                    $(window).on('page', 'page/index', location.hash || '');
                     return
                 case 'dashboard':
                     (v || $.UI.IsAuthenticated) ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
@@ -643,7 +649,7 @@
                             return;
                         default:
                             if (/[A-Z]+/.test(root)) {
-                                $(window).on('page', 'page/' + pKey, '');
+                                $(window).on('page', 'page/' + pKey, location.hash || '');
                                 return;
                             }
                             break;
@@ -688,7 +694,8 @@
             }
 
         });
-        var active = false
+        var active = false;
+        var intervalBar = 0;
         $.UI.On('Sub.Title.Change', function (e, v) {
             if (active && active.attr('data-id') == v.Id) {
                 active.text(v.Title || '请输入标题');
@@ -833,7 +840,7 @@
             var clipboardData = window.clipboardData || navigator.clipboardData;
             if (clipboardData) {
                 clipboardData.setData('Text', v.text);
-                $.UI.Msg("内容成功复制");
+                $.UI.Msg(v.msg || "内容成功复制");
             } else {
                 var input = document.createElement('input');
                 document.body.appendChild(input);
@@ -841,7 +848,7 @@
                 input.select();
 
                 if (document.execCommand('copy')) {
-                    $.UI.Msg("内容成功复制");
+                    $.UI.Msg(v.msg || "内容成功复制");
                 } else {
                     $.UI.Confirm("内容复制失败", '需要您手动复制: <b id="Clipboard"></b>');
                     var selection = window.getSelection();
@@ -855,7 +862,9 @@
             }
 
         }).On('Subject.Menu', function (e, v) {
+            $.UI.On('Progress.Bar');
             $.UI.API("Subject", 'Nav', v || '', function (xhr) {
+                $.UI.On('Progress.Bar', true);
                 switch (xhr.type) {
                     case 'login':
                         UMC.UI.On('Login');
@@ -960,9 +969,29 @@
                     return false;
                 }
             })
+        }).On('Progress.Bar', function (e, b) {
+            if (b) {
+                document.body.style.setProperty('--loading', '100%');
+                clearInterval(intervalBar);
+                intervalBar = 0;
+                setTimeout(() => {
+                    document.body.style.removeProperty('--loading')
+                }, 500);
+            } else if (intervalBar == 0) {
+                document.body.style.setProperty('--loading', '5%');
+                var time = 1;
+                intervalBar = setInterval(function () {
+                    time++;
+                    var v = time % 10;
+                    if (v) {
+                        document.body.style.setProperty('--loading', v + '0%');
+                    } else {
+                        clearInterval(intervalBar);
+                    }
+                }, 200);
+            }
 
         });
-
         $('.el-dropdown').menu().siblings('*[role]').click('a', function () {
             var me = $(this);
             switch (me.attr('data-key')) {
@@ -1145,8 +1174,8 @@
             requestAnimationFrame(function () { $(window).on('popstate') });
         }).On('Close', function () {
             location.reload(false);
-        }).On('Share',function(){
-            $.UI.Command('Platform','Share',location.pathname);
+        }).On('Share', function () {
+            $.UI.Command('Platform', 'Share', location.pathname);
         })
 
         $(document.body).ui('Key.Pager', function (e, v) {
