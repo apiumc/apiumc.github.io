@@ -931,9 +931,9 @@
         UMC({ tag: 'div' }).appendTo(cells);
         for (var i = 0; i < data.length; i++) {
             var t = data[i];
-            UMC({ tag: 'input', type: 'submit', value: i + '' }).appendTo(UMC({ tag: 'div', cls: pxf + '_cell', text: t[fd || 'Text'] || t['text'] }).appendTo(cells));
+            UMC({ tag: 'button', type: 'submit', value: i + '' }).appendTo(UMC({ tag: 'div', cls: pxf + '_cell', text: t[fd || 'Text'] || t['text'] }).appendTo(cells));
         }
-        UMC({ tag: 'input', type: 'submit', value: -1 }).appendTo(UMC({ tag: 'div', cls: pxf + '_cell', text: '取消' }).appendTo(UMC({ tag: 'div', cls: pxf + '_action' }).appendTo(sheet)));
+        UMC({ tag: 'button', type: 'submit', value: -1 }).appendTo(UMC({ tag: 'div', cls: pxf + '_cell', text: '取消' }).appendTo(UMC({ tag: 'div', cls: pxf + '_action' }).appendTo(sheet)));
 
         sheet.appendTo(document.body).submit(function (e) {
             mask.click();

@@ -455,12 +455,12 @@
                     if (data.SendValue != key) {
                         data.SendValue.Key = key;
                     }
+                default:
                     var model = data.Model;
                     var cmd = data.Command;
                     if (model && cmd) {
                         $.UI.Command(model, cmd, data.SendValue)
                     }
-                case "BarCode":
                     break;
             }
         }).click("*[click-data]", function (e) {

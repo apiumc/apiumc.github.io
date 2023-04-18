@@ -17,7 +17,7 @@ site.html([
     '<li><a ui-spa href="/">应用网关</a></li>',
     '<li><a ui-spa href="/#account">统一登录</a></li>',
     '<li><a ui-spa href="/#function">强化应用</a></li>',
-    '<li><a ui-spa href="/#scenarios">应用场景</a></li>',
+    '<li><a ui-spa href="/#scenarios">经典场景</a></li>',
     '<li><a ui-spa href="/#userValue">客户价值</a></li>'
 ].join(''));
     requestAnimationFrame(function () {

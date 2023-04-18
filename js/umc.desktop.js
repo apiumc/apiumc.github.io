@@ -900,7 +900,12 @@ UMC(function ($) {
         var me = $(this);
         $.UI.Command("Account", "Check", "Info", function (xhr) {
             xhr.IsCashier ? 0 : $.UI.On('Close');
-        });
+        });    
+        switch (me.attr('data-app')) {
+            case 'Add':
+                $.UI.Command('Proxy','Site','Create');
+                return false;
+        }
         switch (me.attr('target')) {
             case '_blank':
                 return true;
@@ -929,6 +934,7 @@ UMC(function ($) {
         switch (me.attr('data-app')) {
             case 'Settings':
             case 'Docs':
+            case 'Add':
                 return;
         }
         var mask = $(document.createElement('div')).addClass("weui_mask")

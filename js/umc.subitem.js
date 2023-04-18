@@ -32,31 +32,7 @@
             }
         })).find('.wdk-subject-nav-item')
             .click(function () {
-                var ofset = emKeys.eq(parseInt($(this).attr('data-index'))).offset();
-                var top = ofset.top - con.top;
-                var stop = t.r[0].scrollTop + top + 20;
-                var sctop = t.r[0].scrollTop;
-                var num = (stop - sctop) / 30;
-                function run() {
-                    sctop = sctop + num;
-                    if (num > 0) {
-                        if (sctop >= stop) {
-                            sctop = stop
-                        } else {
-                            requestAnimationFrame(run);
-                        }
-                    } else {
-
-                        if (sctop <= stop) {
-                            sctop = stop
-                        } else {
-                            requestAnimationFrame(run);
-                        }
-                    }
-
-                    t.r[0].scrollTop = sctop;
-                }
-                run();
+                $.scroll(t.r, emKeys.eq(parseInt($(this).attr('data-index'))));
 
             }).each(function (i) {
                 $(this).attr('data-index', i + '');
@@ -122,6 +98,14 @@
         })
         $.UI.Command('Subject', 'Item', root.attr('ui-key'), function (xhr) {
             $('.umc-subitem-caption', root).text(xhr.caption);
+            var title = xhr.caption;
+
+            root.on('active', function () {
+                window.top.postMessage(JSON.stringify({
+                    type: 'page',
+                    value: { title: title, search: true }
+                }), "*");
+            }).on('active');
             root.find('.umc-subitem-users').html($.format('<li><a model="Subject" cmd="Account" send="{id}"><img src="{src}" /></a></li>', xhr.users));
             var htmls = [];
             var keys = [];
@@ -140,7 +124,6 @@
             root.find('.umc-subitem-nav>ul').html(htmls.join(''));
             root.find('.umc-subitem-users-sum span').text(xhr.users.length);
         });
-
 
     })
 
@@ -323,18 +306,9 @@
                             return;
 
                     }
-                    $.UI.On('Portfolio.List', { subs: xhr.subs });
 
                     if (xhr.spa) {
-                        xhr.spa.path ? history.replaceState(null, null, $.SPA + xhr.spa.path) : 0;
-                        switch (xhr.spa.type || 'subject') {
-                            case 'subject':
-                                $(window).on('page', 'subject/' + xhr.spa.id, '');
-                                break;
-                            case 'item':
-                                $(window).on('page', 'item/' + xhr.spa.id, '');
-                                break;
-                        }
+                        $.UI.On('Portfolio.List', xhr);
                     } else if ($.UI.On('UI.Error') !== true) {
                         $.nav($.SPA + xhr.nav);
                     }

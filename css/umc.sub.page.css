@@ -720,7 +720,7 @@
 }
 
 .product-title {
-    font-size: 32px;
+    font-size: 28px;
     text-align: center;
     line-height: 1.5;
     font-weight: 600;
@@ -739,6 +739,8 @@
     color: #6c6f75;
     margin-top: 10px;
     margin-bottom: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .umc-sub-header-container.price {
@@ -1880,7 +1882,6 @@
 }
 
 .product-matrix-and-scene .footer-inner h3 {
-    margin-bottom: 70px;
     line-height: 40px;
     font-size: 28px;
     text-align: center
@@ -1888,7 +1889,7 @@
 
 .product-matrix-and-scene .footer-inner .user-value {
     position: relative;
-    height: 550px;
+    height: 520px;
     width: 1120px;
     margin: auto
 }
@@ -2176,12 +2177,10 @@ transform: translate(-50%, -50%);}
 
     margin-left: 11px;
     margin-top: 15px;
-    background-image: url(https://wwcdn.weixin.qq.com/node/wwnl/wwnl/style/images/officialImages$64a1bb5d.png);
-    background-position: 0 -89px;
+    background-image: url(/css/images/download.png);
+    background-position: center;
     width: 90px;
     height: 90px;
-    background-position: 0 -89px;
-    background-size: 376px 337px;
 }
 .umc-sub-footer-container .login-box{
     color: #fff;
@@ -2329,5 +2328,31 @@ transform: translate(-50%, -50%);}
 }
 .index-solution-card{
     margin: 10px 0;
+    
+}
+.product-scene-card{
+    height: 120px;
+    margin: 10px;
+    overflow: hidden;
+}
+.product-scene-card-img{
+    float: left;
+    padding-top: 10px;
+}
+.umc-sub-middle-wrapper{
+
+    padding: 20px;
+}
+.product-matrix-and-scene .footer-inner .user-value ul li{
+    margin: 0px;
+
+     float:none;
+     width: auto;
+}
+.product-matrix-and-scene .footer-inner .user-value{
+    height: auto;
+    width: auto;
+}.product-matrix-and-scene .footer-inner .user-value ul li:nth-child(n+5) {
+    margin-top: 0px
 }
 }

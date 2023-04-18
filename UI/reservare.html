@@ -1,0 +1,66 @@
+<div class="app-container">
+    <div class="item-container">
+        <div class="el-table">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <colgroup>
+                    <col width="300">
+                    <col width="110">
+                    <col width="100">
+                    <col width="120">
+                    <col width="100">
+                    <col width="100">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th>
+                            主体信息
+                        </th>
+                        <th>
+                            联系人
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            状态
+                        </th>
+                        <th>
+                            跟进时间
+                        </th>
+                        <th>
+                            登记时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script type="text/html">
+                        <tr class="el-table__row">
+                            <td>
+
+                                <a model="Platform" cmd="Register" send="Type=Search&Id={Id}" class="link-type">  {Name}</a>
+
+                            </td>
+                            <td>
+                                {Contact}
+                            </td>
+                            <td>
+                                {Tel}
+                            </td>
+                            <td>
+                                {Status}
+                            </td>
+                            <td>
+
+                                {LastTime}
+                            </td>
+                            <td class="is-center">
+                                {Time}
+                            </td>
+                        </tr>
+                    </script>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

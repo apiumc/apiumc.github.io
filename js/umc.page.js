@@ -439,7 +439,7 @@
         var top = ofset.top - con.offset().top;
         var stop = src.scrollTop + top + 20;
         var sctop = src.scrollTop;
-        var num = (stop - sctop) / 30;
+        var num = (stop > sctop) ? 50 : -50;
         function run() {
             sctop = sctop + num;
             if (num > 0) {

@@ -1,68 +1,525 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
-    <title>UMC网关</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <link href="/css/weui.css" rel="stylesheet" type="text/css" />
-    <link href="/css/base.css" rel="stylesheet" type="text/css" />
-    <link href="/css/icon.css" rel="stylesheet" type="text/css" />
-    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css" />
-    <link href="/css/umc.css" rel="stylesheet" type="text/css" />
-    <link href="/css/auth.css" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>自建应用 SSO 方案 | Authing 文档</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://authing.cn/favicon.ico">
+    <script>!function () { var e = window.Cohere = window.Cohere || []; if (e.invoked) console.error("Tried to load Cohere twice"); else { e.invoked = !0, e.snippet = "0.2", e.methods = ["init", "identify", "stop", "showCode", "getSessionUrl", "makeCall", "addCallStatusListener", "removeCallStatusListener", "widget", "addSessionUrlListener", "removeSessionUrlListener",], e.methods.forEach(function (o) { e[o] = function () { var t = Array.prototype.slice.call(arguments); t.unshift(o), e.push(t) } }); var o = document.createElement("script"); o.type = "text/javascript", o.async = !0, o.src = "https://static.cohere.so/main.js", o.crossOrigin = "anonymous"; var t = document.getElementsByTagName("script")[0]; t.parentNode.insertBefore(o, t) } }();</script>
+    <script>if (window.location.hostname === "docs.authing.cn") { window.Cohere.init("PUkf845sOZgDd59V6aTJCsuJ"); }</script>
+    <script async="true" src="https://www.googletagmanager.com/gtag/js?id=G-B1XMPFE9RK"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    <script src="/js/umc.js" type="text/javascript"></script>
-
-    <script src="/UMC.Conf" type="text/javascript"></script>
-
-    <script src="/js/mqttws31.min.js?v.01"></script>
-    <script src="/js/qrcode.min.js?v.01"></script>
-    <script src="/js/umc.proxy.js"></script>
-
+        gtag('config', 'G-B1XMPFE9RK');</script>
+    <meta name="description" content="Authing 文档">
+    <link rel="preload" href="//cdn.authing.co/authing-docs-v2/1.3.174/assets/css/45.styles.8dc27df0.css" as="style">
+    <link rel="preload" href="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/app.3750de6f.js" as="script">
+    <link rel="preload" href="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/46.8d0c524a.js" as="script">
+    <link rel="preload" href="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/18.98609200.js" as="script">
+    <link rel="preload" href="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/15.de296cce.js" as="script">
+    <link rel="stylesheet" href="//cdn.authing.co/authing-docs-v2/1.3.174/assets/css/45.styles.8dc27df0.css">
 </head>
 
 <body>
-    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active"
-        style="z-index: 2100;">
-        <i class="el-message__icon el-icon-success"></i>
-        <p class="el-message__content"></p>
-    </div>
-    <div class="login-container">
-        <form class="el-form login-form el-form--label-left scanning"
-            style="border-radius: 6px; box-shadow: 0 4px 8px 0 rgba(42, 93, 158, .16), 0 0 4px 0 rgba(42, 93, 158, .08); background-color: #fff;width: 300px;"
-            autocomplete="on">
-            <div class="loginFunc">
-                <div class="qrcode"></div>
-                <div class="account"></div>
-            </div>
-            <div class="title-container" style="padding-top:15px; margin-bottom:15px">
-                欢迎使用 UMC网关!!!
-            </div>
-            <div class="qrcode_view" style="top: 28%;">
-                <div style="width: 200px; height: 200px; margin: auto; position: relative;">
-                    <div class="context"></div>
-                    <div id="qrcode"></div>
-                    <!--[if IE]> 不支持IE内核的浏览器，推荐使用chrome .如果使用360请切换极速模式<![endif]-->
+    <div id="app" data-server-rendered="true">
+        <div class="theme-container">
+            <div class="vue-notification-group" style="width:300px;top:0px;left:calc(50% - 150px);"></div>
+            <header class="navbar fixed-header">
+                <div class="navbar-container content-layout-container">
+                    <div class="nav-bar-logo-container"><a href="https://authing.cn" class="nav-bar-new-logo"><img
+                                src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg"
+                                alt="Authing 文档" class="logo"></a><a href="/v2/"
+                            class="home-link router-link-active"><span class="site-name">文档</span></a></div>
+                    <div class="links can-hide">
+                        <nav class="nav-links can-hide">
+                            <div class="nav-item"><a href="/v2/quickstarts/" class="nav-link">快速开始</a></div>
+                            <div class="nav-item"><a href="/v2/concepts/" class="nav-link">概念</a></div>
+                            <div class="nav-item"><a href="/v2/guides/" class="nav-link router-link-active">使用指南</a>
+                            </div>
+                            <div class="nav-item">
+                                <div class="authing-dropdown" data-v-b78310c6>
+                                    <div data-v-b78310c6>开发集成 <img
+                                            src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-down-line.8cdb276c.svg"
+                                            alt="arrow" class="arrow-down" data-v-b78310c6></div>
+                                    <ul class="authing-dropdown-menu" style="display:none;" data-v-b78310c6
+                                        data-v-b78310c6>
+                                        <li data-v-b78310c6>V2 文档</li>
+                                        <li data-v-b78310c6>V3 文档</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="nav-item"><a href="/v2/integration/" class="nav-link">应用集成</a></div>
+                            <div class="nav-item"><a href="/v2/apn/" class="nav-link">加入 APN</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/reference-new/" class="nav-link">开发集成</a>
+                            </div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/tenant/" class="nav-link">多租户（内测版）</a>
+                            </div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/console-using/"
+                                    class="nav-link">控制台文档</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/multi-tenant-console/"
+                                    class="nav-link">多租户控制台</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/tenant-console/"
+                                    class="nav-link">租户控制台</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/tenant-app-demo/" class="nav-link">Saas
+                                    应用 Demo</a></div>
+                        </nav>
+                    </div>
+                    <div class="authing-search-box"><input aria-label="Search" placeholder="在文档中搜索" autocomplete="off"
+                            spellcheck="false" value=""></div>
+                    <div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img"
+                            viewBox="0 0 448 512" class="icon"></svg></div>
                 </div>
-                <div style="text-align: center;background-color: #fff;padding: 30px 0;">
-                    请使用<a id="tip"></a>扫描二维码登录
+            </header>
+            <main class="page content-layout-container">
+                <div class="main-content">
+                    <aside class="sidebar">
+                        <nav class="nav-links">
+                            <div class="nav-item"><a href="/v2/quickstarts/" class="nav-link">快速开始</a></div>
+                            <div class="nav-item"><a href="/v2/concepts/" class="nav-link">概念</a></div>
+                            <div class="nav-item"><a href="/v2/guides/" class="nav-link router-link-active">使用指南</a>
+                            </div>
+                            <div class="nav-item">
+                                <div class="authing-dropdown" data-v-b78310c6>
+                                    <div data-v-b78310c6>开发集成 <img
+                                            src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-down-line.8cdb276c.svg"
+                                            alt="arrow" class="arrow-down" data-v-b78310c6></div>
+                                    <ul class="authing-dropdown-menu" style="display:none;" data-v-b78310c6
+                                        data-v-b78310c6>
+                                        <li data-v-b78310c6>V2 文档</li>
+                                        <li data-v-b78310c6>V3 文档</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="nav-item"><a href="/v2/integration/" class="nav-link">应用集成</a></div>
+                            <div class="nav-item"><a href="/v2/apn/" class="nav-link">加入 APN</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/reference-new/" class="nav-link">开发集成</a>
+                            </div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/tenant/" class="nav-link">多租户（内测版）</a>
+                            </div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/console-using/"
+                                    class="nav-link">控制台文档</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/multi-tenant-console/"
+                                    class="nav-link">多租户控制台</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/tenant-console/"
+                                    class="nav-link">租户控制台</a></div>
+                            <div class="nav-item nav-item-hidden"><a href="/v2/tenant-app-demo/" class="nav-link">Saas
+                                    应用 Demo</a></div>
+                        </nav><a href="https://old-docs.authing.cn" class="old-version"><svg aria-hidden="true"
+                                class="icon"></svg> 旧版</a>
+                        <div class="current-nav-text">使用指南</div>
+                        <div class="authing-search-box sidebar-search"><input aria-label="Search" placeholder="搜索标题"
+                                autocomplete="off" spellcheck="false" value=""></div>
+                        <ul class="sidebar-links">
+                            <li data-index="0">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>快速开始</span></p>
+                                </section>
+                            </li>
+                            <li data-index="1">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>对用户进行认证</span></p>
+                                </section>
+                            </li>
+                            <li data-index="2">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>对用户进行权限管理</span></p>
+                                </section>
+                            </li>
+                            <li data-index="3">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>授权</span></p>
+                                </section>
+                            </li>
+                            <li data-index="4">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>管理用户账号</span></p>
+                                </section>
+                            </li>
+                            <li data-index="5">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>管理用户目录</span></p>
+                                </section>
+                            </li>
+                            <li data-index="6">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>同步中心</span></p>
+                                </section>
+                            </li>
+                            <li data-index="7">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable open" data-v-43640650><span
+                                            class="arrow down-arrow" style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-down-s-fill.4c17f7bf.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>应用</span></p>
+                                    <ul class="sidebar-links sidebar-group-items" data-v-43640650 data-v-43640650>
+                                        <li data-index="7-0">
+                                            <section class="sidebar-group collapsable is-sub-group depth-1"
+                                                data-v-43640650>
+                                                <p class="sidebar-heading clickable" data-v-43640650><span
+                                                        class="arrow right-arrow" style="display:;" data-v-43640650><img
+                                                            src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                            data-v-43640650></span><span class="sidebar-heading__title"
+                                                        data-v-43640650>自建应用</span></p>
+                                            </section>
+                                        </li>
+                                        <li data-index="7-1">
+                                            <section class="sidebar-group collapsable is-sub-group depth-1"
+                                                data-v-43640650>
+                                                <p class="sidebar-heading clickable open" data-v-43640650><span
+                                                        class="arrow down-arrow" style="display:;" data-v-43640650><img
+                                                            src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-down-s-fill.4c17f7bf.svg"
+                                                            data-v-43640650></span><span class="sidebar-heading__title"
+                                                        data-v-43640650>单点登录 SSO</span></p>
+                                                <ul class="sidebar-links sidebar-group-items" data-v-43640650
+                                                    data-v-43640650>
+                                                    <li data-index="7-1-0"><a href="/v2/guides/dashboard/"
+                                                            class="sidebar-link">应用面板</a></li>
+                                                    <li data-index="7-1-1"><a href="/v2/guides/apn/"
+                                                            class="sidebar-link">集成应用 SSO 方案</a></li>
+                                                    <li data-index="7-1-2"><a
+                                                            href="/v2/guides/app-new/sso/create-app-sso.html"
+                                                            aria-current="page" class="active sidebar-link">自建应用 SSO
+                                                            方案</a></li>
+                                                    <li data-index="7-1-3">
+                                                        <section class="sidebar-group collapsable is-sub-group depth-2"
+                                                            data-v-43640650>
+                                                            <p class="sidebar-heading clickable" data-v-43640650><span
+                                                                    class="arrow right-arrow" style="display:;"
+                                                                    data-v-43640650><img
+                                                                        src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                                        data-v-43640650></span><span
+                                                                    class="sidebar-heading__title" data-v-43640650>第三方
+                                                                    SSO 方案</span></p>
+                                                        </section>
+                                                    </li>
+                                                    <li data-index="7-1-4"><a href="/v2/guides/asa/"
+                                                            class="sidebar-link">ASA 表单代填</a></li>
+                                                </ul>
+                                            </section>
+                                        </li>
+                                    </ul>
+                                </section>
+                            </li>
+                            <li data-index="8">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>成为联邦认证身份源</span></p>
+                                </section>
+                            </li>
+                            <li data-index="9">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>连接外部身份源（IdP）</span></p>
+                                </section>
+                            </li>
+                            <li data-index="10">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>微信生态全场景能力</span></p>
+                                </section>
+                            </li>
+                            <li data-index="11">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>迁移用户到 Authing</span></p>
+                                </section>
+                            </li>
+                            <li data-index="12">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>管理组织机构</span></p>
+                                </section>
+                            </li>
+                            <li data-index="13">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>安全设置</span></p>
+                                </section>
+                            </li>
+                            <li data-index="14">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>品牌化</span></p>
+                                </section>
+                            </li>
+                            <li data-index="15">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>自动化</span></p>
+                                </section>
+                            </li>
+                            <li data-index="16">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>审计日志</span></p>
+                                </section>
+                            </li>
+                            <li data-index="17">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>设置</span></p>
+                                </section>
+                            </li>
+                            <li data-index="18"><a href="/v2/guides/authingVerify/" class="sidebar-link">Authing 令牌</a>
+                            </li>
+                            <li data-index="19">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading clickable" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>私有化部署方案</span></p>
+                                </section>
+                            </li>
+                            <li data-index="20">
+                                <section class="sidebar-group collapsable depth-0" data-v-43640650>
+                                    <p class="sidebar-heading" data-v-43640650><span class="arrow right-arrow"
+                                            style="display:;" data-v-43640650><img
+                                                src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/arrow-right-s-fill.c2e17522.svg"
+                                                data-v-43640650></span><span class="sidebar-heading__title"
+                                            data-v-43640650>常见问题 FAQ</span></p>
+                                </section>
+                            </li>
+                        </ul>
+                    </aside>
+                    <div class="breadcrumb-content-container">
+                        <div class="breadcrumb-container"></div>
+                        <div class="theme-default-content content__default">
+                            <h1 id="自建应用-sso-方案"><a href="#自建应用-sso-方案" class="header-anchor">¶</a> 自建应用 SSO 方案</h1>
+                            <div class="authing-last-updated" data-v-714ba727>
+                                <div class="left" data-v-714ba727><span class="prefix" data-v-714ba727>更新时间:</span>
+                                    <span class="time" data-v-714ba727>2022-11-19 21:44:40</span></div>
+                                <div class="right" data-v-714ba727>
+                                    <div class="github-edit" data-v-714ba727><svg viewBox="0 0 1024 1024" version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg" data-v-714ba727></svg> <a
+                                            href="https://github.com/Authing/docs/edit/main/docs/guides/app-new/sso/create-app-sso.md"
+                                            data-v-714ba727>编辑</a></div>
+                                </div>
+                            </div>
+                            <p>Authing
+                                提供自建应用。用户池存储了用户系统中所有的用户数据，而自建应用则对应的是现实中根据业务需求创建的业务应用。一个用户池可能会有多个自建应用。开启应用之间的单点登录后，同一个用户池下的不同应用之间的登录状态将会打通，终端用户只需登录一次即可在不同的应用之间畅行。
+                            </p>
+                            <h2 id="在-localeconfig-brandname-控制台配置单点登录"><a href="#在-localeconfig-brandname-控制台配置单点登录"
+                                    class="header-anchor">¶</a> 在 Authing 控制台配置单点登录</h2>
+                            <h3 id="第一步-创建两个应用"><a href="#第一步-创建两个应用" class="header-anchor">¶</a> 第一步：创建两个应用</h3>
+                            <p>首先你可以按照 <a href="/v2/guides/app-new/create-app/create-app.html">指引</a> 创建两个应用。</p>
+                            <h3 id="第二步-配置单点登录"><a href="#第二步-配置单点登录" class="header-anchor">¶</a> 第二步：配置单点登录</h3>
+                            <ol>
+                                <li>进入菜单 <strong>应用-&gt;单点登录 SSO</strong>，点击右上角 <strong>添加自建应用</strong>。</li>
+                            </ol>
+                            <p><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/01.2e7715fe.png" alt="">
+                            </p>
+                            <ol start="2">
+                                <li>在列表中找到并添加已创建的应用。</li>
+                            </ol>
+                            <p><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/02.0ed0700f.png" alt="">
+                            </p>
+                            <h3 id="第三步-体验应用单点登录"><a href="#第三步-体验应用单点登录" class="header-anchor">¶</a> 第三步：体验应用单点登录</h3>
+                            <ol>
+                                <li>进入 <strong>单点登录 SSO</strong> 的 <strong>应用列表</strong> 标签，选择一个应用，点击
+                                    <strong>体验登录</strong>。</li>
+                            </ol>
+                            <p><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/03.acabeb39.png" alt="">
+                            </p>
+                            <ol start="2">
+                                <li>在登录页面完成登录。</li>
+                            </ol><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/sso04.d08877af.png"
+                                height="550" style="display:block;margin:0 auto;">
+                            <p>成功后会跳转到应用回调地址：</p>
+                            <p><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/sso05.60b29dcb.png" alt="">
+                            </p>
+                            <ol start="3">
+                                <li>接下来我们点击另一个应用的体验按钮。</li>
+                            </ol>
+                            <p><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/03.acabeb39.png" alt="">
+                            </p>
+                            <p>用户无需再次输入密码，直接进入了该应用的回调地址：</p>
+                            <p><img src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/img/sso07.f52dad2f.png" alt="">
+                            </p>
+                            <h2 id="使用-sdk-接入单点登录"><a href="#使用-sdk-接入单点登录" class="header-anchor">¶</a> 使用 SDK 接入单点登录
+                            </h2>
+                            <p>详细的接入流程请见 <a href="https://docs.authing.cn/v3/reference/sdk/web/" target="_blank"
+                                    rel="noopener noreferrer">单点登录 SDK<span><svg xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100"
+                                            width="15" height="15" class="icon outbound"></svg> <span
+                                            class="sr-only">(opens new window)</span></span></a> 文档。</p>
+                        </div>
+                        <div class="page-nav" data-v-d52b11e4>
+                            <div class="inner" data-v-d52b11e4><a href="/v2/guides/apn/" class="prev"
+                                    data-v-d52b11e4>上一篇: 集成应用 SSO 方案 </a><a
+                                    href="/v2/guides/app-new/sso/third-party-sso/" class="next" data-v-d52b11e4>下一篇: 第三方
+                                    SSO 方案</a></div>
+                        </div>
+                    </div>
+                    <div class="on-this-page">
+                        <aside class="on-this-page-navigation">
+                            <div style="display:;">
+                                <div>
+                                    <ul class="links">
+                                        <li><a href="/v2/guides/app-new/sso/create-app-sso.html#在-localeconfig-brandname-控制台配置单点登录"
+                                                class="on-this-page-link"><span>在 Authing 控制台配置单点登录</span></a></li>
+                                        <li><a href="/v2/guides/app-new/sso/create-app-sso.html#使用-sdk-接入单点登录"
+                                                class="on-this-page-link"><span>使用 SDK 接入单点登录</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
                 </div>
-            </div>
-            <div class="el-form-item user el-input">
-                <input tabindex="1" type="text" required="" autocomplete="on" placeholder="账号" name="Username"
-                    class="el-input__inner">
-
-            </div>
-            <div class="el-form-item password el-input" tabindex="0">
-
-                <input tabindex="2" type="password" autocomplete="on" placeholder="密码" name="Password"
-                    class="el-input__inner">
-            </div><button type="submit" class="el-button el-button--primary el-button--default"
-                style="width: 100%; margin-bottom: 30px;">登录</button>
-        </form>
+            </main>
+            <footer class="footer">
+                <div class="content-layout-container footer-container"><a href="https://authing.cn"
+                        class="footer-logo"><img width="100px"
+                            src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg"></a>
+                    <div class="footer-collapse">
+                        <h4 class="footer-title">用户身份管理</h4>
+                        <div class="footer-collapse-content">
+                            <div class="footer-link-wrapper"><a href="/v2/guides/connections/"
+                                    class="nav-link footer-link">集成第三方登录</a></div>
+                            <div class="footer-link-wrapper"><a href="https://authing.cn/verify" target="_blank"
+                                    rel="noopener noreferrer" class="nav-link external footer-link">手机号闪验 <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+                                            x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15"
+                                            class="icon outbound"></svg> <span class="sr-only">(opens new
+                                            window)</span></span></a></div>
+                            <div class="footer-link-wrapper"><a href="/v2/reference/ui-components/"
+                                    class="nav-link footer-link">通用登录表单组件</a></div>
+                            <div class="footer-link-wrapper"><a href="/v2/guides/pipeline/"
+                                    class="nav-link footer-link">自定义认证流程</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-collapse">
+                        <h4 class="footer-title">企业内部管理</h4>
+                        <div class="footer-collapse-content">
+                            <div class="footer-link-wrapper"><a href="/v2/guides/app-new/sso/"
+                                    class="nav-link footer-link router-link-active">单点登录</a></div>
+                            <div class="footer-link-wrapper"><a href="/v2/guides/security/mfa/"
+                                    class="nav-link footer-link">多因素认证</a></div>
+                            <div class="footer-link-wrapper"><a href="/v2/guides/access-control/"
+                                    class="nav-link footer-link">权限管理</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-collapse">
+                        <h4 class="footer-title">开发者</h4>
+                        <div class="footer-collapse-content">
+                            <div class="footer-link-wrapper"><a href="/v2/reference/"
+                                    class="nav-link footer-link">开发文档</a></div>
+                            <div class="footer-link-wrapper"><a href="/v2/reference/frameworks.html"
+                                    class="nav-link footer-link">框架集成</a></div>
+                            <div class="footer-link-wrapper"><a href="https://authing.cn/blog" target="_blank"
+                                    rel="noopener noreferrer" class="nav-link external footer-link">博客 <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+                                            x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15"
+                                            class="icon outbound"></svg> <span class="sr-only">(opens new
+                                            window)</span></span></a></div>
+                            <div class="footer-link-wrapper"><a href="https://github.com/authing" target="_blank"
+                                    rel="noopener noreferrer" class="nav-link external footer-link">GitHub <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+                                            x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15"
+                                            class="icon outbound"></svg> <span class="sr-only">(opens new
+                                            window)</span></span></a></div>
+                            <div class="footer-link-wrapper"><a href="https://forum.authing.cn/" target="_blank"
+                                    rel="noopener noreferrer" class="nav-link external footer-link">社区用户中心 <span><svg
+                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
+                                            x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15"
+                                            class="icon outbound"></svg> <span class="sr-only">(opens new
+                                            window)</span></span></a></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="footer-collapse">
+                            <h4 class="footer-title">公司</h4>
+                            <div class="footer-collapse-content">
+                                <div class="footer-text-wrapper">400 888 2106</div>
+                                <div class="footer-text-wrapper">sales@authing.cn</div>
+                                <div class="footer-text-wrapper">北京市朝阳区北辰世纪中心 B 座 16 层（总）</div>
+                                <div class="footer-text-wrapper">成都市高新区天府五街 200 号 1 号楼 B 区 4 楼 406 室（分）</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-last-right-container">
+                        <p class="footer-icp-record">京ICP备19051205号</p>
+                        <p class="footer-icp-record"><img src="//files.authing.co/authing-website/icon-beian-gov.png"
+                                alt="beian">京公网安备 11010802035968号</p>
+                        <p class="footer-company-name">© 北京蒸汽记忆科技有限公司</p>
+                        <div class="footer-social-container"><a title="GitHub" target="_blank"
+                                href="https://github.com/Authing"><svg aria-hidden="true" class="icon"></svg></a><a
+                                title="Forum" target="_blank" href="https://forum.authing.cn/"><svg aria-hidden="true"
+                                    class="icon"></svg></a><a title="知乎" target="_blank"
+                                href="https://www.zhihu.com/org/authing"><svg aria-hidden="true" class="icon"></svg></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-    <a id="ICPFiling" href="https://beian.miit.gov.cn" target="_blank"></a>
+    <script src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/app.3750de6f.js" defer="defer"></script>
+    <script src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/46.8d0c524a.js" defer="defer"></script>
+    <script src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/18.98609200.js" defer="defer"></script>
+    <script src="//cdn.authing.co/authing-docs-v2/1.3.174/assets/js/15.de296cce.js" defer="defer"></script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 
 UMC(function ($) {
+    var query = UMC.query(location.search.substring(1));
     $.UI.Off('Prompt').On("Prompt", function (e, p) {
         var msg = $('.el-message').removeClass('el-message-fade-leave-active');
         msg.find('.el-message__content').html(p.Text);
@@ -7,9 +8,8 @@ UMC(function ($) {
             msg.addClass('el-message-fade-leave-active');
         }, 3000);
     }).On("User", function () {
-        var v = UMC.query(location.search.substring(1));
-        if (v.oauth_callback) {
-            location.href = v.oauth_callback;
+        if (query.oauth_callback) {
+            location.href = query.oauth_callback;
         } else {
             location.reload(true);
         }
@@ -22,6 +22,7 @@ UMC(function ($) {
     });
     login.find('form').submit(function () {
         var v = $(this).val();
+        if (query.transfer) v.transfer = query.transfer;
         $.UI.Command('Account', "Login", v);
         return false;
     });
