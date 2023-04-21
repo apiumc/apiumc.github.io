@@ -900,10 +900,10 @@ UMC(function ($) {
         var me = $(this);
         $.UI.Command("Account", "Check", "Info", function (xhr) {
             xhr.IsCashier ? 0 : $.UI.On('Close');
-        });    
+        });
         switch (me.attr('data-app')) {
             case 'Add':
-                $.UI.Command('Proxy','Site','Create');
+                $.UI.Command('Proxy', 'Site', 'Create');
                 return false;
         }
         switch (me.attr('target')) {
@@ -1050,6 +1050,12 @@ UMC(function ($) {
             }
         });
 
+    }).On('Fingerprint', function (e, v) {
+        import('https://www.apiumc.com/js/fingerprint.js')
+            .then(FingerprintJS => FingerprintJS.load())
+            .then(fp => fp.get())
+            .then(result => $.api('Platform', 'Fingerprint', { SessionKey: v.SessionKey || '', VisitorId: result.visitorId, "Type": v.FType || "Register" }))
+            .catch(error => console.error(error))
 
     }).On('Site.Config', function () {
         UMC.UI.Command('Proxy', 'App');

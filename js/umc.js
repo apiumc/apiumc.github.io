@@ -1180,6 +1180,16 @@
         i.className = o.className;
         o.parentElement.replaceChild(i, o);
     }
+    UMC.api = function (m, c, t, b) {
+        var args = encodeUArgs(m, c, t);
+        var call = b || args[1];
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            check(JSON.parse(xhr.responseText), call);
+        };
+        xhr.open('GET', ['https://api.apiumc.com/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''), true);
+        xhr.send();
+    };
 
     __p.Ready = check;
     var dlgIndex = 0;

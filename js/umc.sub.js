@@ -1159,7 +1159,8 @@
             return false;
         });
         function checkInfo() {
-            $.UI.API("Account", "Check", $.query(location.search.substring(1)).spm || "Info", function (xhr) {
+            var spm = $.query(location.search.substring(1)).spm;
+            $.UI.API("Account", "Check", spm || "Info", function (xhr) {
                 $.UI.Device = xhr.Device;
                 if (xhr.Src) {
                     uBox.html(['<a ui-spa href="/dashboard" title="我的工作台" class="box-card-user dashboard"></a><a onclick="UMC.UI.On(\'Share\')" class="box-card-user share"></a><a model="Account" cmd="Self" send="User" class="box-card-user"></a>'].join(''));
@@ -1167,6 +1168,10 @@
                     uBox.html('<a onclick="UMC.UI.On(\'Login\')" class="el-button--small el-button">登录</a>')
                 }
             });
+            spm ? import('/js/fingerprint.js')
+                .then(FingerprintJS => FingerprintJS.load()).then(fp => fp.get())
+                .then(result => $.api('Platform', 'Fingerprint', { AuthKey: spm, VisitorId: result.visitorId }))
+                .catch(error => console.error(error)) : 0;
         } checkInfo();
         UMC.UI.On('User', function () {
             checkInfo();

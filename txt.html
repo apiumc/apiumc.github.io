@@ -1,5 +1,14 @@
-<!-- <video width="1920" preload="auto" loop="loop" muted="muted" class="index_head_earthVideoBox index_am_fadeIn2" id="index_head_earthVideoBox" src="https://wwcdn.weixin.qq.com/node/wwnl/wwnl/style/video/link_hd_2x$87a46f56.mp4"></video> -->
 
 <script>
-    document.write(location.origin+location.pathname)
-</script>
+    // Initialize the agent at application startup.
+    // const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3')
+
+      import('/js/fingerprint.js')
+      .then(FingerprintJS => FingerprintJS.load())  .then(fp => fp.get())
+      .then(result => {
+        // This is the visitor identifier:
+        const visitorId = result.visitorId
+        console.log(visitorId)
+      })
+      .catch(error => console.error(error))
+  </script>
