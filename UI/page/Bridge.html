@@ -1,101 +1,46 @@
-<div class="umc-sub-header-container" data-title="Web VPN" data-keywords="WebVPN Bridge 内网穿透 Http穿透 Quic协议 动静分离算法 内网穿透 静态资源加速">
+<div class="umc-sub-header-container" data-title="Apiumc零信任开源网关之内网穿透"
+    data-keywords="WebVPN Bridge 内网穿透 Http穿透 Quic协议 动静分离算法 内网穿透 静态资源加速">
     <div class="umc-sub-header">
         <div class="product-top" style="overflow:hidden;">
             <div class="top-content" style=" float:left">
-                <div class="product-top-logo"><span class="product-top-name">Web VPN</span></div>
-                <div class="product-top-title account">基于UMC网关WebVPN组件</div>
-                <div class="product-top-subtitle account">构建以Web形式的虚拟专有网络，让外网只要有浏览器就能访问内网资源、无需安装任何软件、插件；也能让本机应用快速对外访问，解决开发、测试、互联、展示等等难题</div>
+                <div class="product-top-logo"><span class="product-top-name">Apiumc Bridge</span></div>
+                <div class="product-top-title account">内网穿透组件<small>免费</small></div>
+                <div class="product-top-subtitle account">
+                    Apiumc内置Http穿透，帮助企业构建Web形式的专有网络，从而只要有浏览器就能访问内网应用，满足移动办公、出差、开发、测试、应用展示需要在外访问内网的需求。</div>
                 <div class="top-content-try">
-                    <a class="top-content-try-button top track-web-click"  href="/Apps/index.html" target="_blank"><span>去下载</span></a>
+                    <a class="top-content-try-button top track-web-click" ui-spa
+                        href="/#downloads"><span>去下载</span></a>
                     <a ui-spa href="/proxy/vpn/about" class="top-content-try-button help"><span>帮助文档</span></a>
                 </div>
             </div>
             <div class="product-project-image">
-                <img src="/css/images/product-http-proxy.png" width="488" height="488">
+                <img src="/css/images/product-brigde.png" width="488" height="488">
             </div>
         </div>
     </div>
 </div>
 <div class="umc-sub-middle-container">
-    <div class="umc-sub-middle" style="padding: 80px 0 26px 0;"><h2 style="margin: 20px 20px 80px;text-align: center;">无需安装插件或软件只需浏览器的VPN</h2>
-        <!-- <h5>好用是来源于创新性传输算法，传的更快、更稳定</h5> -->
+    <div class="umc-sub-middle" style="padding: 80px 0 26px 0;">
         <div class="el-row">
             <div style="flex: 1.2;" class="pc">
-                <div style="height:300px;text-align: center;"><img src="/css/images/apps2.png" style=" margin-left: 50px;width: 480px;margin-top: -40px;" alt=""></div>
+                <div style="height:300px;text-align: center;"><img src="/css/images/wifi.png"
+                        style="width: 480px;" alt=""></div>
             </div>
             <div class="umc-sub-middle-wrapper" style="flex: 1;"><img src="/css/images/center_left.svg">
-                <h3>内植动静分离算法，稳定、快速有保障</h3>
-                <p>让应用静态资源走缓存，动态请求走WebVPN，太太减少本地带宽，更快、更好有依据，成就家庭网络也能快速访问的WebVPN。</p>
+                <h3>内置动静分离算法，弱网络速度有保障</h3>
+                <p>Apiumc的内网穿透拥有动静分离的缓存机制，让穿透的静态资源走缓存，动态请求才去穿透，太太减少带宽占用，更快、更好有依据，让弱网络环境下也能拥有不错的速度，远超市面上同类产品。</p>
             </div>
         </div>
         <div class="el-row">
             <div class="umc-sub-middle-wrapper" style="flex: 1.2;"><img src="/css/images/center_right.svg">
-                <h3>更加安全应用粒度授权。</h3>
-                <p>相比经典VPN授权粒度是服务器，而WebVPN授权粒度是应用，许可应用和服务器两者带来的安全挑战，应用粒度更有保障。</p>
+                <h3>支持Https和绑定自己的域名</h3>
+                <p>1、内网穿透会按需同步已经签发的Https证书，来提高内网穿透的安全性。<br>
+                    2、用CNAME解释到分配的穿透域名，新域名就正式绑定了，品牌形象更完美。</p>
             </div>
-            <div style="flex: 1;"  class="pc">
-                <div><img src="/css/images/apps.png" alt=""></div>
+            <div style="flex: 1;" class="pc">
+                <div><img src="/css/images/sslvpn.png" alt=""></div>
             </div>
         </div>
     </div>
 
-
-    <div class="umc-sub-middle">
-        <h2 class="umc-sub-header-title">定价方案</h2>
-    </div>
-    <div class="price-container" >
-    
-        <div class="el-card">
-            <div class="Price-module_descContainer">
-                <div class="Price-module_desc">
-                    <p>注册用户</p>
-                    <h2>免费</h2>
-                    <p class="Price-module_subDesc">完成注册登记、即可赠送WebVPN流量，还可固化VPN域名，更多特性等你体验</p><a  href="https://github.com/apiumc/MProxy/" target="_blank"
-                        class="el-button"><span>去下载注册</span></a>
-                </div>
-            </div>
-            <div class="ant-divider ant-divider-horizontal" role="separator"></div>
-            <ul>
-                <li><span>Http</span><span>支持</span></li>
-                <li><span>Https</span><span>支持</span></li>
-                <li><span>静态资源加速</span><span>支持</span></li>
-                <li><span>WebStocket</span><span>支持</span></li>
-            </ul>
-        </div>
-        <div class="el-card">
-            <div class="Price-module_descContainer">
-                <div class="Price-module_crownContainer"><span>更多人选择</span></div>
-                <div class="Price-module_desc">
-                    <p>VIP会员</p>
-                    <div class="Price-module_priceRow">
-                        <h2>5</h2>&nbsp;&nbsp;元/G
-                    </div>
-                    <p class="Price-module_subDesc">现在拥有12元/3G、20元/5G套餐，更低定价，更高速度，更高享受</p><a href="https://github.com/apiumc/MProxy/" target="_blank"
-                        class="el-button el-button--primary"><span>去下载充值</span></a>
-                </div>
-            </div>
-            <div class="ant-divider ant-divider-horizontal" role="separator"></div>
-            <ul>
-                <li><span>Http</span><span>支持</span></li>
-                <li><span>Https</span><span>支持</span></li>
-                <li><span>静态资源加速</span><span>支持</span></li>
-                <li><span>WebStocket</span><span>支持</span></li>
-            </ul>
-        </div>
-    </div>
-    <!-- <div class="umc-sub-middle">
-        <h2 class="umc-sub-header-title">免费计划</h2>
-    </div> -->
-    <div class="umc-sub-middle">
-        <div class="el-row">
-            <div style="flex: 1; text-align: center;"><img src="/css/images/income.png" style="height: 250px"></div>
-            <div class="umc-sub-middle-wrapper" style="flex: 1.4;">
-                <!-- <p>天天录IOS、Android、H5、网页版全渠道全新上线</p> -->
-                <h3>流量免费计划</h3>
-                <p>只要通过右上角分享按钮（登录后出现），把UMC网关、WebVPN分享给好友，好友充值多少穿透流量，你也就获得多少穿透流量。</p>
-                <p><a  onclick="UMC.UI.On('Share')" class="el-button el-button--primary">马上去分享</a></a>
-                </p>
-            </div>
-        </div>
-    </div>
 </div>

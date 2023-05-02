@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>API UMC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link href="/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.css" rel="stylesheet" type="text/css" />
+    <script src="/js/umc.js"></script>
+    <script>UMC.UI.Config({ 'posurl': 'https://api.apiumc.com/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });</script>
+    <script src="/js/umc.database.js"></script>
+    <script src="/js/umc.grid.js"></script>
+    <script src="/js/umc.ui.js"></script>
+    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.page.js"></script>
+    <style>
+        body>div.ui:nth-of-type(1) .header .back {
+            visibility: hidden;
+            /* display: none; */
+        }
+
+
+        @media screen and (max-width: 560px) {
+            .wdk-dialog {
+                position: fixed;
+                width: 100% !important;
+            }
+
+            .wdk-dialog .wdk-footer {
+                width: 100% !important;
+
+            }
+
+            body>div.ui:nth-of-type(1) .header {
+                display: none;
+            }
+        }
+    </style>
+    <script>UMC(function ($) {
+            $.UI.Off('Prompt')
+                .On("Prompt", function (e, p) {
+                    var msg = $('#wdk-msg');
+                    if (msg.length == 0) {
+                        msg = $(document.createElement("div")).attr('id','wdk-msg').appendTo(document.body);
+                    }
+                    msg.addClass('animate').html(p.Text);
+                    setTimeout(function () {
+                        msg.removeClass('animate');
+                    }, 3000);
+                })
+                .On("UI.Show", function (e, d) {
+                    var doc = $(document.createElement("div")).addClass('weui_mask')
+                        .click(function () {
+                            $('div[ui].wdk-dialog').addClass('right').removeClass('ui');
+                        })
+                        .appendTo(document.body);
+                    d.on('close', function () {
+                        doc.remove();
+                    });
+                    var h = $('body>div.ui:nth-of-type(1) .header');
+                    if (h.length) {
+                        document.title = h.text();
+                    } else {
+                        d.on('section', function () {
+                            document.title = $('body>div.ui:nth-of-type(1) .header').text()
+                        }, 1)
+                    }
+                });
+            var search = $.query(location.search.substring(1));
+
+            $.UI.Command('Platform', 'Cert', search);
+
+        });</script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

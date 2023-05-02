@@ -883,7 +883,7 @@
     function dialog(title, content, fn, btn) {
         var pxf = "weui_dialog";
         var me = UMC(document.createElement("div"));
-        var html = ['<form action="', posurl.posurl, '?_v=Form" method="post" target="_blank">',
+        var html = ['<form action="', posurl.posurl, '/?_v=Form" method="post" target="_blank">',
             '<div class="', pxf, '_hd">',
             '<strong class="', pxf, '_title">', title, '</strong></div>',
             '<div class="', pxf, '_bd">', content, '</div>',
@@ -914,7 +914,7 @@
 
     function actionSheet(title, data, fn, fd, cells) {
         var pxf = "weui_actionsheet";
-        var sheet = UMC({ tag: 'form', cls: pxf, action: posurl.posurl + '?_v=Form', method: 'post', target: '_blank' });
+        var sheet = UMC({ tag: 'form', cls: pxf, action: posurl.posurl + '/?_v=Form', method: 'post', target: '_blank' });
         var mask = UMC({
             tag: 'div',
             cls: 'weui_mask',
@@ -1102,11 +1102,10 @@
                         case "OpenUrl":
                             window.open(p.value, "_self");
                             break;
-                        case "Wxpay":
-                            var bd = typeof WeixinJSBridge == 'undefined' ? false : WeixinJSBridge;
-                            bd ? bd.invoke('getBrandWCPayRequest', p.value, function (res) {
-                                __p.On(res.err_msg == "get_brand_wcpay_request:ok" ? p.type : 'Debug', p, v, res);
-                            }) : __p.On("Debug", p, v);
+                        case "Tenpay":
+                            WeixinJSBridge.invoke('getBrandWCPayRequest', p.order, function (res) {
+                                res.err_msg == "get_brand_wcpay_request:ok" ? (p.check ? UMC.Click(p.check) : __p.On(p.type, p, res)) : __p.On("Debug", p, res);
+                            });
                             break;
                         case "Click":
                             UMC.Click(p.Click);

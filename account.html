@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>APIUMC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <link href="/css/weui.css" rel="stylesheet" type="text/css">
+    <link href="/css/base.css" rel="stylesheet" type="text/css">
+    <link href="/css/icon.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.css" rel="stylesheet" type="text/css">
+    <link href="/css/umc.sub.css" rel="stylesheet" type="text/css">
+    <script src="/js/umc.js" type="text/javascript"></script>
+    <script src="/UI/js/qrcode.min.js" type="text/javascript"></script>
+    <script>
+        //http://weixin.qq.com/q/02ktdA8xcffVD114JIxzcn
+        UMC(function ($) {
+            var qrcode = new QRCode($("#qrcode").html('')[0]);
+            qrcode.makeImage = function () {
+
+                $('#qrcode img').attr({ 'src': 'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', style: false });//.attr('style':)
+            };
+            qrcode.makeCode('http://weixin.qq.com/q/02ktdA8xcffVD114JIxzcn', {
+                width: 200,
+                height: 200
+            });
+        })
+    </script>
+</head>
+
+<body class="View ">
+
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active"
+        style="z-index: 2100;">
+        <i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content"></p>
+    </div>
+    <script type="text/html" id="menu-wrapper">
+        <div class="menu-wrapper">
+            <li class="el-submenu">
+                <div class="el-submenu__title"><input><i class="el-submenu__icon-arrow"></i><em></em></div>
+                <ul class="el-menu"></ul>
+            </li>
+        </div>
+    </script>
+    <div class="navbar ">
+
+        <div class="sidebar-logo-container">
+            <div class="umc-sidebar-back"></div>
+            <div class="umc-sidebar-menu"></div>
+            <div class="login-box"><em>API</em> <sub>UMC</sub>
+                <a ui-spa="" href="/"></a>
+            </div>
+            <!--%publish team%-->
+            <a ui-spa="" id="team" href="/umc">UMC</a>
+            <!--%end%-->
+            <a class="umc-project-item el-dropdown"></a>
+            <ul role="menu" class="umc-project-item-menu">
+                <li>
+                    <a data-key="EditItem">
+                        <b class="wdk_cell_icon" data-icon=""></b> 编辑栏位
+                    </a>
+                </li>
+                <li><a data-key="AddItem"><b class="wdk_cell_icon" data-icon=""></b> 增加栏位</a></li>
+                <li><a id="Import">
+                        <b class="wdk_cell_icon" data-icon=""></b> 图文导入
+                        <input accept="text/*" type="file">
+                    </a></li>
+
+            </ul>
+        </div>
+
+        <div class="umc-sub-nav">
+
+            <div class="header-sub-nav">
+                <ul class="menu-site">
+                    <li class=" "><a ui-spa="" href="/">主页</a></li>
+                    <li class=" "><a ui-spa="" href="/Wiki">知识库</a></li>
+                    <li class=" "><a ui-spa="" href="/Gateway">门神网关</a></li>
+                    <li class=" "><a ui-spa="" href="/Bridge">内网穿透</a></li>
+                    <li class=" "><a ui-spa="" href="/About">关于我们</a></li>
+                    <!-- <li><a class="AppDown" ui-spa href="/download">移动端下载</a></li> -->
+                </ul>
+            </div>
+            <div class="header-search right-menu-item show" id="header-search">
+                <form class="el-select header-search-select el-select--small">
+                    <div class="el-input el-input--small el-input--suffix">
+                        <input type="search" autocomplete="off" placeholder="搜索" class="el-input__inner">
+                    </div>
+                </form>
+            </div>
+            <ul role="menu" class="umc-search-menu"></ul>
+        </div>
+        <div class="umc-sub-nav">
+            <!--%publish nav%-->
+            <ul class="menu-site" id="nav">
+                <li class=" is-active"><a ui-spa="" href="/umc/Home" data-id="7125082411687477249">UMC介绍</a></li>
+                <li class=""><a ui-spa="" href="/umc/Row" data-id="7125082411688722433">行单元组件</a></li>
+                <li class=""><a ui-spa="" href="/umc/Java" data-id="7125082411691081729">Java实现</a></li>
+                <li class=""><a ui-spa="" href="/umc/dotnet" data-id="7125082411691343873">.NET实现</a></li>
+                <li class=""><a ui-spa="" href="/umc/Web" data-id="7125082411691606017">Web实现</a></li>
+            </ul>
+            <!--%end%-->
+        </div>
+        <div class="right-menu"><a onclick="UMC.UI.On('Login')" class="el-button--small el-button">登录</a></div>
+        <div class="right-menu" id="menu">
+
+        </div>
+
+    </div>
+    <div id="app" class=" hideScrollbar">
+        <div class="sidebar-container">
+
+            <div class="el-scrollbar">
+                <div class="scrollbar-wrapper el-scrollbar__wrap">
+                    <div class="el-breadcrumb app-breadcrumb breadcrumb-container" id="breadcrumb-container">
+
+                        <span>正文</span>
+                    </div>
+                    <div class="el-scrollbar__view">
+                        <!--%publish menu%-->
+                        <div id="menubar" class="el-menu" nav="/umc/Home">
+                            <li class="el-submenu is-opened">
+                                <div class="el-submenu__title is-active" data-id="7125082411687542785">介绍<i
+                                        class="el-submenu__icon-arrow"></i><em></em></div>
+                                <ul class="el-menu">
+                                    <li class="el-menu-item"><a class="" data-id="7125082411687608321" ui-spa=""
+                                            href="/umc/Home/About">UMC介绍</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411687673857" ui-spa=""
+                                            href="/umc/Home/BaseDesc">UMC基础概念</a></li>
+                                    <li class="el-menu-item is-active"><a class="" data-id="7125082411687804929"
+                                            ui-spa="" href="/umc/Home/builder">调试与原生APP生成</a></li>
+                                </ul>
+                            </li>
+                            <li class="el-submenu">
+                                <div class="el-submenu__title " data-id="7125082411687739393">功能开发<i
+                                        class="el-submenu__icon-arrow"></i><em></em></div>
+                                <ul class="el-menu">
+                                    <li class="el-menu-item"><a class="" data-id="7125082411687870465" ui-spa=""
+                                            href="/umc/Home/5y291a">UMC服务注册</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411687936001" ui-spa=""
+                                            href="/umc/Home/WebConf">UMC移动端主页配置</a></li>
+                                </ul>
+                            </li>
+                            <li class="el-submenu">
+                                <div class="el-submenu__title " data-id="7125082411688001537">组件说明<i
+                                        class="el-submenu__icon-arrow"></i><em></em></div>
+                                <ul class="el-menu">
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688067073" ui-spa=""
+                                            href="/umc/Home/UIDialog">UIDialog对话框</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688132609" ui-spa=""
+                                            href="/umc/Home/UIFormDialog">UIFormDialog表单对话框</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688198145" ui-spa=""
+                                            href="/umc/Home/UIGridDialog">UIGridDialog表格对话框</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688263681" ui-spa=""
+                                            href="/umc/Home/UIStyle">UIStyle文本着色</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688329217" ui-spa=""
+                                            href="/umc/Home/UIClick">UIClick界面点击事件对象</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688394753" ui-spa=""
+                                            href="/umc/Home/UIEventText">UIEventText事件元素</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688460289" ui-spa=""
+                                            href="/umc/Home/UIView">UIView视图元素</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688525825" ui-spa=""
+                                            href="/umc/Home/UISection">UISection界面组件</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688591361" ui-spa=""
+                                            href="/umc/Home/UICell">UICell单元行组件</a></li>
+                                    <li class="el-menu-item"><a class="" data-id="7125082411688656897" ui-spa=""
+                                            href="/umc/Home/UIDataSource">UIDataSource数据源列表组件</a></li>
+                                </ul>
+                            </li>
+                        </div>
+                        <!--%end%-->
+
+                        <div class="el-menu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="el-link-menu" style="height: 50px;">
+
+                <a class="wdk-footer-icon" id="Portfolio">
+                    <i></i><em>新建文集</em>
+                </a>
+                <a class="wdk-footer-icon" title="新建富文本格式" id="Rich">
+                    <i></i><em>新建文档</em>
+                </a>
+                <a class="wdk-footer-icon" id="Markdown" title="新建Markdown格式">
+                    <i></i><em>新建文档</em>
+                </a>
+                <a class="wdk-footer-icon" ui-spa="" href="/365lu/help">
+                    <i></i><em>帮助手册</em>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-container">
+
+            <!--%publish container%-->
+            <section class="app-main">
+
+                <div hidescrollbar="true" style=" display: flex;background-color: #fff;"
+                    ui="subject/7125082411687804929" ui-key="7125082411687804929" class=" ui"
+                    data-id="7125082411687804929">
+
+                    <div id="view" class="umc-subject-view wdk-top" page-name="p0">
+                        <section>
+                            <div class="weui_cells weui_cells_access umc-not-separatorline" id="Subject"
+                                section-index="0">
+                                <div class="wdk-desc umc-cell-not-separatorline"
+                                    style="white-space: pre-line; line-height:1.5; padding:55px 10px 10px 10px;font-size:18px;border:none;font-weight:bold;"
+                                    row-index="0" data-json="c0"><span
+                                        style="font-size:18px;border:none;font-weight:bold;">调试与原生APP生成</span></div>
+                                <div class="wdk-cms-attention weui_media_box weui_media_appmsg umc-cell-not-separatorline"
+                                    row-index="1" data-json="c1">
+                                    <div style="flex: 1;display: flex;"
+                                        click-data="{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;ProjectUI&quot;,&quot;send&quot;:{&quot;Id&quot;:&quot;7125082218413752321&quot;}}">
+                                        <div class="weui_media_hd" data-icon=""><img class="weui_media_appmsg_thumb"
+                                                src="https://image.365lu.cn/images/00000000-0000-0000-0100-01008760e162/1/0.jpg!100">
+                                        </div>
+                                        <div class="weui_media_bd">
+                                            <h4 class="weui_media_title"><span style="border:none;"><span
+                                                        style="font-weight:bold;">UMC</span></span></h4>
+                                            <p class="weui_media_desc"><span style="border:none;"><span
+                                                        style="color:#999;"> One Code移动开发架构</span></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="wdk-cms-look-button"><a
+                                            click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Attention&quot;,&quot;send&quot;:{&quot;Id&quot;:&quot;7125082218413752321&quot;}}}"
+                                            class="weui_btn weui_btn_mini weui_btn_warn"
+                                            style="background:#e67979"><span style="border:none;">+关注</span></a></div>
+                                </div>
+                                <div class="wdk-cms-text " style="" row-index="2" data-json="c2">登录UMC管理到后台，点击<span
+                                        style="color:#cc6600;">开发调试</span>项，如下图：</div><a
+                                    style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="3"
+                                    data-json="c3"><img style=""
+                                        original-src="http://oss.365lu.cn/UserResources/1usm4ih/1585114668270/image.png!m600"
+                                        src="http://oss.365lu.cn/UserResources/1usm4ih/1585114668270/image.png!m600"
+                                        alt=""></a>
+                                <div class="wdk-cms-text " style="" row-index="4" data-json="c4"><span
+                                        style="font-weight:bold;">注意</span>：也可以在浏览器地址上加入#debug打开<span
+                                        style="color:#cc6600;">开发调试</span>界面。</div>
+                                <div class="wdk-cms-text " style="" row-index="5" data-json="c5">
+                                    点击上图的功能，则我们就可以用移动APP来桥接调试本地UMC了，<a style="" target="_blank"
+                                        href="http://oss.365lu.cn/app/index.html">下载安装</a></div>
+                                <div class="wdk-cms-text " style="" row-index="6" data-json="c6">如下图：</div><a
+                                    style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="7"
+                                    data-json="c7"><img style=""
+                                        original-src="http://oss.365lu.cn/UserResources/1usm4ih/1585118144470/image.png!m600"
+                                        src="http://oss.365lu.cn/UserResources/1usm4ih/1585118144470/image.png!m600"
+                                        alt=""></a>
+                                <div class="wdk-cms-text " style="" row-index="8" data-json="c8">
+                                    在APP上确认调试后，APP的每个请求都会转接到本地请求。</div>
+                                <div data-key="3" class="wdk-cms-text " style="font-size:22px;font-weight:bold;"
+                                    row-index="9" data-json="c9">原生APP生成</div>
+                                <div class="wdk-cms-text " style="" row-index="10" data-json="c10">点击界面的上的<span
+                                        style="color:#cc6600;">应用生成</span>如下图：</div><a style="padding:0px 10px 0px 10px"
+                                    class="wdk-cms-image" row-index="11" data-json="c11"><img style=""
+                                        original-src="http://oss.365lu.cn/UserResources/1usm4ih/1585118288662/image.png!m600"
+                                        src="http://oss.365lu.cn/UserResources/1usm4ih/1585118288662/image.png!m600"
+                                        alt=""></a>
+                                <div class="wdk-cms-text " style="" row-index="12" data-json="c12">
+                                    则会进入原生APP界面架构配置页面。如下图：</div><a style="padding:0px 10px 0px 10px"
+                                    class="wdk-cms-image" row-index="13" data-json="c13"><img style=""
+                                        original-src="http://oss.365lu.cn/UserResources/1usm4ih/1585122388398/image.png!m600"
+                                        src="http://oss.365lu.cn/UserResources/1usm4ih/1585122388398/image.png!m600"
+                                        alt=""></a>
+                                <div class="wdk-cms-text " style="" row-index="14" data-json="c14">
+                                    开始默认主页是没有内容的，你可以在右上角点击<span
+                                        style="color:#cc6600;">主页设计</span>设计主页元素，也可以增加移动界面的Bar按钮，再设置APP名称、图标启动背景图，再点击<span
+                                        style="color:#cc6600;">生成</span>，就会出现二维码，如下图：</div><a
+                                    style="padding:0px 10px 0px 10px" class="wdk-cms-image" row-index="15"
+                                    data-json="c15"><img style=""
+                                        original-src="http://oss.365lu.cn/UserResources/1usm4ih/1585122987391/image.png!m600"
+                                        src="http://oss.365lu.cn/UserResources/1usm4ih/1585122987391/image.png!m600"
+                                        alt=""></a>
+                                <div data-key="3" class="wdk-cms-text " style="font-size:22px;font-weight:bold;"
+                                    row-index="16" data-json="c16">转接到移动端</div>
+                                <div class="wdk-cms-text " style="" row-index="17" data-json="c17">
+                                    再用APP扫一下，就转到我们APP端，如下图：</div><a style="padding:0px 10px 0px 10px"
+                                    class="wdk-cms-image" row-index="18" data-json="c18"><img style=""
+                                        original-src="http://oss.365lu.cn/UserResources/1usm4ih/1585123134095/image.png!m250"
+                                        src="http://oss.365lu.cn/UserResources/1usm4ih/1585123134095/image.png!m250"
+                                        alt=""></a>
+                                <div style="padding:7px" class="weui_cell  no_access" row-index="19" data-json="c19">
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <p><span style="font-size:14px;color:#999;"><span
+                                                    style="font-family:wdk;"></span> 管理员 | 阅读(157) | 评论(0)</span></p>
+                                    </div>
+                                    <div class="weui_cell_ft wdk-button"></div>
+                                </div>
+                                <div style="padding:10px 20px 10px 20px" class="weui_cell  no_access" row-index="20"
+                                    data-json="c20">
+                                    <div class="weui_cell_bd weui_cell_primary wdk-button" style="text-align:center"><a
+                                            click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Best&quot;,&quot;send&quot;:{&quot;Key&quot;:&quot;7125082411687804929&quot;}}}"
+                                            style="min-width:80px;color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span
+                                                style="color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span
+                                                    style="font-family:wdk;"></span>赞</span></a> <a
+                                            click-data="{&quot;key&quot;:&quot;Click&quot;,&quot;send&quot;:{&quot;model&quot;:&quot;Subject&quot;,&quot;cmd&quot;:&quot;Comment&quot;,&quot;send&quot;:{&quot;Refer&quot;:&quot;7125082411687804929&quot;}}}"
+                                            style="min-width:80px;color:#999;border-radius:20px;border-color:#999;font-size:16px;"><span
+                                                style="color:#999;border-radius:20px;border-color:#999;font-size:16px;">评论</span></a>
+                                    </div>
+                                </div>
+                                <div class=" umc-sub-follower">作者设置了<a data-key="umc">关注</a> 后才可解锁内容</div>
+                            </div>
+                            <div class=" umc-subject-footer"><a class=" umc-subject-left" href="/umc/Home/BaseDesc"
+                                    ui-spa="1">UMC基础概念</a><a class=" umc-subject-right" href="/umc/Home/5y291a"
+                                    ui-spa="1">UMC服务注册</a></div>
+                            <div class="weui_cells weui_cells_access" id="Comments" section-index="1">
+                                <div class="wdk-tabs-fixed" row-index="0">
+                                    <div class="weui_navbar">
+                                        <div class="weui_navbar_item weui_bar_item_on" data-index="0">评论</div>
+                                        <div class="weui_navbar_item" data-index="1">点赞</div>
+                                        <div class="weui_navbar_item" data-index="2">已读</div>
+                                    </div>
+                                </div>
+                                <div class="wdk-desc"
+                                    style="white-space: pre-line; line-height:1.5; padding:20px 20px 20px 20px;color:#aaa;font-size:12px;text-align:center;background-color:#fff;"
+                                    row-index="1" data-json="c21"><span
+                                        style="color:#aaa;font-size:12px;text-align:center;background-color:#fff;"><span
+                                            style="font-size:60px;font-family:wdk;"></span>
+                                        暂无评论</span></div>
+                            </div>
+                        </section>
+                        <nav class="wdk-top-icon"></nav>
+
+                    </div>
+                    <div class="wdk-subject-nav el-scrollbar__wrap">
+
+                        <div id="nav">
+                            <div class="wdk-subject-nav-item " style="padding-left:30px;" data-index="0"><a>原生APP生成</a>
+                            </div>
+
+                            <div class="wdk-subject-nav-item " style="padding-left:30px;" data-index="1"><a>转接到移动端</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--%end%-->
+        </div>
+    </div>
+
+
+
+    <div class="umc-sub-login">
+        <div class="weui_mask"></div>
+        <div class="close"></div>
+        <div class="qrcode_view show">
+            <div class="close"></div>
+            <div class="title" data-key="title">关注</div>
+            <div style="width: 200px; height: 200px; margin: auto; position: relative;">
+                <div class="context"></div>
+                <div id="qrcode" title="http://weixin.qq.com/q/02ktdA8xcffVD114JIxzcn"> </div>
+            </div>
+
+            <div style="color: #999;font-size: 14px; line-height: 50px;">
+                <div class="pc">
+                    用 <a id="tip" style="color: #337ab7;">微信</a> 扫一扫</div>
+                <div class="mob">长按二维码，点击识别</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -297,7 +297,7 @@
                 headers.push('<a class="right"><span class="icon-menu"></span></a>');
             }
         }
-        headers.push('</div><form method="post" action="', $.UI.Config().posurl, '?_v=Form" target="_blank" class="weui_cell_primary" style="overflow: auto">', formHTML, '</form>')
+        headers.push('</div><form method="post" action="', $.UI.Config().posurl, '/?_v=Form" target="_blank" class="weui_cell_primary" style="overflow: auto">', formHTML, '</form>')
         var me = this;
 
         var isInput = formHTML.indexOf('<input ') > 0 || formHTML.indexOf('<select ') > 0 || formHTML.indexOf('<textarea ') > 0;

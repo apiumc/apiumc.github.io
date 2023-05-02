@@ -1701,15 +1701,15 @@
         var clipboardData = window.clipboardData || navigator.clipboardData;
         if (clipboardData) {
             clipboardData.setData('Text', v.text);
-            $.UI.Msg("内容已经成功复制");
+            $.UI.Msg(v.msg || "内容已经成功复制");
         } else {
-            var input = document.createElement('input');
+            var input = document.createElement('textarea');
             document.body.appendChild(input);
             input.value = v.text;
             input.select();
 
             if (document.execCommand('copy')) {
-                $.UI.Msg("内容已经成功复制");
+                $.UI.Msg(v.msg || "内容已经成功复制");
             } else {
                 $.UI.Confirm("内容复制失败", '需要您手动复制: <b id="Clipboard"></b>');
                 var selection = window.getSelection();
@@ -1723,8 +1723,10 @@
         }
 
     });
-    $(document.body).on('UI.Key.Clipboard', function (e, d) {
-        $.UI.On('Clipboard', d);
+    $(function () {
+        $(document.body).on('UI.Key.Clipboard', function (e, d) {
+            $.UI.On('Clipboard', d);
+        });
     });
 
 })(UMC);

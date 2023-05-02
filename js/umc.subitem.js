@@ -126,6 +126,56 @@
         });
 
     })
+    function XHR(src, fn) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () { fn(xhr) };
+        xhr.open('GET', ($.Src || '') + src, true);
+        xhr.send('');
+    }
+    XHR('subject/preview.html', function (xhr) {
+      var  preview = $(document.createElement("div")).html(xhr.responseText).children("div").remove();
+        preview.find('img').on('load', function () {
+
+            var rect = this.getBoundingClientRect();
+            var winWidth = (window.innerWidth || document.body.clientWidth) - rect.width;
+            var winHeight = (window.innerHeight || document.body.clientHeight) - rect.height;
+            $(this).css('transform', ['translate(', (winWidth / 2), 'px,', (winHeight / 2), 'px)'].join(''))
+
+        });
+        preview.find('.weui_mask,img').click(function () {
+            preview.remove();
+        });
+        preview.find('.umc-preview-left').click(function () {
+            var index = parseInt($(this).attr('data-index'));
+            if (!isNaN(index)) {
+                $.UI.On("Image.Preview", $('.weui_cells img[original-src]').eq(index - 1));
+            }
+        });
+
+        preview.find('.umc-preview-right').click(function () {
+            var index = parseInt($(this).attr('data-index'));
+            if (!isNaN(index)) {
+                $.UI.On("Image.Preview", $('.weui_cells img[original-src]').eq(index + 1));
+            }
+
+        });
+        $.UI.On("Image.Preview", function (e, v) {
+            var rect = v[0].getBoundingClientRect();
+            preview.find('img').attr('src', v.attr('original-src')).css('transform', ['translate(', (rect.left), 'px,', (rect.top), 'px)'].join(''))
+            preview.appendTo(document.body);
+            var index = -1;
+            var len = $('.weui_cells img[original-src]').each(function (i) {
+                if (this == v[0]) {
+                    index = i;
+                    return false;
+                }
+            }).length;
+            preview.find('.umc-preview-left').attr('data-index', index == 0 ? 'start' : index);
+            preview.find('.umc-preview-right').attr('data-index', (index == (len - 1)) ? 'end' : index.toString());
+            preview.find('.umc-preview-original').attr('href', v.attr('original-src'))
+        });
+
+    });
 
 
     UMC(function ($) {

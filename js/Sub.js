@@ -1,5 +1,5 @@
-UMC.UI.Config({ 'posurl': 'https://api.apiumc.com/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
-// UMC.UI.Config({ 'posurl': 'http://127.0.0.1:5188/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+// UMC.UI.Config({ 'posurl': 'https://api.apiumc.com/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+UMC.UI.Config({ 'posurl': 'http://127.0.0.1:5188/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
 UMC.Src = '/UI/';
 UMC.SPA = '/';
 
@@ -15,10 +15,10 @@ UMC(function ($) {
 var site=$('.header-sub-nav .menu-site');///proxy/image/cast
 site.html([
     '<li><a ui-spa href="/">应用网关</a></li>',
-    '<li><a ui-spa href="/#account">统一登录</a></li>',
-    '<li><a ui-spa href="/#function">强化应用</a></li>',
-    '<li><a ui-spa href="/#scenarios">经典场景</a></li>',
-    '<li><a ui-spa href="/#userValue">客户价值</a></li>'
+    '<li><a ui-spa href="/Ssl">Https证书</a></li>',
+    '<li><a ui-spa href="/Bridge">内网穿透</a></li>',
+    '<li><a ui-spa href="/Auth">网关登录</a></li>'
+    // '<li><a ui-spa href="/Wiki">知识录</a></li>'
 ].join(''));
     requestAnimationFrame(function () {
         $(window).on("page", function () {
