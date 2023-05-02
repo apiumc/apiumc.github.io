@@ -1170,7 +1170,7 @@
             });
             spm ? import('/js/fingerprint.js')
                 .then(FingerprintJS => FingerprintJS.load()).then(fp => fp.get())
-                .then(result => $.api('Platform', 'Fingerprint', { AuthKey: spm, VisitorId: result.visitorId }))
+                .then(result => $.UI.API('Platform', 'Fingerprint', { AuthKey: spm, VisitorId: result.visitorId }))
                 .catch(error => console.error(error)) : 0;
         } checkInfo();
         UMC.UI.On('User', function () {

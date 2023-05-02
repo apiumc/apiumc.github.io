@@ -690,32 +690,6 @@ UMC(function ($) {
         $('.umc-logo-name').text(v.Alias);
     }).On('Desktop.Open', function (e, v) {
         $(window).on('open', v);
-    }).On('Clipboard', function (e, v) {
-
-        var clipboardData = window.clipboardData || navigator.clipboardData;
-        if (clipboardData) {
-            clipboardData.setData('Text', v.text);
-            $.UI.Msg("内容已经成功复制");
-        } else {
-            var input = document.createElement('input');
-            document.body.appendChild(input);
-            input.value = v.text;
-            input.select();
-
-            if (document.execCommand('copy')) {
-                $.UI.Msg("内容已经成功复制");
-            } else {
-                $.UI.Confirm("内容复制失败", '需要您手动复制: <b id="Clipboard"></b>');
-                var selection = window.getSelection();
-                selection.removeAllRanges();
-                var range = new Range();
-                range.selectNodeContents($('.weui_dialog_bd #Clipboard').text(v.text)[0]);
-                selection.addRange(range);
-            }
-            document.body.removeChild(input);
-
-        }
-
     }).On('Close', function (e, v) {
         location.href = ['/Unauthorized?oauth_callback=', unescape(location.pathname + location.search), v ? '' : '&un=no'].join('');
     });

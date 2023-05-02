@@ -1696,6 +1696,35 @@
                 $('div[page-name=' + v.ui + ']').on('UI.' + v.key, v.value || v);
                 break;
         }
+    }).On('Clipboard', function (e, v) {
+
+        var clipboardData = window.clipboardData || navigator.clipboardData;
+        if (clipboardData) {
+            clipboardData.setData('Text', v.text);
+            $.UI.Msg("内容已经成功复制");
+        } else {
+            var input = document.createElement('input');
+            document.body.appendChild(input);
+            input.value = v.text;
+            input.select();
+
+            if (document.execCommand('copy')) {
+                $.UI.Msg("内容已经成功复制");
+            } else {
+                $.UI.Confirm("内容复制失败", '需要您手动复制: <b id="Clipboard"></b>');
+                var selection = window.getSelection();
+                selection.removeAllRanges();
+                var range = new Range();
+                range.selectNodeContents($('.weui_dialog_bd #Clipboard').text(v.text)[0]);
+                selection.addRange(range);
+            }
+            document.body.removeChild(input);
+
+        }
+
+    });
+    $(document.body).on('UI.Key.Clipboard', function (e, d) {
+        $.UI.On('Clipboard', d);
     });
 
-})(WDK);
+})(UMC);
