@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Apiumc</title>
+    <link href="/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.sub.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.sub.page.css" rel="stylesheet" type="text/css" />
+    <script src="/js/umc.js" type="text/javascript"></script>
+    <script src="/js/Sortable.js"></script>
+    <script src="/js/umc.database.js"></script>
+    <script src="/js/umc.grid.js"></script>
+    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.ui.js"></script>
+    <script src="/js/umc.page.js"></script>
+    <script src="/js/umc.paging.js"></script>
+    <script src="/js/umc.sub.js"></script>
+    <style>
+        h2{
+            text-align: center;
+        }
+        h3{
+            margin-top: 1em;
+        }
+    </style>
+    <script>
+        UMC.UI.Config({ 'posurl': 'https://api.apiumc.com/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+        // UMC.UI.Config({ 'posurl': 'http://127.0.0.1:5188/UMC/' + (UMC.cookie('device') || UMC.cookie('device', UMC.uuid())) });
+        UMC.Src = '/UI/';
+        UMC.SPA = '/';
+        UMC(function ($) {
+            $.UI.Command('Subject', 'Nav', { code: 'proxy' }, function (xhr) {
+                var menu = xhr.menu;
+                // var seq = 0;
+                var ul = $(document.createElement("ul")).appendTo(document.body)
+
+                menu.forEach(element => {
+                    // seq++;
+
+                    if (element.hide !== true) {
+                        var li = $(document.createElement("li")).appendTo(ul)
+                        var h2 = document.createElement("h2");
+                        h2.textContent = element.text;
+                        $(h2).appendTo(li);
+
+                        var section = $(document.createElement('ol')).appendTo(li);
+
+
+                        $.UI.Command('Subject', 'Nav', element.path, function (xhr) {
+
+                            var subs = [];
+                            xhr.subs.forEach(element => {
+                                subs = subs.concat(element.subs)
+                            });
+
+                            Sub(section, subs, 0)
+
+
+                        })
+                    }
+
+
+                });
+                // console.log(xh);
+            })
+            // function Menu(section, mes, index) {
+            //     var h2 = document.createElement("h2");
+            //     h2.textContent = mes[index].text;
+            //     $(h2).appendTo(section);
+            //     var men = document.createElement("div");
+            //     $(h2).appendTo(section);
+            //     $.UI.Command('Subject', 'Nav', mes[index].path, function (xhr) {
+
+            //         var subs = [];
+            //         xhr.subs.forEach(element => {
+            //             subs = subs.concat(element.subs)
+            //         });
+
+            //         Sub(subs, 0)
+
+
+            //     })
+            // }
+            function Sub(section, mes, index) {
+                if (mes.length > index) {
+                    var li = $(document.createElement("li")).appendTo(section);
+                    $(document.createElement("h3")).text(mes[index].text).appendTo(li);
+                    var h2 = $(document.createElement("div"));
+
+                    h2.appendTo(li);
+                    h2.append(document.createElement('section'));
+
+
+
+                    $.UI.Command('Subject', 'UIMin', { Id: mes[index].id, limit: 300 }, function (xhr) {
+                        new $.UI.Pager(h2).dataSource(xhr);
+                        h2.find('.wdk-desc').remove();
+
+                        Sub(section, mes, index + 1);
+
+                    })
+                }
+            }
+
+        })
+    </script>
+
+</head>
+
+<body>
+
+    <ol>
+
+    </ol>
+</body>
+
+</html>

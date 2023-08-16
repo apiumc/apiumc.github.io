@@ -23,7 +23,7 @@
             }
         }).ui('System.Setup', function () {
             $.UI.Command("System", 'Setup', "Mapping", function (xhr) {
-    
+
                 root.find('#component').format(xhr.component || [], {
                     OK: function (x) {
                         return x.setup ? 'el-tag--success' : ''
@@ -33,7 +33,7 @@
                     }
                 }, true);
                 root.find('#mapping table tbody').format(xhr.data || [], true);
-    
+
                 var isnat = false;
                 for (var i = 0; i < xhr.data.length; i++) {
                     if (xhr.data[i].name == 'Http.Bridge') {
@@ -58,7 +58,13 @@
                 ths.eq(1).html(['<a model="System" cmd="License" class="link-type">', x.msg, '</a>'].join(''));
             } else if (x.domain) {
                 ths.eq(0).removeClass('el-tag--danger el-tag--success').addClass(x.bridge ? 'el-tag--success' : 'el-tag--danger').find('a').text(x.status);
-                ths.eq(1).html(['<a class="link-type" target="_blank" href="', x.domain, '">', x.domain, '</a>'].join(''));
+                if (x.domain.indexOf('http://') == 0) {
+                    ths.eq(1).html(['<a class="link-type" target="_blank" href="', x.domain, '">', x.domain, '</a> <a  model="Proxy" cmd="Server" send="VIP" style="transform: translateX(-100%);width:6rem" class="swipe el-button--primary"">升级成https</a>'].join('')).addClass('rel');
+
+                } else {
+                    ths.eq(1).html(['<a class="link-type" target="_blank" href="', x.domain, '">', x.domain, '</a>'].join(''));
+
+                }
             }
         }).ui('System.Setup');
 

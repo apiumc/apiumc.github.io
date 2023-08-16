@@ -11,7 +11,7 @@
     }
 
     function createSubmit(v, htmls) {
-        if (v !== false) {
+        if (!v.hide && v !== false) {
             htmls.push('<div class="weui_btn_area">');
             htmls.push('<button type="submit" class="weui_btn weui_btn_primary">', (typeof v) == 'string' ? v : ((v || {}).text || '确认提交'), '</button></div>');
         }
@@ -45,24 +45,6 @@
 
                 if (!v.required) {
                     htmls.push('<input name="', key, '" type="hidden" disabled ', v.required ? '' : 'required', ' placeholder="', v.placeholder || ("请选择" + v.Title), '"/>')
-                }
-                break;
-            case "Receiver":
-                htmls.push('<input ', v.required ? '' : 'required', ' type="hidden" value="', defaultValue || '', '" placeholder="', v.placeholder || ("请选择" + v.Title), '"  name="', key, '" />');
-                if (v.Receiver) {
-                    htmls.push('<a class="weui_cell"  data-key="', key, '">',
-                        '<div class="weui_cell_bd weui_cell_primary">',
-                        '<p>收货人</p>',
-                        '</div><div class="weui_cell_ft">', v.Receiver, '</div></a>');
-                } else {
-                    htmls.push('<a class="weui_cell"  data-key="', key, '">',
-                        '<div class="weui_cell_ft">', v.Empty || '请点击设置收单人信息', '</div></a>');
-                }
-                if (v.Address) {
-                    htmls.push('<a class="weui_cell"  data-key="', key, '">',
-                        '<div class="weui_cell_bd weui_cell_primary">',
-                        '<p>收货地址</p>',
-                        '</div><div class="weui_cell_ft">', v.Address, '</div></a>');
                 }
                 break;
             case "Score":
@@ -100,18 +82,7 @@
             case 'Image':
                 htmls.push('<div class="weui_cell">', '<img class="wdk-ui-image" src="', v.Src, '"/>', '</div>');
                 break;
-            case 'Command':
-            case "UI":
-                htmls.push('<a class="weui_cell" data-key="', key, '">');
-                if (v.Icon) {
-                    htmls.push('<b class="wdk_cell_icon" data-icon="', v.Icon, '" ', v.Color ? ('style="color:' + v.Color + '"') : '', '></b>');
-                }
-
-                htmls.push('<div class="weui_cell_primary">', title, '</div><div class="weui_cell_ft">', v.DefaultValue || v.placeholder, '</div></a>');
-                break;
-
             case "Option":
-            case "Area":
                 htmls.push('<a class="weui_cell wdk-option" data-key="', key, '">');
                 createlabel(title, htmls, key);
                 htmls.push('<input type="hidden" ', v.required ? '' : 'required', ' value="', defaultValue || '', '"  name="', key, '"', ' placeholder="', v.placeholder || v.Title, '"  />');
@@ -172,212 +143,17 @@
     }
 
     function Dialog(v, dom) {
-        dom.ui("UI.Setting", function (e, v) {
-            delete v.type;
-            dom.find('input').each(function () {
-                if (this.name in v) {
-                    var vl = v[this.name];
-                    this.value = vl.Value || vl;
-                }
-            });
-            dom.find('*[data-key]').each(function () {
-                var m = WDK(this);
-                var key = m.attr('data-key');
-                if (key in v) {
-                    var vl = v[this.name];
-                    m.find('.weui_cell_ft').text(vl.Text || vl);
-                }
-            })
-        });
-        this.param = v;
+
         this.dom = dom;
         this.item = {};
-        var header = this.Header = v.Header || {};
-        var fhn = $.UI.Headers || {};
-        var fnh = fhn[header.type] || function () { return '' };
-        var htmls = [fnh(header.type == 'Slider' ? header : header.data || {}, header.format || {}, header.style || {})];
-        var isSubmit = false;
-        switch (v.Type) {
-            case "Form":
-                var iswriter = false;
-                var items = v.DataSource;
-                for (var i = 0, l = items.length; i < l; i++) {
-                    var cfg = items[i];
-                    var key = cfg.Name || '_';
-                    this.item[key] = cfg;
-                    switch (cfg.Type) {
-
-                        case 'Confirm':
-                            htmls.push('<input type="hidden" value="', cfg.DefaultValue || 'YES', '"  name="', key, '" />');
-                        case "Prompt":
-                            if (iswriter) {
-                                iswriter = false;
-                                htmls.push('</div>');
-                            }
-                            htmls.push('<div class="weui_cells_tips">');
-                            htmls.push($.format(cfg.Format || '{Text}', cfg, cfg.Style || {}));
-                            htmls.push('</div>');
-                            break;
-                        case "Receiver":
-                        case "RadioGroup":
-                        case "CheckboxGroup":
-                        case "TextValue":
-                        case "TextNameValue":
-                            if (iswriter) {
-                                iswriter = false;
-                                htmls.push('</div>');
-                            }
-                            if (cfg.Title) {
-                                htmls.push('<div class="weui_cells_title">', cfg.Title, '</div>');
-                            }
-                            htmls.push('<div class="weui_cells ')
-                            switch (cfg.Type) {
-                                case "RadioGroup":
-                                case 'CheckboxGroup':
-                                    htmls.push("weui_cells_checkbox");
-                                    break;
-                            }
-                            htmls.push('">');
-                            htmls.push(createField(cfg, cfg.Name));
-                            htmls.push('</div>');
-                            break;
-                        default:
-                            if (iswriter) {
-                                if (cfg.hasOwnProperty('tip')) {
-                                    htmls.push('</div>');
-                                    if (cfg.tip) htmls.push('<div class="weui_cells_title">', cfg.tip, '</div>');
-                                    htmls.push('<div class="weui_cells weui_cells_access">');
-                                }
-                            } else {
-                                iswriter = true;
-                                if (cfg.tip) {
-                                    htmls.push('<div class="weui_cells_title">', cfg.tip, '</div>');
-                                }
-                                htmls.push('<div class="weui_cells weui_cells_access">');
-                            }
-                            htmls.push(createField(cfg, cfg.Name, cfg.Title));
-                            break;
-                    }
-                    if (cfg.Submit) {
-                        if (iswriter) {
-                            iswriter = false;
-                            htmls.push('</div>');
-                        }
-                        isSubmit = true;
-                        createSubmit(v.Submit, htmls);
-                    }
-
-
-                }
-                if (iswriter) {
-                    iswriter = false;
-                    htmls.push('</div>');
-                }
-                break;
-
-            case "BarCode":
-                v.Type = 'Number';
-            default:
-                this.item[v.Name || '_'] = v;
-                htmls.push('<div class="weui_cells">');
-                htmls.push(createField(v, v.Name || '_'));
-                htmls.push('</div>');
-                break;
-        }
-        var smt = v.Submit;
-        if (!isSubmit) {
-            createSubmit(smt, htmls);
-        }
-        var formHTML = htmls.join('');
-        var headers = ['<div class="header"><a class="back"></a><h1>', v.Title || "请输入", '</h1> '];
-        if (v.menu) {
-            if (v.menu.length == 1) {
-                headers.push('<a class="right">', v.menu[0].text, '</a>');
-            } else {
-                headers.push('<a class="right"><span class="icon-menu"></span></a>');
-            }
-        }
-        headers.push('</div><form method="post" action="', $.UI.Config().posurl, '/?_v=Form" target="_blank" class="weui_cell_primary" style="overflow: auto">', formHTML, '</form>')
         var me = this;
-
-        var isInput = formHTML.indexOf('<input ') > 0 || formHTML.indexOf('<select ') > 0 || formHTML.indexOf('<textarea ') > 0;
-        var form = dom.html(headers.join(''))
-            .find('form').submit(function () {
-                var f = $(this);
-                var vs = f.val();
-                if (vs !== false) {
-                    if (me.Submit(vs) !== false) {
-                        me.param.CloseEvent ? 0 : dom.addClass('right').removeClass('ui');
-                        if (me.param.Action) {
-                            $.Click(me.param.Action);
-                            return isInput;
-                        } else if (isInput) {
-                            $.UI.Command(vs);
-                        }
-                    }
-                }
-                return false;
-            }).on('file', function (e, f, t) {
-
-                var data = me.item[f.attr('data-key')];
-                var model = data.Model;
-                var command = data.Command;
-                var value = t.media_id || t.src;
-                var map = { media_id: value };
-                if (data.Type == 'File') {
-                    f.parent('.weui_uploader_input_wrp').css('background-image', 'url(' + (t.min || t.src) + ')');
-                    f.parent('.weui_cell').find('input[type=hidden]').val(value);
-                } else {
-                    var fm = f.parent('.weui_uploader').find('.weui_uploader_files');
-                    fm.append(['<li class="weui_uploader_file" style="background-image: url(', t.min || t.src, ')"></li>'].join(''));
-                    var size = fm.find('li').length;
-                    fm.parent('.weui_uploader').find('.weui_cell_ft').text([size, '/', data.Max || 5].join(''));
-                    fm.siblings('input').val(size + '');
-                    map.seq = size;
-                }
-                var sendValue = data.SendValue;
-                if (model && command) {
-
-                    switch (typeof sendValue) {
-                        case 'object':
-                            $.extend(map, sendValue);
-                            break;
-                        case 'string':
-                            map = sendValue + '&media_id=' + encodeURIComponent(value);
-                            break;
-                    }
-                    $.UI.Command(model, command, map);
-                }
-            });
-
-        var send = $.extend({}, smt.send);
-        send._model = smt.model;
-        send._cmd = smt.cmd;
-        for (var k in send) {
-            $({ tag: 'input', 'value': send[k], name: k, type: 'hidden' }).appendTo(form);
-        }
-        form.find('input[type=file]').click(function () {
-            if ($.UI.On('Form.File', this) === false) {
-                return false;
+        dom.on('event', function (e, v) {
+            switch (v) {
+                case 'Submit':
+                    dom.find('form').on('submit');
+                    break;
             }
-        }).on('change', function () {
-            var f = $(this);
-            if (this.files.length > 0) {
-                if (this.name == '_f')
-                    f.parent('.weui_cell').find('.weui_cell_ft').text(this.files[0].name);
-                f.parent('form').addClass('wdk-loading');
-                $.uploader(this.files[0], function (t) {
-                    form.removeClass('wdk-loading');
-                    form.on('file', f, t)
-                });
-            }
-        });
-        form.find('input[type=barcode]').click(function () {
-            if ($.UI.On('Form.BarCode', this) === false) {
-                return false;
-            }
-        });
-        dom.find('.header a').click(function () {
+        }).click('.header a', function () {
             var menu = me.param.menu;
             var b = $(this)
             if (b.is('.back')) {
@@ -390,8 +166,7 @@
                 var v = menu[0];
                 $.UI.Command(v.model, v.cmd, v.send);
             }
-        });
-        dom.on('click', 'a[data-key]', function () {
+        }).on('click', 'a[data-key]', function () {
             var m = $(this);
             var key = m.attr('data-key');
             var data = me.item[key];
@@ -469,17 +244,232 @@
                 return true;
             } else {
                 var click = JSON.parse(m.attr('click-data')) || {};
-                click.key ? m.parent('div[ui]').ui('Key.' + click.key, click.send) : $.Click(click);
+                switch (click.key) {
+                    case 'Click':
+                        click = click.send;
+                        var send = click.send || {};
+                        send.UI = dom.attr('page-name');
+                        click.send = send;
+                        $.Click(click);
+                        break;
+                    case 'Query':
+                        var submit = me.param.Submit;
+                        var send = $.extend(submit.send, click.send || {}, {});
+                        delete send.KEY_DIALOG_ID;
+                        send.___ = dom.attr('page-name');
+                        $.UI.Command(submit.model, submit.cmd, send, function (x) {
+                            me.Init(dom, x);
+                        });
+                        break;
+                    default:
+                        click.key ? m.parent('div[ui]').ui('Key.' + click.key, click.send) : $.Click(click);
+                        break;
+                }
+                return false;
             }
         });
-
+        me.Init(dom, v);
     }
     Dialog.prototype = {
         Msg: function (titls, t) {
             if (t) titls[1] = t;
             $.UI.On("Prompt", { Text: titls.join('') });
         },
+        Init: function (dom, v) {
+            this.param = v;
+            var me = this;
+            var header = this.Header = v.Header || {};
+            var fhn = $.UI.Headers || {};
+            var fnh = fhn[header.type] || function () { return '' };
+            var htmls = [fnh(header.type == 'Slider' ? header : header.data || {}, header.format || {}, header.style || {})];
+            var isSubmit = false;
+            switch (v.Type) {
+                case "Form":
+                    var iswriter = false;
+                    var items = v.DataSource;
+                    for (var i = 0, l = items.length; i < l; i++) {
+                        var cfg = items[i];
+                        var key = cfg.Name || '_';
+                        this.item[key] = cfg;
+                        switch (cfg.Type) {
 
+                            case 'Confirm':
+                                htmls.push('<input type="hidden" value="', cfg.DefaultValue || 'YES', '"  name="', key, '" />');
+                            case "Prompt":
+                            case "Footer":
+                                if (iswriter) {
+                                    iswriter = false;
+                                    htmls.push('</div>');
+                                }
+                                htmls.push('<div class="weui_cells_tips">');
+                                htmls.push($.format(cfg.Format || '{Text}', cfg, cfg.Style || {}));
+                                htmls.push('</div>');
+                                break;
+                            case "Receiver":
+                            case "RadioGroup":
+                            case "CheckboxGroup":
+                            case "TextValue":
+                            case "TextNameValue":
+                                if (iswriter) {
+                                    iswriter = false;
+                                    htmls.push('</div>');
+                                }
+                                if (cfg.Title) {
+                                    htmls.push('<div class="weui_cells_title">', cfg.Title, '</div>');
+                                }
+                                htmls.push('<div class="weui_cells ')
+                                switch (cfg.Type) {
+                                    case "RadioGroup":
+                                    case 'CheckboxGroup':
+                                        htmls.push("weui_cells_checkbox");
+                                        break;
+                                }
+                                htmls.push('">');
+                                htmls.push(createField(cfg, cfg.Name));
+                                htmls.push('</div>');
+                                break;
+                            default:
+                                if (iswriter) {
+                                    if (cfg.hasOwnProperty('tip')) {
+                                        htmls.push('</div>');
+                                        if (cfg.tip) htmls.push('<div class="weui_cells_title">', cfg.tip, '</div>');
+                                        htmls.push('<div class="weui_cells weui_cells_access">');
+                                    }
+                                } else {
+                                    iswriter = true;
+                                    if (cfg.tip) {
+                                        htmls.push('<div class="weui_cells_title">', cfg.tip, '</div>');
+                                    }
+                                    htmls.push('<div class="weui_cells weui_cells_access">');
+                                }
+                                htmls.push(createField(cfg, cfg.Name, cfg.Title));
+                                break;
+                        }
+                        if (cfg.Submit) {
+                            if (iswriter) {
+                                iswriter = false;
+                                htmls.push('</div>');
+                            }
+                            isSubmit = true;
+                            createSubmit(v.Submit, htmls);
+                        }
+
+
+                    }
+                    if (iswriter) {
+                        iswriter = false;
+                        htmls.push('</div>');
+                    }
+                    break;
+
+                case "BarCode":
+                    v.Type = 'Number';
+                default:
+                    this.item[v.Name || '_'] = v;
+                    htmls.push('<div class="weui_cells ')
+                    switch (v.Type) {
+                        case "RadioGroup":
+                        case 'CheckboxGroup':
+                            htmls.push("weui_cells_checkbox");
+                            break;
+                    }
+                    htmls.push('">');
+                    htmls.push(createField(v, v.Name || '_'));
+                    htmls.push('</div>');
+                    break;
+            }
+            var smt = v.Submit;
+            isSubmit ? 0 : createSubmit(smt, htmls);
+            var formHTML = htmls.join('');
+            var headers = ['<div class="header"><a class="back"></a><h1>', v.Title || "请输入", '</h1> '];
+            if (v.menu) {
+                if (v.menu.length == 1) {
+                    headers.push('<a class="right">', v.menu[0].text, '</a>');
+                } else {
+                    headers.push('<a class="right"><span class="icon-menu"></span></a>');
+                }
+            }
+            headers.push('</div><form method="post" action="', $.UI.Config().posurl, '/?_v=Form" target="_blank" class="weui_cell_primary" style="overflow: auto">', formHTML, '</form>')
+
+
+            var isInput = formHTML.indexOf('<input ') > 0 || formHTML.indexOf('<select ') > 0 || formHTML.indexOf('<textarea ') > 0;
+            var form = dom.html(headers.join(''))
+                .find('form').submit(function () {
+                    var f = $(this);
+                    var vs = f.val();
+                    if (vs !== false) {
+                        if (me.Submit(vs) !== false) {
+                            me.param.CloseEvent ? 0 : dom.addClass('right').removeClass('ui');
+                            if (me.param.Action) {
+                                $.Click(me.param.Action);
+                                return isInput;
+                            } else if (isInput) {
+                                $.UI.Command(vs);
+                            }
+                        }
+                    }
+                    return false;
+                }).on('file', function (e, f, t) {
+
+                    var data = me.item[f.attr('data-key')];
+                    var model = data.Model;
+                    var command = data.Command;
+                    var value = t.media_id || t.src;
+                    var map = { media_id: value };
+                    if (data.Type == 'File') {
+                        f.parent('.weui_uploader_input_wrp').css('background-image', 'url(' + (t.min || t.src) + ')');
+                        f.parent('.weui_cell').find('input[type=hidden]').val(value);
+                    } else {
+                        var fm = f.parent('.weui_uploader').find('.weui_uploader_files');
+                        fm.append(['<li class="weui_uploader_file" style="background-image: url(', t.min || t.src, ')"></li>'].join(''));
+                        var size = fm.find('li').length;
+                        fm.parent('.weui_uploader').find('.weui_cell_ft').text([size, '/', data.Max || 5].join(''));
+                        fm.siblings('input').val(size + '');
+                        map.seq = size;
+                    }
+                    var sendValue = data.SendValue;
+                    if (model && command) {
+
+                        switch (typeof sendValue) {
+                            case 'object':
+                                $.extend(map, sendValue);
+                                break;
+                            case 'string':
+                                map = sendValue + '&media_id=' + encodeURIComponent(value);
+                                break;
+                        }
+                        $.UI.Command(model, command, map);
+                    }
+                });
+
+            var send = $.extend({}, smt.send);
+            send._model = smt.model;
+            send._cmd = smt.cmd;
+            for (var k in send) {
+                $({ tag: 'input', 'value': send[k], name: k, type: 'hidden' }).appendTo(form);
+            }
+            form.find('input[type=file]').click(function () {
+                if ($.UI.On('Form.File', this) === false) {
+                    return false;
+                }
+            }).on('change', function () {
+                var f = $(this);
+                if (this.files.length > 0) {
+                    if (this.name == '_f')
+                        f.parent('.weui_cell').find('.weui_cell_ft').text(this.files[0].name);
+                    f.parent('form').addClass('wdk-loading');
+                    $.uploader(this.files[0], function (t) {
+                        form.removeClass('wdk-loading');
+                        form.on('file', f, t)
+                    });
+                }
+            });
+            form.find('input[type=barcode]').click(function () {
+                if ($.UI.On('Form.BarCode', this) === false) {
+                    return false;
+                }
+            });
+        },
         Submit: function (v) {
             if (v) {
                 for (var k in v) {
@@ -499,7 +489,7 @@
                         this.Msg([item.Title, '不能大于', maxSize, '个字']);
                         return false;
                     }
-                    if (item.For) {
+                    if (item.For && item.Compare) {
                         var titls = [item.Title, '', item.For]
                         var forValue = item.For;
                         if (this.item.hasOwnProperty(item.For)) {

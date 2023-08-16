@@ -336,8 +336,8 @@ svg:not(:root) {
     text-align: center;
     background-color: #1890ff;
     border-color: #1890ff;
-    margin: 0.5em;
-    padding: 12px 16px;
+    margin: 4px;
+    padding: 10px 6px;
     font-size: 14px;
     border-radius: 4px;
     color: #fff;
@@ -901,7 +901,8 @@ svg:not(:root) {
 }
 
 .app-container {
-    padding: 1em;
+    padding: 1em; 
+    box-sizing: border-box;
 }
 
 .item-container {
@@ -2704,4 +2705,59 @@ form.filter-container .filter-container-button {
 .umc-preview-right[data-index=end]{
 
     cursor: not-allowed;
+}
+
+.umc-market-container {
+
+    max-width: 1100px;
+    margin: 0px auto;
+}
+
+.umc-market-container .weui_cell:before {
+    display: none;
+}
+
+.umc-market-container .weui_cell {
+    float: left;
+    width: calc(50% - 24px);
+    box-sizing: content-box;
+    padding: 16px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    margin: 12px;
+    box-shadow: 0px 0px 4px 0px rgba(169, 176, 180, 0.20);
+    box-sizing: border-box;
+}
+
+.umc-market .topic_category {
+    text-align: center;
+    height: 50px;
+    font-size: 14px;
+    vertical-align: center;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.umc-market .topic_category .item {
+    line-height: 20px;
+    padding: 15px 10px;
+    display: inline-block;
+    color: #A9B0B4;
+}
+
+.umc-market .topic_category .item_selected {
+    font-size: 14px;
+    color: #757C82;
+}
+.umc-market .topic_header article div{ 
+    height: 350px;
+}
+.umc-market-container:empty{
+    text-align: center;
+    height: 350px;
+    padding-top: 150px;
+    box-sizing: border-box;
+}
+.umc-market-container:empty::before{
+    content: attr(data-msg);
 }

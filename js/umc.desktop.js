@@ -134,6 +134,7 @@
         if (win == window) {
             return;
         }
+        var isApi = false;
         switch (data.type) {
             case 'close':
             case 'open':
@@ -167,6 +168,8 @@
             case 'msg':
                 $.UI.Msg(data.value);
                 break;
+            case 'api':
+                isApi = true;
             case 'umc':
                 var bridge = new Bridge(win);
                 bridge.key = data.key;
@@ -174,7 +177,7 @@
                 xhr.onload = function () {
                     bridge.bridge(JSON.parse(xhr.responseText));
                 };
-                xhr.open('POST', UMC.UI.Config().posurl, true);
+                xhr.open('POST', isApi ? ['https://api.apiumc.com/UMC/', UMC.UI.Config().posurl.split('/').pop()].join('') : UMC.UI.Config().posurl, true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.send(data.value.replace(/(^\&*)/g, ""));
                 break;
@@ -350,7 +353,13 @@
             $('.umc-task_bar-app').addClass('hide');
             $('#umc-desktop-menu').children().remove();
             $('.umc-task_bar-wins').addClass('hide').siblings('ul').remove();
-            $('#umc-desktop-task~ul').find('a[win-id=' + this.cfg.id + ']').remove();
+            var l = $('#umc-desktop-task~ul').find('a[win-id=' + this.cfg.id + ']').parent();
+            var node = l.prop('previousSibling');
+            while (node && node.nodeType != 1) {
+                node = node.previousSibling;
+            }
+            $(node).find('a').click();
+            l.remove();
             delete apps[this.cfg.id];
         },
         win: function (cfg, text) {
@@ -548,8 +557,8 @@
                 menuWin.text(wtitle.text());
             }).on('menu', function (e, vs) {
                 var menu = $(this).find('.umc-window-menu')
-                menu.children().remove();
                 if (Array.isArray(vs)) {
+                    menu.children().remove();
                     for (var i = 0; i < vs.length; i++) {
                         var v = vs[i];
                         if (typeof v == 'object' && v.hide !== true) {
@@ -562,18 +571,25 @@
                 }
 
 
-            }).on('nav', function (e, vs) {
-                if (Array.isArray(vs)) {
+            }).on('nav', function (e, v) {
+                if (Array.isArray(v)) {
                     app.cfg.menu.children().remove();
-                    app._menu(app.cfg.menu, vs);
-                } else if (typeof v == 'object') {
-                    var li = app._item(v);
-                    if (v.id) {
-                        var ld = app.cfg.menu.find('#n' + v.id);
-                        ld.length ? ld.parent()[0].replaceChild(li[0], ld[0]) : app.cfg.menu.append(li)
+                    app._menu(app.cfg.menu, v);
+                } else {
+                    switch (typeof v) {
+                        case 'object':
+                            var li = app._item(v);
+                            if (v.id) {
+                                var ld = app.cfg.menu.find('#n' + v.id);
+                                ld.length ? ld.parent()[0].replaceChild(li[0], ld[0]) : app.cfg.menu.append(li)
 
-                    } else {
-                        app.cfg.menu.append(li);
+                            } else {
+                                app.cfg.menu.append(li);
+                            }
+                            break;
+                        case 'string':
+                            app.cfg.menu.find('a[key=' + v + ']').click();
+                            break;
                     }
                 }
 
@@ -877,7 +893,9 @@ UMC(function ($) {
         });
         switch (me.attr('data-app')) {
             case 'Add':
-                $.UI.Command('Proxy', 'Site', 'Create');
+                $(window).on('open', { "title": "应用市场", "id": "Market", "text": "应用市场", max: true, src: '/Desktop/market?Setup' });
+
+                // $.UI.Command('Proxy', 'Site', 'Create');
                 return false;
         }
         switch (me.attr('target')) {
@@ -908,6 +926,7 @@ UMC(function ($) {
         switch (me.attr('data-app')) {
             case 'Settings':
             case 'Docs':
+            case 'Market':
             case 'Add':
                 return;
         }
@@ -1066,5 +1085,8 @@ UMC(function ($) {
         appList.cls('not-find', !isOK)
 
     }).click(function () { return false });
+    $(document.body).on('UI.Key.Setup', function (e, v) {
+        $.UI.Command('Proxy', 'Setup', v)
+    })
 
 });

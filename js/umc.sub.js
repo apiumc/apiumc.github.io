@@ -27,18 +27,16 @@
                 m.is('.ui') ? m.removeClass('ui') : m.remove();
             });
             var key = location.pathname.substring(1) || 'index.html';
-            var xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                $.UI.API('Subject', "Publish", $.extend({ Key: key }, a))
-            }
-            xhr.open('PUT', 'https://wdk.oss-accelerate.aliyuncs.com/Sub/' + key, true);
-            xhr.send(JSON.stringify({ title: title, keyword: keyword, desc: desc, html: body.html() }));
+            var htmls = { title: title, keyword: keyword, desc: desc, html: body.html() };
+            var head = $.extend({ Key: key }, a);
+            $.UI.On('UI.Published', head, htmls);
 
         })
 
     $(function () {
         $.page('subject');
         $.page('page');
+        $.page('download')
         var comment, preview, login;
         function XHR(src, fn) {
             var xhr = new XMLHttpRequest();
@@ -338,7 +336,7 @@
                     return true;
                 }
             }).On('UI.Push', function (e, xhr) {
-                var dom = app.children('div.ui');//.cls('ui', 0);
+                var dom = app.children('div.ui');
                 if (dom[0] != xhr.root[0]) {
                     navbar.cls('show-menu', 0);
                     dom.prop('top', app[0].scrollTop || '0');
@@ -637,7 +635,10 @@
                 case 'index.html':
                 case 'index':
                     $(window).on('page', 'page/index', location.hash || '');
-                    return
+                    return;
+                case 'Download':
+                    $(window).on('page', 'download', location.hash || ''); 
+                    return;
                 case 'dashboard':
                     (v || $.UI.IsAuthenticated) ? $(window).on('page', 'subject/dashboard', '') : $.UI.On('Subject.Menu', { code: pKey, type: $.UI.ProjectId ? "self" : 'project' })
                     return;

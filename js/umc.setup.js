@@ -7,23 +7,24 @@
         root.on('event', function (e, v) {
             switch (v) {
                 case 'Command':
-                    root.on('debug');
+                    $.script('/js/qrcode.min.js').wait(function () {
+                        $.UI.Ready({ "ClientEvent": 6, "Headers": { "AsyncDialog": { "Text": "请用Apiumc App扫一扫，快速安装", "Url": "data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==", "Type": "Image", "Title": "发布到Apiumc网关" } } });
+
+                        var qr = $('.weui_dialog .weui_dialog_bd a');
+                        var qrcode = new QRCode(qr[0]);
+
+                        location.pathname.substring(location.pathname.indexOf('/', 3))
+                        qrcode.makeCode(['https://api.apiumc.com/UMC/Platform/Apper?Setup=', location.origin, '/UMC'].join(''), {
+                            width: 256,
+                            height: 256
+                        });
+                        qr.find('img').last().css('margin', 'auto')
+                    });
                     break;
                 case "Scanning":
                     $.UI.Command('System', 'Setup', 'Scanning');
                     break;
             }
-        }).on('debug', function (e, m, c, v) {
-            $.UI.On('Form', {
-                "Title": "调试指令",
-                "Type": "Form", "DataSource": [{
-                    "DefaultValue": m || "", "Name": "_model", "placeholder": "触发的模块", "Type": "Text", "Title": "模块"
-                }, {
-                    "DefaultValue": c || "", "Name": "_cmd", "placeholder": "触发的指令", "Type": "Text", "Title": "指令"
-                }, {
-                    "Name": "_", "required": "no", "Title": "参数", "DefaultValue": v || "", "Type": "Text", "placeholder": "触发的参数"
-                }]
-            });
         }).find('#mapping.el-table').click('a.link-type', function () {
             var ns = $(this).text().split('.');
             if (ns[0] && ns[1]) {
@@ -112,7 +113,7 @@
         var p = location.pathname.substring($.SPA.length).replace(/(^\/+)|(\/+$)/g, '');
         if (p) {
             if (p.endsWith('.html')) {
-                var p2 = p.substring(0, p.length  - 5);
+                var p2 = p.substring(0, p.length - 5);
                 $.page(p2);
                 $(window).on('page', p2 || 'main', location.search.substring(1));
             } else {

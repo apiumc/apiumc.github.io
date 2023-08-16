@@ -807,6 +807,11 @@
                     case 'height':
                         htmls.push('min-height:', v, 'px;');
                         break;
+                    case 'border-color':
+                    case 'color':
+                    case 'background-color':
+                        v.charAt(0) == '#' ? htmls.push(k, ':', v, ';') : htmls.push(k, ':var(--', v, ');');
+                        break;
                     default:
                         htmls.push(k, ':', v, ';');
                         break;
@@ -980,18 +985,19 @@
             switch (e.key) {
                 case 'Url':
                     return e.send;
-                    break;
+                case "Tel":
+                    return 'tel:' + e.send
             }
         },
         Msg: function (text) {
             __p.On('Prompt', { Text: text });
         },
-        Bridge: function (v, fn) {
+        Bridge: function (v, fn, url) {
             var xhr = new XMLHttpRequest();
             if (__p.On('XHR.Bridge', xhr, fn, v) !== false) {
                 xhr.onload = function () { fn(JSON.parse(xhr.responseText)); };
             }
-            xhr.open('POST', [posurl.posurl, __p.Ver ? "?_v=" + __p.Ver : ''].join(''), true);
+            xhr.open('POST', url || [posurl.posurl, __p.Ver ? "?_v=" + __p.Ver : ''].join(''), true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.send(v);
         },
@@ -1023,7 +1029,7 @@
         var event = parseInt(v.ClientEvent);
         if (!isNaN(event)) {
             __p.On("Event", event, v);
-            if ((event & 4) > 0) {
+            if (event & 4) {
                 var p = (v.Headers || {})["AsyncDialog"];
                 switch (p.Type) {
                     case 'Select':
@@ -1091,10 +1097,10 @@
                 }
                 __p.On("Dialog", p, v);
             }
-            if ((event & 1) > 0)
+            if (event & 1)
                 __p.On("Prompt", (v.Headers || {})["Prompt"], v)
 
-            if ((event & 64) > 0) {
+            if (event & 64) {
                 var ps = [].concat((v.Headers || {})["DataEvent"]);
                 for (var i = 0; i < ps.length; i++) {
                     var p = ps[i]
@@ -1119,9 +1125,19 @@
                     }
                 }
             }
-            if ((event & 1024) > 0) {
-                __p.On("Change", v.Ticket, v);
-                UMC('div[ui].ui').ui('Change', v.Ticket, v)
+            if ((event & 128) > 0) {
+                __p.On("Close");
+            }
+            if ((event & 1024) || (event & 512)) {
+                delete v.ClientEvent;
+                delete v.Headers;
+                delete v.Redirect;
+                __p.ActiveData = UMC.extend(__p.ActiveData, v)
+                __p.On("ActiveData", __p.ActiveData, v);
+                UMC('div[ui].ui').ui('ActiveData', __p.ActiveData, v);
+                if (event & 512) {
+                    __p.ActiveData = {};
+                }
             }
         } else if (ISFN(cfn)) cfn(v)
     }
@@ -1134,8 +1150,7 @@
                 call = t;
                 break;
             case 'object':
-                srcs.push('&', UMC.query(t));
-                break;
+                t = UMC.query(t);
             default:
                 t ? srcs.push('&', t) : 0;
                 break;
@@ -1182,12 +1197,8 @@
     UMC.api = function (m, c, t, b) {
         var args = encodeUArgs(m, c, t);
         var call = b || args[1];
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            check(JSON.parse(xhr.responseText), call);
-        };
-        xhr.open('GET', ['https://api.apiumc.com/UMC/', UMC.UI.Config().posurl.split('/').pop(), '?', args[0]].join(''), true);
-        xhr.send();
+
+        __p.Bridge(args[0], function (xhr) { check(xhr, call) }, ['https://api.apiumc.com/UMC/', UMC.UI.Config().posurl.split('/').pop()].join(''));
     };
 
     __p.Ready = check;

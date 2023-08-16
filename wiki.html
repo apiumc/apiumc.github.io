@@ -1,28 +1,299 @@
-dotnet publish -r osx-x64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/osx-x64/publish/UMC.Host /Users/wushunming/Documents/APIUMC/MPorxy/osx-x64/MProxy
+
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Apiumc</title>
+    <link href="/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.sub.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.sub.page.css" rel="stylesheet" type="text/css" />
+    <script src="/js/umc.js" type="text/javascript"></script>
+    <script src="/js/Sortable.js"></script>
+    <script src="/js/umc.database.js"></script>
+    <script src="/js/umc.grid.js"></script>
+    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.ui.js"></script>
+    <script src="/js/umc.page.js"></script>
+    <script src="/js/umc.paging.js"></script>
+    <script src="/js/umc.sub.js"></script>
+    <script src="/UMC.Conf"></script>
+    <script src="/js/wiki.js"></script>
+</head>
+
+<body>
+    <div role="alert" class="el-message el-message--warning el-message-fade-leave el-message-fade-leave-active"
+        style="z-index: 2100;">
+        <i class="el-message__icon el-icon-success"></i>
+        <p class="el-message__content"></p>
+    </div>
+    <div class="navbar">
+
+        <div class="sidebar-logo-container">
+            <div class="umc-sidebar-back"></div>
+            <div class="umc-sidebar-menu"></div>
+            <div class="login-box"><em>API</em> <sub>UMC</sub>
+                <a ui-spa href="/"></a>
+            </div>
+            <!--%publish team%-->
+            <a ui-spa id="team"></a>
+            <!--%end%-->
+            <a class="umc-project-item el-dropdown"></a>
+            <ul role="menu" class="umc-project-item-menu">
+                <li>
+                    <a data-key="EditItem">
+                        <b class="wdk_cell_icon" data-icon="&#xf040;"></b> 编辑栏位
+                    </a>
+                </li>
+                <li><a data-key="AddItem"><b class="wdk_cell_icon" data-icon="&#xf067;"></b> 增加栏位</a></li>
+                <li><a id="Import">
+                        <b class="wdk_cell_icon" data-icon="&#xf0ee;"></b> 图文导入
+                        <input accept="text/*" type="file" />
+                    </a></li>
+
+            </ul>
+        </div>
+
+        <div class="umc-sub-nav">
+
+            <div class="header-sub-nav">
+                <ul class="menu-site">
+                    <li><a ui-spa href="/">知识库</a></li>
+                </ul>
+            </div>
+            <div class="header-search right-menu-item show" id="header-search">
+                <form class="el-select header-search-select el-select--small">
+                    <div class="el-input el-input--small el-input--suffix">
+                        <input type="search" autocomplete="off" placeholder="搜索" class="el-input__inner">
+                    </div>
+                </form>
+            </div>
+            <ul role="menu" class="umc-search-menu"></ul>
+        </div>
+        <div class="umc-sub-nav">
+            <!--%publish nav%-->
+            <ul class="menu-site" id="nav"></ul>
+            <!--%end%-->
+        </div>
+        <div class="right-menu">
+            <a model="Account" cmd="Self" send="User" class="box-card-user">
+            </a>
+        </div>
+        <div class="right-menu" id="menu">
+
+        </div>
+
+    </div>
+    <div id="app" class="hideSidebar">
+        <div class="sidebar-container">
+
+            <div class="el-scrollbar">
+                <div class="scrollbar-wrapper el-scrollbar__wrap">
+                    <div class="el-breadcrumb app-breadcrumb breadcrumb-container" id="breadcrumb-container">
+                        <span class="no-redirect"></span>
+                    </div>
+                    <div class="el-scrollbar__view">
+                        <!--%publish menu%-->
+                        <ul id="menubar" class="el-menu"></ul>
+                        <!--%end%-->
+
+                        <div class="el-menu"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="el-link-menu" style="height: 50px;">
+                <a class="wdk-footer-icon" id="Portfolio">
+                    <i>&#xf07c;</i><em>新建文集</em>
+                </a>
+                <a class="wdk-footer-icon" title="新建富文本格式" id="Rich">
+                    <i>&#xf13b;</i><em>新建文档</em>
+                </a>
+                <a class="wdk-footer-icon" target="_blank" href="https://www.apiumc.cn/wiki/help">
+                    <i>&#xf059;</i><em>帮助手册</em>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <!--%publish container%-->
+            <section class="app-main" app-cls="umc-sub-index ui-pager umc-sub-app">
+                <div app-cls="umc-sub-index ui-pager umc-sub-app" hidesidebar="true" class="umc-sub-page-index"
+                    ui="page/index" ui-key="index">
+                    <div class="umc-sub-page-container">
+                        <div app-cls="umc-sub-index ui-pager umc-sub-app" hidesidebar="true" class="umc-sub-page-index">
+                            <div class="umc-sub-page-container">
+                                <div class="umc-sub-header-container" data-title="知识录"
+                                    data-keywords="内容运营、公众号运营，公众号推广，项目文档 学习笔记 团队专栏 帮助手册 专业编辑器 结构化知识库 体系化协同">
+                                    <div class="umc-sub-header">
+                                        <div class="product-top" style="overflow:hidden;">
+                                            <div class="top-content" style=" float:left">
+                                                <div class="product-top-logo"><span class="product-top-name">Apiumc
+                                                        Wiki</span></div>
+                                                <div class="product-top-title account">能变现的文档知识库</div>
+                                                <div class="product-top-subtitle account">
+                                                    托管个人、企业项目中图文、Markdown等文档，并结构化管理，打造轻松流畅文档协同和变现两不误的知识宝库。
+                                                </div>
+                                                <div class="top-content-try">
+                                                    <a ui-spa="" href="/dashboard"
+                                                        class="top-content-try-button top track-web-click"><span>开始使用</span></a>
+                                                    <a  target="_blank"  href="https://www.apiumc.cn/wiki/help"
+                                                        class="top-content-try-button help"><span>帮助文档</span></a>
+                                                    <!-- <a ui-spa href="/wiki/help" class="top-content-try-button income"><span>如何变现</span></a> -->
+                                                </div>
+                                            </div>
+                                            <div class="product-project-image">
+                                                <img src="/css/images/product-wiki-topX3-f74a1e259a.png" width="488"
+                                                    height="488">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="umc-sub-middle-container">
+
+                                    <div class="umc-sub-middle">
+                                        <div class="el-row">
+                                            <div style="flex: 1;"><img src="/css/images/center_left_2.png"></div>
+                                            <div class="umc-sub-middle-wrapper" style="flex: 1.4;">
+                                                <!-- <p>天天录IOS、Android、H5、网页版全渠道全新上线</p> -->
+                                                <h3>知识录成就个人知识财富，助力企业项目文档管理</h3>
+                                                <p>面向个人、企业或组织，提供全新的体系化文档管理， 让协作更高效，让内容变现，让知识成为财富。</p>
+                                                <p><a target="_blank" href="https://www.apiumc.cn/wiki/media/income"
+                                                        class="el-button el-button--primary">了解如何变现</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="umc-sub-middle pc">
+                                        <h2 style="margin: 30px 20px 80px;text-align: center;">强大的文档创作与管理</h2>
+                                        <div class="el-row">
+                                            <div style="width: 30%;">
+                                                <h2 style="font-size: 30px;">丰富的应用场景</h2>
+                                                <ul type="tabs" for=".umc-sub-middle-tabs">
+                                                    <li class="active">项目文档</li>
+                                                    <li>学习笔记</li>
+                                                    <li>团队专栏</li>
+                                                    <li>帮助手册</li>
+                                                </ul>
+                                            </div>
+                                            <div class="umc-sub-middle-tabs" style="flex: 1;">
+                                                <div class="active">
+                                                    <img src="/css/images/center_1.png">
+                                                </div>
+                                                <div>
+                                                    <img src="/css/images/center_2.png">
+                                                </div>
+                                                <div>
+                                                    <img src="/css/images/center_3.png">
+                                                </div>
+
+                                                <div>
+                                                    <img src="/css/images/center_4.png">
+                                                </div>
 
 
-dotnet publish -r linux-x64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/linux-x64/publish/UMC.Host /Users/wushunming/Documents/APIUMC/MPorxy/linux-x64/MProxy
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="umc-sub-middle">
+                                        <!-- <h2 style="margin: 20px 20px 80px;text-align: center;">好用的编辑器</h2> -->
+                                        <div class="el-row" style="margin-top: 100px">
+                                            <div style="flex: 1.2;">
+                                                <div><img src="/css/images/center_left.png" alt=""></div>
+                                            </div>
+                                            <div class="umc-sub-middle-wrapper" style="flex: 1;"><img
+                                                    src="/css/images/center_left.svg">
+                                                <h3>专业编辑器</h3>
+                                                <p>编辑器自主研发，支持 Markdown、表格、代码块等专业编辑能力，让你脱离调文档格式烦优，让你专注于创作。</p>
+                                            </div>
+                                        </div>
+                                        <div class="el-row">
+                                            <div class="umc-sub-middle-wrapper" style="flex: 1.2;"><img
+                                                    src="/css/images/center_right.svg">
+                                                <h3>结构化知识库</h3>
+                                                <p>通过文档大纲，自动生成文档要点，拖放之间完成项目目录编排，让项目文档结构化，让项目资料形成一本本像书一样清晰易读的知识库。</p>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div><img src="/css/images/center_right.png" alt=""></div>
+                                            </div>
+                                        </div>
+                                        <div class="el-row">
+                                            <div style="flex: 1.2;">
+                                                <div><img src="/css/images/center_left_1.png" alt=""></div>
+                                            </div>
+                                            <div class="umc-sub-middle-wrapper" style="flex: 1;"><img
+                                                    src="/css/images/center_left_1.svg">
+                                                <h3>体系化协同</h3>
+                                                <p>基于团队的文档知识管理，可以有效避免企业内部的知识碎片化和知识孤岛化，让知识在团队之间能自由流动，产生更大价值。</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-dotnet publish -r linux-arm -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/linux-arm/publish/UMC.Host /Users/wushunming/Documents/APIUMC/MPorxy/linux-arm/MProxy
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="umc-sub-footer-container ICP pc">
+                        <footer>
+                            <div class="el-row">
+                                <div class="box-item">
+                                    <div class="login-box"><em>API</em> <sub>UMC</sub>
 
-dotnet publish -r linux-musl-x64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/linux-musl-x64/publish/UMC.Host /Users/wushunming/Documents/APIUMC/MPorxy/linux-musl-x64/MProxy
+                                    </div>
+                                    <div><img class="qrcode" src="/css/images/qrcode.jpg"></div>
+                                </div>
+                                <div class="box-item">
+                                    <ul>
+                                        <li>
+                                            <h3>产品</h3>
+                                        </li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/">应用网关</a></li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/Wiki">知识录</a></li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/Auth">网关登录</a></li>
+                                    </ul>
 
-dotnet publish -r linux-arm64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/linux-arm64/publish/UMC.Host /Users/wushunming/Documents/APIUMC/MPorxy/linux-arm64/MProxy
+                                </div>
+                                <div class="box-item">
+                                    <ul>
+                                        <li>
+                                            <h3>文档</h3>
+                                        </li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/proxy/help">应用网关文档</a></li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/wiki/help">知识录文档</a></li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/proxy/auth/about">网关登录文档</a></li>
+                                    </ul>
 
-dotnet publish -r win-arm64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/win-arm64/publish/UMC.Host.exe /Users/wushunming/Documents/APIUMC/MPorxy/win-arm64/MProxy.exe
+                                </div>
+                                <div class="box-item">
+                                    <ul>
+                                        <li>
+                                            <h3>关于</h3>
+                                        </li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/About">关于我们</a></li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/wiki/provision/private">隐私政策</a></li>
+                                        <li><a target="_blank" href="https://www.apiumc.cn/wiki/provision/eula">使用协议</a></li>
+                                    </ul>
 
-dotnet publish -r win-arm -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/win-arm/publish/UMC.Host.exe /Users/wushunming/Documents/APIUMC/MPorxy/win-arm/MProxy.exe
+                                </div>
+                            </div>
+                            <div class="driver"></div>
+                            <div class="copyright">
+                                ©2023 Apiumc All Rights Reserved 湖北小雨伞科技有限公司
+                                <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2022013972号</a>
+                            </div>
+                        </footer>
 
-dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/win-x64/publish/UMC.Host.exe /Users/wushunming/Documents/APIUMC/MPorxy/win-x64/MProxy.exe
+                    </div>
+                </div>
+            </section>
+            <!--%end%-->
+        </div>
+    </div>
 
+</body>
 
-dotnet publish -r win-x86 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true /p:EnableCompressionInSingleFile=true
-cp bin/Release/net6.0/win-x86/publish/UMC.Host.exe /Users/wushunming/Documents/APIUMC/MPorxy/win-x86/MProxy.exe 
+</html>

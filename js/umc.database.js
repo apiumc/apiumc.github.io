@@ -4,8 +4,7 @@
     __p.Cells = {};
     __p.Headers = {};
 
-
-    UMC.prototype.more = function () {
+    $.prototype.more = function () {
         return this.click(function (e, v) {
             var m = WDK(this);
             if (m.attr('loading')) return false;
@@ -66,16 +65,16 @@
         var account = data.account;
         var htmls = ['<div class="profile" style="background-image: -webkit-gradient(linear, 0 0, 0 100%, from(', data.startColor || '#fe314e', '), to(', data.endColor || '#fe6263', '));">',
             '<div class="figure" style="margin-top: 0px;top: 1em;">',
-            '<div class="head" style="background-image: url(', data[fmt.src || 'src'], ');">',
-            '</div>',
-            '<a class="name" ', hashUrl(data.click), ' style="color: #fff">',
-            '<div style="padding-left: 0.5em">',
+            '<a class="head" ', hashUrl(data.click), ' style="background-image: url(', data[fmt.src || 'src'], ');">',
+            '</a>',
+            '<div class="name"  style="color: #fff">',
+            '<div style="padding-left: 5px">',
             $.format(fmt.name || '{name}', data, style),
             '</div>',
-            '<div style="padding-left: 0.5em; font-size: 80%;">',
+            '<div style="padding-left: 5px; font-size: 80%;">',
             $.format(fmt.number || 'NO:{3:number}', data, style),
             '</div>',
-            '</a>',
+            '</div>',
             '</div>']
         if (account)
             htmls.push(
@@ -169,8 +168,13 @@
             '<div class="wdk-image-text-desc-desc">',
             $.format(fmt.desc || '{desc}', data, style),
             '</div>',
-            '</div>',
-            '</', tag, '>');
+            '</div>');
+        if (fmt.tag) {
+            htmls.push('<div class="wdk-cell-tag" style="')
+            $.style(style.tag || {}, htmls);
+            htmls.push('">', $.format(fmt.tag || '{tag}', data, style), '</div>');
+        }
+        htmls.push('</', tag, '>');
         return htmls.join('');
     }
 
@@ -209,21 +213,25 @@
         var tag = tagUrl(click, htmls);
 
         htmls.push(' class="weui_cell" style="overflow: hidden;">',
-            '<div  style="float: left; padding: 10px;">',
+            '<div  style="float: left;">',
             '<img src="', data[fmt.src || 'src'], '" style="width: 70px; height: 70px;"></div>',
-            '<div class="weui_cell_primary" style=" font-size: 12px; color: #666; line-height: 1.5;">',
-            '<div style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">',
-            $.format(fmt.title || '{title}', data, style),
+            '<div class="weui_cell_primary">',
+            '<div class="wdk-image-text-desc-text">',
+            $.format(fmt.text || '{text}', data, style),
             '</div>',
-            '<div>',
-            $.format(fmt.text || '{text}', data, style), '</div>',
-            '<div>', $.format(fmt.desc || '{desc}', data, style),
+            '<div  class="wdk-image-text-desc-desc">',
+            $.format(fmt.desc || '{desc}', data, style), '</div>',
+            // '<div>', $.format(fmt.desc || '{desc}', data, style),
+            // '</div>',
+            '<div class="wdk-image-text-desc-time">', $.format(fmt.time || '{time}', data, style),
             '</div>',
-            '<div>', $.format(fmt.time || '{time}', data, style),
-            '</div>',
-            '</div>',
-            '</', tag, '>'
-        )
+            '</div>')
+        if (fmt.tag) {
+            htmls.push('<div class="wdk-cell-tag" style="')
+            $.style(style.tag || {}, htmls);
+            htmls.push('">', $.format(fmt.tag || '{tag}', data, style), '</div>');
+        }
+        htmls.push('</', tag, '>')
         return htmls.join('');
     }
     __p.Cells.DuoBao = function (data, fmt, style) {
@@ -496,4 +504,4 @@
         }
     };
     $.UI.DataSource = DataSource;
-})(WDK);
+})(UMC);

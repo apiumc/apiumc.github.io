@@ -27,32 +27,7 @@
             }
         })).find('.wdk-subject-nav-item')
             .click(function () {
-                $.scroll(t.r,emKeys.eq(parseInt($(this).attr('data-index'))));
-                // var ofset = emKeys.eq(parseInt($(this).attr('data-index'))).offset();
-                // var top = ofset.top - con.top;
-                // var stop = t.r[0].scrollTop + top + 20;
-                // var sctop = t.r[0].scrollTop;
-                // var num = (stop - sctop) / 30;
-                // function run() {
-                //     sctop = sctop + num;
-                //     if (num > 0) {
-                //         if (sctop >= stop) {
-                //             sctop = stop
-                //         } else {
-                //             requestAnimationFrame(run);
-                //         }
-                //     } else {
-
-                //         if (sctop <= stop) {
-                //             sctop = stop
-                //         } else {
-                //             requestAnimationFrame(run);
-                //         }
-                //     }
-
-                //     t.r[0].scrollTop = sctop;
-                // }
-                // run();
+                $.scroll(t.r, emKeys.eq(parseInt($(this).attr('data-index'))));
 
             }).each(function (i) {
                 $(this).attr('data-index', i + '');
@@ -256,7 +231,7 @@
                         }
                             break;
                         case 1: {
-                            var pager = new WDK.UI.Pager(body);
+                            var pager = new $.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'Self'
                             pager.search = { NextKey: 'Self', Type: 'PC' };
@@ -269,7 +244,7 @@
                             break;
                         case 2: {
 
-                            var pager = new WDK.UI.Pager(body);
+                            var pager = new $.UI.Pager(body);
                             pager.model = 'Subject'
                             pager.cmd = 'Dynamic'
 
@@ -285,7 +260,7 @@
 
             }).find('div.weui_navbar_item').eq(0).click();
 
-        var pager2 = new WDK.UI.Pager(root.find("#myProject"));
+        var pager2 = new UMC.UI.Pager(root.find("#myProject"));
         pager2.model = 'Subject'
         pager2.cmd = 'Account'
         pager2.search = { NextKey: 'Self', selectIndex: 1 };
@@ -319,7 +294,7 @@
             $.UI.On('Subject.Path', { Path: v.code || v.Code });
         });
         root.ui('Subject.Portfolio.New,Subject.Del', function () {
-            root.ui('image');
+            root.ui('System.Picture');
             root.find('.weui_tab_bd_item').on('refresh');
             root.find('.pagination-container').on('search');
         }, true);//.ui('UI.Setting')
@@ -363,7 +338,7 @@
             $.UI.API('Subject', 'Project', root.attr('ui-key'), function (xhr) {
                 root.find('*[data-field]').each(function () {
                     var m = $(this);
-                    m.is('img') ? m.css({ 'background-image': ['url(', xhr[m.attr('data-field')], ')'].join('') }) : m.text(xhr[m.attr('data-field')]);
+                    m.is('img') ? m.attr('src', xhr[m.attr('data-field')]) : m.text(xhr[m.attr('data-field')]);
 
                 });
                 editer.cls('editer', xhr.IsAuth);
@@ -402,7 +377,7 @@
                 var body = me.parent().siblings('.wdk_tab_bd').children('div').eq(index);
                 body.show().siblings('div').hide();
                 if (!tabs[index]) {
-                    var pager = new WDK.UI.Pager(body);
+                    var pager = new UMC.UI.Pager(body);
                     tabs[index] = pager;
                     switch (index) {
                         case 0: {

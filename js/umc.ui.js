@@ -139,6 +139,18 @@
         htmls.push('</a>')
         return htmls.join('');
     };
+    $.UI.Cells.Image = function (value, fmt, style) {
+
+        var padd = style.padding;
+        delete style.padding;
+        var maxWidth = style["max-width"];
+
+        var htmls = ['<a style="', padding(padd), '"', formatClick(value.click), '  class="weui_cell"><img  class="wdk-ui-image" style="', maxWidth ? ('max-width:' + maxWidth + "px;") : '']
+
+        var click = $.style(style || {}, htmls, true);
+        htmls.push('"', formatClick(click), ' src="', value.Src, '" alt=""/></a>')
+        return htmls.join('');
+    }
     $.UI.Cells.CMSImage = function (value, fmt, style) {
 
         var padd = style.padding;
@@ -587,7 +599,7 @@
         var sk = $.extend({}, style);
 
         return [
-            '<div class="weui_cell wdk-buy" ', value.tag ? ('data-tag="' + value.tag + '"') : '', '>',
+            '<div class="weui_cell wdk-buy" ', fmt.tag ? ('data-tag="' + fmt.tag + '"') : '', '>',
             '<div class="wdk-buy-comment">',
             '<a ', formatClick(value.click), '>', $.format(fmt.value || '{value}', value, sk) || '0',
             '<div>', $.format(fmt.caption || '{caption}', value, sk), '</div> ',
@@ -1180,18 +1192,13 @@
     function Pager(v, dom) {
         if (dom) {
             dom.html('<header class="wdk-header header"></header><section></section><nav class="wdk-top-icon"></nav><footer class="wdk-footer"></footer><div></div>')
-
             this.init(dom);
-            if (v.DataSource) {
-                this.dataSource(v);
-            } else {
-                this.model = v.model;
-                this.cmd = v.cmd;
-                this.search = v.search || {};
-                this.query();
-            }
+            var submit = v.Submit || v;
+            this.model = submit.model;
+            this.cmd = submit.cmd;
+            this.search = submit.send || submit.search || {};
+            v.DataSource ? this.dataSource(v) : this.query();
         } else {
-
             this.init(v);
         }
     }
@@ -1361,6 +1368,8 @@
             });
             dom.on('refresh', function () {
                 t.start = 0;
+                // t.isRefersh = true;
+                // delete t.nextKey;
                 t.next();
             }).ui('Change', function (e, data) {
                 var qty = $('.wdk-cart-quantity', this);
@@ -1456,6 +1465,7 @@
             var limit = this.limit || 30;
             var me = this;
             var p = { start: start, limit: limit };
+            delete me.search.NextKey;
             if (me.nextKey) {
                 p.NextKey = me.nextKey;
             }
@@ -1529,32 +1539,18 @@
 
                 var section = document.createElement("div");
                 section.className = "weui_cells weui_cells_access";
-                section = WDK(section);
+                section = UMC(section);
                 if (i == 0) {
                     var lastStn = me.b.children('.weui_cells').last();
                     if (lastStn.length > 0 && lastStn.attr('id') == ds.key) {
                         section = lastStn;
-                        if (xhr.start == 0) {
+                        if (me.start == 0) {
                             section.html('');
                         }
                     }
                 }
 
-                if (ds.header) {
-                    if (ds.header.text) {
-                        var header = document.createElement('div');
 
-                        header.className = "weui_cell";
-
-                        header.innerHTML = $.format('<div class="weui_cell_bd weui_cell_primary"><p>{text}</p></div>', ds.header, { prefix: { font: 'wdk', 'font-size': 12 } })
-                        section.append(header);
-                    }
-                    if (ds.header.title) {
-                        tab.push({ 'text': ds.header.title, index: i });
-                        section.attr('data-src', 'tab');
-                        section.attr('tab-index', tab.length - 1);
-                    }
-                }
                 if (ds.separatorLine === false) {
                     section.addClass('umc-not-separatorline');
                 }
@@ -1592,6 +1588,19 @@
                                 last.addClass('umc-cell-not-separatorline')
                                 break;
                         }
+                    }
+                }
+                if (ds.header) {
+                    if (ds.header.text) {
+                        var header = document.createElement('div');
+                        header.className = "weui_cells_title";
+                        header.innerHTML = $.format('{text}', ds.header, { prefix: { font: 'wdk', 'font-size': 12 } })
+                        me.b.append(header);
+                    }
+                    if (ds.header.title) {
+                        tab.push({ 'text': ds.header.title, index: i });
+                        section.attr('data-src', 'tab');
+                        section.attr('tab-index', tab.length - 1);
                     }
                 }
                 me.b.append(section);
@@ -1676,10 +1685,6 @@
 
             }
 
-            // if (xhr.Header && xhr.Header.sku) {
-            //     $.UI.On('SKUSheet', xhr.Header.sku);
-            //     $.UI.Start();
-            // }
             requestAnimationFrame(function () {
                 me.r.on('defer');
             });
@@ -1726,6 +1731,10 @@
     $(function () {
         $(document.body).on('UI.Key.Clipboard', function (e, d) {
             $.UI.On('Clipboard', d);
+        }).on('UI.Key.Tel', function (e, d) {
+            window.open('tel:' + d)
+        }).on('UI.Key.Url', function (e, d) {
+            location.href = d;
         });
     });
 

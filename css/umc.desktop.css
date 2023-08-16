@@ -281,6 +281,10 @@ ul[role=menu] li a {
     transition: background-color 0.3s ease;
 }
 
+.umc-desktop-menu a~ ul li a{
+    min-width: 100px;
+    padding-left: 2em;
+}
 .umc-logo-icon {
     background-position: 50%;
     background-size: cover;
@@ -340,7 +344,7 @@ div.wdk-dialog.ui {
     list-style: none;
 }
 
-.umc-desktop-menu li {
+.umc-desktop-menu>li {
     float: left;
 }
 

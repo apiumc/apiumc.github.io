@@ -2167,16 +2167,28 @@ transform: translate(-50%, -50%);}
     content: '\f179';
     font-family: wdk; 
     color: #000;
+    font-size: 56px;
 }
 .index_download_item_Window::before{
     content: '\f17a';
     font-size: 50px;
+    font-family: wdk; 
     color: #01adef;
 
 }
 .index_download_item_Linux::before{
-    /* color: #267ef0; */
+    /* color: #26f03a; */
     content: '\f17c';
+    font-family: wdk; 
+    font-size: 56px;
+
+}
+
+.index_download_item_Android::before{
+    /* color: #267ef0; */
+    color: #26f03a;
+    content: '\f17b';
+    font-family: wdk; 
     font-size: 56px;
 
 }

@@ -1,4 +1,7 @@
 
+:root{
+    --highlighted:#1890ff;
+}
 * {
     -webkit-tap-highlight-color: transparent;
 }
@@ -1424,7 +1427,7 @@ div[ui]>.wdk-header {
 .wdk-cms-info,
 .wdk-cms-text,
 .wdk-cms-title {
-    margin: 0 .5em
+    margin: 0 10px;
 }
 
 .wdk-cms-reply h1 {
@@ -1603,7 +1606,7 @@ a.wdk-image-pro:before {
 .wdk-button a {
     display: inline-block;
     font-size: 14px;
-    padding: .4em .5em;
+    padding: .4em 1em;
     border: 1px solid #ccc;
     border-radius: 2px;
     color: #666;

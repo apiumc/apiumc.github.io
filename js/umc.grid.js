@@ -137,16 +137,17 @@
                 var me = this;
                 var su = me.Header.ValueField;
                 if (su) {
+                    
                     if (typeof su == 'object') {
-                        var send = $.extend({}, su.send);
+                        var send = $.extend({}, me.search.send);
                         for (var k in su) {
                             send[k] = value[su[k]];
                         }
-                        $.UI.Command(su.model, su.cmd, send)
+                        $.UI.Command(me.search.model, me.search.cmd, send)
                     } else {
-                        var v = $.extend({}, su.send);
-                        v[me.Name || ''] = value[su];
-                        $.UI.Command(su.model, su.cmd, v)
+                        var send = $.extend({}, me.search.send);
+                        send[me.Name || '_'] = value;
+                        $.UI.Command(me.search.model, me.search.cmd, send)
                     }
                 }
             }

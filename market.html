@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>API UMC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link href="/css/weui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/base.css" rel="stylesheet" type="text/css" />
+    <link href="/css/icon.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.ui.css" rel="stylesheet" type="text/css" />
+    <link href="/css/umc.css" rel="stylesheet" type="text/css" />
+    <script src="/js/umc.js"></script>
+    <script src="/UMC.Conf"></script>
+    <script src="/js/umc.database.js"></script>
+    <script src="/js/umc.grid.js"></script>
+    <script src="/js/umc.ui.js"></script>
+    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.page.js"></script>
+    <script src="/js/umc.setup.js"></script>
+    <style>
+        .weui_mask {
+            background-color: transparent !important;
+        }
+
+        body>div[ui] {
+            box-shadow: -2px 0px 5px #88888888;
+        }
+
+        @media screen and (max-width: 560px) {
+            .wdk-dialog {
+                position: fixed;
+                width: 100% !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="ui umc-market" ui="market">
+        <div class="wdk-slider">
+            <div id="sliders" style="height:350px"><input checked="" class="slider-1" type="radio" name="slider1"
+                    id="slider11">
+                <div class="sliders">
+                    <div id="overflow">
+                        <div class="inner">
+                            <article>
+                                <div
+                                    style="background-image:url(http://127.0.0.1/css/images/BgSrc/bg5.jpg?umc-image=m350x200o);background-size:cover;">
+                                    <a style="overflow:hidden;display:block;"><img
+                                            src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="></a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div><label class="controls ctr1" for="slider11"></label>
+                <div id="active" class="active"></div>
+            </div>
+        </div>
+        <div class="topic_category">
+            <a href="javascript:void(0)" onclick="showTopicCategory('topic_category_oa')">
+                <span id="topic_category_oa" class="item item_selected">付费排行</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_shichang')">
+                <span id="systopic_shichang" class="item">销售/客服</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_caiwu')">
+                <span id="systopic_caiwu" class="item">财税管理</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_it')">
+                <span id="systopic_it" class="item" data-spm-anchor-id="0.0.0.i2.53db4104q4OVqd">低代码平台</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_renshi')">
+                <span id="systopic_renshi" class="item">人事管理</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_peixun')">
+                <span id="systopic_peixun" class="item">企业培训</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_tuandui')">
+                <span id="systopic_tuandui" class="item">协同效率</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('yunwei_wumo')">
+                <span id="yunwei_wumo" class="item">运维安全</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_kefu')">
+                <span id="systopic_kefu" class="item">营销获客</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_gyl')">
+                <span id="systopic_gyl" class="item">供应链/ERP</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_xingzheng')">
+                <span id="systopic_xingzheng" class="item">行政管理</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_qiyefuwu')">
+                <span id="systopic_qiyefuwu" class="item">商旅出行</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('PraiseRanking')">
+                <span id="PraiseRanking" class="item">企业权益</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('systopic_xitongjicheng')">
+                <span id="systopic_xitongjicheng" class="item">系统集成</span>
+            </a>
+            <a href="javascript:void(0)" onclick="showTopicCategory('shujubi')">
+                <span id="shujubi" class="item">数据BI</span>
+            </a>
+        </div>
+        <div class="umc-market-container">
+
+            <div click-data="{&quot;model&quot;:&quot;Platform&quot;,&quot;cmd&quot;:&quot;Market&quot;,&quot;send&quot;:{&quot;Code&quot;:&quot;822715079_docs&quot;}}"
+                class="weui_cell wdk-image-text-desc" row-index="0" data-json="c0">
+                <div class="wdk-image-text-desc-media"><img
+                        src="https://www.apiumc.com/images/822715079/docs/1/0.jpg!100?" alt=""></div>
+                <div class="wdk-image-text-desc-content">
+                    <div class="wdk-image-text-desc-title">文档管理</div>
+                    <div class="wdk-image-text-desc-desc">文档管理,ffdd</div>
+                </div>
+
+            </div>
+
+            <div click-data="{&quot;model&quot;:&quot;Platform&quot;,&quot;cmd&quot;:&quot;Market&quot;,&quot;send&quot;:{&quot;Code&quot;:&quot;822715079_docs&quot;}}"
+                class="weui_cell wdk-image-text-desc" row-index="0" data-json="c0">
+                <div class="wdk-image-text-desc-media"><img
+                        src="https://www.apiumc.com/images/822715079/docs/1/0.jpg!100?" alt=""></div>
+                <div class="wdk-image-text-desc-content">
+                    <div class="wdk-image-text-desc-title">文档管理</div>
+                    <div class="wdk-image-text-desc-desc">文档管理,ffdd</div>
+                </div>
+
+
+            </div>
+
+            <div click-data="{&quot;model&quot;:&quot;Platform&quot;,&quot;cmd&quot;:&quot;Market&quot;,&quot;send&quot;:{&quot;Code&quot;:&quot;822715079_docs&quot;}}"
+                class="weui_cell wdk-image-text-desc" row-index="0" data-json="c0">
+                <div class="wdk-image-text-desc-media"><img
+                        src="https://www.apiumc.com/images/822715079/docs/1/0.jpg!100?" alt=""></div>
+                <div class="wdk-image-text-desc-content">
+                    <div class="wdk-image-text-desc-title">文档管理</div>
+                    <div class="wdk-image-text-desc-desc">文档管理,ffdd</div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div ui="main">
+
+        <div class="app-container">
+
+
+        </div>
+    </div>
+</body>
+
+</html>

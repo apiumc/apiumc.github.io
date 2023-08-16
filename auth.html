@@ -15,7 +15,7 @@
     <script src="/js/umc.database.js"></script>
     <script src="/js/umc.grid.js"></script>
     <script src="/js/umc.ui.js"></script>
-    <script src="/js/umc.dialog.js"></script>
+    <script src="/js/umc.dialog.js?v.001"></script>
     <script src="/js/umc.page.js"></script>
     <style>
         body>div.ui:nth-of-type(1) .header .back {
@@ -45,7 +45,7 @@
                 .On("Prompt", function (e, p) {
                     var msg = $('#wdk-msg');
                     if (msg.length == 0) {
-                        msg = $(document.createElement("div")).attr('id','wdk-msg').appendTo(document.body);
+                        msg = $(document.createElement("div")).attr('id', 'wdk-msg').appendTo(document.body);
                     }
                     msg.addClass('animate').html(p.Text);
                     setTimeout(function () {
@@ -63,16 +63,16 @@
                     });
                     var h = $('body>div.ui:nth-of-type(1) .header');
                     if (h.length) {
-                        document.title = h.text();
+                        document.title = h.text() || "API UMC";;
                     } else {
                         d.on('section', function () {
-                            document.title = $('body>div.ui:nth-of-type(1) .header').text()
+                            document.title = $('body>div.ui:nth-of-type(1) .header').text() || "API UMC";
                         }, 1)
                     }
                 });
             var search = $.query(location.search.substring(1));
 
-            $.UI.Command('Platform', 'Cert', search);
+            $.UI.Command('Platform', 'Login', search);
 
         });</script>
 

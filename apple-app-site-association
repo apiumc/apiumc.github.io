@@ -3,8 +3,8 @@
         "apps": [],
         "details": [
             {
-                "appID": "27K5BHY5T5.com.umc.pos",
-                "paths": [ "/*" ]
+                "appID": "27K5BHY5T5.com.umc.apiumc",
+                "paths": [ "/UMC/","/UMC/*" ]
             }
         ]
     }
